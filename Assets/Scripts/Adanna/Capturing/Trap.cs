@@ -7,9 +7,17 @@ public class Trap : MonoBehaviour
 {
     // refrenced gun shoot function later after shoot function is made properly
 
+
     [SerializeField]
     bool Catchable = false;
     public GameObject Bubble;
+    // use this to refrence traps
+    public GameObject playerGun;
+
+    private void Start()
+    {
+      //playerGun.GetComponent<Gun>().Shoot();
+    }
 
     private void Update()
     {
@@ -34,7 +42,7 @@ public class Trap : MonoBehaviour
         if(Catchable == true)
         {
             // add gun refrence later so shoot function works.
-            Shoot();
+            playerGun.GetComponent<Gun>().Shoot();
         }
         
     }
@@ -61,6 +69,7 @@ public class Trap : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         Bubble.SetActive(false);
+        yield return new WaitForSeconds(3);
         Catchable = false;
     }
 
