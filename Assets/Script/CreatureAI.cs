@@ -1,6 +1,7 @@
 //using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,11 +10,12 @@ public class CreatureAI : MonoBehaviour
 {
     public enum CritterState { 
     idle,
-    roming,
+    roaming,
+    movingToPOI,
     checking,
     drinking,
     sleeping,
-    startPanicing,
+    //startPanicing,
     panicing,
     capturing,
     stunned
@@ -23,6 +25,7 @@ public class CreatureAI : MonoBehaviour
 
     public float VelocityToPanic;
     public float POIDetectionRadius;
+    private Transform _POITarget;
     public float PlayerDectectionRadius;
     private Vector3 _homePoint;
     public float TravelableDistanceFromHome;
@@ -34,11 +37,17 @@ public class CreatureAI : MonoBehaviour
     public float Lazyness;
     [Range(0f, 100f)]
     public float Fearfulness;
+    [Header("Resources")]
+    [Range(0f, 100f)]
+    public float Hydration = 100;
+    [Range(0f, 100f)]
+    public float Energy = 100;
     [Header("Tags")]
     public string PlayerTag;
     private GameObject _player;
     public string DrinkableTag;
 
+    public TextMeshProUGUI textBox;
     private void Start()
     {
         _homePoint = transform.position;
@@ -48,7 +57,7 @@ public class CreatureAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float rnd;
+        textBox.text = State.ToString();
         switch (State)
         {
             case CritterState.idle:
@@ -58,10 +67,19 @@ public class CreatureAI : MonoBehaviour
                     StartCoroutine(UpdateState(CritterState.panicing, 0));
                     break;
                 }
-
+                //Check for POIs
+                if (Hydration < Thirstiness)
+                    foreach (GameObject drinkable in GameObject.FindGameObjectsWithTag(DrinkableTag))
+                        if (Vector3.Distance(transform.position, drinkable.transform.position) < POIDetectionRadius)
+                        {
+                            //Go to the edge of the water source
+                            _POITarget = drinkable.transform;
+                            _agent.SetDestination(_POITarget.position);
+                            StartCoroutine(UpdateState(CritterState.movingToPOI, 0));
+                            break;
+                        }
                 //Choose to move
-                rnd = Random.Range(0f, 100f);
-                if (rnd > Lazyness)
+                if (Energy > Lazyness)
                 {
                     //If moving, where?
                     float n = TravelableDistanceFromHome / 2;
@@ -69,17 +87,18 @@ public class CreatureAI : MonoBehaviour
                     Debug.DrawRay(newPos, Vector3.up * 0.1f, Color.blue, 1f);
                     //Move there
                     _agent.SetDestination(newPos);
-                    //Start roming
-                    StartCoroutine(UpdateState(CritterState.roming, 0));
+                    //Start roaming
+                    StartCoroutine(UpdateState(CritterState.roaming, 0));
                     break;
                 }
-                else if (rnd < Lazyness / 2)
+                else
                 {
                     StartCoroutine(UpdateState(CritterState.sleeping, 0));
                     break;
                 }
-                break;
-            case CritterState.roming:
+
+            case CritterState.roaming:
+                Mathf.Clamp(Energy -= Time.deltaTime * 2, 0, 100);
                 //Check for player
                 if (Vector3.Distance(transform.position, _player.transform.position) < PlayerDectectionRadius)
                 {
@@ -87,13 +106,14 @@ public class CreatureAI : MonoBehaviour
                     break;
                 }
                 //Check for POIs
-                rnd = Random.Range(0f, 100f);
-                if (rnd < Thirstiness)
+                if (Hydration < Thirstiness)
                     foreach (GameObject drinkable in GameObject.FindGameObjectsWithTag(DrinkableTag))
                         if (Vector3.Distance(transform.position, drinkable.transform.position) < POIDetectionRadius)
                         {
                             //Go to the edge of the water source
-                            _agent.SetDestination(drinkable.transform.position);
+                            _POITarget = drinkable.transform;
+                            _agent.SetDestination(_POITarget.position);
+                            StartCoroutine(UpdateState(CritterState.movingToPOI, 0));
                             break;
                         }
                 //Are we at the point?
@@ -105,31 +125,51 @@ public class CreatureAI : MonoBehaviour
                 }
                 //Keep moving
                 break;
+            case CritterState.movingToPOI:
+                if(Vector3.Distance(transform.position, _POITarget.position) < 1f)
+                    if (_POITarget.gameObject.tag == DrinkableTag)
+                    {
+                        StartCoroutine(UpdateState(CritterState.drinking, 0));
+                        break;
+                    }
+                break;
             case CritterState.checking:
 
                 break;
             case CritterState.drinking:
                 //Choose to continue drinking
-                rnd = Random.Range(0f, 100f);
-                if (rnd > Thirstiness)
+                if (Hydration >= 100)
+                {
                     StartCoroutine(UpdateState(CritterState.idle, 0));
+                }
+                else
+                    Mathf.Clamp(Hydration += Time.deltaTime * 10, 0, 100);
                 break;
             case CritterState.sleeping:
                 //Choose to continue sleeping
-                rnd = Random.Range(0f, 100f);
-                if (rnd > Lazyness)
+                if (Energy >= 100)
                     StartCoroutine(UpdateState(CritterState.idle, 0));
+                else
+                    Mathf.Clamp(Energy += Time.deltaTime * 10, 0, 100);
                 break;
+                /*
             case CritterState.startPanicing:
-                _agent.SetDestination(_homePoint);
-                _agent.speed *= 2;
+                Vector3 dir = (_player.transform.position - transform.position).normalized;
+                _agent.SetDestination(_player.transform.position + dir * 1.5f);
+                StartCoroutine(UpdateState(CritterState.panicing, 0));
                 break;
+                 */
             case CritterState.panicing:
                 //Choose to continue panicing
+                Mathf.Clamp(Energy -= Time.deltaTime * 4, 0, 100);
                 if (Vector3.Distance(transform.position, _player.transform.position) < PlayerDectectionRadius)
+                {
+                    Vector3 dir = (_player.transform.position - transform.position).normalized;
+                    _agent.SetDestination(_player.transform.position + dir * PlayerDectectionRadius * -1.5f);
                     break;
+                }
                 else if (Vector3.Distance(transform.position, _agent.destination) < 2f)
-                    StartCoroutine(UpdateState(CritterState.idle, Random.Range(1f, 5f)));
+                    StartCoroutine(UpdateState(CritterState.idle, 0));
                 break;
             case CritterState.capturing:
                 //TODO
@@ -138,6 +178,10 @@ public class CreatureAI : MonoBehaviour
                 //Do nothing
                 break;
         }
+        if(State != CritterState.sleeping || State != CritterState.drinking)
+            Hydration -= Time.deltaTime;
+
+        Debug.DrawRay(_agent.destination, Vector3.up * 10, Color.blue);
     }
     IEnumerator UpdateState(CritterState newState, float delay)
     {
