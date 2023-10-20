@@ -1,5 +1,6 @@
 //Created by Jackson Lucas
 //Last Edited by Jackson Lucas
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,7 +49,6 @@ public class CreatureAI : MonoBehaviour
 
     [Header("Resources")]
     [Range(0f, 100f)]
-    [SerializeField]
     public float Hydration = 100;
     [Range(0f, 100f)]
     public float Energy = 100;
@@ -58,13 +58,13 @@ public class CreatureAI : MonoBehaviour
     private string _playerTag;
     private GameObject _player;
     public GameObject Player { get { return _player; } }
-    [SerializeField]
-    private string _drinkableTag;
 
     private NavMeshAgent _agent;
     public NavMeshAgent GetAgent { get { return _agent; } }
     private float _baseSpeed;
     public float BaseSpeed { get { return _baseSpeed; } }
+    private Animator _animator;
+    public Animator Animator { get { return _animator; } }
     [Header("Debug")]
     [Tooltip("State display")]
     public TextMeshProUGUI _textBox;
@@ -75,6 +75,7 @@ public class CreatureAI : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _baseSpeed = _agent.speed;
         _player = GameObject.FindGameObjectWithTag(_playerTag);
+        _animator = GetComponent<Animator>();
         _currentState = new IdleState(this);
         _currentState.StartState();
     }
@@ -91,7 +92,7 @@ public class CreatureAI : MonoBehaviour
                 Hydration -= Time.deltaTime;
         }
 
-        Debug.DrawLine(_agent.destination, transform.position, Color.blue);
+        Debug.DrawLine(transform.position, _agent.destination, Color.blue);
     }
     /// <summary>
     /// State chaging function. Will update this creature's state after a given time.
@@ -108,7 +109,7 @@ public class CreatureAI : MonoBehaviour
             _currentState = newState;
             _currentState.StartState();
         }
-        Debug.Log("The state is " + _currentState.GetType());
+        //Debug.Log("The state is " + _currentState.GetType());
     }
     /// <summary>
     /// Panic if player is near. Mod affects radius.
@@ -205,23 +206,23 @@ public abstract class State
     public abstract void Update();
     public abstract void EndState();
 }
-
 public class IdleState : State
 {
+    float _countDown;
     public IdleState(CreatureAI ai) : base(ai)
     {
-
+        _countDown = 0;
     }
     public override void StartState()
     {
-
+        AI.Animator.SetBool("IdleState", true);
     }
     public override void Update()
     {
         if (AI.CheckForPlayer(1)) return;
         if (AI.CheckForPOIs(1)) return;
         //If we have enough energy, move
-        if (AI.Energy > AI.Lazyness)
+        if (AI.Energy > 0)
         {
             //Choose a random spot
             float n = AI.TravelDistance;
@@ -232,7 +233,7 @@ public class IdleState : State
             AI.StartCoroutine(AI.UpdateState(new RoamingState(AI), 0));
             return;
         }
-        else
+        else 
         {
             //Otherwise, sleep
             AI.StartCoroutine(AI.UpdateState(new SleepState(AI), 0));
@@ -241,7 +242,7 @@ public class IdleState : State
     }
     public override void EndState()
     {
-        
+        AI.Animator.SetBool("IdleState", false);
     }
 }
 public class RoamingState : State
@@ -253,6 +254,7 @@ public class RoamingState : State
     public override void StartState()
     {
         Agent.isStopped = false;
+        AI.Animator.SetBool("RoamingState", true);
     }
     public override void Update()
     {
@@ -260,6 +262,7 @@ public class RoamingState : State
         Mathf.Clamp(AI.Energy -= Time.deltaTime * 2, 0, 100);
         if (AI.CheckForPlayer(1)) return;
         if (AI.CheckForPOIs(1)) return;
+        if(AI.Energy <= 0) { AI.StartCoroutine(AI.UpdateState(new SleepState(AI), 0)); return; }
         //Are we at the point?
         if (Vector3.Distance(AI.transform.position, Agent.destination) <= 1f)
         {
@@ -271,7 +274,7 @@ public class RoamingState : State
     }
     public override void EndState()
     {
-
+        AI.Animator.SetBool("RoamingState", false);
     }
 }
 public class SleepState : State
@@ -283,6 +286,7 @@ public class SleepState : State
     public override void StartState()
     {
         Agent.isStopped = true;
+        AI.Animator.SetBool("SleepState", true);
     }
     public override void Update()
     {
@@ -295,6 +299,7 @@ public class SleepState : State
     public override void EndState()
     {
         Agent.isStopped = false;
+        AI.Animator.SetBool("SleepState", false);
     }
 }
 public class MovingToPOIState : State
@@ -306,6 +311,7 @@ public class MovingToPOIState : State
     public override void StartState()
     {
         Agent.isStopped = false;
+        AI.Animator.SetBool("MovingToPOIState", true);
     }
     public override void Update()
     {
@@ -321,7 +327,7 @@ public class MovingToPOIState : State
     }
     public override void EndState()
     {
-
+        AI.Animator.SetBool("MovingToPOIState", false);
     }
 
 }
@@ -329,12 +335,12 @@ public class DrinkingState : State
 {
     public DrinkingState(CreatureAI ai) : base(ai)
     {
-
     }
     public override void StartState()
     {
         //Stop moving
         Agent.isStopped = true;
+        AI.Animator.SetBool("DrinkingState", true);
     }
     public override void Update()
     {
@@ -350,17 +356,18 @@ public class DrinkingState : State
     public override void EndState()
     {
         Agent.isStopped = false;
+        AI.Animator.SetBool("DrinkingState", false);
     }
 }
 public class PanicState : State
 {
     public PanicState(CreatureAI ai) : base(ai)
     {
-
     }
     public override void StartState()
     {
         Agent.isStopped = false;
+        AI.Animator.SetBool("PanicState", true);
     }
     public override void Update()
     {
@@ -384,7 +391,7 @@ public class PanicState : State
     }
     public override void EndState()
     {
-
+        AI.Animator.SetBool("PanicState", false);
     }
 
 }
@@ -396,7 +403,7 @@ public class CaptureState : State
     }
     public override void StartState()
     {
-
+        AI.Animator.SetBool("CaptureState", true);
     }
     public override void Update()
     {
@@ -404,7 +411,7 @@ public class CaptureState : State
     }
     public override void EndState()
     {
-
+        AI.Animator.SetBool("CaptureState", false);
     }
 
 }
@@ -417,6 +424,7 @@ public class StunnedState : State
     public override void StartState()
     {
         Agent.isStopped = true;
+        AI.Animator.SetBool("StunnedState", true);
     }
     public override void Update()
     {
@@ -425,6 +433,7 @@ public class StunnedState : State
     public override void EndState()
     {
         Agent.isStopped = false;
+        AI.Animator.SetBool("StunnedState", false);
     }
 
 }
