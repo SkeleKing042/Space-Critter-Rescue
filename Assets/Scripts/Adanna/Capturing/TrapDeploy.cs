@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TrapDeploy : MonoBehaviour
 {
@@ -12,24 +13,34 @@ public class TrapDeploy : MonoBehaviour
     bool holdingTrap;
     bool holdingGun;
 
-    enum CurrentlyHolding
+    bool trapDeployed;
+
+    public enum CurrentlyHolding
     {
         vacuum,
         trap
     }
 
-    [SerializeField] CurrentlyHolding currentlyHolding;
+    [SerializeField]
+    public CurrentlyHolding currentlyHolding;
 
+    /// <summary>
+    /// set starting values in scene
+    /// </summary>
     void Start()
     {
         currentlyHolding = CurrentlyHolding.vacuum;
+        Trap.transform.SetParent(transform);
+        Trap.SetActive(false);
 
     }
 
     // LB to toggle holding trap
     // LT to throw trap if holding
 
-    // Update is called once per frame
+    /// <summary>
+    /// declare functions if conditions apply
+    /// </summary>
     void Update()
     {
         Toggle();
@@ -44,17 +55,16 @@ public class TrapDeploy : MonoBehaviour
             Trap.transform.position = PlayerGun.transform.position;
             Trap.transform.rotation = PlayerGun.transform.rotation;
         }
-            
-        
-
 
     }
-
+    /// <summary>
+    /// toggle between Vacuum and Trap, check Enum
+    /// </summary>
     void Toggle()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (currentlyHolding == CurrentlyHolding.vacuum)
+            if (currentlyHolding == CurrentlyHolding.vacuum && trapDeployed == false)
             {
                 PlayerGun.SetActive(false);
                 Trap.SetActive(true);
@@ -73,6 +83,10 @@ public class TrapDeploy : MonoBehaviour
 
 
     }
+
+    /// <summary>
+    /// deploy trap if conditions met, add rigidbody, make kinematic false
+    /// </summary>
     void DeployTrap()
     {
         if(currentlyHolding == CurrentlyHolding.trap)
@@ -81,24 +95,38 @@ public class TrapDeploy : MonoBehaviour
             Trap.transform.parent = null;
             // Trap.transform.position = Player.transform.forward *5;
             currentlyHolding = CurrentlyHolding.vacuum;
-            Trap.AddComponent<Rigidbody>();
+            Trap.GetComponent<BoxCollider>().enabled = true;
+          
+            Trap.GetComponent<Rigidbody>().isKinematic = false;
             Debug.Log("deployyyyy");
+            PlayerGun.SetActive(true);
+            trapDeployed = true;
 
         }
     
     }
 
+    /// <summary>
+    /// pick up trap if the tag matching trap and if pressing Q.
+    /// disable box collider, rigidbody is kinematic, change currently holding
+    /// </summary>
+    /// <param name="trap"></param>
+
     private void OnTriggerStay(Collider trap)
     {
-        if (trap.gameObject.tag == "trap" && Input.GetKeyDown(KeyCode.Q))
+       
+        if (trap.gameObject.tag == "trap" && Input.GetKey(KeyCode.Q) && currentlyHolding != CurrentlyHolding.trap)
         {
+            Debug.Log("PickUp");
+            Trap.transform.SetParent(transform);
+            Trap.GetComponent<BoxCollider>().enabled = false;
+            Trap.GetComponent<Rigidbody>().isKinematic =true;
+            currentlyHolding = CurrentlyHolding.vacuum;
 
-            // holding trap == true 
-            // set vector position
-            // make trap a parent
-            Trap.AddComponent<Rigidbody>();
-            Trap.transform.parent = Player.transform;
-
+            PlayerGun.SetActive(true);
+            Trap.SetActive(false);
+            trapDeployed = false;
+            
         }
     }
 
