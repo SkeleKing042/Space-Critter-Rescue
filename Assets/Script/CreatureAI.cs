@@ -1,39 +1,35 @@
 //Created by Jackson Lucas
 //Last Edited by Jackson Lucas
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using static CreatureAI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class CreatureAI : MonoBehaviour
 {
-    public enum CritterState { 
-    idle,
-    roaming,
-    movingToPOI,
-    drinking,
-    sleeping,
-    panicking,
-    capturing,
-    stunned
-    };
-
-    public CritterState State;
+    private State _currentState;
 
     [Header("Check radi")]
     [Tooltip("The radius at which POIs are detected.")]
     [SerializeField]
     private float _POIDetectionRadius;
     private Transform _POITarget;
+    public Transform POITarget { get { return _POITarget; } }
     [Tooltip("The radius at which the player is detected.")]
     [SerializeField]
     private float _playerDectectionRadius;
+    public float PlayerDectectionRadius { get { return _playerDectectionRadius; } }
     private Vector3 _homePoint;
+    public Vector3 HomePoint { get { return _homePoint; } }
     [Tooltip("The maximum distance that a creature will travel from their initial starting position.")]
     [SerializeField]
     private float _travelableDistanceFromHome;
+    public float TravelDistance { get { return _travelableDistanceFromHome; } }
 
     [Tooltip("The velocity that a colliding object has to have to send the creature into the panicking state.")]
     [SerializeField]
@@ -48,23 +44,27 @@ public class CreatureAI : MonoBehaviour
     [Tooltip("How quickly this creature will rest.")]
     [SerializeField]
     private float _lazyness;
+    public float Lazyness { get { return _lazyness; }  }
 
     [Header("Resources")]
     [Range(0f, 100f)]
     [SerializeField]
-    private float _hydration = 100;
+    public float Hydration = 100;
     [Range(0f, 100f)]
-    [SerializeField]
-    private float _energy = 100;
+    public float Energy = 100;
+
     [Header("Tags")]
     [SerializeField]
     private string _playerTag;
     private GameObject _player;
+    public GameObject Player { get { return _player; } }
     [SerializeField]
     private string _drinkableTag;
 
     private NavMeshAgent _agent;
+    public NavMeshAgent GetAgent { get { return _agent; } }
     private float _baseSpeed;
+    public float BaseSpeed { get { return _baseSpeed; } }
     [Header("Debug")]
     [Tooltip("State display")]
     public TextMeshProUGUI _textBox;
@@ -75,111 +75,21 @@ public class CreatureAI : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _baseSpeed = _agent.speed;
         _player = GameObject.FindGameObjectWithTag(_playerTag);
+        _currentState = new IdleState(this);
+        _currentState.StartState();
     }
     // Update is called once per frame
     void Update()
     {
-        _textBox.text = State.ToString();
-        switch (State)
+        //_textBox.text = State.ToString();
+        if (_currentState != null)
         {
-            case CritterState.idle:
-                if (CheckForPlayer(1)) break;
-                if(CheckForPOIs(1)) break;
-                //If we have enough energy, move
-                if (_energy > _lazyness)
-                {
-                    //Choose a random spot
-                    float n = _travelableDistanceFromHome;
-                    Vector3 newPos = new Vector3(_homePoint.x + Random.Range(-n, n), _homePoint.y + Random.Range(-n, n), _homePoint.z + Random.Range(-n, n));
-                    //Move there
-                    _agent.SetDestination(newPos);
-                    //Start roaming
-                    StartCoroutine(UpdateState(CritterState.roaming, 0));
-                    break;
-                }
-                else
-                {
-                    //Otherwise, sleep
-                    StartCoroutine(UpdateState(CritterState.sleeping, 0));
-                    break;
-                }
-            case CritterState.roaming:
-                //Lose energy over time
-                Mathf.Clamp(_energy -= Time.deltaTime * 2, 0, 100);
-                if (CheckForPlayer(1)) break;
-                if (CheckForPOIs(1)) break;
-                //Are we at the point?
-                if (Vector3.Distance(transform.position, _agent.destination) <= 1f)
-                {
-                    //If so, stop
-                    StartCoroutine(UpdateState(CritterState.idle, 0));
-                    break;
-                }
-                //Otherwise, keep moving
-                break;
-            case CritterState.movingToPOI:
-                if(CheckForPlayer(1)) break;
-                //If the POI is a drinkable source, check if we are near the source...
-                if (_POITarget.GetComponent<DrinkableSource>())
-                    if(Vector3.Distance(transform.position, _POITarget.position) < _POITarget.GetComponent<DrinkableSource>().GetRadius())
-                    {
-                        //... if so, drink
-                        StartCoroutine(UpdateState(CritterState.drinking, 0));
-                        break;
-                    }
-                break;
-            case CritterState.drinking:
-                if (CheckForPlayer(0.5f)) break;
-                //Stop moving and replenish hydration
-                _agent.isStopped = true;
-                if (_hydration >= 100)
-                {
-                    StartCoroutine(UpdateState(CritterState.idle, 0));
-                    _agent.isStopped = false;
-                }
-                else
-                    Mathf.Clamp(_hydration += Time.deltaTime * 10, 0, 100);
-                break;
-            case CritterState.sleeping:
-                //Stop moving and replenish energy
-                _agent.isStopped = true;
-                if (_energy >= 100)
-                {
-                    StartCoroutine(UpdateState(CritterState.idle, 0));
-                    _agent.isStopped = false;
-                }
-                else
-                    Mathf.Clamp(_energy += Time.deltaTime * 10, 0, 100);
-                break;
-            case CritterState.panicking:
-                _agent.isStopped = false;
-                //Move twice as fast and lose energy twice as fast
-                _agent.speed = _baseSpeed * 2f;
-                Mathf.Clamp(_energy -= Time.deltaTime * 4, 0, 100);
-                if (Vector3.Distance(transform.position, _player.transform.position) < _playerDectectionRadius)
-                {
-                    Vector3 dir = (_player.transform.position - transform.position).normalized;
-                    _agent.SetDestination(_player.transform.position + dir * _playerDectectionRadius * -1.5f);
-                    break;
-                }
-                if (Vector3.Distance(transform.position, _agent.destination) < 2f)
-                {
-                    //Reset speed and go idle
-                    _agent.speed = _baseSpeed;
-                    StartCoroutine(UpdateState(CritterState.idle, 0));
-                }
-                break;
-            case CritterState.capturing:
-                //TODO
-                break;
-            case CritterState.stunned:
-                _agent.isStopped = true;
-                //Anims can go here
-                break;
+            _currentState.Update();
+            //Always reduce hydration
+
+            if (_currentState.GetType() != typeof(SleepState) || _currentState.GetType() != typeof(DrinkingState))
+                Hydration -= Time.deltaTime;
         }
-        //Always reduce hydration
-        if(State != CritterState.sleeping || State != CritterState.drinking)
-            _hydration -= Time.deltaTime;
 
         Debug.DrawLine(_agent.destination, transform.position, Color.blue);
     }
@@ -189,22 +99,27 @@ public class CreatureAI : MonoBehaviour
     /// <param name="newState"></param>
     /// <param name="delay"></param>
     /// <returns></returns>
-    IEnumerator UpdateState(CritterState newState, float delay)
+    public IEnumerator UpdateState(State newState, float delay)
     {
         yield return new WaitForSeconds(delay);
-        if (newState != State)
-            State = newState;
+        if (newState.GetType() != _currentState.GetType())
+        {
+            _currentState.EndState();
+            _currentState = newState;
+            _currentState.StartState();
+        }
+        Debug.Log("The state is " + _currentState.GetType());
     }
     /// <summary>
     /// Panic if player is near. Mod affects radius.
     /// </summary>
     /// <param name="mod"></param>
     /// <returns></returns>
-    private bool CheckForPlayer(float mod)
+    public bool CheckForPlayer(float mod)
     {
         if (Vector3.Distance(transform.position, _player.transform.position) < _playerDectectionRadius * mod)
         {
-            StartCoroutine(UpdateState(CritterState.panicking, 0));
+            StartCoroutine(UpdateState(new PanicState(this), 0));
             return true;
         }
         return false;
@@ -214,10 +129,10 @@ public class CreatureAI : MonoBehaviour
     /// </summary>
     /// <param name="mod"></param>
     /// <returns></returns>
-    private bool CheckForPOIs(float mod)
+    public bool CheckForPOIs(float mod)
     {
         //If dehydrated
-        if (_hydration < _thirstiness)
+        if (Hydration < _thirstiness)
         {
             DrinkableSource currentSource = null;
             //Find all drinkable sources
@@ -236,13 +151,12 @@ public class CreatureAI : MonoBehaviour
                 //Go to the water source
                 _POITarget = currentSource.transform;
                 _agent.SetDestination(_POITarget.position);
-                StartCoroutine(UpdateState(CritterState.movingToPOI, 0));
+                StartCoroutine(UpdateState(new MovingToPOIState(this), 0));
                 return true;
             }
         }
         return false;
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         //Upon hitting another rigidbody moving fast enough, get stunned then, panic
@@ -251,10 +165,10 @@ public class CreatureAI : MonoBehaviour
             Rigidbody otherBody = collision.gameObject.GetComponent<Rigidbody>();
             if (otherBody.velocity.magnitude > _velocityToPanic)
             {
-                StartCoroutine(UpdateState(CritterState.stunned, 0));
+                StartCoroutine(UpdateState(new StunnedState(this), 0));
                 //Run from the object
                 _agent.SetDestination(transform.position + otherBody.velocity.normalized * (otherBody.velocity.magnitude / 3.0f));
-                StartCoroutine(UpdateState(CritterState.panicking, collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude / 10));
+                StartCoroutine(UpdateState(new PanicState(this), collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude / 10));
             }
         }
     }
@@ -267,8 +181,253 @@ public class CreatureAI : MonoBehaviour
         Gizmos.color = new Color(0, 255, 0, 0.50f);
         Gizmos.DrawSphere(_homePoint, _travelableDistanceFromHome);
     }
+
 }
 
+
+public abstract class State
+{
+    private CreatureAI _ai;
+    private NavMeshAgent _agent;
+    public State(CreatureAI ai)
+    {
+        _ai = ai;
+        _agent = _ai.GetAgent;
+    }
+    public State(CreatureAI ai, NavMeshAgent agent)
+    {
+        _ai = ai;
+        _agent = agent;
+    }
+    public CreatureAI AI { get { return _ai; } }
+    public NavMeshAgent Agent { get { return _agent; } }
+    public abstract void StartState();
+    public abstract void Update();
+    public abstract void EndState();
+}
+
+public class IdleState : State
+{
+    public IdleState(CreatureAI ai) : base(ai)
+    {
+
+    }
+    public override void StartState()
+    {
+
+    }
+    public override void Update()
+    {
+        if (AI.CheckForPlayer(1)) return;
+        if (AI.CheckForPOIs(1)) return;
+        //If we have enough energy, move
+        if (AI.Energy > AI.Lazyness)
+        {
+            //Choose a random spot
+            float n = AI.TravelDistance;
+            Vector3 newPos = new Vector3(AI.HomePoint.x + UnityEngine.Random.Range(-n, n), AI.HomePoint.y + UnityEngine.Random.Range(-n, n), AI.HomePoint.z + UnityEngine.Random.Range(-n, n));
+            //Move there
+            Agent.SetDestination(newPos);
+            //Start roaming
+            AI.StartCoroutine(AI.UpdateState(new RoamingState(AI), 0));
+            return;
+        }
+        else
+        {
+            //Otherwise, sleep
+            AI.StartCoroutine(AI.UpdateState(new SleepState(AI), 0));
+            return;
+        }
+    }
+    public override void EndState()
+    {
+        
+    }
+}
+public class RoamingState : State
+{
+    public RoamingState(CreatureAI AI) : base(AI)
+    {
+
+    }
+    public override void StartState()
+    {
+        Agent.isStopped = false;
+    }
+    public override void Update()
+    {
+        //Lose energy over time
+        Mathf.Clamp(AI.Energy -= Time.deltaTime * 2, 0, 100);
+        if (AI.CheckForPlayer(1)) return;
+        if (AI.CheckForPOIs(1)) return;
+        //Are we at the point?
+        if (Vector3.Distance(AI.transform.position, Agent.destination) <= 1f)
+        {
+            //If so, stop
+            AI.StartCoroutine(AI.UpdateState(new IdleState(AI), 0));
+            return;
+        }
+        //Otherwise, keep moving
+    }
+    public override void EndState()
+    {
+
+    }
+}
+public class SleepState : State
+{
+    public SleepState(CreatureAI AI) : base(AI)
+    {
+
+    }
+    public override void StartState()
+    {
+        Agent.isStopped = true;
+    }
+    public override void Update()
+    {
+        //Stop moving and replenish energy
+        if (AI.Energy >= 100)
+            AI.StartCoroutine(AI.UpdateState(new IdleState(AI), 0));
+        else
+            Mathf.Clamp(AI.Energy += Time.deltaTime * 10, 0, 100);
+    }
+    public override void EndState()
+    {
+        Agent.isStopped = false;
+    }
+}
+public class MovingToPOIState : State
+{
+    public MovingToPOIState(CreatureAI ai) : base(ai)
+    {
+
+    }
+    public override void StartState()
+    {
+        Agent.isStopped = false;
+    }
+    public override void Update()
+    {
+        if (AI.CheckForPlayer(1)) return;
+        //If the POI is a drinkable source, check if we are near the source...
+        if (AI.POITarget.GetComponent<DrinkableSource>())
+            if (Vector3.Distance(AI.transform.position, AI.POITarget.position) < AI.POITarget.GetComponent<DrinkableSource>().GetRadius())
+            {
+                //... if so, drink
+                AI.StartCoroutine(AI.UpdateState(new DrinkingState(AI), 0));
+                return;
+            }
+    }
+    public override void EndState()
+    {
+
+    }
+
+}
+public class DrinkingState : State
+{
+    public DrinkingState(CreatureAI ai) : base(ai)
+    {
+
+    }
+    public override void StartState()
+    {
+        //Stop moving
+        Agent.isStopped = true;
+    }
+    public override void Update()
+    {
+        //Replenish hydration
+        if (AI.CheckForPlayer(0.5f)) return;
+        if (AI.Hydration >= 100)
+        {
+            AI.StartCoroutine(AI.UpdateState(new IdleState(AI), 0));
+        }
+        else
+            Mathf.Clamp(AI.Hydration += Time.deltaTime * 10, 0, 100);
+    }
+    public override void EndState()
+    {
+        Agent.isStopped = false;
+    }
+}
+public class PanicState : State
+{
+    public PanicState(CreatureAI ai) : base(ai)
+    {
+
+    }
+    public override void StartState()
+    {
+        Agent.isStopped = false;
+    }
+    public override void Update()
+    {
+        //Move twice as fast and lose energy twice as fast
+        Agent.speed = AI.BaseSpeed * 2f;
+        Mathf.Clamp(AI.Energy -= Time.deltaTime * 4, 0, 100);
+        if (Vector3.Distance(AI.transform.position, AI.Player.transform.position) < AI.PlayerDectectionRadius)
+        {
+            Vector3 dir = (AI.Player.transform.position - AI.transform.position).normalized;
+            Agent.SetDestination(AI.Player.transform.position + dir * AI.PlayerDectectionRadius * -1.5f);
+            return;
+        }
+        if (Vector3.Distance(AI.transform.position, Agent.destination) < 2f)
+        {
+            //Reset speed and go idle
+            Agent.speed = AI.BaseSpeed;
+            AI.StartCoroutine(AI.UpdateState(new IdleState(AI), 0));
+            return;
+        }
+
+    }
+    public override void EndState()
+    {
+
+    }
+
+}
+public class CaptureState : State
+{
+    public CaptureState(CreatureAI ai) : base(ai)
+    {
+
+    }
+    public override void StartState()
+    {
+
+    }
+    public override void Update()
+    {
+
+    }
+    public override void EndState()
+    {
+
+    }
+
+}
+public class StunnedState : State
+{
+    public StunnedState(CreatureAI ai) : base(ai)
+    {
+
+    }
+    public override void StartState()
+    {
+        Agent.isStopped = true;
+    }
+    public override void Update()
+    {
+
+    }
+    public override void EndState()
+    {
+        Agent.isStopped = false;
+    }
+
+}
 
 //State _currentState
 

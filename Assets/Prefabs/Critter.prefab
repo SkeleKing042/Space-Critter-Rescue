@@ -134,15 +134,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d3ed5ec9b5e3a4da369a5100ae918f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 0
   _POIDetectionRadius: 10
   _playerDectectionRadius: 5
   _travelableDistanceFromHome: 15
-  _velocityToPanic: 0
+  _velocityToPanic: 5
   _thirstiness: 50
   _lazyness: 50
-  _hydration: 100
-  _energy: 100
+  Hydration: 100
+  Energy: 100
   _playerTag: Player
   _drinkableTag: Drinkable
   _textBox: {fileID: 5260860325457863235}
