@@ -52,9 +52,9 @@ public class Jump : MonoBehaviour
         
         if (Input.GetButton("Jump") && _jetpackCapacity >0)
         {
-            rigidbody.AddForce(Vector3.up * 10);
+            rigidbody.AddForce(Vector3.up * 7);
             Jumped?.Invoke();
-            rigidbody.AddForce(Vector3.up * 10);
+            rigidbody.AddForce(Vector3.up * 7);
             _jetpackCapacity = _jetpackCapacity - 1.2f;
         }
 
