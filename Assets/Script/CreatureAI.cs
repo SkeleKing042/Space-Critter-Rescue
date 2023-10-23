@@ -14,38 +14,41 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class CreatureAI : MonoBehaviour
 {
     private State _currentState;
+    [SerializeField]
+    private string _theState;
 
     [Header("Check radi")]
-    [Tooltip("The radius at which POIs are detected.")]
-    [SerializeField]
+    [SerializeField, Tooltip("The radius at which POIs are detected.")]
     private float _POIDetectionRadius;
     private Transform _POITarget;
     public Transform POITarget { get { return _POITarget; } }
-    [Tooltip("The radius at which the player is detected.")]
-    [SerializeField]
+    private bool _goingForDrink;
+    public bool GoingForDrink { get { return _goingForDrink; } set { _goingForDrink = value; } }
+    [SerializeField, Tooltip("The radius at which the player is detected.")]
     private float _playerDectectionRadius;
     public float PlayerDectectionRadius { get { return _playerDectectionRadius; } }
     private Vector3 _homePoint;
     public Vector3 HomePoint { get { return _homePoint; } }
-    [Tooltip("The maximum distance that a creature will travel from their initial starting position.")]
-    [SerializeField]
+    [SerializeField, Tooltip("The maximum distance that a creature will travel from their initial starting position.")]
     private float _travelableDistanceFromHome;
     public float TravelDistance { get { return _travelableDistanceFromHome; } }
 
-    [Tooltip("The velocity that a colliding object has to have to send the creature into the panicking state.")]
-    [SerializeField]
+    [SerializeField, Tooltip("The velocity that a colliding object has to have to send the creature into the panicking state.")]
     private float _velocityToPanic;
 
     [Header("Threasholds")]
-    [Range(0f, 100f)]
-    [Tooltip("Point at which this creature will look for water.")]
-    [SerializeField]
+    [SerializeField, Range(0f, 100f), Tooltip("Point at which this creature will look for water.")]
     private float _thirstiness;
+    [SerializeField, Tooltip("The amount time that should pass between thrist checks.")]
+    private float _thirstCheckDelay = 1;
+    private float _timeSinceLastThirstCheck;
+    
     [Range(0f, 100f)]
-    [Tooltip("How quickly this creature will rest.")]
-    [SerializeField]
+    [SerializeField, Tooltip("How quickly this creature will rest.")]
     private float _lazyness;
-    public float Lazyness { get { return _lazyness; }  }
+    [SerializeField, Tooltip("The amount time that should pass between lazy checks.")]
+    private float _lazyCheckDelay = 1;
+    private float _timeSinceLastLazyCheck;
 
     [Header("Resources")]
     [Range(0f, 100f)]
@@ -65,33 +68,41 @@ public class CreatureAI : MonoBehaviour
     public float BaseSpeed { get { return _baseSpeed; } }
     private Animator _animator;
     public Animator Animator { get { return _animator; } }
-    [Header("Debug")]
-    [Tooltip("State display")]
-    public TextMeshProUGUI _textBox;
 
     private void Start()
     {
+        //Sets the center of the area that the AI will move around
         _homePoint = transform.position;
         _agent = GetComponent<NavMeshAgent>();
         _baseSpeed = _agent.speed;
         _player = GameObject.FindGameObjectWithTag(_playerTag);
         _animator = GetComponent<Animator>();
+
+        _thirstCheckDelay = Mathf.Abs(_thirstCheckDelay);
+        _lazyCheckDelay = Mathf.Abs(_lazyCheckDelay);
+        _timeSinceLastThirstCheck = _thirstCheckDelay;
+        _timeSinceLastLazyCheck = _lazyCheckDelay;
+
         _currentState = new IdleState(this);
         _currentState.StartState();
     }
-    // Update is called once per frame
     void Update()
     {
-        //_textBox.text = State.ToString();
         if (_currentState != null)
         {
+            //Update the state
             _currentState.Update();
-            //Always reduce hydration
 
+            //Always reduce hydration, unless sleeping or drinking
             if (_currentState.GetType() != typeof(SleepState) || _currentState.GetType() != typeof(DrinkingState))
                 Hydration -= Time.deltaTime;
         }
+        //Increment time checks
+        _timeSinceLastThirstCheck += Time.deltaTime;
+        _timeSinceLastLazyCheck += Time.deltaTime;
 
+        //Debuging
+        _theState = _currentState.GetType().ToString();
         Debug.DrawLine(transform.position, _agent.destination, Color.blue);
     }
     /// <summary>
@@ -109,7 +120,6 @@ public class CreatureAI : MonoBehaviour
             _currentState = newState;
             _currentState.StartState();
         }
-        //Debug.Log("The state is " + _currentState.GetType());
     }
     /// <summary>
     /// Panic if player is near. Mod affects radius.
@@ -132,27 +142,55 @@ public class CreatureAI : MonoBehaviour
     /// <returns></returns>
     public bool CheckForPOIs(float mod)
     {
-        //If dehydrated
-        if (Hydration < _thirstiness)
+        //Generate a random value between the thirstiness level and half of that
+        //If that random value is greater then the Hydration level, go drink
+        //Eg: thirstiness = 50 // rnd returns 33 // Hydration = 40 // Won't drink
+        //rnd return amny number // Hydroation below 0.5 of thirstiness // will drink
+        if(_timeSinceLastThirstCheck >= _thirstCheckDelay)
         {
-            DrinkableSource currentSource = null;
-            //Find all drinkable sources
-            foreach (DrinkableSource drinkable in FindObjectsOfType<DrinkableSource>())
+            _timeSinceLastThirstCheck = 0;
+            float rnd = UnityEngine.Random.Range(_thirstiness * 0.5f, _thirstiness);
+            if(rnd > Hydration)
             {
-                //Check the distance to them and if they're close enough, go to that source
-                if (Vector3.Distance(transform.position, drinkable.transform.position) < _POIDetectionRadius * mod)
-                    if (currentSource == null)
-                        currentSource = drinkable;
-                    else
-                        if (Vector3.Distance(transform.position, currentSource.transform.position) > Vector3.Distance(transform.position, drinkable.transform.position))
-                        currentSource = drinkable;
+                DrinkableSource currentSource = null;
+                //Find all drinkable sources
+                foreach (DrinkableSource drinkable in FindObjectsOfType<DrinkableSource>())
+                {
+                    //Check the distance to them and if they're close enough, go to that source
+                    if (Vector3.Distance(transform.position, drinkable.transform.position) < _POIDetectionRadius * mod)
+                        if (currentSource == null)
+                            currentSource = drinkable;
+                        else
+                            if (Vector3.Distance(transform.position, currentSource.transform.position) > Vector3.Distance(transform.position, drinkable.transform.position))
+                            currentSource = drinkable;
+                }
+                if (currentSource != null)
+                {
+                    //Go to the water source
+                    _POITarget = currentSource.transform;
+                    _agent.SetDestination(_POITarget.position);
+                    GoingForDrink = true;
+                    StartCoroutine(UpdateState(new RoamingState(this), 0));
+                    return true;
+                }
             }
-            if (currentSource != null)
+        }
+        return false;
+    }
+    /// <summary>
+    /// Checks if this creature should fall asleep
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckForSleep()
+    {
+        if(_timeSinceLastLazyCheck >= _lazyCheckDelay)
+        {
+            _timeSinceLastLazyCheck = 0;
+            //Same as the POI check 
+            float rnd = UnityEngine.Random.Range(_lazyness * 0.5f, _lazyness);
+            if(rnd > Energy)
             {
-                //Go to the water source
-                _POITarget = currentSource.transform;
-                _agent.SetDestination(_POITarget.position);
-                StartCoroutine(UpdateState(new MovingToPOIState(this), 0));
+                StartCoroutine(UpdateState(new SleepState(this), 0));
                 return true;
             }
         }
@@ -184,8 +222,6 @@ public class CreatureAI : MonoBehaviour
     }
 
 }
-
-
 public abstract class State
 {
     private CreatureAI _ai;
@@ -208,10 +244,9 @@ public abstract class State
 }
 public class IdleState : State
 {
-    float _countDown;
     public IdleState(CreatureAI ai) : base(ai)
     {
-        _countDown = 0;
+        
     }
     public override void StartState()
     {
@@ -219,10 +254,11 @@ public class IdleState : State
     }
     public override void Update()
     {
+        //Call check
         if (AI.CheckForPlayer(1)) return;
         if (AI.CheckForPOIs(1)) return;
-        //If we have enough energy, move
-        if (AI.Energy > 0)
+        if (AI.CheckForSleep()) return;
+        else
         {
             //Choose a random spot
             float n = AI.TravelDistance;
@@ -231,12 +267,6 @@ public class IdleState : State
             Agent.SetDestination(newPos);
             //Start roaming
             AI.StartCoroutine(AI.UpdateState(new RoamingState(AI), 0));
-            return;
-        }
-        else 
-        {
-            //Otherwise, sleep
-            AI.StartCoroutine(AI.UpdateState(new SleepState(AI), 0));
             return;
         }
     }
@@ -260,9 +290,19 @@ public class RoamingState : State
     {
         //Lose energy over time
         Mathf.Clamp(AI.Energy -= Time.deltaTime * 2, 0, 100);
+        //Call checks
         if (AI.CheckForPlayer(1)) return;
-        if (AI.CheckForPOIs(1)) return;
-        if(AI.Energy <= 0) { AI.StartCoroutine(AI.UpdateState(new SleepState(AI), 0)); return; }
+        if (AI.GoingForDrink)
+            if (AI.POITarget.GetComponent<DrinkableSource>())
+            //Are we at the drinking source
+                if (Vector3.Distance(AI.transform.position, AI.POITarget.position) < AI.POITarget.GetComponent<DrinkableSource>().GetRadius())
+                {
+                    //... if so, drink
+                    AI.StartCoroutine(AI.UpdateState(new DrinkingState(AI), 0));
+                    return;
+                }
+        else if (AI.CheckForPOIs(1)) return;
+        if (AI.CheckForSleep()) return;
         //Are we at the point?
         if (Vector3.Distance(AI.transform.position, Agent.destination) <= 1f)
         {
@@ -302,35 +342,6 @@ public class SleepState : State
         AI.Animator.SetBool("SleepState", false);
     }
 }
-public class MovingToPOIState : State
-{
-    public MovingToPOIState(CreatureAI ai) : base(ai)
-    {
-
-    }
-    public override void StartState()
-    {
-        Agent.isStopped = false;
-        AI.Animator.SetBool("MovingToPOIState", true);
-    }
-    public override void Update()
-    {
-        if (AI.CheckForPlayer(1)) return;
-        //If the POI is a drinkable source, check if we are near the source...
-        if (AI.POITarget.GetComponent<DrinkableSource>())
-            if (Vector3.Distance(AI.transform.position, AI.POITarget.position) < AI.POITarget.GetComponent<DrinkableSource>().GetRadius())
-            {
-                //... if so, drink
-                AI.StartCoroutine(AI.UpdateState(new DrinkingState(AI), 0));
-                return;
-            }
-    }
-    public override void EndState()
-    {
-        AI.Animator.SetBool("MovingToPOIState", false);
-    }
-
-}
 public class DrinkingState : State
 {
     public DrinkingState(CreatureAI ai) : base(ai)
@@ -355,6 +366,7 @@ public class DrinkingState : State
     }
     public override void EndState()
     {
+        AI.GoingForDrink = false;
         Agent.isStopped = false;
         AI.Animator.SetBool("DrinkingState", false);
     }
@@ -374,15 +386,17 @@ public class PanicState : State
         //Move twice as fast and lose energy twice as fast
         Agent.speed = AI.BaseSpeed * 2f;
         Mathf.Clamp(AI.Energy -= Time.deltaTime * 4, 0, 100);
+        //Find a point away from the player relative to our current position
         if (Vector3.Distance(AI.transform.position, AI.Player.transform.position) < AI.PlayerDectectionRadius)
         {
             Vector3 dir = (AI.Player.transform.position - AI.transform.position).normalized;
             Agent.SetDestination(AI.Player.transform.position + dir * AI.PlayerDectectionRadius * -1.5f);
             return;
         }
+        //Once we're far enough away...
         if (Vector3.Distance(AI.transform.position, Agent.destination) < 2f)
         {
-            //Reset speed and go idle
+            //...Reset speed and go idle
             Agent.speed = AI.BaseSpeed;
             AI.StartCoroutine(AI.UpdateState(new IdleState(AI), 0));
             return;
@@ -437,32 +451,3 @@ public class StunnedState : State
     }
 
 }
-
-//State _currentState
-
-//Update()
-//_currentState.Update()
-//
-//ChangeState(State newState)
-// { State.End(); _currentState = newState; _currentState.Begin(); }
-
-
-//class State
-//Agent agent
-//
-//
-
-//class WalkState : State
-//
-//Constructor (Agent agent)
-//
-// Update()
-//{
-//    if (something)
-//    {
-//        agent.ChangeState(new IdleState(agent));
-//    }
-//
-//
-//}
-//
