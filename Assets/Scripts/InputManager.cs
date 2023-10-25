@@ -21,10 +21,11 @@ public class InputManager : MonoBehaviour
     [SerializeField] private UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
     [SerializeField] private UnityEvent SprintAction = new UnityEvent();
     [SerializeField] private UnityEvent CrouchAction = new UnityEvent();
-    private Vector2 movementAxis;
+
     [Header("Jump actions")]
-    [SerializeField] private UnityEvent JumpHoldAction = new UnityEvent();
     [SerializeField] private UnityEvent JumpAction = new UnityEvent();
+    [SerializeField] private UnityEvent JumpHoldAction = new UnityEvent();
+    [SerializeField] private UnityEvent EndJumpHoldAction = new UnityEvent();
     [SerializeField] private InputActionReference JumpActRef;
 
     [Header("Tool actions")]
@@ -43,7 +44,7 @@ public class InputManager : MonoBehaviour
                 if (context.interaction is HoldInteraction)
                 {
                     Debug.Log("OnJump Tapped");
-                    JumpHoldAction.Invoke();
+                    JumpAction.Invoke();
                 }
             };
 
@@ -55,15 +56,9 @@ public class InputManager : MonoBehaviour
                     Debug.Log("OnJump Held");
                     JumpHoldAction.Invoke();
                 }
-                /*else
-                {
-                    Debug.Log("OnJump tapped");
-                    JumpAction.Invoke();
-
-                }*/
             };
-        //jumpAct.canceled +=
-            //_ => endFunct();
+        jumpAct.canceled +=
+            _ => EndJumpHoldAction.Invoke();
     }
     void OnSprint()
     {
@@ -84,10 +79,6 @@ public class InputManager : MonoBehaviour
     {
         Debug.Log("OnCrouch called.");
         CrouchAction.Invoke();
-    }
-    void OnLook()
-    {
-        //Debug.Log("OnLook called.");
     }
     void OnTablet()
     {
