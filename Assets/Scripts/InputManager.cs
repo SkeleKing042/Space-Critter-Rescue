@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// Interperates the new unity input manager into listeners
@@ -15,44 +17,73 @@ public class InputManager : MonoBehaviour
 //editor so the other disciplines can make changes easier.
 {
     [Header("Movement")]
-    [Tooltip("Called when the \'D\' key is pressed")]
-    public UnityEvent PositiveHorizontalMoveAction = new UnityEvent();
-    public UnityEvent NeutralHorizontalMoveAction = new UnityEvent();
-    [Tooltip("Called when the \'A\' key is pressed")]
-    public UnityEvent NegativeHorizontalMoveAction = new UnityEvent();
-    [Tooltip("Called when the \'W\' key is pressed")]
-    public UnityEvent PositiveVerticalMoveAction = new UnityEvent();
-    public UnityEvent NeutralVerticalMoveAction = new UnityEvent();
-    [Tooltip("Called when the \'S\' key is pressed")]
-    public UnityEvent NegativeVerticalMoveAction = new UnityEvent();
-    [Tooltip("Called when the \'LMB\' is pressed")]
-    public UnityEvent FireAction = new UnityEvent();
-    [Tooltip("Called when the \'RMB\' is pressed")]
-    public UnityEvent AltFireAction = new UnityEvent();
-    public UnityEvent JumpAction = new UnityEvent();
+    [SerializeField] private UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
+    [SerializeField] private UnityEvent SprintAction = new UnityEvent();
+    [SerializeField] private UnityEvent CrouchAction = new UnityEvent();
+    private Vector2 movementAxis;
+    [Header("Jump actions")]
+    [SerializeField] private UnityEvent JumpHoldAction = new UnityEvent();
+    [SerializeField] private UnityEvent JumpAction = new UnityEvent();
 
+    [Header("Tool actions")]
+    [SerializeField] private UnityEvent TrapInteractionAction = new UnityEvent();
+    [SerializeField] private UnityEvent TabletAction = new UnityEvent();
+    [SerializeField] private UnityEvent FireAction = new UnityEvent();
+    [SerializeField] private UnityEvent AltFireAction = new UnityEvent();
+
+    void OnJump(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            Debug.Log("OnJump Held");
+            JumpHoldAction.Invoke();
+        }
+        else if (!value.isPressed)
+        {
+            Debug.Log("OnJump tapped");
+            JumpAction.Invoke();
+        }
+    }
+    void OnSprint()
+    {
+        Debug.Log("OnSprint called.");
+        SprintAction.Invoke();
+    }
+    void OnPickupTrap(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            Debug.Log("OnPickupTrap called.");
+            TrapInteractionAction.Invoke();
+        }
+    }
+    void OnMove(InputValue value)
+    {
+        Debug.Log("OnMove called.");
+        MovementAction.Invoke(value.Get<Vector2>());
+    }
+    void OnCrouch()
+    {
+        Debug.Log("OnCrouch called.");
+        CrouchAction.Invoke();
+    }
+    void OnLook()
+    {
+        //Debug.Log("OnLook called.");
+    }
+    void OnTablet()
+    {
+        Debug.Log("OnTablet called.");
+        TabletAction.Invoke();
+    }
     void OnFire()
     {
+        Debug.Log("OnFire called.");
         FireAction.Invoke();
     }
     void OnAltFire()
     {
+        Debug.Log("OnAltFire called.");
         AltFireAction.Invoke();
-    }
-    void OnMove(InputValue value)
-    {
-        Vector2 v = value.Get<Vector2>();
-
-        if (v.y > 0) PositiveHorizontalMoveAction.Invoke();
-        else if (v.y == 0) NeutralHorizontalMoveAction.Invoke();
-        else if (v.y < 0) NegativeHorizontalMoveAction.Invoke();
-
-        if (v.x > 0) PositiveVerticalMoveAction.Invoke();
-        else if (v.x == 0) NeutralVerticalMoveAction.Invoke();
-        else if (v.x < 0) NegativeVerticalMoveAction.Invoke();
-    }
-    void OnJump()
-    {
-        JumpAction.Invoke();
     }
 }

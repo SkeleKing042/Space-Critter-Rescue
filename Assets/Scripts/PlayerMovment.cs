@@ -24,15 +24,10 @@ public class PlayerMovment : MonoBehaviour
     void FixedUpdate()
     {
         if (_rb.velocity.x + _rb.velocity.z < MaxSpeed)
-            _rb.AddForce((transform.forward * _movementInput.x * (MoveSpeed * _rb.mass) * _movementModifier + transform.right * _movementInput.y * (StrafeSpeed * _rb.mass) * _movementModifier) * Time.deltaTime);
+            _rb.AddForce((transform.forward * _movementInput.y * (MoveSpeed * _rb.mass) * _movementModifier + transform.right * _movementInput.x * (StrafeSpeed * _rb.mass) * _movementModifier) * Time.deltaTime);
     }
-
-    public void UpdateXMovement(float v)
+    public void UpdateMovementAxis(Vector2 v)
     {
-        _movementInput.x = v;
-    }
-    public void UpdateYMovement(float v)
-    {
-        _movementInput.y = v;
+        _movementInput = v;
     }
 }
