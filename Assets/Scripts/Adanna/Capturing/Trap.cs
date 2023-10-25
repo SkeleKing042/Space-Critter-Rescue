@@ -15,6 +15,8 @@ public class Trap : MonoBehaviour
     // use this to refrence traps
     public GameObject playerGun;
 
+    VacuumGun Suck;
+
     Vector3 offSet;
     Vector3 lerpPathDestination;
 
@@ -34,6 +36,7 @@ public class Trap : MonoBehaviour
 
         TrapCatching();
 
+        
     }
 
 
@@ -49,8 +52,8 @@ public class Trap : MonoBehaviour
             StartCoroutine(BubbleTimer());
         }
 
-         
-         playerGun.GetComponent<Gun>().Shoot();
+        Suck.VacuumSuck();
+        // playerGun.GetComponent<Gun>().Shoot();
 
         
     }
@@ -62,7 +65,7 @@ public class Trap : MonoBehaviour
     {
         if (Bubble.gameObject.activeSelf == true)
         {
-            if (alien.gameObject.tag == "alien")
+            if (alien.gameObject.tag == "bigAlien")
             {
                 //I DONT KNOW WHY THIS ALLOWS PULLING
                 // I ALSO DONT KNOW WHTY IT DOESNT LERP CORRECTLY EDSBUFDEWUIFBWEYDFB32

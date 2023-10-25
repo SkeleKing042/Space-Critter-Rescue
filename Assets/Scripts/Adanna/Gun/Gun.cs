@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -65,7 +66,7 @@ public class Gun : MonoBehaviour
                 if (hit.transform != null)
                 {
                     Debug.Log("raycastHit");
-                    if (hit.transform.tag == "alien")
+                    if (hit.transform.tag == "alien" || hit.transform.tag == "smallAlien")
                     {
                         Debug.Log("creature hit");
 
@@ -77,6 +78,9 @@ public class Gun : MonoBehaviour
                         float distance = Vector3.Distance(creature.transform.position, transform.position);
                         Debug.Log(distance);
 
+                        distance = Mathf.Abs(distance);
+                       
+                        
                         if (distance < MaxRange && Trap.Catchable == true )
                         {
                             Debug.Log("is pulling");
@@ -94,6 +98,7 @@ public class Gun : MonoBehaviour
             }
 
         }
+        // add partical effect to visualise a vacuum
 
 
         void Pull()
