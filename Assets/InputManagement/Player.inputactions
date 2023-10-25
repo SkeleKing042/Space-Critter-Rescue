@@ -7,11 +7,11 @@
             "actions": [
                 {
                     "name": "Jump",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "61f66354-bf42-48c9-ae89-07c73124895a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold(duration=0.2)",
+                    "interactions": "Hold",
                     "initialStateCheck": true
                 },
                 {
@@ -30,7 +30,7 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold(duration=0.2)",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Move",

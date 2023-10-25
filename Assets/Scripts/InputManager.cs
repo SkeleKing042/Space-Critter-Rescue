@@ -1,6 +1,7 @@
 //Created by Jackson Lucas
 //Last Edited by Jackson Lucas
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,7 @@ public class InputManager : MonoBehaviour
     [Header("Jump actions")]
     [SerializeField] private UnityEvent JumpHoldAction = new UnityEvent();
     [SerializeField] private UnityEvent JumpAction = new UnityEvent();
+    [SerializeField] private InputActionReference JumpActRef;
 
     [Header("Tool actions")]
     [SerializeField] private UnityEvent TrapInteractionAction = new UnityEvent();
@@ -31,31 +33,47 @@ public class InputManager : MonoBehaviour
     [SerializeField] private UnityEvent FireAction = new UnityEvent();
     [SerializeField] private UnityEvent AltFireAction = new UnityEvent();
 
-    void OnJump(InputValue value)
+    void OnJump()
     {
-        if (value.isPressed)
-        {
-            Debug.Log("OnJump Held");
-            JumpHoldAction.Invoke();
-        }
-        else if (!value.isPressed)
-        {
-            Debug.Log("OnJump tapped");
-            JumpAction.Invoke();
-        }
+        InputAction jumpAct = JumpActRef.action;
+
+        jumpAct.started +=
+            context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    Debug.Log("OnJump Tapped");
+                    JumpHoldAction.Invoke();
+                }
+            };
+
+        jumpAct.performed +=
+            context =>
+            {
+                if (context.interaction is HoldInteraction)
+                {
+                    Debug.Log("OnJump Held");
+                    JumpHoldAction.Invoke();
+                }
+                /*else
+                {
+                    Debug.Log("OnJump tapped");
+                    JumpAction.Invoke();
+
+                }*/
+            };
+        //jumpAct.canceled +=
+            //_ => endFunct();
     }
     void OnSprint()
     {
         Debug.Log("OnSprint called.");
         SprintAction.Invoke();
     }
-    void OnPickupTrap(InputValue value)
+    void OnPickupTrap()
     {
-        if (value.isPressed)
-        {
-            Debug.Log("OnPickupTrap called.");
-            TrapInteractionAction.Invoke();
-        }
+        Debug.Log("OnPickupTrap called.");
+        TrapInteractionAction.Invoke();
     }
     void OnMove(InputValue value)
     {
