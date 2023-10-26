@@ -42,6 +42,7 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
+        Debug.Log(Trap.Catchable);
         if (Input.GetButtonDown("Fire1"))
         {
             MouseDown = true;

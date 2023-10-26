@@ -15,7 +15,7 @@ public class Trap : MonoBehaviour
     // use this to refrence traps
     public GameObject playerGun;
 
-    VacuumGun Suck;
+    public VacuumGun Suck;
 
     Vector3 offSet;
     Vector3 lerpPathDestination;
@@ -24,6 +24,8 @@ public class Trap : MonoBehaviour
     private void Start()
     {
         //playerGun.GetComponent<Gun>().Shoot();
+
+        Suck.GetComponent<VacuumGun>().VacuumSuck();
 
         offSet = new Vector3(1, 0, 1);
 
@@ -88,7 +90,6 @@ public class Trap : MonoBehaviour
         Bubble.SetActive(true);
         yield return new WaitForSeconds(5);
         Bubble.SetActive(false);
-        yield return new WaitForSeconds(1);
         Catchable = false;
     }
 

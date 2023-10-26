@@ -32,13 +32,15 @@ public class CollectAlien : MonoBehaviour
     }
     void OnTriggerEnter(Collider creature)
     {
-        Debug.Log("collision");
-        if (creature.gameObject.tag == "Alien" && mouseDown)
+      
+        if ((creature.gameObject.tag == "alien" || creature.gameObject.tag == "bigAlien") && mouseDown)
         {
-
-            creature.gameObject.SetActive(false);
+            Debug.Log("collision");
+          
             AlienCount++;
             AlienUICount.text = "Alien Count: " + AlienCount.ToString();
+
+            Destroy(creature.gameObject);
         }
     }
 }

@@ -8,8 +8,8 @@ using static UnityEditor.PlayerSettings;
 public class VacuumGun : MonoBehaviour
 {
     public GameObject Alien;
-    public GameObject Middle;
-    Rigidbody _alienRigid;
+    public GameObject Nothing;
+    public Rigidbody _alienRigid;
     bool _inRange;
     bool _mouseDown;
 
@@ -21,8 +21,16 @@ public class VacuumGun : MonoBehaviour
 
     float _centralOffset;
 
+    private void Start()
+    {
+     
+
+    }
+
     void Update()
     {
+        _alienRigid = Alien.GetComponent<Rigidbody>();
+
 
         // vector dot gets the cosine value from a yje Vacume gun. 
         // if the value is 0,-1 then the other object behind the gun
@@ -33,7 +41,8 @@ public class VacuumGun : MonoBehaviour
         // 
         if (Alien)
         {
-             forward = transform.right;
+            
+            forward = transform.right;
              AlienPosition = Alien.transform.position - transform.position;
             
             _centralOffset = Vector3.Dot(forward, AlienPosition);
@@ -49,6 +58,8 @@ public class VacuumGun : MonoBehaviour
             }
 
         }
+        
+
 
         VacuumSuck();
     }
@@ -72,12 +83,13 @@ public class VacuumGun : MonoBehaviour
 
         if (_inRange == true && _mouseDown == true)
         {
+
            // Debug.Log("result: " + _centralOffset);
             // write succc funtions
             _alienRigid.useGravity = false;
             Pull();
             OffsetCorrection();
-
+            Alien = Nothing.gameObject;
             /*
              *  Get the offset
              *  times float by -1
@@ -93,11 +105,19 @@ public class VacuumGun : MonoBehaviour
              * 
              */
 
-           // Mathf.Abs(_centralOffset);
+            // Mathf.Abs(_centralOffset);
 
         }
         else
-        _alienRigid.useGravity=true;
+        {
+            if (_alienRigid == null)
+            {
+                _alienRigid = Nothing.GetComponent<Rigidbody>();
+            }
+
+            _alienRigid.useGravity = true;
+        }
+     
 
 
     }
@@ -122,13 +142,13 @@ public class VacuumGun : MonoBehaviour
             if(_comingLeft)
             {
                 for (int i = 0; i < 10; i++)
-                    Alien.transform.position -= transform.right * 0.1f;
+                    Alien.transform.position -= transform.right * 0.5f;
                 Debug.Log(" right ajusting...");
             }
             if(_comingLeft!)
             {
                 for (int i = 0; i < 10; i++)
-                    Alien.transform.position += transform.right * 0.1f;
+                    Alien.transform.position += transform.right * 0.5f;
                 Debug.Log(" left ajusting...");
             }
             
@@ -138,7 +158,7 @@ public class VacuumGun : MonoBehaviour
     void Pull()
     {
         //  while(mouseDown == true)
-        Alien.transform.position = Vector3.Lerp(Alien.transform.position, transform.position, 1f * Time.deltaTime);
+        Alien.transform.position = Vector3.Lerp(Alien.transform.position, transform.position, 5f * Time.deltaTime);
 
     }
 
@@ -155,6 +175,7 @@ public class VacuumGun : MonoBehaviour
             Alien = alien.transform.gameObject;
             _alienRigid = alien.GetComponent<Rigidbody>();
             _inRange = true;
+            Debug.Log(Trap.Catchable);
         }
        
     }
@@ -165,13 +186,14 @@ public class VacuumGun : MonoBehaviour
     /// <param name="alien"></param>
     private void OnTriggerExit(Collider alien)
     {
-        if (alien.gameObject.tag == "alien" || (Trap.Catchable == true && alien.gameObject.tag == "bigAlien"))
+        if (alien.gameObject.tag == "alien" || alien.gameObject.tag == "bigAlien")
         {
             Debug.Log(" Alien left range");
-            Alien = null;
+ 
             _alienRigid = null;
             _inRange = false;
             Trap.Catchable = false;
+            Debug.Log(Trap.Catchable);
         }
        
     }
