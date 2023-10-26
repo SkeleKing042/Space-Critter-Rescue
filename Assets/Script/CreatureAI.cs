@@ -378,8 +378,14 @@ public class PanicState : State
     }
     public override void StartState()
     {
-        Agent.isStopped = false;
-        AI.Animator.SetBool("PanicState", true);
+        
+       
+        if(AI.gameObject.activeSelf)
+        {
+            AI.GetAgent.enabled = true;
+            Agent.isStopped = false;
+            AI.Animator.SetBool("PanicState", true);
+        }
     }
     public override void Update()
     {
