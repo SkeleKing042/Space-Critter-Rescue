@@ -15,20 +15,51 @@ public class PlayerMovment : MonoBehaviour
     Camera _camera;
     Vector2 _movementInput;
     [Header("Ground movement")]
-    [SerializeField, Tooltip("The speed at which the player moves forwards and backwards.")] private float _moveSpeed;
-    [SerializeField, Tooltip("The speed at which the player moves side to side.")] private float _strafeSpeed;
-    [SerializeField, Tooltip("The maximum speed the player can reach.")] private float _maxSpeed;
-    [SerializeField, Tooltip("Modifies how agresive the breaking is at maximum speed.")] private float _breakForce = 1;
+    [SerializeField, Tooltip("The speed at which the player moves forwards and backwards.")]
+    private float _moveSpeed;
+    [SerializeField, Tooltip("The speed at which the player moves side to side.")]
+    private float _strafeSpeed;
+    [SerializeField, Tooltip("The maximum speed the player can reach.")]
+    private float _maxSpeed;
+    [SerializeField, Tooltip("Modifies how agresive the breaking is at maximum speed.")]
+    private float _breakForce = 1;
     private float _movementModifier = 1; //Unused ATM
+
     [Header("Jump movement")]
-    [SerializeField, Tooltip("The force that the player jumps with.")] private float _jumpForce;
-    [SerializeField] private Vector3 _feetPosition;
-    [SerializeField, Tooltip("The force that the jetpack outputs.")] private float _jetpackForce;
-    private bool doJet;
-    [SerializeField, Tooltip("The rate at which the jetpack fuel is expended.")] private float _jetBurnRate;
-    [SerializeField, Tooltip("The rate at which the jetpack refuels.")] private float _jetReturnRate;
+    [SerializeField, Tooltip("The force that the player jumps with.")]
+    private float _jumpForce;
+    [SerializeField]
+    private Vector3 _feetPosition;
+    [SerializeField, Tooltip("The distance from the feet position that the ground check reaches.")]
+    private float _legLength;
+
+    [Header("Jetpack Settings")]
+    [SerializeField, Tooltip("The force that the jetpack outputs.")]
+    private float _jetForce;
+    private bool _doJet;
+    [SerializeField, Tooltip("The rate at which the jetpack fuel is expended.")]
+    private float _burnRate;
+    [SerializeField, Tooltip("The time it takes for the jetpack to start after jumping.")]
+    private float _burnDelay;
+    private float _burnTime;
+    [SerializeField, Tooltip("The amount of fuel burnt when using the jetpack in the air.")]
+    private float _burstBurn;
+    [SerializeField, Tooltip("The strength of the burst along the horizontal (x) and vertial (y) axi.")]
+    private Vector2 _burstScale;
+    [SerializeField, Tooltip("The rate at which the jetpack refuels.")]
+    private float _refuelRate;
+    [SerializeField, Range(0f, 1f), Tooltip("The time it takes for the jetpack to begin refueling.")]
+    private float _refuelDelay;
+    private float _refuelTime;
     private float _jetFuel = 1;
-    [SerializeField, Tooltip("The display for the jet fuel.")] private Image _fuelBar;
+
+    [Header("Debug")]
+    [SerializeField, Tooltip("The display for the jet fuel.")]
+    private Image _fuelBar;
+    [SerializeField]
+    private Image _fuelBarBackground;
+    [SerializeField]
+    private Color[] _jetColors;
 
     void Start()
     {
@@ -59,24 +90,48 @@ public class PlayerMovment : MonoBehaviour
         else
         {
             //Move the player forwards based on the camera rotation
-            _rb.AddForce((Vector3.Cross(_camera.transform.right, Vector3.up) * _movementInput.y * (_moveSpeed * _rb.mass) * _movementModifier + _camera.transform.right * _movementInput.x * (_strafeSpeed * _rb.mass) * _movementModifier) * Time.deltaTime);
+            _rb.AddForce(
+                (Vector3.Cross(_camera.transform.right, Vector3.up) * _movementInput.y * (_moveSpeed * _rb.mass) * _movementModifier +
+                _camera.transform.right * _movementInput.x * (_strafeSpeed * _rb.mass) * _movementModifier) * Time.deltaTime);
         }
 
-        //If we are using the jet and it has fuel...
-        if(doJet && _jetFuel > 0)
+        //While doing the jet input...
+        if (_doJet)
         {
-            //...Push the player up and reduce the fuel
-            _rb.AddForce(_jetpackForce * Vector3.up, ForceMode.Acceleration);
-            _jetFuel = Mathf.Clamp(_jetFuel - _jetBurnRate * Time.deltaTime, 0f , 1f);
+            //...if we are ready to burn...
+            if (_burnTime <= 0)
+            {
+                //...and we have fuel...
+                if (_jetFuel > 0)
+                {
+                    //...Push the player up and reduce the fuel
+                    _rb.AddForce(_jetForce * Vector3.up * _rb.mass, ForceMode.Force);
+                    _jetFuel = Mathf.Clamp(_jetFuel - _burnRate * Time.deltaTime, 0f, 1f);
+                    _refuelTime = _refuelDelay;
+                }
+            }
+            //...otherwise, reduce burn delay
+            else
+            {
+                _burnTime -= Time.deltaTime;
+            }
         }
-        //otherwise, if on the ground...
-        if(!doJet && _jetFuel < 1 && GroundCheck())
+        //...otherwise, if on the ground & out of fuel...
+        else if (_jetFuel < 1 && GroundCheck())
         {
             //...refuel the jetpack
-            _jetFuel = Mathf.Clamp(_jetFuel + _jetReturnRate * Time.deltaTime, 0f, 1f);
-        }
+            if (_refuelTime > 0)
+                _refuelTime -= Time.deltaTime;
+            else
+                _jetFuel = Mathf.Clamp(_jetFuel + _refuelRate * Time.deltaTime, 0f, 1f);
+        } 
 
         //Always update the ui
+        if (_refuelTime > 0)
+            _fuelBarBackground.color = _jetColors[1];
+        else
+            _fuelBarBackground.color = _jetColors[0];
+
         _fuelBar.fillAmount = _jetFuel;
         
     }
@@ -91,7 +146,7 @@ public class PlayerMovment : MonoBehaviour
     private bool GroundCheck()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position + _feetPosition, -Vector3.up, out hit, 1.0f))
+        if(Physics.Raycast(transform.position + _feetPosition, -Vector3.up * _legLength, out hit, 1.0f))
         {
             Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             if(hit.collider.tag == "Ground")
@@ -100,25 +155,35 @@ public class PlayerMovment : MonoBehaviour
 
         return false;
     }
-    /// <summary>
-    /// Pushes the player up while grounded
-    /// </summary>
-    public void Jump()
+    public void InitializeJump()
     {
-        if(GroundCheck())
-            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+        if (GroundCheck())
+        {
+            _rb.AddForce(Vector3.up * _jumpForce * _rb.mass, ForceMode.Impulse);
+            _burnTime = _burnDelay;
+        }
+        else
+        {
+            if (_jetFuel >= _burstBurn)
+            {
+
+                _rb.AddForce(
+                    (Vector3.Cross(_camera.transform.right, Vector3.up) * _movementInput.y * _jumpForce * _burstScale.x * _rb.mass * _movementModifier +
+                    _camera.transform.right * _movementInput.x * _jumpForce * _burstScale.x * _rb.mass * _movementModifier +
+                    Vector3.up * _jumpForce * _burstScale.y * _rb.mass), ForceMode.Impulse);
+                _jetFuel -= _burstBurn;
+            }
+            _burnTime = 0;
+        }
+        _doJet = true;
     }
-    public void EnableJet()
+    public void TerminateJump()
     {
-        doJet = true;
-    }
-    public void DisableJet()
-    {
-        doJet = false;
+        _doJet = false;
     }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(transform.position + _feetPosition, -Vector3.up);
+        Gizmos.DrawRay(transform.position + _feetPosition, -Vector3.up * _legLength);
     }
 }

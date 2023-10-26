@@ -18,36 +18,34 @@ public class InputManager : MonoBehaviour
 //editor so the other disciplines can make changes easier.
 {
     [Header("Movement")]
-    [SerializeField] private UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
-    [SerializeField] private UnityEvent SprintAction = new UnityEvent();
-    [SerializeField] private UnityEvent CrouchAction = new UnityEvent();
+    [SerializeField] private UnityEvent<Vector2> _movementAction = new UnityEvent<Vector2>();
+    [SerializeField] private UnityEvent _sprintAction = new UnityEvent();
+    [SerializeField] private UnityEvent _crouchAction = new UnityEvent();
 
     [Header("Jump actions")]
-    [SerializeField] private UnityEvent JumpAction = new UnityEvent();
-    [SerializeField] private UnityEvent JumpHoldAction = new UnityEvent();
-    [SerializeField] private UnityEvent EndJumpHoldAction = new UnityEvent();
-    [SerializeField] private InputActionReference JumpActRef;
+    [SerializeField] private UnityEvent _jumpAction = new UnityEvent();
+    [SerializeField] private UnityEvent _endJumpAction = new UnityEvent();
+    [SerializeField] private InputActionReference _jumpActRef;
+    private InputAction _jumpInputAct;
 
     [Header("Tool actions")]
-    [SerializeField] private UnityEvent TrapInteractionAction = new UnityEvent();
-    [SerializeField] private UnityEvent TabletAction = new UnityEvent();
-    [SerializeField] private UnityEvent FireAction = new UnityEvent();
-    [SerializeField] private UnityEvent AltFireAction = new UnityEvent();
+    [SerializeField] private UnityEvent _trapInteractionAction = new UnityEvent();
+    [SerializeField] private UnityEvent _tabletAction = new UnityEvent();
+    [SerializeField] private UnityEvent _fireAction = new UnityEvent();
+    [SerializeField] private UnityEvent _altFireAction = new UnityEvent();
 
+    private void Start()
+    {
+        _jumpInputAct = _jumpActRef.action;
+    }
     void OnJump()
     {
-        InputAction jumpAct = JumpActRef.action;
-
-        jumpAct.started +=
-            context =>
-            {
-                if (context.interaction is HoldInteraction)
-                {
-                    Debug.Log("OnJump Tapped");
-                    JumpAction.Invoke();
-                }
-            };
-
+        Debug.Log("Jump input recived.");
+        _jumpInputAct.started +=
+            context => _jumpAction.Invoke();
+        _jumpInputAct.canceled +=
+            _ => _endJumpAction.Invoke();
+        /*
         jumpAct.performed +=
             context =>
             {
@@ -57,42 +55,41 @@ public class InputManager : MonoBehaviour
                     JumpHoldAction.Invoke();
                 }
             };
-        jumpAct.canceled +=
-            _ => EndJumpHoldAction.Invoke();
+         */
     }
     void OnSprint()
     {
         Debug.Log("OnSprint called.");
-        SprintAction.Invoke();
+        _sprintAction.Invoke();
     }
     void OnPickupTrap()
     {
         Debug.Log("OnPickupTrap called.");
-        TrapInteractionAction.Invoke();
+        _trapInteractionAction.Invoke();
     }
     void OnMove(InputValue value)
     {
         Debug.Log("OnMove called.");
-        MovementAction.Invoke(value.Get<Vector2>());
+        _movementAction.Invoke(value.Get<Vector2>());
     }
     void OnCrouch()
     {
         Debug.Log("OnCrouch called.");
-        CrouchAction.Invoke();
+        _crouchAction.Invoke();
     }
     void OnTablet()
     {
         Debug.Log("OnTablet called.");
-        TabletAction.Invoke();
+        _tabletAction.Invoke();
     }
     void OnFire()
     {
         Debug.Log("OnFire called.");
-        FireAction.Invoke();
+        _fireAction.Invoke();
     }
     void OnAltFire()
     {
         Debug.Log("OnAltFire called.");
-        AltFireAction.Invoke();
+        _altFireAction.Invoke();
     }
 }
