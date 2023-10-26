@@ -11,6 +11,8 @@ public class VacuumGun : MonoBehaviour
     public Rigidbody _alienRigid;
     bool _mouseDown;
 
+    public CreatureAI AlienAI;
+
     public float SuckSpeed;
     public float OffsetFixSpeed;
 
@@ -106,37 +108,46 @@ public class VacuumGun : MonoBehaviour
         bool _comingLeft = true;
         if (_centralOffset < -0.01) // -1
         {
-            Alien.transform.position += transform.right * OffsetFixSpeed ;
+
+            _alienRigid.AddForce(Vector3.right * OffsetFixSpeed);
+
+          //  Alien.transform.position += transform.right * OffsetFixSpeed ;
             _comingLeft = true;
         }
         if (_centralOffset > 0.01) // 1
         {
-            Alien.transform.position -= transform.right * OffsetFixSpeed;
+            _alienRigid.AddForce(-Vector3.right * OffsetFixSpeed);
+
+         //   Alien.transform.position -= transform.right * OffsetFixSpeed;
             _comingLeft = false;
         }
-        if(_centralOffset  < 0.01f && _centralOffset > -0.01)
-        {
-          //  float _jiggle = Random.value;
-
-            if(_comingLeft)
-            {
-                for (int i = 0; i < 10; i++)
-                    Alien.transform.position -= transform.right * 0.5f;
-                //Debug.Log(" right ajusting...");
-            }
-            if(_comingLeft!)
-            {
-                for (int i = 0; i < 10; i++)
-                    Alien.transform.position += transform.right * 0.5f;
-                //Debug.Log(" left ajusting...");
-            } 
-        }
+      // if(_centralOffset  < 0.01f && _centralOffset > -0.01)
+      // {
+      //   //  float _jiggle = Random.value;
+      //
+      //     if(_comingLeft)
+      //     {
+      //         for (int i = 0; i < 10; i++)
+      //             Alien.transform.position -= transform.right * 0.5f;
+      //         //Debug.Log(" right ajusting...");
+      //     }
+      //     if(_comingLeft!)
+      //     {
+      //         for (int i = 0; i < 10; i++)
+      //             Alien.transform.position += transform.right * 0.5f;
+      //         //Debug.Log(" left ajusting...");
+      //     } 
+      // }
     }
 
     void Pull()
     {
         //  while(mouseDown == true)
-        Alien.transform.position = Vector3.Lerp(Alien.transform.position, transform.position, SuckSpeed * Time.deltaTime);
+        //Alien.transform.position = Vector3.Lerp(Alien.transform.position, transform.position, SuckSpeed * Time.deltaTime);
+        Vector3 dir =  transform.position - _alienRigid.transform.position;
+        dir = Vector3.Normalize(dir);
+
+        _alienRigid.AddForce(dir * SuckSpeed);
 
     }
 
@@ -155,22 +166,31 @@ public class VacuumGun : MonoBehaviour
             {
                 Debug.Log("Mouse is held down");    
                 
+
                 if(Alien == null)
                 {
                     Debug.Log("Assigned Alien");
+                    
 
                     Alien = alien.transform.gameObject;
+
+
                     _alienRigid = alien.GetComponent<Rigidbody>();
                     _alienRigid.useGravity = false;
+
+                    AlienAI = Alien.GetComponent<CreatureAI>();
+                    StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
                 }
 
+                
+
                 Pull();
-                OffsetCorrection();
+                //OffsetCorrection();
             }
             else
             {
                 UnassignAlien();
-
+                
             }
         }
        
@@ -200,9 +220,12 @@ public class VacuumGun : MonoBehaviour
     {
         if (Alien != null)
         {
+            StartCoroutine(AlienAI.UpdateState(new PanicState(AlienAI), 0f));
             _alienRigid.useGravity = true;
             _alienRigid = null;
             Alien = null;
+            AlienAI = null;
+
         }
     }
 

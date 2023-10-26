@@ -413,11 +413,12 @@ public class CaptureState : State
 {
     public CaptureState(CreatureAI ai) : base(ai)
     {
-
+        
     }
     public override void StartState()
     {
         AI.Animator.SetBool("CaptureState", true);
+        AI.GetAgent.enabled = false;
     }
     public override void Update()
     {
@@ -425,6 +426,7 @@ public class CaptureState : State
     }
     public override void EndState()
     {
+        AI.GetAgent.enabled = true;
         AI.Animator.SetBool("CaptureState", false);
     }
 

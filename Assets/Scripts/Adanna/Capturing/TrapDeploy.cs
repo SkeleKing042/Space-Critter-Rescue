@@ -127,13 +127,9 @@ public class TrapDeploy : MonoBehaviour
 
             PlayerGun.SetActive(true);
             Trap.SetActive(false);
-            trapDeployed = false;
-            
+            trapDeployed = false; 
         }
-       // if (trap.gameObject.tag == "trap" && Input.GetKey(KeyCode.Q) && currentlyHolding != CurrentlyHolding.trap && Bubble.activeSelf == true)
-       // {
-       //     Bubble.SetActive(false);
-       // }
+    
     }
 
    
