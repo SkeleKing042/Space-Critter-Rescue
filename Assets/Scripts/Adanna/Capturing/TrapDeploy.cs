@@ -9,6 +9,8 @@ public class TrapDeploy : MonoBehaviour
     public GameObject PlayerGun;
     public GameObject Player;
 
+    public GameObject Bubble;
+
     [SerializeField]
     bool holdingTrap;
     bool holdingGun;
@@ -115,7 +117,7 @@ public class TrapDeploy : MonoBehaviour
     private void OnTriggerStay(Collider trap)
     {
        
-        if (trap.gameObject.tag == "trap" && Input.GetKey(KeyCode.Q) && currentlyHolding != CurrentlyHolding.trap)
+        if (trap.gameObject.tag == "trap" && Input.GetKey(KeyCode.Q) && currentlyHolding != CurrentlyHolding.trap )
         {
             Debug.Log("PickUp");
             Trap.transform.SetParent(transform);
@@ -128,6 +130,10 @@ public class TrapDeploy : MonoBehaviour
             trapDeployed = false;
             
         }
+       // if (trap.gameObject.tag == "trap" && Input.GetKey(KeyCode.Q) && currentlyHolding != CurrentlyHolding.trap && Bubble.activeSelf == true)
+       // {
+       //     Bubble.SetActive(false);
+       // }
     }
 
    

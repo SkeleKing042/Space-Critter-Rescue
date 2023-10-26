@@ -25,7 +25,7 @@ public class Trap : MonoBehaviour
     {
         //playerGun.GetComponent<Gun>().Shoot();
 
-        Suck.GetComponent<VacuumGun>().VacuumSuck();
+        Suck.GetComponent<VacuumGun>().CheckMouseDown();
 
         offSet = new Vector3(1, 0, 1);
 
@@ -37,8 +37,8 @@ public class Trap : MonoBehaviour
         Debug.Log("Catchable: " + Catchable);
 
         TrapCatching();
+       
 
-        
     }
 
 
@@ -54,11 +54,13 @@ public class Trap : MonoBehaviour
             StartCoroutine(BubbleTimer());
         }
 
-        Suck.VacuumSuck();
+        Suck.CheckMouseDown();
         // playerGun.GetComponent<Gun>().Shoot();
-
-        
     }
+
+
+
+
     /// <summary>
     /// if a item (that is an alien) is withing the trap radius then let the alein be catchable
     /// </summary>

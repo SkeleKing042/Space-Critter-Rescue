@@ -11,6 +11,8 @@ public class CollectAlien : MonoBehaviour
     private int AlienCount;
     public bool mouseDown = false;
 
+    public VacuumGun Vac;
+
     private void Update()
     {
         if (Input.GetButtonDown("Fire1"))
@@ -30,17 +32,21 @@ public class CollectAlien : MonoBehaviour
 
        
     }
+
+
     void OnTriggerEnter(Collider creature)
     {
-      
+        Debug.Log("collision");
         if ((creature.gameObject.tag == "alien" || creature.gameObject.tag == "bigAlien") && mouseDown)
         {
-            Debug.Log("collision");
+       
           
             AlienCount++;
             AlienUICount.text = "Alien Count: " + AlienCount.ToString();
 
-            Destroy(creature.gameObject);
+            Vac.UnassignAlien();
+
+            creature.transform.gameObject.SetActive(false);
         }
     }
 }
