@@ -117,7 +117,7 @@ public class TrapDeploy : MonoBehaviour
     private void OnTriggerStay(Collider trap)
     {
        
-        if (trap.gameObject.tag == "trap" && Input.GetKey(KeyCode.Q) && currentlyHolding != CurrentlyHolding.trap )
+        if (trap.gameObject.tag == "trap" && Input.GetKey(KeyCode.Q) && currentlyHolding != CurrentlyHolding.trap && Bubble.activeSelf == false)
         {
             Debug.Log("PickUp");
             Trap.transform.SetParent(transform);
