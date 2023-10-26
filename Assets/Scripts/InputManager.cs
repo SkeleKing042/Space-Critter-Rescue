@@ -34,7 +34,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private UnityEvent _fireAction = new UnityEvent();
     [SerializeField] private UnityEvent _altFireAction = new UnityEvent();
 
-    private void Start()
+    private void Awake()
     {
         _jumpInputAct = _jumpActRef.action;
     }
@@ -42,20 +42,17 @@ public class InputManager : MonoBehaviour
     {
         Debug.Log("Jump input recived.");
         _jumpInputAct.started +=
-            context => _jumpAction.Invoke();
-        _jumpInputAct.canceled +=
-            _ => _endJumpAction.Invoke();
-        /*
-        jumpAct.performed +=
             context =>
             {
-                if (context.interaction is HoldInteraction)
-                {
-                    Debug.Log("OnJump Held");
-                    JumpHoldAction.Invoke();
-                }
+                Debug.Log("Jump started");
+                _jumpAction.Invoke();
             };
-         */
+        _jumpInputAct.canceled +=
+            _ =>
+            {
+                Debug.Log("Jump ended");
+                _endJumpAction.Invoke();
+            };
     }
     void OnSprint()
     {

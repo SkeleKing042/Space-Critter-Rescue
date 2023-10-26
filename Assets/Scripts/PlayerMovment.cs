@@ -48,7 +48,7 @@ public class PlayerMovment : MonoBehaviour
     private Vector2 _burstScale;
     [SerializeField, Tooltip("The rate at which the jetpack refuels.")]
     private float _refuelRate;
-    [SerializeField, Range(0f, 1f), Tooltip("The time it takes for the jetpack to begin refueling.")]
+    [SerializeField, Tooltip("The time it takes for the jetpack to begin refueling.")]
     private float _refuelDelay;
     private float _refuelTime;
     private float _jetFuel = 1;
@@ -157,6 +157,7 @@ public class PlayerMovment : MonoBehaviour
     }
     public void InitializeJump()
     {
+        Debug.Log("Jump initiated");
         if (GroundCheck())
         {
             _rb.AddForce(Vector3.up * _jumpForce * _rb.mass, ForceMode.Impulse);
@@ -179,6 +180,7 @@ public class PlayerMovment : MonoBehaviour
     }
     public void TerminateJump()
     {
+        Debug.Log("Jump terminated");
         _doJet = false;
     }
     private void OnDrawGizmos()
