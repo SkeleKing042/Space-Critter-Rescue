@@ -17,7 +17,7 @@ public class VacuumGun : MonoBehaviour
     public float OffsetFixSpeed;
 
 
-    public Trap trap;
+    //public Trap trap;
 
     Vector3 AlienPosition;
     Vector3 forward;
@@ -117,16 +117,18 @@ public class VacuumGun : MonoBehaviour
       // }
     }
 
-    void Pull()
+    public void Pull()
     {
-        StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
+        if (Alien != null)
+        {
+            StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
 
-        //Alien.transform.position = Vector3.Lerp(Alien.transform.position, transform.position, SuckSpeed * Time.deltaTime);
-        Vector3 dir =  transform.position - _alienRigid.transform.position;
-        dir = Vector3.Normalize(dir);
+            //Alien.transform.position = Vector3.Lerp(Alien.transform.position, transform.position, SuckSpeed * Time.deltaTime);
+            Vector3 dir = transform.position - _alienRigid.transform.position;
+            dir = Vector3.Normalize(dir);
 
-        _alienRigid.AddForce(dir * SuckSpeed);
-
+            _alienRigid.AddForce(dir * SuckSpeed);
+        }
     }
 
     /*/// <summary>
@@ -196,7 +198,6 @@ public class VacuumGun : MonoBehaviour
 
     // if alien is in collision of the cone collider 
     // get th
-
 }
 
 

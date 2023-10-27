@@ -42,7 +42,7 @@ public class CollectAlien : MonoBehaviour
        
           
             AlienCount++;
-            AlienUICount.text = "Alien Count: " + AlienCount.ToString();
+            AlienUICount.text = ": " + AlienCount.ToString();
 
             Vac.UnassignAlien();
 
