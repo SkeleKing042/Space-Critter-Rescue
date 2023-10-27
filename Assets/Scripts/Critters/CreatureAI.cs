@@ -18,11 +18,12 @@ public class CreatureAI : MonoBehaviour
     private string _theState;
 
     [Header("Check radi")]
-    [SerializeField, Tooltip("The radius at which POIs are detected.")]
-    private float _POIDetectionRadius;
+    //[SerializeField, Tooltip("The radius at which POIs are detected.")]
+    //private float _POIDetectionRadius;
     private Transform _POITarget;
     public Transform POITarget { get { return _POITarget; } }
     private bool _goingForDrink;
+    private DrinkenFinden _drinkingSources;
     public bool GoingForDrink { get { return _goingForDrink; } set { _goingForDrink = value; } }
     [SerializeField, Tooltip("The radius at which the player is detected.")]
     private float _playerDectectionRadius;
@@ -82,6 +83,8 @@ public class CreatureAI : MonoBehaviour
         _lazyCheckDelay = Mathf.Abs(_lazyCheckDelay);
         _timeSinceLastThirstCheck = _thirstCheckDelay;
         _timeSinceLastLazyCheck = _lazyCheckDelay;
+
+        _drinkingSources = GetComponentInChildren<DrinkenFinden>();
 
         _currentState = new IdleState(this);
         _currentState.StartState();
@@ -154,15 +157,13 @@ public class CreatureAI : MonoBehaviour
             {
                 DrinkableSource currentSource = null;
                 //Find all drinkable sources
-                foreach (DrinkableSource drinkable in FindObjectsOfType<DrinkableSource>())
+                foreach (GameObject drinkable in _drinkingSources.Sources)
                 {
-                    //Check the distance to them and if they're close enough, go to that source
-                    if (Vector3.Distance(transform.position, drinkable.transform.position) < _POIDetectionRadius * mod)
-                        if (currentSource == null)
-                            currentSource = drinkable;
-                        else
-                            if (Vector3.Distance(transform.position, currentSource.transform.position) > Vector3.Distance(transform.position, drinkable.transform.position))
-                            currentSource = drinkable;
+                    if (currentSource == null)
+                        currentSource = drinkable.GetComponent<DrinkableSource>();
+                    else
+                        if (Vector3.Distance(transform.position, currentSource.transform.position) > Vector3.Distance(transform.position, drinkable.transform.position))
+                        currentSource = drinkable.GetComponent<DrinkableSource>();
                 }
                 if (currentSource != null)
                 {
