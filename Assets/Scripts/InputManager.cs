@@ -38,6 +38,7 @@ public class InputManager : MonoBehaviour
     private InputAction _fireInputAct;
     [SerializeField] private UnityEvent _altFireAction = new UnityEvent();
     [SerializeField] private UnityEvent _returnToShipAction = new UnityEvent();
+    [SerializeField] private UnityEvent _switchToolAction = new UnityEvent();
 
     private void Awake()
     {
@@ -115,5 +116,10 @@ public class InputManager : MonoBehaviour
     {
         Debug.Log("Attempting ship return.");
         _returnToShipAction.Invoke();
+    }
+    void OnSwitchTool()
+    {
+        Debug.Log("Switching Tools");
+        _switchToolAction.Invoke();
     }
 }
