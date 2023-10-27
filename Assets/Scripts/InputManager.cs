@@ -30,13 +30,19 @@ public class InputManager : MonoBehaviour
 
     [Header("Tool actions")]
     [SerializeField] private UnityEvent _trapInteractionAction = new UnityEvent();
+    [SerializeField] private UnityEvent _enableTrapAction = new UnityEvent();
     [SerializeField] private UnityEvent _tabletAction = new UnityEvent();
     [SerializeField] private UnityEvent _fireAction = new UnityEvent();
+    [SerializeField] private UnityEvent _endFireAction = new UnityEvent();
+    [SerializeField] private InputActionReference _fireActRef;
+    private InputAction _fireInputAct;
     [SerializeField] private UnityEvent _altFireAction = new UnityEvent();
+    [SerializeField] private UnityEvent _returnToShipAction = new UnityEvent();
 
     private void Awake()
     {
         _jumpInputAct = _jumpActRef.action;
+        _fireInputAct = _fireActRef.action;
     }
     void OnJump()
     {
@@ -58,6 +64,11 @@ public class InputManager : MonoBehaviour
     {
         Debug.Log("OnSprint called.");
         _sprintAction.Invoke();
+    }
+    void OnEnableTrap()
+    {
+        Debug.Log("Enabling trap.");
+        _enableTrapAction.Invoke();
     }
     void OnPickupTrap()
     {
@@ -82,11 +93,27 @@ public class InputManager : MonoBehaviour
     void OnFire()
     {
         Debug.Log("OnFire called.");
-        _fireAction.Invoke();
+        _fireInputAct.started +=
+            context =>
+            {
+                Debug.Log("Fire started");
+                _fireAction.Invoke();
+            };
+        _fireInputAct.canceled +=
+            _ =>
+            {
+                Debug.Log("Stopped firing.");
+                _endFireAction.Invoke();
+            };
     }
     void OnAltFire()
     {
         Debug.Log("OnAltFire called.");
         _altFireAction.Invoke();
+    }
+    void OnReturnToShip()
+    {
+        Debug.Log("Attempting ship return.");
+        _returnToShipAction.Invoke();
     }
 }
