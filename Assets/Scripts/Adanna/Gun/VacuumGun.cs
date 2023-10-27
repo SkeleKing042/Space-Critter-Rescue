@@ -9,7 +9,8 @@ public class VacuumGun : MonoBehaviour
 {
     public GameObject Alien;
     public Rigidbody _alienRigid;
-    [SerializeField] bool _mouseDown;
+    [SerializeField] 
+    private bool _mouseDown;
 
     public CreatureAI AlienAI;
 
@@ -17,18 +18,13 @@ public class VacuumGun : MonoBehaviour
     public float OffsetFixSpeed;
 
 
-    //public Trap trap;
+    public Trap trap;
 
     Vector3 AlienPosition;
     Vector3 forward;
 
     float _centralOffset;
 
-    private void Start()
-    {
-     
-
-    }
 
     void Update()
     {
@@ -73,9 +69,9 @@ public class VacuumGun : MonoBehaviour
         {
             _mouseDown = true;    
         }
-
+  {
         if (Input.GetButtonUp("Fire1"))
-        {
+      
             _mouseDown = false;
         }
     }
@@ -117,18 +113,16 @@ public class VacuumGun : MonoBehaviour
       // }
     }
 
-    public void Pull()
+    void Pull()
     {
-        if (Alien != null)
-        {
-            StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
+        StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
 
-            //Alien.transform.position = Vector3.Lerp(Alien.transform.position, transform.position, SuckSpeed * Time.deltaTime);
-            Vector3 dir = transform.position - _alienRigid.transform.position;
-            dir = Vector3.Normalize(dir);
+        //Alien.transform.position = Vector3.Lerp(Alien.transform.position, transform.position, SuckSpeed * Time.deltaTime);
+        Vector3 dir =  transform.position - _alienRigid.transform.position;
+        dir = Vector3.Normalize(dir);
 
-            _alienRigid.AddForce(dir * SuckSpeed);
-        }
+        _alienRigid.AddForce(dir * SuckSpeed);
+
     }
 
     /*/// <summary>
@@ -198,6 +192,7 @@ public class VacuumGun : MonoBehaviour
 
     // if alien is in collision of the cone collider 
     // get th
+
 }
 
 
