@@ -68,9 +68,9 @@ public class VacuumGun : MonoBehaviour
         {
             _mouseDown = true;    
         }
-  {
+  
         if (Input.GetButtonUp("Fire1"))
-      
+        { 
             _mouseDown = false;
         }
     }
@@ -112,7 +112,7 @@ public class VacuumGun : MonoBehaviour
       // }
     }
 
-    void Pull()
+    public void Pull()
     {
         StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
 
@@ -121,6 +121,11 @@ public class VacuumGun : MonoBehaviour
         dir = Vector3.Normalize(dir);
 
         _alienRigid.AddForce(dir * SuckSpeed);
+
+    }
+    public void EndPull()
+    {
+        Debug.Log("pull terminated");
 
     }
 

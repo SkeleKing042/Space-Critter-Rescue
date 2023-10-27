@@ -51,7 +51,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""id"": ""2c07340e-8973-4b4f-bd01-81d4e4767d2f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Hold(duration=0.2)"",
+                    ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
@@ -109,18 +109,27 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DeployTrap"",
+                    ""name"": ""EnableTrap"",
                     ""type"": ""Button"",
-                    ""id"": ""bf4cdb21-6147-4232-80ce-63d289c0635c"",
+                    ""id"": ""e51eea2d-f941-40f2-a0ed-310b878a9aea"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ToggleTool"",
+                    ""name"": ""ReturnToShip"",
                     ""type"": ""Button"",
-                    ""id"": ""e37ea769-c062-4988-bcc7-58ef018a9c2f"",
+                    ""id"": ""55a4b40f-bf12-4990-9cb6-666ee1e13cdd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchTool"",
+                    ""type"": ""Button"",
+                    ""id"": ""f66e18a3-ceeb-4439-a854-dc91452d67e7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -262,6 +271,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""143bb1cd-cc10-4eca-a2f0-a3664166fe91"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""05f6913d-c316-48b2-a6bb-e225f14c7960"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -273,22 +293,22 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3b69efb3-6ca8-4ea3-a0d8-ce1a635fe948"",
-                    ""path"": ""<XInputController>/rightTrigger"",
+                    ""id"": ""8115417b-7adf-4fe9-a121-e46e8dab965f"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Fire"",
+                    ""action"": ""AltFire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8115417b-7adf-4fe9-a121-e46e8dab965f"",
-                    ""path"": ""<XInputController>/rightShoulder"",
+                    ""id"": ""f3d2f770-03e4-4fea-9bee-e2b6d2d0966b"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""AltFire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -307,7 +327,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6a109394-42fd-4037-b9cb-dca80ec78059"",
-                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -343,7 +363,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
+                    ""groups"": """",
                     ""action"": ""PickupTrap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -351,10 +371,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""57a90032-6f28-4d7d-8207-f3b43dfac22c"",
-                    ""path"": ""<XInputController>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
+                    ""groups"": """",
                     ""action"": ""PickupTrap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -405,429 +425,67 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6edc062e-d0d8-4a2a-9dfc-e0acf630fa24"",
-                    ""path"": ""<XInputController>/buttonNorth"",
+                    ""id"": ""0c43db28-6e36-4bd8-871f-923e8cec3e5a"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""DeployTrap"",
+                    ""action"": ""EnableTrap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f3d2f770-03e4-4fea-9bee-e2b6d2d0966b"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""AltFire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""26dee3c3-09a4-4f72-af5f-13eb87691af9"",
-                    ""path"": ""<XInputController>/leftShoulder"",
+                    ""id"": ""4ab95548-bf9b-4aea-af6a-c62b887bcc05"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ToggleTool"",
+                    ""action"": ""EnableTrap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Player1"",
-            ""id"": ""3834fb6d-a351-4472-bbdb-26e574f19c91"",
-            ""actions"": [
-                {
-                    ""name"": ""Jump"",
-                    ""type"": ""Button"",
-                    ""id"": ""ff02823b-8cd2-4700-8822-15f425186e71"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 },
-                {
-                    ""name"": ""Sprint"",
-                    ""type"": ""Button"",
-                    ""id"": ""619586ae-2a09-443c-9ecf-8d3968702d09"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PickupTrap"",
-                    ""type"": ""Button"",
-                    ""id"": ""51abc249-4ef2-42de-a61d-09fda972a7aa"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Hold(duration=0.2)"",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""a09046a0-205c-4124-831d-781939510904"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Crouch"",
-                    ""type"": ""Button"",
-                    ""id"": ""ef1e1d16-b9d2-48aa-ad19-11f4f8b76162"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Look"",
-                    ""type"": ""Value"",
-                    ""id"": ""d4302995-0523-4466-9b4b-ef2496b5dbf4"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Tablet"",
-                    ""type"": ""Button"",
-                    ""id"": ""58befe96-7e00-488d-9103-c601d9406b6c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Fire"",
-                    ""type"": ""Button"",
-                    ""id"": ""64cd10b2-0f09-4dfe-8071-0ab0593e8bad"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""AltFire"",
-                    ""type"": ""Button"",
-                    ""id"": ""39ce26ba-cbc9-4900-a1f2-03f0e91c5b23"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""DeployTrap"",
-                    ""type"": ""Button"",
-                    ""id"": ""ed912994-6d2d-4b8e-bc3e-d640a2afb2f4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""4b1f3e98-a666-41b6-992f-d508c97c2d9d"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""WASD"",
-                    ""id"": ""803bf9df-f76f-418d-bdbd-6b556b714f23"",
-                    ""path"": ""Dpad"",
+                    ""id"": ""1aa24071-3774-4365-bceb-112fced05690"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""9d66c924-39ed-4dd5-a3d4-b5a76593c56a"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""1a6a99f1-d766-409a-8ab2-b6e77cbafbd2"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""c1b0c962-9c30-4069-a33b-6cd690c8d56c"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""72e10d32-5cdc-43a7-ab85-94388c87e5be"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""bcdac7cc-8446-442a-9196-035b116604bb"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""f75b7685-4f93-43b2-b126-a6f02108166e"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""5a548d66-2b03-4c7c-81a9-fc8a2f2d585d"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""34302afd-e5fe-4717-9acd-f9155ea2c206"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ed06ad39-b913-40d0-8688-aaf8a053bbd9"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Look"",
+                    ""action"": ""ReturnToShip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""deb73453-7dd2-4074-a1fc-1fa6c2749e80"",
-                    ""path"": ""<Pointer>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse;Touch"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""63902989-a94a-4473-8109-76a4b49ef3fc"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""221441c3-cfc3-4a31-9e77-7180f3e708f2"",
-                    ""path"": ""<XInputController>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2c848ad1-32d7-46df-9d44-8c7a10a38572"",
-                    ""path"": ""<XInputController>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""AltFire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""dac5d6a8-c42a-4bc7-9b72-e9d58d97707c"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""AltFire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""bb0c9024-13cc-4415-9e50-643121c539d3"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f7c8323b-732e-4ec3-9c59-9e394ac3542d"",
-                    ""path"": ""<XInputController>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b054ab5e-575a-485c-93a0-e8ff112f786d"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""id"": ""3311698e-5042-444b-9bef-ed13af2a46c5"",
+                    ""path"": ""<Keyboard>/t"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Sprint"",
+                    ""action"": ""ReturnToShip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1e786aad-573b-49aa-8851-e716d28745c3"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""id"": ""0af20c0a-059b-4dfb-9b9f-1144a444d2a9"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Sprint"",
+                    ""action"": ""SwitchTool"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1a56bbfd-8377-4c9f-9253-fcd32b5e1000"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""PickupTrap"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d3d57b43-9c16-415a-91c2-4a5dc0a0157a"",
-                    ""path"": ""<XInputController>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""PickupTrap"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2d2d7fc3-c44a-4261-8b47-e8df835ce623"",
-                    ""path"": ""<Keyboard>/ctrl"",
+                    ""id"": ""a7aacedd-4d4a-431d-a5ab-08ca89e99346"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Crouch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7f5b89a9-685f-42b2-9f4d-545082253430"",
-                    ""path"": ""<Gamepad>/leftStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Crouch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6ace56b3-6b2b-4d42-9a80-e802c6e0a159"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Tablet"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""900f4b1b-9bd7-436c-aeb9-d1d0c66f7057"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Tablet"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3fbb5d04-2dfd-474d-b768-41136ae43d1f"",
-                    ""path"": ""<XInputController>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DeployTrap"",
+                    ""action"": ""SwitchTool"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1424,20 +1082,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_Tablet = m_Player.FindAction("Tablet", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_AltFire = m_Player.FindAction("AltFire", throwIfNotFound: true);
-        m_Player_DeployTrap = m_Player.FindAction("DeployTrap", throwIfNotFound: true);
-        m_Player_ToggleTool = m_Player.FindAction("ToggleTool", throwIfNotFound: true);
-        // Player1
-        m_Player1 = asset.FindActionMap("Player1", throwIfNotFound: true);
-        m_Player1_Jump = m_Player1.FindAction("Jump", throwIfNotFound: true);
-        m_Player1_Sprint = m_Player1.FindAction("Sprint", throwIfNotFound: true);
-        m_Player1_PickupTrap = m_Player1.FindAction("PickupTrap", throwIfNotFound: true);
-        m_Player1_Move = m_Player1.FindAction("Move", throwIfNotFound: true);
-        m_Player1_Crouch = m_Player1.FindAction("Crouch", throwIfNotFound: true);
-        m_Player1_Look = m_Player1.FindAction("Look", throwIfNotFound: true);
-        m_Player1_Tablet = m_Player1.FindAction("Tablet", throwIfNotFound: true);
-        m_Player1_Fire = m_Player1.FindAction("Fire", throwIfNotFound: true);
-        m_Player1_AltFire = m_Player1.FindAction("AltFire", throwIfNotFound: true);
-        m_Player1_DeployTrap = m_Player1.FindAction("DeployTrap", throwIfNotFound: true);
+        m_Player_EnableTrap = m_Player.FindAction("EnableTrap", throwIfNotFound: true);
+        m_Player_ReturnToShip = m_Player.FindAction("ReturnToShip", throwIfNotFound: true);
+        m_Player_SwitchTool = m_Player.FindAction("SwitchTool", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1518,8 +1165,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Tablet;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_AltFire;
-    private readonly InputAction m_Player_DeployTrap;
-    private readonly InputAction m_Player_ToggleTool;
+    private readonly InputAction m_Player_EnableTrap;
+    private readonly InputAction m_Player_ReturnToShip;
+    private readonly InputAction m_Player_SwitchTool;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -1533,8 +1181,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Tablet => m_Wrapper.m_Player_Tablet;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @AltFire => m_Wrapper.m_Player_AltFire;
-        public InputAction @DeployTrap => m_Wrapper.m_Player_DeployTrap;
-        public InputAction @ToggleTool => m_Wrapper.m_Player_ToggleTool;
+        public InputAction @EnableTrap => m_Wrapper.m_Player_EnableTrap;
+        public InputAction @ReturnToShip => m_Wrapper.m_Player_ReturnToShip;
+        public InputAction @SwitchTool => m_Wrapper.m_Player_SwitchTool;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1571,12 +1220,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @AltFire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAltFire;
                 @AltFire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAltFire;
                 @AltFire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAltFire;
-                @DeployTrap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeployTrap;
-                @DeployTrap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeployTrap;
-                @DeployTrap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDeployTrap;
-                @ToggleTool.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTool;
-                @ToggleTool.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTool;
-                @ToggleTool.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTool;
+                @EnableTrap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnableTrap;
+                @EnableTrap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnableTrap;
+                @EnableTrap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnableTrap;
+                @ReturnToShip.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToShip;
+                @ReturnToShip.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToShip;
+                @ReturnToShip.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToShip;
+                @SwitchTool.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
+                @SwitchTool.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
+                @SwitchTool.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1608,121 +1260,19 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @AltFire.started += instance.OnAltFire;
                 @AltFire.performed += instance.OnAltFire;
                 @AltFire.canceled += instance.OnAltFire;
-                @DeployTrap.started += instance.OnDeployTrap;
-                @DeployTrap.performed += instance.OnDeployTrap;
-                @DeployTrap.canceled += instance.OnDeployTrap;
-                @ToggleTool.started += instance.OnToggleTool;
-                @ToggleTool.performed += instance.OnToggleTool;
-                @ToggleTool.canceled += instance.OnToggleTool;
+                @EnableTrap.started += instance.OnEnableTrap;
+                @EnableTrap.performed += instance.OnEnableTrap;
+                @EnableTrap.canceled += instance.OnEnableTrap;
+                @ReturnToShip.started += instance.OnReturnToShip;
+                @ReturnToShip.performed += instance.OnReturnToShip;
+                @ReturnToShip.canceled += instance.OnReturnToShip;
+                @SwitchTool.started += instance.OnSwitchTool;
+                @SwitchTool.performed += instance.OnSwitchTool;
+                @SwitchTool.canceled += instance.OnSwitchTool;
             }
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
-
-    // Player1
-    private readonly InputActionMap m_Player1;
-    private IPlayer1Actions m_Player1ActionsCallbackInterface;
-    private readonly InputAction m_Player1_Jump;
-    private readonly InputAction m_Player1_Sprint;
-    private readonly InputAction m_Player1_PickupTrap;
-    private readonly InputAction m_Player1_Move;
-    private readonly InputAction m_Player1_Crouch;
-    private readonly InputAction m_Player1_Look;
-    private readonly InputAction m_Player1_Tablet;
-    private readonly InputAction m_Player1_Fire;
-    private readonly InputAction m_Player1_AltFire;
-    private readonly InputAction m_Player1_DeployTrap;
-    public struct Player1Actions
-    {
-        private @PlayerInput m_Wrapper;
-        public Player1Actions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Jump => m_Wrapper.m_Player1_Jump;
-        public InputAction @Sprint => m_Wrapper.m_Player1_Sprint;
-        public InputAction @PickupTrap => m_Wrapper.m_Player1_PickupTrap;
-        public InputAction @Move => m_Wrapper.m_Player1_Move;
-        public InputAction @Crouch => m_Wrapper.m_Player1_Crouch;
-        public InputAction @Look => m_Wrapper.m_Player1_Look;
-        public InputAction @Tablet => m_Wrapper.m_Player1_Tablet;
-        public InputAction @Fire => m_Wrapper.m_Player1_Fire;
-        public InputAction @AltFire => m_Wrapper.m_Player1_AltFire;
-        public InputAction @DeployTrap => m_Wrapper.m_Player1_DeployTrap;
-        public InputActionMap Get() { return m_Wrapper.m_Player1; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(Player1Actions set) { return set.Get(); }
-        public void SetCallbacks(IPlayer1Actions instance)
-        {
-            if (m_Wrapper.m_Player1ActionsCallbackInterface != null)
-            {
-                @Jump.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnJump;
-                @Sprint.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnSprint;
-                @Sprint.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnSprint;
-                @Sprint.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnSprint;
-                @PickupTrap.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnPickupTrap;
-                @PickupTrap.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnPickupTrap;
-                @PickupTrap.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnPickupTrap;
-                @Move.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnMove;
-                @Crouch.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnCrouch;
-                @Crouch.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnCrouch;
-                @Crouch.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnCrouch;
-                @Look.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnLook;
-                @Look.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnLook;
-                @Look.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnLook;
-                @Tablet.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnTablet;
-                @Tablet.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnTablet;
-                @Tablet.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnTablet;
-                @Fire.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnFire;
-                @Fire.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnFire;
-                @Fire.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnFire;
-                @AltFire.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnAltFire;
-                @AltFire.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnAltFire;
-                @AltFire.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnAltFire;
-                @DeployTrap.started -= m_Wrapper.m_Player1ActionsCallbackInterface.OnDeployTrap;
-                @DeployTrap.performed -= m_Wrapper.m_Player1ActionsCallbackInterface.OnDeployTrap;
-                @DeployTrap.canceled -= m_Wrapper.m_Player1ActionsCallbackInterface.OnDeployTrap;
-            }
-            m_Wrapper.m_Player1ActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Jump.started += instance.OnJump;
-                @Jump.performed += instance.OnJump;
-                @Jump.canceled += instance.OnJump;
-                @Sprint.started += instance.OnSprint;
-                @Sprint.performed += instance.OnSprint;
-                @Sprint.canceled += instance.OnSprint;
-                @PickupTrap.started += instance.OnPickupTrap;
-                @PickupTrap.performed += instance.OnPickupTrap;
-                @PickupTrap.canceled += instance.OnPickupTrap;
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
-                @Crouch.started += instance.OnCrouch;
-                @Crouch.performed += instance.OnCrouch;
-                @Crouch.canceled += instance.OnCrouch;
-                @Look.started += instance.OnLook;
-                @Look.performed += instance.OnLook;
-                @Look.canceled += instance.OnLook;
-                @Tablet.started += instance.OnTablet;
-                @Tablet.performed += instance.OnTablet;
-                @Tablet.canceled += instance.OnTablet;
-                @Fire.started += instance.OnFire;
-                @Fire.performed += instance.OnFire;
-                @Fire.canceled += instance.OnFire;
-                @AltFire.started += instance.OnAltFire;
-                @AltFire.performed += instance.OnAltFire;
-                @AltFire.canceled += instance.OnAltFire;
-                @DeployTrap.started += instance.OnDeployTrap;
-                @DeployTrap.performed += instance.OnDeployTrap;
-                @DeployTrap.canceled += instance.OnDeployTrap;
-            }
-        }
-    }
-    public Player1Actions @Player1 => new Player1Actions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -1884,21 +1434,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnTablet(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnAltFire(InputAction.CallbackContext context);
-        void OnDeployTrap(InputAction.CallbackContext context);
-        void OnToggleTool(InputAction.CallbackContext context);
-    }
-    public interface IPlayer1Actions
-    {
-        void OnJump(InputAction.CallbackContext context);
-        void OnSprint(InputAction.CallbackContext context);
-        void OnPickupTrap(InputAction.CallbackContext context);
-        void OnMove(InputAction.CallbackContext context);
-        void OnCrouch(InputAction.CallbackContext context);
-        void OnLook(InputAction.CallbackContext context);
-        void OnTablet(InputAction.CallbackContext context);
-        void OnFire(InputAction.CallbackContext context);
-        void OnAltFire(InputAction.CallbackContext context);
-        void OnDeployTrap(InputAction.CallbackContext context);
+        void OnEnableTrap(InputAction.CallbackContext context);
+        void OnReturnToShip(InputAction.CallbackContext context);
+        void OnSwitchTool(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

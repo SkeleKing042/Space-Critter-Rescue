@@ -34,9 +34,9 @@ public class Trap : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Catchable: " + Catchable);
+        //Debug.Log("Catchable: " + Catchable);
 
-        TrapCatching();
+        //TrapCatching();
        
 
     }
@@ -45,16 +45,14 @@ public class Trap : MonoBehaviour
     /// <summary>
     /// initial inputs to start trap
     /// </summary>
-    void TrapCatching()
+    public void TrapCatching()
     {
         // if player presses e activate trap start timer
-        if(Input.GetKeyUp(KeyCode.E) && playerGun.activeSelf == true)
-        {
-            
-            StartCoroutine(BubbleTimer());
-        }
 
-        Suck.CheckMouseDown();
+            StartCoroutine(BubbleTimer());
+        
+
+        Suck.Pull();
         // playerGun.GetComponent<Gun>().Shoot();
     }
 

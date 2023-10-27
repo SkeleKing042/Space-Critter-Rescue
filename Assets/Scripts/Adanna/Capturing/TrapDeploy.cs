@@ -1,21 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class TrapDeploy : MonoBehaviour
 {
+    public PlayerInput Input;
+    private InputAction _PickUp;
+
     public GameObject Trap;
     public GameObject PlayerGun;
     public GameObject Player;
+    private Rigidbody _trapRigid;
 
     public GameObject Bubble;
+    public float PickUpRange = 10;
+
+    public float TrapThrowForce;
 
     [SerializeField]
     bool holdingTrap;
     bool holdingGun;
 
     bool trapDeployed;
+
+    private bool _pickupable = false;
 
     public enum CurrentlyHolding
     {
@@ -31,9 +41,17 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     void Start()
     {
+        Input = new PlayerInput();
         currentlyHolding = CurrentlyHolding.vacuum;
         Trap.transform.SetParent(transform);
         Trap.SetActive(false);
+
+        _PickUp = Input.Player.AltFire;
+        _PickUp .Enable();
+
+        // _swap = Input.Player.Fire;
+       
+        _trapRigid = Trap.GetComponent<Rigidbody>();
 
     }
 
@@ -45,13 +63,14 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     void Update()
     {
-        Toggle();
+        //Toggle();
 
-        if(Input.GetMouseButtonDown(0))
-        {
-            DeployTrap();
-            
-        }
+        //// add new input
+        //if(_mouse)
+        //{
+        //    DeployTrap();
+        //    
+        //}
         if (currentlyHolding == CurrentlyHolding.vacuum && Trap.transform.parent !=null)
         {
             Trap.transform.position = PlayerGun.transform.position;
@@ -62,10 +81,10 @@ public class TrapDeploy : MonoBehaviour
     /// <summary>
     /// toggle between Vacuum and Trap, check Enum
     /// </summary>
-    void Toggle()
+    public void Toggle()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
+        //change to new input use editor
+   
             if (currentlyHolding == CurrentlyHolding.vacuum && trapDeployed == false)
             {
                 PlayerGun.SetActive(false);
@@ -81,7 +100,7 @@ public class TrapDeploy : MonoBehaviour
                 currentlyHolding = CurrentlyHolding.vacuum;
                 return;
             }
-        }
+
 
 
     }
@@ -89,7 +108,7 @@ public class TrapDeploy : MonoBehaviour
     /// <summary>
     /// deploy trap if conditions met, add rigidbody, make kinematic false
     /// </summary>
-    void DeployTrap()
+    public void DeployTrap()
     {
         if(currentlyHolding == CurrentlyHolding.trap)
         {
@@ -98,8 +117,9 @@ public class TrapDeploy : MonoBehaviour
             // Trap.transform.position = Player.transform.forward *5;
             currentlyHolding = CurrentlyHolding.vacuum;
             Trap.GetComponent<BoxCollider>().enabled = true;
-          
             Trap.GetComponent<Rigidbody>().isKinematic = false;
+
+            _trapRigid.AddForce(Camera.main.transform.forward * TrapThrowForce, ForceMode.Impulse);
             Debug.Log("deployyyyy");
             PlayerGun.SetActive(true);
             trapDeployed = true;
@@ -113,24 +133,49 @@ public class TrapDeploy : MonoBehaviour
     /// disable box collider, rigidbody is kinematic, change currently holding
     /// </summary>
     /// <param name="trap"></param>
+    /// 
 
-    private void OnTriggerStay(Collider trap)
+
+    public void OnTriggerStay(Collider trap)
     {
        
-        if (trap.gameObject.tag == "trap" && Input.GetKey(KeyCode.Q) && currentlyHolding != CurrentlyHolding.trap && Bubble.activeSelf == false)
+        if (trap.gameObject.tag == "trap" )
+        {
+            _pickupable = true;
+        }
+        else
+        {
+            _pickupable = false;
+        } 
+    }
+
+
+                       
+
+    public void pickUp()
+    {
+
+        float distance = Vector3.Distance(Trap.transform.position, transform.position);
+        Debug.Log(distance);
+        distance = Mathf.Abs(distance);
+        
+
+        if (PickUpRange >= distance && currentlyHolding != CurrentlyHolding.trap && Bubble.activeSelf == false)
         {
             Debug.Log("PickUp");
             Trap.transform.SetParent(transform);
             Trap.GetComponent<BoxCollider>().enabled = false;
-            Trap.GetComponent<Rigidbody>().isKinematic =true;
+            Trap.GetComponent<Rigidbody>().isKinematic = true;
+            
             currentlyHolding = CurrentlyHolding.vacuum;
 
             PlayerGun.SetActive(true);
             Trap.SetActive(false);
-            trapDeployed = false; 
+            trapDeployed = false;
         }
-    
+
     }
 
-   
+
+
 }
