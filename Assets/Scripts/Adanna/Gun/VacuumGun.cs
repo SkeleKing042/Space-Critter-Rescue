@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
-using static UnityEditor.PlayerSettings;
 
 public class VacuumGun : MonoBehaviour
 {
