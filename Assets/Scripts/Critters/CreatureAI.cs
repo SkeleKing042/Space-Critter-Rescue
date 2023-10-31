@@ -3,13 +3,8 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using static CreatureAI;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class CreatureAI : MonoBehaviour
 {
@@ -18,11 +13,12 @@ public class CreatureAI : MonoBehaviour
     private string _theState;
 
     [Header("Check radi")]
-    [SerializeField, Tooltip("The radius at which POIs are detected.")]
-    private float _POIDetectionRadius;
+    //[SerializeField, Tooltip("The radius at which POIs are detected.")]
+    //private float _POIDetectionRadius;
     private Transform _POITarget;
     public Transform POITarget { get { return _POITarget; } }
     private bool _goingForDrink;
+    private DrinkenFinden _drinkingSources;
     public bool GoingForDrink { get { return _goingForDrink; } set { _goingForDrink = value; } }
     [SerializeField, Tooltip("The radius at which the player is detected.")]
     private float _playerDectectionRadius;
@@ -64,6 +60,8 @@ public class CreatureAI : MonoBehaviour
 
     private NavMeshAgent _agent;
     public NavMeshAgent GetAgent { get { return _agent; } }
+    private bool _naving = true;
+    private Rigidbody _rb;
     private float _baseSpeed;
     public float BaseSpeed { get { return _baseSpeed; } }
     private Animator _animator;
@@ -82,6 +80,9 @@ public class CreatureAI : MonoBehaviour
         _lazyCheckDelay = Mathf.Abs(_lazyCheckDelay);
         _timeSinceLastThirstCheck = _thirstCheckDelay;
         _timeSinceLastLazyCheck = _lazyCheckDelay;
+
+        _drinkingSources = GetComponentInChildren<DrinkenFinden>();
+        _rb = GetComponent<Rigidbody>();
 
         _currentState = new IdleState(this);
         _currentState.StartState();
@@ -154,15 +155,13 @@ public class CreatureAI : MonoBehaviour
             {
                 DrinkableSource currentSource = null;
                 //Find all drinkable sources
-                foreach (DrinkableSource drinkable in FindObjectsOfType<DrinkableSource>())
+                foreach (GameObject drinkable in _drinkingSources.Sources)
                 {
-                    //Check the distance to them and if they're close enough, go to that source
-                    if (Vector3.Distance(transform.position, drinkable.transform.position) < _POIDetectionRadius * mod)
-                        if (currentSource == null)
-                            currentSource = drinkable;
-                        else
-                            if (Vector3.Distance(transform.position, currentSource.transform.position) > Vector3.Distance(transform.position, drinkable.transform.position))
-                            currentSource = drinkable;
+                    if (currentSource == null)
+                        currentSource = drinkable.GetComponent<DrinkableSource>();
+                    else
+                        if (Vector3.Distance(transform.position, currentSource.transform.position) > Vector3.Distance(transform.position, drinkable.transform.position))
+                        currentSource = drinkable.GetComponent<DrinkableSource>();
                 }
                 if (currentSource != null)
                 {
@@ -211,10 +210,34 @@ public class CreatureAI : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Either enables or disables the rigidbody mode of the creature.
+    /// </summary>
+    public void RigidMode()
+    {
+        if(_naving)
+        {
+            _agent.isStopped = true;
+            _agent.enabled = false;
+            _rb.isKinematic = false;
+        }
+        else if(!_naving)
+        {
+            _rb.isKinematic = true;
+            _agent.enabled = true;
+            _agent.isStopped = false;
+        }
+    }
+    /// <summary>
+    /// Enables or disables the rigidbody mode of the creature depending on the incoming bool
+    /// </summary>
+    public void RigidMode(bool b)
+    {
+        _naving = b;
+        RigidMode();
+    }
     public void OnDrawGizmosSelected()
     {
-        Gizmos.color = new Color(0,0,255, 0.50f);
-        Gizmos.DrawSphere(transform.position, _POIDetectionRadius);
         Gizmos.color = new Color(255, 0, 0, 0.50f);
         Gizmos.DrawSphere(transform.position, _playerDectectionRadius);
         Gizmos.color = new Color(0, 255, 0, 0.50f);
@@ -424,16 +447,17 @@ public class CaptureState : State
     public override void StartState()
     {
         AI.Animator.SetBool("CaptureState", true);
-        AI.GetAgent.enabled = false;
+        AI.RigidMode(true);
     }
     public override void Update()
     {
-
+        Quaternion targetRot = Quaternion.LookRotation(AI.Player.transform.position - AI.transform.position);
+        AI.transform.rotation = Quaternion.Slerp(AI.transform.rotation, targetRot, 0.1f);
     }
     public override void EndState()
     {
-        AI.GetAgent.enabled = true;
         AI.Animator.SetBool("CaptureState", false);
+        AI.RigidMode(false);
     }
 
 }
@@ -445,8 +469,8 @@ public class StunnedState : State
     }
     public override void StartState()
     {
-        Agent.isStopped = true;
         AI.Animator.SetBool("StunnedState", true);
+        AI.RigidMode(true);
     }
     public override void Update()
     {
@@ -454,8 +478,8 @@ public class StunnedState : State
     }
     public override void EndState()
     {
-        Agent.isStopped = false;
         AI.Animator.SetBool("StunnedState", false);
+        AI.RigidMode(false);
     }
 
 }
