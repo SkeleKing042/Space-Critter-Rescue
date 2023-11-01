@@ -17,9 +17,9 @@ public class InputManager : MonoBehaviour
     [Serializable]
     public class HoldEvent
     {
-        public UnityEvent _startAction = new UnityEvent();
-        public UnityEvent _endAction = new UnityEvent();
-        public InputActionReference _inputReference; 
+        public UnityEvent StartAction = new UnityEvent();
+        public UnityEvent EndAction = new UnityEvent();
+        public InputActionReference InputReference; 
         private InputAction _inputAction;
 
         //DOES NOT WORK AS A CONSTRUCTOR
@@ -28,7 +28,7 @@ public class InputManager : MonoBehaviour
         /// </summary>
         public void InitializeAction()
         {
-            _inputAction = _inputReference.action;
+            _inputAction = InputReference.action;
             DoEvent();
         }
 
@@ -42,13 +42,13 @@ public class InputManager : MonoBehaviour
                 context =>
                 {
                     Debug.Log("Start action");
-                    _startAction.Invoke();
+                    StartAction.Invoke();
                 };
             _inputAction.canceled +=
                 _ =>
                 {
                     Debug.Log("Ending action.");
-                    _endAction.Invoke();
+                    EndAction.Invoke();
                 };
         }
     }
@@ -57,19 +57,19 @@ public class InputManager : MonoBehaviour
     [SerializeField] private bool _lockCursor;
 
     [Header("Movement")]
-    [SerializeField] private UnityEvent<Vector2> _movementAction = new UnityEvent<Vector2>();
-    [SerializeField] private UnityEvent _sprintAction = new UnityEvent();
-    [SerializeField] private UnityEvent _crouchAction = new UnityEvent();
-    [SerializeField] private HoldEvent _jumpAction = new HoldEvent();
+    public UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
+    public UnityEvent SprintAction = new UnityEvent();
+    public UnityEvent CrouchAction = new UnityEvent();
+    public HoldEvent JumpAction = new HoldEvent();
 
     [Header("Tool actions")]
-    [SerializeField] private UnityEvent _trapInteractionAction = new UnityEvent();
-    [SerializeField] private UnityEvent _enableTrapAction = new UnityEvent();
-    [SerializeField] private UnityEvent _tabletAction = new UnityEvent();
-    [SerializeField] private HoldEvent _fireAction = new HoldEvent();
-    [SerializeField] private UnityEvent _altFireAction = new UnityEvent();
-    [SerializeField] private UnityEvent _returnToShipAction = new UnityEvent();
-    [SerializeField] private UnityEvent _switchToolAction = new UnityEvent();
+    public UnityEvent TrapInteractionAction = new UnityEvent();
+    public UnityEvent EnableTrapAction = new UnityEvent();
+    public UnityEvent TabletAction = new UnityEvent();
+    public HoldEvent FireAction = new HoldEvent();
+    public UnityEvent AltFireAction = new UnityEvent();
+    public UnityEvent ReturnToShipAction = new UnityEvent();
+    public UnityEvent SwitchToolAction = new UnityEvent();
 
 
     private void Awake()
@@ -79,62 +79,62 @@ public class InputManager : MonoBehaviour
         else
             Cursor.lockState = CursorLockMode.None;
             
-        _jumpAction.InitializeAction();
-        _fireAction.InitializeAction();
+        JumpAction.InitializeAction();
+        FireAction.InitializeAction();
     }
     void OnJump()
     {
         Debug.Log("OnJump called.");
-        _jumpAction.DoEvent();
+        JumpAction.DoEvent();
     }
     void OnSprint()
     {
         Debug.Log("OnSprint called.");
-        _sprintAction.Invoke();
+        SprintAction.Invoke();
     }
     void OnEnableTrap()
     {
         Debug.Log("Enabling trap.");
-        _enableTrapAction.Invoke();
+        EnableTrapAction.Invoke();
     }
     void OnPickupTrap()
     {
         Debug.Log("OnPickupTrap called.");
-        _trapInteractionAction.Invoke();
+        TrapInteractionAction.Invoke();
     }
     void OnMove(InputValue value)
     {
         Debug.Log("OnMove called.");
-        _movementAction.Invoke(value.Get<Vector2>());
+        MovementAction.Invoke(value.Get<Vector2>());
     }
     void OnCrouch()
     {
         Debug.Log("OnCrouch called.");
-        _crouchAction.Invoke();
+        CrouchAction.Invoke();
     }
     void OnTablet()
     {
         Debug.Log("OnTablet called.");
-        _tabletAction.Invoke();
+        TabletAction.Invoke();
     }
     void OnFire()
     {
         Debug.Log("OnFire called.");
-        _fireAction.DoEvent();
+        FireAction.DoEvent();
     }
     void OnAltFire()
     {
         Debug.Log("OnAltFire called.");
-        _altFireAction.Invoke();
+        AltFireAction.Invoke();
     }
     void OnReturnToShip()
     {
         Debug.Log("Attempting ship return.");
-        _returnToShipAction.Invoke();
+        ReturnToShipAction.Invoke();
     }
     void OnSwitchTool()
     {
         Debug.Log("Switching Tools");
-        _switchToolAction.Invoke();
+        SwitchToolAction.Invoke();
     }
 }
