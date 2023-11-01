@@ -115,13 +115,17 @@ public class VacuumGun : MonoBehaviour
 
     public void Pull()
     {
-        StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
+        if (Alien != null)
+        {
+            StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
 
-        //Alien.transform.position = Vector3.Lerp(Alien.transform.position, transform.position, SuckSpeed * Time.deltaTime);
-        Vector3 dir =  transform.position - _alienRigid.transform.position;
-        dir = Vector3.Normalize(dir);
+            //Alien.transform.position = Vector3.Lerp(Alien.transform.position, transform.position, SuckSpeed * Time.deltaTime);
+            Vector3 dir = transform.position - _alienRigid.transform.position;
+            dir = Vector3.Normalize(dir);
 
-        _alienRigid.AddForce(dir * SuckSpeed);
+            _alienRigid.AddForce(dir * SuckSpeed);
+        }
+      
 
     }
     public void EndPull()
