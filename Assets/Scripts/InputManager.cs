@@ -1,8 +1,8 @@
 //Created by Jackson Lucas
 //Last Edited by Jackson Lucas
 
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -14,45 +14,127 @@ public class InputManager : MonoBehaviour
 //OK, so I'm using listeners here as it makes it posible to change the invoked function in the
 //editor so the other disciplines can make changes easier.
 {
+    [Serializable]
+    public class HoldEvent
+    {
+        public UnityEvent _startAction = new UnityEvent();
+        public UnityEvent _endAction = new UnityEvent();
+        public InputActionReference _inputReference; 
+        private InputAction _inputAction;
+
+        //DOES NOT WORK AS A CONSTRUCTOR
+        /// <summary>
+        /// Sets up the input action and called the action
+        /// </summary>
+        public void InitializeAction()
+        {
+            _inputAction = _inputReference.action;
+            DoEvent();
+        }
+
+        /// <summary>
+        /// Invokes the desiered actions.
+        /// </summary>
+        public void DoEvent()
+        {
+            Debug.Log("Hold action called.");
+            _inputAction.started +=
+                context =>
+                {
+                    Debug.Log("Start action");
+                    _startAction.Invoke();
+                };
+            _inputAction.canceled +=
+                _ =>
+                {
+                    Debug.Log("Ending action.");
+                    _endAction.Invoke();
+                };
+        }
+    }
+
+    [Header("Game Settings")]
+    [SerializeField] private bool _lockCursor;
+
     [Header("Movement")]
-    [Tooltip("Called when the \'D\' key is pressed")]
-    public UnityEvent PositiveHorizontalMoveAction = new UnityEvent();
-    public UnityEvent NeutralHorizontalMoveAction = new UnityEvent();
-    [Tooltip("Called when the \'A\' key is pressed")]
-    public UnityEvent NegativeHorizontalMoveAction = new UnityEvent();
-    [Tooltip("Called when the \'W\' key is pressed")]
-    public UnityEvent PositiveVerticalMoveAction = new UnityEvent();
-    public UnityEvent NeutralVerticalMoveAction = new UnityEvent();
-    [Tooltip("Called when the \'S\' key is pressed")]
-    public UnityEvent NegativeVerticalMoveAction = new UnityEvent();
-    [Tooltip("Called when the \'LMB\' is pressed")]
-    public UnityEvent FireAction = new UnityEvent();
-    [Tooltip("Called when the \'RMB\' is pressed")]
-    public UnityEvent AltFireAction = new UnityEvent();
-    public UnityEvent JumpAction = new UnityEvent();
+    [SerializeField] private UnityEvent<Vector2> _movementAction = new UnityEvent<Vector2>();
+    [SerializeField] private UnityEvent _sprintAction = new UnityEvent();
+    [SerializeField] private UnityEvent _crouchAction = new UnityEvent();
+    [SerializeField] private HoldEvent _jumpAction = new HoldEvent();
 
-    void OnFire()
-    {
-        FireAction.Invoke();
-    }
-    void OnAltFire()
-    {
-        AltFireAction.Invoke();
-    }
-    void OnMove(InputValue value)
-    {
-        Vector2 v = value.Get<Vector2>();
+    [Header("Tool actions")]
+    [SerializeField] private UnityEvent _trapInteractionAction = new UnityEvent();
+    [SerializeField] private UnityEvent _enableTrapAction = new UnityEvent();
+    [SerializeField] private UnityEvent _tabletAction = new UnityEvent();
+    [SerializeField] private HoldEvent _fireAction = new HoldEvent();
+    [SerializeField] private UnityEvent _altFireAction = new UnityEvent();
+    [SerializeField] private UnityEvent _returnToShipAction = new UnityEvent();
+    [SerializeField] private UnityEvent _switchToolAction = new UnityEvent();
 
-        if (v.y > 0) PositiveHorizontalMoveAction.Invoke();
-        else if (v.y == 0) NeutralHorizontalMoveAction.Invoke();
-        else if (v.y < 0) NegativeHorizontalMoveAction.Invoke();
 
-        if (v.x > 0) PositiveVerticalMoveAction.Invoke();
-        else if (v.x == 0) NeutralVerticalMoveAction.Invoke();
-        else if (v.x < 0) NegativeVerticalMoveAction.Invoke();
+    private void Awake()
+    {
+        if(_lockCursor)
+            Cursor.lockState = CursorLockMode.Locked;
+        else
+            Cursor.lockState = CursorLockMode.None;
+            
+        _jumpAction.InitializeAction();
+        _fireAction.InitializeAction();
     }
     void OnJump()
     {
-        JumpAction.Invoke();
+        Debug.Log("OnJump called.");
+        _jumpAction.DoEvent();
+    }
+    void OnSprint()
+    {
+        Debug.Log("OnSprint called.");
+        _sprintAction.Invoke();
+    }
+    void OnEnableTrap()
+    {
+        Debug.Log("Enabling trap.");
+        _enableTrapAction.Invoke();
+    }
+    void OnPickupTrap()
+    {
+        Debug.Log("OnPickupTrap called.");
+        _trapInteractionAction.Invoke();
+    }
+    void OnMove(InputValue value)
+    {
+        Debug.Log("OnMove called.");
+        _movementAction.Invoke(value.Get<Vector2>());
+    }
+    void OnCrouch()
+    {
+        Debug.Log("OnCrouch called.");
+        _crouchAction.Invoke();
+    }
+    void OnTablet()
+    {
+        Debug.Log("OnTablet called.");
+        _tabletAction.Invoke();
+    }
+    void OnFire()
+    {
+        Debug.Log("OnFire called.");
+        _fireAction.DoEvent();
+    }
+    void OnAltFire()
+    {
+        Debug.Log("OnAltFire called.");
+        _altFireAction.Invoke();
+    }
+    void OnReturnToShip()
+    {
+        Debug.Log("Attempting ship return.");
+        _returnToShipAction.Invoke();
+    }
+    void OnSwitchTool()
+    {
+        Debug.Log("Switching Tools");
+        _switchToolAction.Invoke();
     }
 }
