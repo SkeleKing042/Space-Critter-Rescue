@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 1320662727876106449}
   - component: {fileID: 3390830656048057689}
   - component: {fileID: 3390830656048057688}
+  - component: {fileID: 7534540182548985643}
   - component: {fileID: 2050349986674664729}
   - component: {fileID: 839125753}
   m_Layer: 0
@@ -240,7 +241,6 @@ MonoBehaviour:
   _theState: 
   isBig: 0
   type: 0
-  _playerDectectionRadius: 5
   _travelableDistanceFromHome: 15
   _velocityToPanic: 5
   _thirstiness: 50
@@ -251,6 +251,28 @@ MonoBehaviour:
   Energy: 100
   _playerTag: Player
   FacePlayerRate: 0.025
+--- !u!114 &7534540182548985643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3390830656048057695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 824ea36567323254ca800584f5f371dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Radius: 10
+  Angle: 115
+  PlayerRef: {fileID: 0}
+  _targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _obstructionMask:
+    serializedVersion: 2
+    m_Bits: 128
+  CanSeeTarget: 0
 --- !u!95 &2050349986674664729
 Animator:
   serializedVersion: 4
