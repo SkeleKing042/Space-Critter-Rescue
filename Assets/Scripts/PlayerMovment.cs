@@ -65,6 +65,7 @@ public class PlayerMovment : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _camera = Camera.main;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void FixedUpdate()
