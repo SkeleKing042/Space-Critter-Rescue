@@ -149,7 +149,7 @@ public class PlayerMovment : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(transform.position + _feetPosition, -Vector3.up * _legLength, out hit, 1.0f))
         {
-            Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
+           // Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             if(hit.collider.tag == "Ground")
                 return true;
         }

@@ -36,7 +36,7 @@ public class CollectAlien : MonoBehaviour
 
     void OnTriggerEnter(Collider creature)
     {
-        Debug.Log("collision");
+
         if ((creature.gameObject.tag == "alien" || creature.gameObject.tag == "bigAlien") && mouseDown)
         {
        
