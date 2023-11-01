@@ -12,7 +12,14 @@ public class CreatureAI : MonoBehaviour
     [SerializeField]
     private string _theState;
 
-    [Header("Check radi")]
+    [Header("Creature Info")]
+    public bool isBig;
+    public enum creatureType
+    {
+        Shroom,
+        Crystal
+    };
+    public creatureType type;
     //[SerializeField, Tooltip("The radius at which POIs are detected.")]
     //private float _POIDetectionRadius;
     private Transform _POITarget;
@@ -20,6 +27,7 @@ public class CreatureAI : MonoBehaviour
     private bool _goingForDrink;
     private DrinkenFinden _drinkingSources;
     public bool GoingForDrink { get { return _goingForDrink; } set { _goingForDrink = value; } }
+    [Header("Check radi")]
     [SerializeField, Tooltip("The radius at which the player is detected.")]
     private float _playerDectectionRadius;
     public float PlayerDectectionRadius { get { return _playerDectectionRadius; } }
@@ -62,10 +70,12 @@ public class CreatureAI : MonoBehaviour
     public NavMeshAgent GetAgent { get { return _agent; } }
     private bool _naving = true;
     private Rigidbody _rb;
+    public Rigidbody Rigidbody { get { return _rb; } }
     private float _baseSpeed;
     public float BaseSpeed { get { return _baseSpeed; } }
     private Animator _animator;
     public Animator Animator { get { return _animator; } }
+    public float FacePlayerRate;
 
     private void Start()
     {
@@ -112,6 +122,14 @@ public class CreatureAI : MonoBehaviour
     /// <param name="newState"></param>
     /// <param name="delay"></param>
     /// <returns></returns>
+    public void PrepareUpdateState(State newState)
+    {
+        StartCoroutine(UpdateState(newState, 0f));
+    }
+    public void PrepareUpdateState(State newState, float delay)
+    {
+        StartCoroutine(UpdateState(newState, delay));
+    }
     public IEnumerator UpdateState(State newState, float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -131,7 +149,7 @@ public class CreatureAI : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, _player.transform.position) < _playerDectectionRadius * mod)
         {
-            StartCoroutine(UpdateState(new PanicState(this), 0));
+            PrepareUpdateState(new PanicState(this));
             return true;
         }
         return false;
@@ -169,7 +187,7 @@ public class CreatureAI : MonoBehaviour
                     _POITarget = currentSource.transform;
                     _agent.SetDestination(_POITarget.position);
                     GoingForDrink = true;
-                    StartCoroutine(UpdateState(new RoamingState(this), 0));
+                    PrepareUpdateState(new RoamingState(this));
                     return true;
                 }
             }
@@ -189,7 +207,7 @@ public class CreatureAI : MonoBehaviour
             float rnd = UnityEngine.Random.Range(_lazyness * 0.5f, _lazyness);
             if(rnd > Energy)
             {
-                StartCoroutine(UpdateState(new SleepState(this), 0));
+                PrepareUpdateState(new SleepState(this));
                 return true;
             }
         }
@@ -203,10 +221,10 @@ public class CreatureAI : MonoBehaviour
             Rigidbody otherBody = collision.gameObject.GetComponent<Rigidbody>();
             if (otherBody.velocity.magnitude > _velocityToPanic)
             {
-                StartCoroutine(UpdateState(new StunnedState(this), 0));
+                PrepareUpdateState(new StunnedState(this));
                 //Run from the object
                 _agent.SetDestination(transform.position + otherBody.velocity.normalized * (otherBody.velocity.magnitude / 3.0f));
-                StartCoroutine(UpdateState(new PanicState(this), collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude / 10));
+                PrepareUpdateState(new PanicState(this), collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude / 10);
             }
         }
     }
@@ -243,7 +261,11 @@ public class CreatureAI : MonoBehaviour
         Gizmos.color = new Color(0, 255, 0, 0.50f);
         Gizmos.DrawSphere(_homePoint, _travelableDistanceFromHome);
     }
-
+    public void DEBUG_CauseBrainRot()
+    {
+        Debug.Log("Causing brain rot");
+        PrepareUpdateState(new StunnedState(this), 1.0f);
+    }
 }
 public abstract class State
 {
@@ -289,7 +311,7 @@ public class IdleState : State
             //Move there
             Agent.SetDestination(newPos);
             //Start roaming
-            AI.StartCoroutine(AI.UpdateState(new RoamingState(AI), 0));
+            AI.PrepareUpdateState(new RoamingState(AI));
             return;
         }
     }
@@ -321,7 +343,7 @@ public class RoamingState : State
                 if (Vector3.Distance(AI.transform.position, AI.POITarget.position) < AI.POITarget.GetComponent<DrinkableSource>().GetRadius())
                 {
                     //... if so, drink
-                    AI.StartCoroutine(AI.UpdateState(new DrinkingState(AI), 0));
+                    AI.PrepareUpdateState(new DrinkingState(AI));
                     return;
                 }
         else if (AI.CheckForPOIs(1)) return;
@@ -330,7 +352,7 @@ public class RoamingState : State
         if (Vector3.Distance(AI.transform.position, Agent.destination) <= 1f)
         {
             //If so, stop
-            AI.StartCoroutine(AI.UpdateState(new IdleState(AI), 0));
+            AI.PrepareUpdateState(new IdleState(AI));
             return;
         }
         //Otherwise, keep moving
@@ -355,7 +377,7 @@ public class SleepState : State
     {
         //Stop moving and replenish energy
         if (AI.Energy >= 100)
-            AI.StartCoroutine(AI.UpdateState(new IdleState(AI), 0));
+            AI.PrepareUpdateState(new IdleState(AI));
         else
             Mathf.Clamp(AI.Energy += Time.deltaTime * 10, 0, 100);
     }
@@ -382,7 +404,7 @@ public class DrinkingState : State
         if (AI.CheckForPlayer(0.5f)) return;
         if (AI.Hydration >= 100)
         {
-            AI.StartCoroutine(AI.UpdateState(new IdleState(AI), 0));
+            AI.PrepareUpdateState(new IdleState(AI));
         }
         else
             Mathf.Clamp(AI.Hydration += Time.deltaTime * 10, 0, 100);
@@ -401,19 +423,18 @@ public class PanicState : State
     }
     public override void StartState()
     {
-        
-       
         if(AI.gameObject.activeSelf)
         {
             AI.GetAgent.enabled = true;
             Agent.isStopped = false;
             AI.Animator.SetBool("PanicState", true);
         }
+        //Double movement speed
+        Agent.speed = AI.BaseSpeed * 2f;
     }
     public override void Update()
     {
-        //Move twice as fast and lose energy twice as fast
-        Agent.speed = AI.BaseSpeed * 2f;
+        //Lose energy twice as fast
         Mathf.Clamp(AI.Energy -= Time.deltaTime * 4, 0, 100);
         //Find a point away from the player relative to our current position
         if (Vector3.Distance(AI.transform.position, AI.Player.transform.position) < AI.PlayerDectectionRadius)
@@ -425,15 +446,16 @@ public class PanicState : State
         //Once we're far enough away...
         if (Vector3.Distance(AI.transform.position, Agent.destination) < 2f)
         {
-            //...Reset speed and go idle
-            Agent.speed = AI.BaseSpeed;
-            AI.StartCoroutine(AI.UpdateState(new IdleState(AI), 0));
+            //go idle
+            AI.PrepareUpdateState(new IdleState(AI));
             return;
         }
 
     }
     public override void EndState()
     {
+        //Return to normal speed
+        Agent.speed = AI.BaseSpeed;
         AI.Animator.SetBool("PanicState", false);
     }
 
@@ -452,7 +474,7 @@ public class CaptureState : State
     public override void Update()
     {
         Quaternion targetRot = Quaternion.LookRotation(AI.Player.transform.position - AI.transform.position);
-        AI.transform.rotation = Quaternion.Slerp(AI.transform.rotation, targetRot, 0.1f);
+        AI.transform.rotation = Quaternion.Slerp(AI.transform.rotation, targetRot, AI.FacePlayerRate);
     }
     public override void EndState()
     {
@@ -471,6 +493,7 @@ public class StunnedState : State
     {
         AI.Animator.SetBool("StunnedState", true);
         AI.RigidMode(true);
+        AI.Rigidbody.useGravity = true;
     }
     public override void Update()
     {
@@ -482,4 +505,39 @@ public class StunnedState : State
         AI.RigidMode(false);
     }
 
+}
+public class StruggleState : State
+{
+    public StruggleState(CreatureAI AI) : base(AI)
+    {
+
+    }
+    public override void StartState()
+    {
+        AI.Animator.SetBool("StuggleState", true);
+        //Double movement speed
+        Agent.speed = AI.BaseSpeed * 4f;
+    }
+    public override void Update()
+    {
+        //Lose energy twice as fast
+        Mathf.Clamp(AI.Energy -= Time.deltaTime * 4, 0, 100);
+        //Find a point away from the player relative to our current position
+        Vector3 dir = (AI.Player.transform.position - AI.transform.position).normalized;
+        Agent.SetDestination(AI.Player.transform.position + dir * AI.PlayerDectectionRadius * -1.5f);
+
+        //Once we're far enough away...
+        if (Vector3.Distance(AI.transform.position, Agent.destination) < 2f)
+        {
+            //Go idle
+            AI.PrepareUpdateState(new IdleState(AI));
+            return;
+        }
+    }
+    public override void EndState()
+    {
+        //Return to base speed
+        Agent.speed = AI.BaseSpeed;
+        AI.Animator.SetBool("StuggleState", false);
+    }
 }

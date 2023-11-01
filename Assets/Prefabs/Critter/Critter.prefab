@@ -238,6 +238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _theState: 
+  isBig: 0
+  type: 0
   _playerDectectionRadius: 5
   _travelableDistanceFromHome: 15
   _velocityToPanic: 5
@@ -248,6 +250,7 @@ MonoBehaviour:
   Hydration: 100
   Energy: 100
   _playerTag: Player
+  FacePlayerRate: 0.025
 --- !u!95 &2050349986674664729
 Animator:
   serializedVersion: 4
