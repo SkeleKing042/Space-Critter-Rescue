@@ -14,8 +14,7 @@ public class DrinkenFinden : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if(other.GetComponent<DrinkableSource>())
-            if(_source.Contains(other.gameObject))
+        if(other.GetComponent<DrinkableSource>() && _source.Contains(other.gameObject))
                 _source.Remove(other.gameObject);
     }
 }
