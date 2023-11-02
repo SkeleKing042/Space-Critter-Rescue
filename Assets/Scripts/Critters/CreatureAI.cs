@@ -17,31 +17,18 @@ public class CreatureAI : MonoBehaviour
     private Animator _animator;
     public Animator Animator { get { return _animator; } }
 
-    [Header("Creature Info")]
-    [SerializeField, Tooltip("Whether or not this is a large creature.")]
-    private bool isBig;
-    public enum creatureType
-    {
-        Shroom,
-        Crystal
-    };
-    [SerializeField, Tooltip("What type of creature this one is.")]
-    private creatureType type;
-    [SerializeField, Tooltip("Half the height of the creature - used for ground checks.")]
-    private float CritterHeight;
+    private float _critterHeight;
 
     [Header("Threasholds")]
-    [SerializeField, Range(0f, 100f), Tooltip("Point at which this creature will look for water.")]
-    private float _thirstiness;
     [SerializeField, Tooltip("The amount time that should pass between thrist checks.")]
     private float _thirstCheckDelay = 1;
     private float _timeSinceLastThirstCheck;
-    
-    [SerializeField,Range(0f, 100f), Tooltip("How quickly this creature will rest.")]
-    private float _lazyness;
+    private float _thirstiness;
+
     [SerializeField, Tooltip("The amount time that should pass between lazy checks.")]
     private float _lazyCheckDelay = 1;
     private float _timeSinceLastLazyCheck;
+    private float _lazyness;
 
     [Header("Resources")]
     [Range(0f, 100f)]
@@ -57,7 +44,12 @@ public class CreatureAI : MonoBehaviour
     private DrinkenFinden _drinkingSources;
 
     [Header("Navigation")]
-    [SerializeField, Tooltip("The maximum distance that a creature will travel from their initial starting position.")]
+    [SerializeField, Tooltip("The offset to respawn this creature from after falling in to a death plane.")]
+    private Vector3 _respawnOffset;
+    [SerializeField, Tooltip("How often the ground check should be run.")]
+    private float _groundCheckDelay = 1;
+    private Vector3 _lastGroundPoint;
+
     private float _travelableDistanceFromHome;
     public float TravelDistance { get { return _travelableDistanceFromHome; } }
     private Vector3 _homePoint;
@@ -67,19 +59,13 @@ public class CreatureAI : MonoBehaviour
     private bool _naving = true;
     private float _baseSpeed;
     public float BaseSpeed { get { return _baseSpeed; } }
-    private Vector3 _lastGroundPoint;
-    [SerializeField, Tooltip("The offset to respawn this creature from after falling in to a death plane.")]
-    private Vector3 _respawnOffset;
-    [SerializeField, Tooltip("How often the ground check should be run.")]
-    private float _groundCheckDelay = 1;
 
     [Header("Player interaction")]
-    [SerializeField, Tooltip("The velocity that a colliding object has to have to send the creature into the panicking state.")]
-    private float _velocityToPanic;
     [SerializeField, Tooltip("The tag that the player uses.")]
     private string _playerTag;
     private GameObject _player;
     public GameObject Player { get { return _player; } }
+    private float _velocityToPanic;
     [SerializeField, Tooltip("How quickly the creature should turn to face the player during the capture state.")]
     private float _facePlayerRate;
     public float FacePlayerRate { get { return _facePlayerRate; } }
@@ -90,7 +76,6 @@ public class CreatureAI : MonoBehaviour
         _homePoint = transform.position;
         //Component grabs
         _agent = GetComponent<NavMeshAgent>();
-        _baseSpeed = _agent.speed;
         _player = GameObject.FindGameObjectWithTag(_playerTag);
         _animator = GetComponent<Animator>();
         _drinkingSources = GetComponentInChildren<DrinkenFinden>();
@@ -107,6 +92,18 @@ public class CreatureAI : MonoBehaviour
         _currentState.StartState();
 
         StartCoroutine(GrabGroundBelow());
+    }
+    public void InitStats(float height, float thirst, float lazy, float dis, float vel, float spd)
+    {
+        if (_agent == null)
+            _agent = GetComponent<NavMeshAgent>();
+
+        _agent.height = _critterHeight = height;
+        _thirstiness = thirst;
+        _lazyness = lazy;
+        _travelableDistanceFromHome = dis;
+        _velocityToPanic = vel;
+        _agent.speed = _baseSpeed = spd;
     }
     void Update()
     {
@@ -167,28 +164,31 @@ public class CreatureAI : MonoBehaviour
         //If that random value is greater then the Hydration level, go drink
         //Eg: thirstiness = 50 // rnd returns 33 // Hydration = 40 // Won't drink
         //rnd return amny number // Hydroation below 0.5 of thirstiness // will drink
-        if(_timeSinceLastThirstCheck >= _thirstCheckDelay)
+        if (_timeSinceLastThirstCheck >= _thirstCheckDelay)
         {
             _timeSinceLastThirstCheck = 0;
             float rnd = UnityEngine.Random.Range(_thirstiness * 0.5f, _thirstiness);
-            if(rnd > Hydration)
+            if (rnd > Hydration)
             {
-                DrinkableSource currentSource = _drinkingSources.Sources[0].GetComponent<DrinkableSource>();
-                //Find all drinkable sources
-                foreach (GameObject drinkable in _drinkingSources.Sources)
+                if (_drinkingSources.Sources.Count > 0)
                 {
-                    if (Vector3.Distance(transform.position, currentSource.transform.position) > Vector3.Distance(transform.position, drinkable.transform.position))
-                        currentSource = drinkable.GetComponent<DrinkableSource>();
-                }
+                    DrinkableSource currentSource = _drinkingSources.Sources[0].GetComponent<DrinkableSource>();
+                    //Find all drinkable sources
+                    foreach (GameObject drinkable in _drinkingSources.Sources)
+                    {
+                        if (Vector3.Distance(transform.position, currentSource.transform.position) > Vector3.Distance(transform.position, drinkable.transform.position))
+                            currentSource = drinkable.GetComponent<DrinkableSource>();
+                    }
 
-                if (currentSource != null)
-                {
-                    //Go to the water source
-                    _POITarget = currentSource.transform;
-                    _agent.SetDestination(_POITarget.position);
-                    GoingForDrink = true;
-                    PrepareUpdateState(new RoamingState(this));
-                    return true;
+                    if (currentSource != null)
+                    {
+                        //Go to the water source
+                        _POITarget = currentSource.transform;
+                        _agent.SetDestination(_POITarget.position);
+                        GoingForDrink = true;
+                        PrepareUpdateState(new RoamingState(this));
+                        return true;
+                    }
                 }
             }
         }
@@ -200,12 +200,12 @@ public class CreatureAI : MonoBehaviour
     /// <returns></returns>
     public bool CheckForSleep()
     {
-        if(_timeSinceLastLazyCheck >= _lazyCheckDelay)
+        if (_timeSinceLastLazyCheck >= _lazyCheckDelay)
         {
             _timeSinceLastLazyCheck = 0;
             //Same as the POI check 
             float rnd = UnityEngine.Random.Range(_lazyness * 0.5f, _lazyness);
-            if(rnd > Energy)
+            if (rnd > Energy)
             {
                 PrepareUpdateState(new SleepState(this));
                 return true;
@@ -233,13 +233,13 @@ public class CreatureAI : MonoBehaviour
     /// </summary>
     public void RigidMode()
     {
-        if(_naving)
+        if (_naving)
         {
             _agent.isStopped = true;
             _agent.enabled = false;
             _rb.isKinematic = false;
         }
-        else if(!_naving)
+        else if (!_naving)
         {
             _rb.isKinematic = true;
             _agent.enabled = true;
@@ -264,7 +264,7 @@ public class CreatureAI : MonoBehaviour
                 Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
                 if (hit.collider.tag == "Ground")
                 {
-                    _lastGroundPoint = hit.point + new Vector3(0, CritterHeight, 0);
+                    _lastGroundPoint = hit.point + new Vector3(0, _critterHeight, 0);
                 }
             }
             yield return new WaitForSeconds(_groundCheckDelay);
