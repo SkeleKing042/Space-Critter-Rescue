@@ -7,7 +7,6 @@ public class Tablet : MonoBehaviour
 {
     [Header("Enums")]
     [SerializeField] TabletState tabletState;
-    [SerializeField] TabletTab tabletTab;
 
     [Header("Components")]
     [SerializeField] Animator animator;
@@ -22,14 +21,7 @@ public class Tablet : MonoBehaviour
         off,
     }
 
-    enum TabletTab
-    {
-        Backpack,
-        Progress,
-        Options,
-        Controls,
-        Quit
-    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,16 +37,13 @@ public class Tablet : MonoBehaviour
 
     public void ToggleTablet()
     {
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if(tabletState == TabletState.on)
         {
-            if(tabletState == TabletState.on)
-            {
-                TurnTabletOff();
-            }
-            else
-            {
-                TurnTabletOn();
-            }
+            TurnTabletOff();
+        }
+        else
+        {
+            TurnTabletOn();
         }
     }
 
