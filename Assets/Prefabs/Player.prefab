@@ -285,6 +285,7 @@ Transform:
   m_Children:
   - {fileID: 8109913824006202798}
   - {fileID: 8109913823639281491}
+  - {fileID: 4052482119666946224}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -387,6 +388,8 @@ MonoBehaviour:
   _jumpForce: 5
   _feetPosition: {x: 0, y: -0.9, z: 0}
   _legLength: 0.2
+  PlayerHeight: 1.5
+  RespawnOffset: {x: 0, y: 0.2, z: 0}
   _jetForce: 15
   _burnRate: 0.5
   _burnDelay: 0.5
@@ -399,6 +402,100 @@ MonoBehaviour:
   _jetColors:
   - {r: 0, g: 0.50980395, b: 0.50980395, a: 1}
   - {r: 0.245105, g: 0.33962262, b: 0.33962262, a: 1}
+--- !u!1001 &1115007304038046142
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8109913824263524882}
+    m_Modifications:
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: _movementAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8109913824263524885}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: _fireAction._endAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5918693712695712689}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: _jumpAction._endAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8109913824263524885}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: _fireAction._startAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5918693712695712689}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: _jumpAction._startAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8109913824263524885}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: _fireAction._endAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndPull
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: _fireAction._endAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: VacuumGun, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: _fireAction._endAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848905, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: m_Name
+      value: InputManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848910, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848910, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848910, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848910, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848910, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848910, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848910, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848910, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848910, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848910, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848910, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+--- !u!4 &4052482119666946224 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3982310410420848910, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+  m_PrefabInstance: {fileID: 1115007304038046142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5636270631344483017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -461,3 +558,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2025321122122528733, guid: d2167cf6b7411224a825142711ba489d, type: 3}
   m_PrefabInstance: {fileID: 5636270631344483017}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5918693712695712689 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2025321121461694840, guid: d2167cf6b7411224a825142711ba489d, type: 3}
+  m_PrefabInstance: {fileID: 5636270631344483017}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea47bb243e35d20429eac3e970a249ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
