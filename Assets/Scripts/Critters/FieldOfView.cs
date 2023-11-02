@@ -29,8 +29,8 @@ public class FieldOfView : MonoBehaviour
     }
     private void Update()
     {
-        if (CanSeeTarget)
-            AI.PrepareUpdateState(new PanicState(AI));
+       //if (CanSeeTarget)
+       //    AI.PrepareUpdateState(new PanicState(AI));
     }
 
     private IEnumerator FOVRoutine()

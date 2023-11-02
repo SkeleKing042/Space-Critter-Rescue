@@ -22,7 +22,9 @@ public class Trap : MonoBehaviour
     Vector3 offSet;
     Vector3 lerpPathDestination;
 
-    private List<GameObject> _alienList;
+    private List<GameObject> _alienList = new List<GameObject> ();
+
+
 
     private void Start()
     {
@@ -52,31 +54,56 @@ public class Trap : MonoBehaviour
         {
             if (alien.gameObject.tag == "bigAlien" || alien.gameObject.tag == "alien")
             {
+                if (!Catchable && alien.transform.position != lerpPathDestination)
+                    alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - offSet, 2f * Time.deltaTime);
+            }
+
+        }
+    }
+    private void OnTriggerStay(Collider alien)
+    {
+        if (Bubble.gameObject.activeSelf == true)
+        {
+            if (alien.gameObject.tag == "bigAlien" || alien.gameObject.tag == "alien")
+            {
                 //I DONT KNOW WHY THIS ALLOWS PULLING
                 // I ALSO DONT KNOW WHTY IT DOESNT LERP CORRECTLY EDSBUFDEWUIFBWEYDFB32
 
                 // set state to stunned
-                if(!_alienList.Contains(alien.gameObject)) _alienList.Add(alien.gameObject);
+                if (!_alienList.Contains(alien.gameObject)) // null refrence called
+                {
+                    _alienList.Add(alien.gameObject);
+                    Debug.Log("alien added to list");
+                }
+
+
+                if (!Catchable && alien.transform.position != lerpPathDestination)
+                {
+                    alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - offSet, 2f * Time.deltaTime);
+                }
 
                 foreach (GameObject item in _alienList)
-                 {
-                     if (!Catchable && alien.transform.position != lerpPathDestination)
-                     {
-                        item.transform.position = Vector3.Lerp(item.transform.position, transform.position - offSet, 2f * Time.deltaTime);  
-                     }
-
+                {
                     AlienAI = item.GetComponent<CreatureAI>();
 
-                     if (Vacuum.Pulling == false && AlienAI != null)
-                     {
-                         StartCoroutine(AlienAI.UpdateState(new StunnedState(AlienAI), 0f));
-                     }  
+                    if (AlienAI != null)
+                    {
+                        if (AlienAI._currentState.GetType() != typeof(StunnedState))
+                        {
+                            StartCoroutine(AlienAI.UpdateState(new StunnedState(AlienAI), 0f));
+                            Catchable = true;
+                            Debug.Log("chnaging states");
+                        }
+
+                    }
                 }
-                 
-                Catchable = true;       
+
             }
-        }   
+        }
     }
+
+
+
     private void OnTriggerExit(Collider alien)
     {
         if (Bubble.gameObject.activeSelf == true)
@@ -84,8 +111,14 @@ public class Trap : MonoBehaviour
             if (alien.gameObject.tag == "bigAlien" || alien.gameObject.tag == "alien")
             {
                 AlienAI = alien.GetComponent<CreatureAI>();
-                StartCoroutine(AlienAI.UpdateState(new PanicState(Vacuum.AlienAI), 0f));
-               if(_alienList.Contains(alien.gameObject)) _alienList.Remove(alien.gameObject);
+               if(_alienList.Contains(alien.gameObject))
+                {
+                    StartCoroutine(AlienAI.UpdateState(new PanicState(AlienAI), 0f));
+                    _alienList.Remove(alien.gameObject);
+                    Debug.Log("deleted alien from list");
+                }
+                
+               // null refrenced gets called^
             }
         }
     }
@@ -103,13 +136,7 @@ public class Trap : MonoBehaviour
         Bubble.SetActive(false);
         Catchable = false;
         // re set state to panic
-
-   
-    }
-
-    private void Update()
-    {
-        if(Bubble.gameObject.activeSelf == false && _alienList.Count >0)
+        if (Bubble.gameObject.activeSelf == false && _alienList.Count > 0)
         {
             foreach (GameObject item in _alienList)
             {
@@ -120,7 +147,13 @@ public class Trap : MonoBehaviour
             }
             _alienList.Clear();
         }
-       
+
+    }
+
+    private void Update()
+    {
+     
+
     }
 
 }
