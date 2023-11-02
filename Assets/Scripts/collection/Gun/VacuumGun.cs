@@ -30,22 +30,7 @@ public class VacuumGun : MonoBehaviour
 
     void Update()
     {
-        if(Pulling && Alien != null)
-        {
-            if (Bubble.gameObject.activeSelf == true)
-                SuckSpeed = 100;
-            else
-                SuckSpeed = 5;
-
-            Debug.Log("starting");
-            // set alien state to captures
-            StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
-            // find what direction the alien is in 
-            Vector3 dir = transform.position - _alienRigid.transform.position;
-            dir = Vector3.Normalize(dir);
-            //move the alien towards the player
-            _alienRigid.AddForce(dir * SuckSpeed);
-        }
+   
 
 
         
@@ -129,8 +114,23 @@ public class VacuumGun : MonoBehaviour
     public void Pull()
     {
      
-            Pulling = true;
-           
+        Pulling = true;
+        if (Pulling && Alien != null)
+        {
+            if (Bubble.gameObject.activeSelf == true)
+                SuckSpeed = 100;
+            else
+                SuckSpeed = 5;
+
+            Debug.Log("starting");
+            // set alien state to captures
+            StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
+            // find what direction the alien is in 
+            Vector3 dir = transform.position - _alienRigid.transform.position;
+            dir = Vector3.Normalize(dir);
+            //move the alien towards the player
+            _alienRigid.AddForce(dir * SuckSpeed);
+        }
 
     }
     public void EndPull()
