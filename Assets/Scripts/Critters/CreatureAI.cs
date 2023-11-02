@@ -8,34 +8,27 @@ using UnityEngine.AI;
 
 public class CreatureAI : MonoBehaviour
 {
-    public State _currentState;
-    [SerializeField]
+    [Header("States")]
+    [SerializeField, Tooltip("The current state of the creature.")]
     private string _theState;
+    public State _currentState;
+    private Rigidbody _rb;
+    public Rigidbody Rb { get { return _rb; } }
+    private Animator _animator;
+    public Animator Animator { get { return _animator; } }
 
     [Header("Creature Info")]
-    public bool isBig;
+    [SerializeField, Tooltip("Whether or not this is a large creature.")]
+    private bool isBig;
     public enum creatureType
     {
         Shroom,
         Crystal
     };
-    public creatureType type;
-
-
-    private Transform _POITarget;
-    public Transform POITarget { get { return _POITarget; } }
-    private bool _goingForDrink;
-    public bool GoingForDrink { get { return _goingForDrink; } set { _goingForDrink = value; } }
-    private DrinkenFinden _drinkingSources;
-
-    [SerializeField, Tooltip("The maximum distance that a creature will travel from their initial starting position.")]
-    private float _travelableDistanceFromHome;
-    public float TravelDistance { get { return _travelableDistanceFromHome; } }
-    private Vector3 _homePoint;
-    public Vector3 HomePoint { get { return _homePoint; } }
-
-    [SerializeField, Tooltip("The velocity that a colliding object has to have to send the creature into the panicking state.")]
-    private float _velocityToPanic;
+    [SerializeField, Tooltip("What type of creature this one is.")]
+    private creatureType type;
+    [SerializeField, Tooltip("Half the height of the creature - used for ground checks.")]
+    private float CritterHeight;
 
     [Header("Threasholds")]
     [SerializeField, Range(0f, 100f), Tooltip("Point at which this creature will look for water.")]
@@ -44,8 +37,7 @@ public class CreatureAI : MonoBehaviour
     private float _thirstCheckDelay = 1;
     private float _timeSinceLastThirstCheck;
     
-    [Range(0f, 100f)]
-    [SerializeField, Tooltip("How quickly this creature will rest.")]
+    [SerializeField,Range(0f, 100f), Tooltip("How quickly this creature will rest.")]
     private float _lazyness;
     [SerializeField, Tooltip("The amount time that should pass between lazy checks.")]
     private float _lazyCheckDelay = 1;
@@ -57,21 +49,40 @@ public class CreatureAI : MonoBehaviour
     [Range(0f, 100f)]
     public float Energy = 100;
 
-    [SerializeField]
-    private string _playerTag;
-    private GameObject _player;
-    public GameObject Player { get { return _player; } }
+    [Header("POIs and Drinking sources")]
+    private Transform _POITarget;
+    public Transform POITarget { get { return _POITarget; } }
+    private bool _goingForDrink;
+    public bool GoingForDrink { get { return _goingForDrink; } set { _goingForDrink = value; } }
+    private DrinkenFinden _drinkingSources;
 
+    [Header("Navigation")]
+    [SerializeField, Tooltip("The maximum distance that a creature will travel from their initial starting position.")]
+    private float _travelableDistanceFromHome;
+    public float TravelDistance { get { return _travelableDistanceFromHome; } }
+    private Vector3 _homePoint;
+    public Vector3 HomePoint { get { return _homePoint; } }
     private NavMeshAgent _agent;
     public NavMeshAgent GetAgent { get { return _agent; } }
     private bool _naving = true;
-    private Rigidbody _rb;
-    public Rigidbody Rigidbody { get { return _rb; } }
     private float _baseSpeed;
     public float BaseSpeed { get { return _baseSpeed; } }
-    private Animator _animator;
-    public Animator Animator { get { return _animator; } }
-    public float FacePlayerRate;
+    private Vector3 _lastGroundPoint;
+    [SerializeField, Tooltip("The offset to respawn this creature from after falling in to a death plane.")]
+    private Vector3 _respawnOffset;
+    [SerializeField, Tooltip("How often the ground check should be run.")]
+    private float _groundCheckDelay = 1;
+
+    [Header("Player interaction")]
+    [SerializeField, Tooltip("The velocity that a colliding object has to have to send the creature into the panicking state.")]
+    private float _velocityToPanic;
+    [SerializeField, Tooltip("The tag that the player uses.")]
+    private string _playerTag;
+    private GameObject _player;
+    public GameObject Player { get { return _player; } }
+    [SerializeField, Tooltip("How quickly the creature should turn to face the player during the capture state.")]
+    private float _facePlayerRate;
+    public float FacePlayerRate { get { return _facePlayerRate; } }
 
     private void Start()
     {
@@ -94,6 +105,8 @@ public class CreatureAI : MonoBehaviour
         //Initial state set
         _currentState = new IdleState(this);
         _currentState.StartState();
+
+        StartCoroutine(GrabGroundBelow());
     }
     void Update()
     {
@@ -240,6 +253,37 @@ public class CreatureAI : MonoBehaviour
     {
         _naving = b;
         RigidMode();
+    }
+    private IEnumerator GrabGroundBelow()
+    {
+        while (true)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, -Vector3.up * 1000f, out hit, 1000f))
+            {
+                Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
+                if (hit.collider.tag == "Ground")
+                {
+                    _lastGroundPoint = hit.point + new Vector3(0, CritterHeight, 0);
+                }
+            }
+            yield return new WaitForSeconds(_groundCheckDelay);
+        }
+    }
+    public void ReturnToLastGrounedPoint()
+    {
+        if (_naving)
+        {
+            _agent.Warp(_lastGroundPoint + _respawnOffset);
+            PrepareUpdateState(new StunnedState(this));
+            PrepareUpdateState(new IdleState(this), 2f);
+        }
+        else if (!_naving)
+        {
+            _rb.velocity = Vector3.zero;
+            transform.position = _lastGroundPoint + _respawnOffset;
+            PrepareUpdateState(new IdleState(this), 2f);
+        }
     }
     public void DEBUG_CauseBrainRot()
     {
