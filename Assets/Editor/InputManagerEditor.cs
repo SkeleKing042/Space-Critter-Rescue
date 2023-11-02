@@ -23,13 +23,12 @@ public class InputManagerEditor : Editor
 
         DrawToEvents(iM.SprintAction);
         DrawToEvents(iM.CrouchAction);
-        DrawToEvents(iM.JumpAction.StartAction);
-        DrawToEvents(iM.JumpAction.EndAction);
+        DrawToEvents(iM.JumpAction);
+        DrawToEvents(iM.JetPackAction.Action);
         DrawToEvents(iM.TrapInteractionAction);
         DrawToEvents(iM.EnableTrapAction);
         DrawToEvents(iM.TabletAction);
-        DrawToEvents(iM.FireAction.StartAction);
-        DrawToEvents(iM.FireAction.EndAction);
+        DrawToEvents(iM.FireAction.Action);
         DrawToEvents(iM.AltFireAction);
         DrawToEvents(iM.ReturnToShipAction);
         DrawToEvents(iM.SwitchToolAction);

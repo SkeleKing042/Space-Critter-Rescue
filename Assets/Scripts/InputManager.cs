@@ -2,6 +2,7 @@
 //Last Edited by Jackson Lucas
 
 using System;
+using System.Collections;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,10 +18,11 @@ public class InputManager : MonoBehaviour
     [Serializable]
     public class HoldEvent
     {
-        public UnityEvent StartAction = new UnityEvent();
-        public UnityEvent EndAction = new UnityEvent();
-        public InputActionReference InputReference; 
+        public UnityEvent Action = new UnityEvent();
+        public InputActionReference InputReference;
+        public float ActionDelay = 0.01f;
         private InputAction _inputAction;
+        private bool _doAction;
 
         //DOES NOT WORK AS A CONSTRUCTOR
         /// <summary>
@@ -35,21 +37,33 @@ public class InputManager : MonoBehaviour
         /// <summary>
         /// Invokes the desiered actions.
         /// </summary>
-        public void DoEvent()
+        public bool DoEvent()
         {
-            Debug.Log("Hold action called.");
+            //Debug.Log("Hold action called.");
             _inputAction.started +=
-                context =>
+                _s =>
                 {
-                    Debug.Log("Start action");
-                    StartAction.Invoke();
+                    Debug.Log("Starting action");
+                    _doAction = true;
                 };
             _inputAction.canceled +=
-                _ =>
+                _e =>
                 {
                     Debug.Log("Ending action.");
-                    EndAction.Invoke();
+                    _doAction = false;
                 };
+
+            return _doAction;
+        }
+
+        public IEnumerator RepeatAction(float delay)
+        {
+            while(_doAction)
+            {
+                yield return new WaitForSeconds(delay);
+                Debug.Log("Doing action");
+                Action.Invoke();
+            }
         }
     }
 
@@ -60,7 +74,8 @@ public class InputManager : MonoBehaviour
     public UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
     public UnityEvent SprintAction = new UnityEvent();
     public UnityEvent CrouchAction = new UnityEvent();
-    public HoldEvent JumpAction = new HoldEvent();
+    public UnityEvent JumpAction = new UnityEvent();
+    public HoldEvent JetPackAction = new HoldEvent();
 
     [Header("Tool actions")]
     public UnityEvent TrapInteractionAction = new UnityEvent();
@@ -79,13 +94,18 @@ public class InputManager : MonoBehaviour
         else
             Cursor.lockState = CursorLockMode.None;
             
-        JumpAction.InitializeAction();
+        JetPackAction.InitializeAction();
         FireAction.InitializeAction();
     }
     void OnJump()
     {
         Debug.Log("OnJump called.");
-        JumpAction.DoEvent();
+        JumpAction.Invoke();
+    }
+    void OnJetPack()
+    {
+        Debug.Log("OnJetPack called.");
+        if (JetPackAction.DoEvent()) StartCoroutine(JetPackAction.RepeatAction(JetPackAction.ActionDelay));
     }
     void OnSprint()
     {
@@ -120,7 +140,7 @@ public class InputManager : MonoBehaviour
     void OnFire()
     {
         Debug.Log("OnFire called.");
-        FireAction.DoEvent();
+        if(FireAction.DoEvent()) StartCoroutine(FireAction.RepeatAction(FireAction.ActionDelay));
     }
     void OnAltFire()
     {
