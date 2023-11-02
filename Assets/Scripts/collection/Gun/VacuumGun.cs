@@ -11,13 +11,15 @@ public class VacuumGun : MonoBehaviour
     public Rigidbody _alienRigid;
     public CreatureAI AlienAI;
     public Trap trap;
+    public GameObject Bubble;
 
     // movement and position vectors
     Vector3 AlienPosition;
     Vector3 forward;
 
     // ajustable variables
-    public float SuckSpeed;
+    [SerializeField]
+    private float SuckSpeed = 5;
     public float OffsetFixSpeed;
     public float StunTime;
 
@@ -30,8 +32,13 @@ public class VacuumGun : MonoBehaviour
     {
         if(Pulling && Alien != null)
         {
+            if (Bubble.gameObject.activeSelf == true)
+                SuckSpeed = 100;
+            else
+                SuckSpeed = 5;
+
             Debug.Log("starting");
-            // set alien state to capture
+            // set alien state to captures
             StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
             // find what direction the alien is in 
             Vector3 dir = transform.position - _alienRigid.transform.position;

@@ -58,6 +58,8 @@ public class Trap : MonoBehaviour
                     alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - offSet, 2f * Time.deltaTime);
             }
 
+          
+
         }
     }
     private void OnTriggerStay(Collider alien)
@@ -77,11 +79,6 @@ public class Trap : MonoBehaviour
                 }
 
 
-                if (!Catchable && alien.transform.position != lerpPathDestination)
-                {
-                    alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - offSet, 2f * Time.deltaTime);
-                }
-
                 foreach (GameObject item in _alienList)
                 {
                     AlienAI = item.GetComponent<CreatureAI>();
@@ -96,7 +93,13 @@ public class Trap : MonoBehaviour
                         }
 
                     }
+                    if (Vacuum.Pulling == true)
+                    {
+                        if (AlienAI._currentState.GetType() != typeof(CaptureState))
+                            StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
+                    }
                 }
+
 
             }
         }
@@ -152,7 +155,7 @@ public class Trap : MonoBehaviour
 
     private void Update()
     {
-     
+
 
     }
 
