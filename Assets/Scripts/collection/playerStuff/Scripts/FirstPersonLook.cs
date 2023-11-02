@@ -19,8 +19,9 @@ public class FirstPersonLook : MonoBehaviour
 
     void Start()
     {
+        Debug.Log(gameObject.name + " has the old look script");
         // Lock the mouse cursor to the game screen.
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
