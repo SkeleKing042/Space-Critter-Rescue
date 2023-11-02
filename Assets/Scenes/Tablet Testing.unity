@@ -1186,7 +1186,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4207293392497186, guid: a9e7ab68607c3f34f9e8a70fb183832e, type: 3}
   m_PrefabInstance: {fileID: 584933180}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1078780609
+--- !u!114 &1078780615
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1195,10 +1195,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1078780593}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d215a67780b29c649a764509c9246935, type: 3}
+  m_Script: {fileID: 11500000, guid: 6edafec02c85e2e4bbae1972ed61d85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabletState: 1
+  tabletState: 0
   tabletTab: 0
   animator: {fileID: 1078780602}
   tabs:
