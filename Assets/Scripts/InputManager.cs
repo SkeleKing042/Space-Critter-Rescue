@@ -141,9 +141,9 @@ public class InputManager : MonoBehaviour
         Debug.Log("OnCrouch called.");
         CrouchAction.Invoke();
     }
-    void OnToggleTablet_On()
+    void OnToggleTablet()
     {
-        Debug.Log("OnTablet called.");
+        Debug.Log("Toggle Tablet called");
         ToggleTablet_On.Invoke();
     }
     void OnFire()
@@ -192,11 +192,7 @@ public class InputManager : MonoBehaviour
         Debug.Log("On select teleport called");
         SelectTeleport.Invoke();
     }
-    void OnToggleTablet_Off()
-    {
-        Debug.Log("Toggled Tablet()");
-        ToggleTablet_Off.Invoke();
-    }
+
 
 
 

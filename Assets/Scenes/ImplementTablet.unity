@@ -547,6 +547,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 81523826}
   m_CullTransparentMesh: 1
+--- !u!1 &141340887 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4052482119666946231, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+  m_PrefabInstance: {fileID: 1262626118}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &161672116
 GameObject:
   m_ObjectHideFlags: 0
@@ -2780,6 +2785,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1445501854533856224, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 141340887}
     - target: {fileID: 1750011440768277443, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2946,7 +2955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: ToggleTablet_On.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleTablet_On
+      value: ToggleTablet
       objectReference: {fileID: 0}
     - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: ToggleTablet_Off.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Tablet : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Tablet : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] Animator animator;
-    [SerializeField] PlayerInput input;
+    [SerializeField] PlayerInput playerInput;
 
     [Header("Tabs")]
     [SerializeField] GameObject[] tabs;
@@ -21,7 +22,6 @@ public class Tablet : MonoBehaviour
         on,
         off,
     }
-
 
     // Start is called before the first frame update
     void Start()
@@ -35,31 +35,23 @@ public class Tablet : MonoBehaviour
 
     }
 
-    public void ToggleTablet_On()
+    public void ToggleTablet()
     {
-        TurnTabletOn();
+        if(tabletState == TabletState.on)
+        {
+            animator.SetTrigger("Lower Tablet");
+            SetTabletState(TabletState.off);
+        }
+        else if(tabletState == TabletState.off)
+        {
+            animator.SetTrigger("Raise Tablet");
+            SetTabletState(TabletState.on);
+        }
     }
-    public void ToggleTablet_Off()
-    {
-        TurnTabletOff();
-    }
-
 
     public void SetTabletState(Tablet.TabletState inputTabletState)
     {
         tabletState = inputTabletState;
-    }
-
-    public void TurnTabletOff()
-    {
-        animator.SetTrigger("Lower Tablet");
-        SetTabletState(TabletState.off);
-    }
-
-    public void TurnTabletOn()
-    {
-        animator.SetTrigger("Raise Tablet");
-        SetTabletState(TabletState.on);
     }
 
     public void ActivateCorrectTab()
@@ -85,6 +77,8 @@ public class Tablet : MonoBehaviour
                 tabIndex = tabs.Length - 1;
             }
         }
+
+        ActivateCorrectTab();
     }
 
     public void MoveTabRight()
@@ -100,6 +94,8 @@ public class Tablet : MonoBehaviour
                 tabIndex = 0;
             }
         }
+
+        ActivateCorrectTab();
     }
 
 

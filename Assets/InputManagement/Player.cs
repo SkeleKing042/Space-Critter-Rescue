@@ -136,9 +136,54 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ToggleTablet_On"",
+                    ""name"": ""ToggleTablet"",
                     ""type"": ""Button"",
                     ""id"": ""2ca207ca-b0b0-4ca5-a04c-df0478ff3ccd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectTeleport"",
+                    ""type"": ""Button"",
+                    ""id"": ""f46e8103-2c0a-4218-b949-536de00c92e2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveTeleportRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""0595c8ad-1489-4455-b438-afd2de7cc9ff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveTeleportLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""21f336e1-a272-4c6d-b964-167de58d633a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveTabRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""900ed08d-fb05-40eb-b7fb-8ffc4337eed8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveTabLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""3d173307-1043-4522-aa74-ba6c7040f1db"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -505,7 +550,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ToggleTablet_On"",
+                    ""action"": ""ToggleTablet"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -516,75 +561,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""ToggleTablet_On"",
+                    ""action"": ""ToggleTablet"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""UI"",
-            ""id"": ""d295925b-a8d5-4cb0-8c48-86536c4e20c7"",
-            ""actions"": [
-                {
-                    ""name"": ""MoveTabLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""02bef0c8-e578-4462-8dcd-013303003db0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 },
-                {
-                    ""name"": ""MoveTabRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""001dc354-c9bb-43ad-bede-b6e2f2b7c8b1"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveTeleportLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""4b8b8859-2c4c-4820-98cf-66f5a15800b9"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveTeleportRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""6b953aaa-46b5-4cd9-95a7-d20129ea9278"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectTeleport"",
-                    ""type"": ""Button"",
-                    ""id"": ""4f6b327a-5c51-4450-bd44-9898cb0b26cc"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ToggleTablet_Off"",
-                    ""type"": ""Button"",
-                    ""id"": ""c4e951d9-2607-453a-85e8-c1b33f5bb4d4"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""369803e0-002b-466c-9572-9e795c86aaa8"",
+                    ""id"": ""0ac88489-1df9-4c6b-95c6-1153a7b4515e"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -595,7 +578,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f110f559-1cd9-47f7-8e9e-41ffd5276b63"",
+                    ""id"": ""bddae5bd-cbbe-4cbe-b249-569405259957"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -606,7 +589,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""16cf14cc-e06d-4de3-85c5-47eeccefbd57"",
+                    ""id"": ""6a7a1d0d-80ae-499e-acdd-84c13364d4fa"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -617,7 +600,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ed2b2208-ccb7-404e-b8a9-34577e1aba53"",
+                    ""id"": ""fb9bbe3e-688f-4c27-a060-6404fc567495"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -628,7 +611,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b9a19df5-4d0c-42e5-b4cf-ecda836c10c3"",
+                    ""id"": ""7e00f67f-5010-41c6-bce2-33a8ac0e7828"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -636,30 +619,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""SelectTeleport"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b3bb1a92-e2ee-462f-b767-f2afe9331694"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ToggleTablet_Off"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8965df55-a35a-44fe-a51c-74bedc270d95"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""ToggleTablet_Off"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""d295925b-a8d5-4cb0-8c48-86536c4e20c7"",
+            ""actions"": [],
+            ""bindings"": []
         }
     ],
     ""controlSchemes"": [
@@ -739,15 +706,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_EnableTrap = m_Player.FindAction("EnableTrap", throwIfNotFound: true);
         m_Player_ReturnToShip = m_Player.FindAction("ReturnToShip", throwIfNotFound: true);
         m_Player_SwitchTool = m_Player.FindAction("SwitchTool", throwIfNotFound: true);
-        m_Player_ToggleTablet_On = m_Player.FindAction("ToggleTablet_On", throwIfNotFound: true);
+        m_Player_ToggleTablet = m_Player.FindAction("ToggleTablet", throwIfNotFound: true);
+        m_Player_SelectTeleport = m_Player.FindAction("SelectTeleport", throwIfNotFound: true);
+        m_Player_MoveTeleportRight = m_Player.FindAction("MoveTeleportRight", throwIfNotFound: true);
+        m_Player_MoveTeleportLeft = m_Player.FindAction("MoveTeleportLeft", throwIfNotFound: true);
+        m_Player_MoveTabRight = m_Player.FindAction("MoveTabRight", throwIfNotFound: true);
+        m_Player_MoveTabLeft = m_Player.FindAction("MoveTabLeft", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_MoveTabLeft = m_UI.FindAction("MoveTabLeft", throwIfNotFound: true);
-        m_UI_MoveTabRight = m_UI.FindAction("MoveTabRight", throwIfNotFound: true);
-        m_UI_MoveTeleportLeft = m_UI.FindAction("MoveTeleportLeft", throwIfNotFound: true);
-        m_UI_MoveTeleportRight = m_UI.FindAction("MoveTeleportRight", throwIfNotFound: true);
-        m_UI_SelectTeleport = m_UI.FindAction("SelectTeleport", throwIfNotFound: true);
-        m_UI_ToggleTablet_Off = m_UI.FindAction("ToggleTablet_Off", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -819,7 +785,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_EnableTrap;
     private readonly InputAction m_Player_ReturnToShip;
     private readonly InputAction m_Player_SwitchTool;
-    private readonly InputAction m_Player_ToggleTablet_On;
+    private readonly InputAction m_Player_ToggleTablet;
+    private readonly InputAction m_Player_SelectTeleport;
+    private readonly InputAction m_Player_MoveTeleportRight;
+    private readonly InputAction m_Player_MoveTeleportLeft;
+    private readonly InputAction m_Player_MoveTabRight;
+    private readonly InputAction m_Player_MoveTabLeft;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -836,7 +807,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @EnableTrap => m_Wrapper.m_Player_EnableTrap;
         public InputAction @ReturnToShip => m_Wrapper.m_Player_ReturnToShip;
         public InputAction @SwitchTool => m_Wrapper.m_Player_SwitchTool;
-        public InputAction @ToggleTablet_On => m_Wrapper.m_Player_ToggleTablet_On;
+        public InputAction @ToggleTablet => m_Wrapper.m_Player_ToggleTablet;
+        public InputAction @SelectTeleport => m_Wrapper.m_Player_SelectTeleport;
+        public InputAction @MoveTeleportRight => m_Wrapper.m_Player_MoveTeleportRight;
+        public InputAction @MoveTeleportLeft => m_Wrapper.m_Player_MoveTeleportLeft;
+        public InputAction @MoveTabRight => m_Wrapper.m_Player_MoveTabRight;
+        public InputAction @MoveTabLeft => m_Wrapper.m_Player_MoveTabLeft;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -882,9 +858,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SwitchTool.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
                 @SwitchTool.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
                 @SwitchTool.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
-                @ToggleTablet_On.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTablet_On;
-                @ToggleTablet_On.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTablet_On;
-                @ToggleTablet_On.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTablet_On;
+                @ToggleTablet.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTablet;
+                @ToggleTablet.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTablet;
+                @ToggleTablet.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTablet;
+                @SelectTeleport.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectTeleport;
+                @SelectTeleport.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectTeleport;
+                @SelectTeleport.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectTeleport;
+                @MoveTeleportRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleportRight;
+                @MoveTeleportRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleportRight;
+                @MoveTeleportRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleportRight;
+                @MoveTeleportLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleportLeft;
+                @MoveTeleportLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleportLeft;
+                @MoveTeleportLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleportLeft;
+                @MoveTabRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabRight;
+                @MoveTabRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabRight;
+                @MoveTabRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabRight;
+                @MoveTabLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabLeft;
+                @MoveTabLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabLeft;
+                @MoveTabLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabLeft;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -925,9 +916,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SwitchTool.started += instance.OnSwitchTool;
                 @SwitchTool.performed += instance.OnSwitchTool;
                 @SwitchTool.canceled += instance.OnSwitchTool;
-                @ToggleTablet_On.started += instance.OnToggleTablet_On;
-                @ToggleTablet_On.performed += instance.OnToggleTablet_On;
-                @ToggleTablet_On.canceled += instance.OnToggleTablet_On;
+                @ToggleTablet.started += instance.OnToggleTablet;
+                @ToggleTablet.performed += instance.OnToggleTablet;
+                @ToggleTablet.canceled += instance.OnToggleTablet;
+                @SelectTeleport.started += instance.OnSelectTeleport;
+                @SelectTeleport.performed += instance.OnSelectTeleport;
+                @SelectTeleport.canceled += instance.OnSelectTeleport;
+                @MoveTeleportRight.started += instance.OnMoveTeleportRight;
+                @MoveTeleportRight.performed += instance.OnMoveTeleportRight;
+                @MoveTeleportRight.canceled += instance.OnMoveTeleportRight;
+                @MoveTeleportLeft.started += instance.OnMoveTeleportLeft;
+                @MoveTeleportLeft.performed += instance.OnMoveTeleportLeft;
+                @MoveTeleportLeft.canceled += instance.OnMoveTeleportLeft;
+                @MoveTabRight.started += instance.OnMoveTabRight;
+                @MoveTabRight.performed += instance.OnMoveTabRight;
+                @MoveTabRight.canceled += instance.OnMoveTabRight;
+                @MoveTabLeft.started += instance.OnMoveTabLeft;
+                @MoveTabLeft.performed += instance.OnMoveTabLeft;
+                @MoveTabLeft.canceled += instance.OnMoveTabLeft;
             }
         }
     }
@@ -936,22 +942,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     // UI
     private readonly InputActionMap m_UI;
     private IUIActions m_UIActionsCallbackInterface;
-    private readonly InputAction m_UI_MoveTabLeft;
-    private readonly InputAction m_UI_MoveTabRight;
-    private readonly InputAction m_UI_MoveTeleportLeft;
-    private readonly InputAction m_UI_MoveTeleportRight;
-    private readonly InputAction m_UI_SelectTeleport;
-    private readonly InputAction m_UI_ToggleTablet_Off;
     public struct UIActions
     {
         private @PlayerInput m_Wrapper;
         public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MoveTabLeft => m_Wrapper.m_UI_MoveTabLeft;
-        public InputAction @MoveTabRight => m_Wrapper.m_UI_MoveTabRight;
-        public InputAction @MoveTeleportLeft => m_Wrapper.m_UI_MoveTeleportLeft;
-        public InputAction @MoveTeleportRight => m_Wrapper.m_UI_MoveTeleportRight;
-        public InputAction @SelectTeleport => m_Wrapper.m_UI_SelectTeleport;
-        public InputAction @ToggleTablet_Off => m_Wrapper.m_UI_ToggleTablet_Off;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -961,46 +955,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_UIActionsCallbackInterface != null)
             {
-                @MoveTabLeft.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveTabLeft;
-                @MoveTabLeft.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveTabLeft;
-                @MoveTabLeft.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveTabLeft;
-                @MoveTabRight.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveTabRight;
-                @MoveTabRight.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveTabRight;
-                @MoveTabRight.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveTabRight;
-                @MoveTeleportLeft.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveTeleportLeft;
-                @MoveTeleportLeft.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveTeleportLeft;
-                @MoveTeleportLeft.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveTeleportLeft;
-                @MoveTeleportRight.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveTeleportRight;
-                @MoveTeleportRight.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveTeleportRight;
-                @MoveTeleportRight.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMoveTeleportRight;
-                @SelectTeleport.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSelectTeleport;
-                @SelectTeleport.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSelectTeleport;
-                @SelectTeleport.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSelectTeleport;
-                @ToggleTablet_Off.started -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleTablet_Off;
-                @ToggleTablet_Off.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleTablet_Off;
-                @ToggleTablet_Off.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleTablet_Off;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @MoveTabLeft.started += instance.OnMoveTabLeft;
-                @MoveTabLeft.performed += instance.OnMoveTabLeft;
-                @MoveTabLeft.canceled += instance.OnMoveTabLeft;
-                @MoveTabRight.started += instance.OnMoveTabRight;
-                @MoveTabRight.performed += instance.OnMoveTabRight;
-                @MoveTabRight.canceled += instance.OnMoveTabRight;
-                @MoveTeleportLeft.started += instance.OnMoveTeleportLeft;
-                @MoveTeleportLeft.performed += instance.OnMoveTeleportLeft;
-                @MoveTeleportLeft.canceled += instance.OnMoveTeleportLeft;
-                @MoveTeleportRight.started += instance.OnMoveTeleportRight;
-                @MoveTeleportRight.performed += instance.OnMoveTeleportRight;
-                @MoveTeleportRight.canceled += instance.OnMoveTeleportRight;
-                @SelectTeleport.started += instance.OnSelectTeleport;
-                @SelectTeleport.performed += instance.OnSelectTeleport;
-                @SelectTeleport.canceled += instance.OnSelectTeleport;
-                @ToggleTablet_Off.started += instance.OnToggleTablet_Off;
-                @ToggleTablet_Off.performed += instance.OnToggleTablet_Off;
-                @ToggleTablet_Off.canceled += instance.OnToggleTablet_Off;
             }
         }
     }
@@ -1064,15 +1022,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnEnableTrap(InputAction.CallbackContext context);
         void OnReturnToShip(InputAction.CallbackContext context);
         void OnSwitchTool(InputAction.CallbackContext context);
-        void OnToggleTablet_On(InputAction.CallbackContext context);
+        void OnToggleTablet(InputAction.CallbackContext context);
+        void OnSelectTeleport(InputAction.CallbackContext context);
+        void OnMoveTeleportRight(InputAction.CallbackContext context);
+        void OnMoveTeleportLeft(InputAction.CallbackContext context);
+        void OnMoveTabRight(InputAction.CallbackContext context);
+        void OnMoveTabLeft(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
-        void OnMoveTabLeft(InputAction.CallbackContext context);
-        void OnMoveTabRight(InputAction.CallbackContext context);
-        void OnMoveTeleportLeft(InputAction.CallbackContext context);
-        void OnMoveTeleportRight(InputAction.CallbackContext context);
-        void OnSelectTeleport(InputAction.CallbackContext context);
-        void OnToggleTablet_Off(InputAction.CallbackContext context);
     }
 }

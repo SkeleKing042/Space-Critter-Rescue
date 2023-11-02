@@ -114,9 +114,54 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ToggleTablet_On",
+                    "name": "ToggleTablet",
                     "type": "Button",
                     "id": "2ca207ca-b0b0-4ca5-a04c-df0478ff3ccd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SelectTeleport",
+                    "type": "Button",
+                    "id": "f46e8103-2c0a-4218-b949-536de00c92e2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveTeleportRight",
+                    "type": "Button",
+                    "id": "0595c8ad-1489-4455-b438-afd2de7cc9ff",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveTeleportLeft",
+                    "type": "Button",
+                    "id": "21f336e1-a272-4c6d-b964-167de58d633a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveTabRight",
+                    "type": "Button",
+                    "id": "900ed08d-fb05-40eb-b7fb-8ffc4337eed8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveTabLeft",
+                    "type": "Button",
+                    "id": "3d173307-1043-4522-aa74-ba6c7040f1db",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -483,7 +528,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "ToggleTablet_On",
+                    "action": "ToggleTablet",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -494,75 +539,13 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "ToggleTablet_On",
+                    "action": "ToggleTablet",
                     "isComposite": false,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "UI",
-            "id": "d295925b-a8d5-4cb0-8c48-86536c4e20c7",
-            "actions": [
-                {
-                    "name": "MoveTabLeft",
-                    "type": "Button",
-                    "id": "02bef0c8-e578-4462-8dcd-013303003db0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
-                {
-                    "name": "MoveTabRight",
-                    "type": "Button",
-                    "id": "001dc354-c9bb-43ad-bede-b6e2f2b7c8b1",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MoveTeleportLeft",
-                    "type": "Button",
-                    "id": "4b8b8859-2c4c-4820-98cf-66f5a15800b9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MoveTeleportRight",
-                    "type": "Button",
-                    "id": "6b953aaa-46b5-4cd9-95a7-d20129ea9278",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SelectTeleport",
-                    "type": "Button",
-                    "id": "4f6b327a-5c51-4450-bd44-9898cb0b26cc",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ToggleTablet_Off",
-                    "type": "Button",
-                    "id": "c4e951d9-2607-453a-85e8-c1b33f5bb4d4",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
                 {
                     "name": "",
-                    "id": "369803e0-002b-466c-9572-9e795c86aaa8",
+                    "id": "0ac88489-1df9-4c6b-95c6-1153a7b4515e",
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
@@ -573,7 +556,7 @@
                 },
                 {
                     "name": "",
-                    "id": "f110f559-1cd9-47f7-8e9e-41ffd5276b63",
+                    "id": "bddae5bd-cbbe-4cbe-b249-569405259957",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
@@ -584,7 +567,7 @@
                 },
                 {
                     "name": "",
-                    "id": "16cf14cc-e06d-4de3-85c5-47eeccefbd57",
+                    "id": "6a7a1d0d-80ae-499e-acdd-84c13364d4fa",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -595,7 +578,7 @@
                 },
                 {
                     "name": "",
-                    "id": "ed2b2208-ccb7-404e-b8a9-34577e1aba53",
+                    "id": "fb9bbe3e-688f-4c27-a060-6404fc567495",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -606,7 +589,7 @@
                 },
                 {
                     "name": "",
-                    "id": "b9a19df5-4d0c-42e5-b4cf-ecda836c10c3",
+                    "id": "7e00f67f-5010-41c6-bce2-33a8ac0e7828",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
@@ -614,30 +597,14 @@
                     "action": "SelectTeleport",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b3bb1a92-e2ee-462f-b767-f2afe9331694",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "ToggleTablet_Off",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8965df55-a35a-44fe-a51c-74bedc270d95",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "ToggleTablet_Off",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "d295925b-a8d5-4cb0-8c48-86536c4e20c7",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": [
