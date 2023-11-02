@@ -80,11 +80,20 @@ public class InputManager : MonoBehaviour
     [Header("Tool actions")]
     public UnityEvent TrapInteractionAction = new UnityEvent();
     public UnityEvent EnableTrapAction = new UnityEvent();
-    public UnityEvent TabletAction = new UnityEvent();
+    public UnityEvent ToggleTablet_On = new UnityEvent();
     public HoldEvent FireAction = new HoldEvent();
     public UnityEvent AltFireAction = new UnityEvent();
     public UnityEvent ReturnToShipAction = new UnityEvent();
     public UnityEvent SwitchToolAction = new UnityEvent();
+
+    [Header("UI Actions")]
+    public UnityEvent MoveTabLeft = new UnityEvent();
+    public UnityEvent MoveTabRight = new UnityEvent();
+    public UnityEvent MoveTeleportLeft = new UnityEvent();
+    public UnityEvent MoveTeleportRight = new UnityEvent();
+    public UnityEvent SelectTeleport = new UnityEvent();
+    public UnityEvent ToggleTablet_Off = new UnityEvent();
+
 
 
     private void Awake()
@@ -132,10 +141,10 @@ public class InputManager : MonoBehaviour
         Debug.Log("OnCrouch called.");
         CrouchAction.Invoke();
     }
-    void OnTablet()
+    void OnToggleTablet_On()
     {
         Debug.Log("OnTablet called.");
-        TabletAction.Invoke();
+        ToggleTablet_On.Invoke();
     }
     void OnFire()
     {
@@ -157,4 +166,38 @@ public class InputManager : MonoBehaviour
         Debug.Log("Switching Tools");
         SwitchToolAction.Invoke();
     }
+
+    void OnMoveTabLeft()
+    {
+        Debug.Log("Move tab left called");
+        MoveTabLeft.Invoke();
+    }
+    void OnMoveTabRight()
+    {
+        Debug.Log("Move tab right called");
+        MoveTabRight.Invoke();
+    }
+    void OnMoveTeleportLeft()
+    {
+        Debug.Log("Move Teleport Left Called");
+        MoveTeleportLeft.Invoke();
+    }
+    void OnMoveTeleportRight()
+    {
+        Debug.Log("Move Teleport Right Called");
+        MoveTeleportRight.Invoke();
+    }
+    void OnSelectTeleport()
+    {
+        Debug.Log("On select teleport called");
+        SelectTeleport.Invoke();
+    }
+    void OnToggleTablet_Off()
+    {
+        Debug.Log("Toggled Tablet()");
+        ToggleTablet_Off.Invoke();
+    }
+
+
+
 }

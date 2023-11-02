@@ -10,6 +10,7 @@ public class Tablet : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] Animator animator;
+    [SerializeField] PlayerInput input;
 
     [Header("Tabs")]
     [SerializeField] GameObject[] tabs;
@@ -25,26 +26,22 @@ public class Tablet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        ToggleTablet();
-        MoveTabs();
+
     }
 
-    public void ToggleTablet()
+    public void ToggleTablet_On()
     {
-        if(tabletState == TabletState.on)
-        {
-            TurnTabletOff();
-        }
-        else
-        {
-            TurnTabletOn();
-        }
+        TurnTabletOn();
+    }
+    public void ToggleTablet_Off()
+    {
+        TurnTabletOff();
     }
 
 
@@ -65,8 +62,6 @@ public class Tablet : MonoBehaviour
         SetTabletState(TabletState.on);
     }
 
-
-
     public void ActivateCorrectTab()
     {
         foreach(GameObject tab in tabs)
@@ -77,19 +72,32 @@ public class Tablet : MonoBehaviour
         tabs[tabIndex].SetActive(true);
     }
 
-    public void MoveTabs()
+    public void MoveTabLeft()
     {
-        if(tabletState == TabletState.on)
+        if (tabletState == TabletState.on)
         {
-            if(Input.GetKeyDown(KeyCode.Z) && tabIndex > 0)
+            if (tabIndex > 0)
             {
                 tabIndex--;
-                ActivateCorrectTab();
             }
-            if(Input.GetKeyDown(KeyCode.X) && tabIndex < tabs.Length-1)
+            else
+            {
+                tabIndex = tabs.Length - 1;
+            }
+        }
+    }
+
+    public void MoveTabRight()
+    {
+        if (tabletState == TabletState.on)
+        {
+            if (tabIndex < tabs.Length - 1)
             {
                 tabIndex++;
-                ActivateCorrectTab();
+            }
+            else
+            {
+                tabIndex = 0;
             }
         }
     }

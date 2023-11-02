@@ -2349,6 +2349,17 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &978888969 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1445501854533856224, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+  m_PrefabInstance: {fileID: 1262626118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6edafec02c85e2e4bbae1972ed61d85e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &990969727
 GameObject:
   m_ObjectHideFlags: 0
@@ -2769,6 +2780,226 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1750011440768277443, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750011440768277443, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750011440768277443, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750011440768277443, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750011440768277443, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750011440768277443, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750011441458074437, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750011441458074437, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750011441458074437, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750011441458074437, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750011441458074437, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750011441458074437, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946225, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: 5489c5d1-4714-4508-858c-cf4669c3fcc3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabLeft.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabRight.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: TabletAction.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_On.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_Off.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabLeft.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabRight.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: TabletAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabLeft.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 978888969}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabRight.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 978888969}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: TabletAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 978888969}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 978888969}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_On.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabLeft.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_Off.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabLeft.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveTabLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabRight.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: TabletAction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_On.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 978888969}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabRight.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveTabRight
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: TabletAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleTablet
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleTablet
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_Off.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 978888969}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_On.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_Off.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_On.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleTablet_On
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_Off.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleTablet_Off
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabLeft.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Tablet, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabRight.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Tablet, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: TabletAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Tablet, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Tablet, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_On.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Tablet, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_Off.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Tablet, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabLeft.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: MoveTabRight.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: TabletAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_On.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: ToggleTablet_Off.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8109913824263524882, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -5354,17 +5585,17 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
+  m_PointAction: {fileID: -3678629613032717633, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
+  m_MoveAction: {fileID: -5697054379854681368, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
+  m_SubmitAction: {fileID: 541737930271607989, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
+  m_CancelAction: {fileID: 6382702959305558787, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
+  m_LeftClickAction: {fileID: 7710194344720917632, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
+  m_MiddleClickAction: {fileID: -2973845306826176013, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
+  m_RightClickAction: {fileID: -6016406669074159604, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
+  m_ScrollWheelAction: {fileID: 8338925243787992546, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
+  m_TrackedDevicePositionAction: {fileID: -5748244170905263571, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: -5374816084195208216, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
