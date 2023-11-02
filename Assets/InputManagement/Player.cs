@@ -37,6 +37,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""JetPack"",
+                    ""type"": ""Button"",
+                    ""id"": ""9896a99f-d05a-453a-8d75-e058c9b8d8b7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""77f697f6-cd6a-4406-b0c7-5341ccdb5355"",
@@ -486,6 +495,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SwitchTool"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b86ce2f-829e-4655-8411-b1d7aac0563e"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""JetPack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9357d9d-cb60-4378-8ff6-3791b44542e4"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""JetPack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1074,6 +1105,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_JetPack = m_Player.FindAction("JetPack", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_PickupTrap = m_Player.FindAction("PickupTrap", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
@@ -1157,6 +1189,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_JetPack;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_PickupTrap;
     private readonly InputAction m_Player_Move;
@@ -1173,6 +1206,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         private @PlayerInput m_Wrapper;
         public PlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @JetPack => m_Wrapper.m_Player_JetPack;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @PickupTrap => m_Wrapper.m_Player_PickupTrap;
         public InputAction @Move => m_Wrapper.m_Player_Move;
@@ -1196,6 +1230,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @JetPack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJetPack;
+                @JetPack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJetPack;
+                @JetPack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJetPack;
                 @Sprint.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
                 @Sprint.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
                 @Sprint.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
@@ -1236,6 +1273,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @JetPack.started += instance.OnJetPack;
+                @JetPack.performed += instance.OnJetPack;
+                @JetPack.canceled += instance.OnJetPack;
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
@@ -1426,6 +1466,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnJump(InputAction.CallbackContext context);
+        void OnJetPack(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnPickupTrap(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);

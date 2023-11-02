@@ -9,34 +9,35 @@ using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerMovment : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     Rigidbody _rb;
     Camera _camera;
     Vector2 _movementInput;
     [Header("Ground movement")]
     [SerializeField, Tooltip("The speed at which the player moves forwards and backwards.")]
-    private float _moveSpeed;
+    private float _moveAccel;
     [SerializeField, Tooltip("The speed at which the player moves side to side.")]
-    private float _strafeSpeed;
+    private float _strafeAccel;
     [SerializeField, Tooltip("The maximum speed the player can reach.")]
     private float _maxSpeed;
-    [SerializeField, Tooltip("Modifies how agresive the breaking is at maximum speed.")]
-    private float _breakForce = 1;
+    [SerializeField, Tooltip("Modifies how aggresive the breaking is at maximum speed.")]
+    private float _breakAggresion = 1;
     private float _movementModifier = 1; //Unused ATM
+    [SerializeField, Tooltip("The maximum distance that the last ground check can reach.")]
+    private float _lastGroundCheckMaxDistance;
 
     [Header("Jump movement")]
     [SerializeField, Tooltip("The force that the player jumps with.")]
     private float _jumpForce;
-    [SerializeField]
-    private Vector3 _feetPosition;
-    [SerializeField, Tooltip("The distance from the feet position that the ground check reaches.")]
-    private float _legLength;
+    [Tooltip("The distance from the feet position that the ground check reaches.")]
+    public float PlayerHeight;
+    private Vector3 _lastGroundPoint;
+    public Vector3 RespawnOffset;
 
     [Header("Jetpack Settings")]
     [SerializeField, Tooltip("The force that the jetpack outputs.")]
     private float _jetForce;
-    private bool _doJet;
     [SerializeField, Tooltip("The rate at which the jetpack fuel is expended.")]
     private float _burnRate;
     [SerializeField, Tooltip("The time it takes for the jetpack to start after jumping.")]
@@ -65,15 +66,16 @@ public class PlayerMovment : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _camera = Camera.main;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void FixedUpdate()
     {
+        GrabGroundBelow();
+        GetGroundNormal();
         //Get the horizontal velocity. We don't want to affect/clamp the vertial movement
         Vector2 horizontalVel = new Vector2(_rb.velocity.x, _rb.velocity.z);
         //Check the current movement speed
-        if(horizontalVel.magnitude > _maxSpeed)
+        if (horizontalVel.magnitude > _maxSpeed)
         {
             //If to high, start breaking
             //Get the amount over the max speed that the player is moving
@@ -82,7 +84,7 @@ public class PlayerMovment : MonoBehaviour
             //Get the direction
             Vector2 normalisedVel = horizontalVel.normalized;
             //Calculate the force to apply
-            Vector2 breakVelocity = normalisedVel * breakSpeed * _breakForce;
+            Vector2 breakVelocity = normalisedVel * breakSpeed * _breakAggresion;
             //Lock that force to the x and z axi
             Vector3 triBreakVelocity = new Vector3(breakVelocity.x, 0, breakVelocity.y);
             //Apply the force
@@ -91,41 +93,22 @@ public class PlayerMovment : MonoBehaviour
         else
         {
             //Move the player forwards based on the camera rotation
-            _rb.AddForce(
-                (Vector3.Cross(_camera.transform.right, Vector3.up) * _movementInput.y * (_moveSpeed * _rb.mass) * _movementModifier +
-                _camera.transform.right * _movementInput.x * (_strafeSpeed * _rb.mass) * _movementModifier) * Time.deltaTime);
+            Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
+            Vector3 forwardForce = camForward * _movementInput.y * _moveAccel * _rb.mass * _movementModifier;
+            Vector3 sideForce = _camera.transform.right * _movementInput.x * _strafeAccel * _rb.mass * _movementModifier;
+            Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
+            _rb.AddForce(orientedForce * Time.deltaTime);
         }
 
-        //While doing the jet input...
-        if (_doJet)
-        {
-            //...if we are ready to burn...
-            if (_burnTime <= 0)
-            {
-                //...and we have fuel...
-                if (_jetFuel > 0)
-                {
-                    //...Push the player up and reduce the fuel
-                    _rb.AddForce(_jetForce * Vector3.up * _rb.mass, ForceMode.Force);
-                    _jetFuel = Mathf.Clamp(_jetFuel - _burnRate * Time.deltaTime, 0f, 1f);
-                    _refuelTime = _refuelDelay;
-                }
-            }
-            //...otherwise, reduce burn delay
-            else
-            {
-                _burnTime -= Time.deltaTime;
-            }
-        }
         //...otherwise, if on the ground & out of fuel...
-        else if (_jetFuel < 1 && GroundCheck())
+        if (_jetFuel < 1 && GroundedCheck())
         {
             //...refuel the jetpack
             if (_refuelTime > 0)
                 _refuelTime -= Time.deltaTime;
             else
                 _jetFuel = Mathf.Clamp(_jetFuel + _refuelRate * Time.deltaTime, 0f, 1f);
-        } 
+        }
 
         //Always update the ui
         if (_refuelTime > 0)
@@ -134,59 +117,103 @@ public class PlayerMovment : MonoBehaviour
             _fuelBarBackground.color = _jetColors[0];
 
         _fuelBar.fillAmount = _jetFuel;
-        
+
     }
     public void UpdateMovementAxis(Vector2 v)
     {
-        _movementInput = v;
+        //Movement got flipped when I added slope calcs and i don't really wanna implement a proper fix rn (2/11 - Jackson)
+        _movementInput = new Vector2(v.y, -v.x);
     }
     /// <summary>
     /// Checks right below the player for objects tagged ground
     /// </summary>
     /// <returns></returns>
-    private bool GroundCheck()
+    private bool GroundedCheck()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position + _feetPosition, -Vector3.up * _legLength, out hit, 1.0f))
+        if(Physics.Raycast(transform.position, -Vector3.up * PlayerHeight, out hit, PlayerHeight))
         {
-           // Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
-            if(hit.collider.tag == "Ground")
-                return true;
+            //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
+            if (hit.collider.tag == "Ground")
+            {                              
+                return true;               
+            }                              
+        }                                  
+        return false;                      
+    }
+    private void GrabGroundBelow()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, -Vector3.up * _lastGroundCheckMaxDistance, out hit, _lastGroundCheckMaxDistance))
+        {
+            //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
+            if (hit.collider.tag == "Ground")
+            {
+                _lastGroundPoint = hit.point + new Vector3(0, PlayerHeight, 0);
+            }
+        }
+    }
+    public Vector3 GetGroundNormal()
+    {
+        Vector3 dir = Vector3.up;
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, -Vector3.up * PlayerHeight, out hit, PlayerHeight))
+        {
+            //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
+            if (hit.collider.tag == "Ground")
+            {
+                dir = hit.normal;
+                Debug.DrawRay(hit.point, dir, Color.red);
+            }
         }
 
-        return false;
+        return dir;
     }
-    public void InitializeJump()
+    public void Jump()
     {
-        Debug.Log("Jump initiated");
-        if (GroundCheck())
+        //Debug.Log("Jump initiated");       
+        if (GroundedCheck())
         {
             _rb.AddForce(Vector3.up * _jumpForce * _rb.mass, ForceMode.Impulse);
             _burnTime = _burnDelay;
         }
         else
         {
+            _burnTime = 0;
+
             if (_jetFuel >= _burstBurn)
             {
-
                 _rb.AddForce(
                     (Vector3.Cross(_camera.transform.right, Vector3.up) * _movementInput.y * _jumpForce * _burstScale.x * _rb.mass * _movementModifier +
                     _camera.transform.right * _movementInput.x * _jumpForce * _burstScale.x * _rb.mass * _movementModifier +
                     Vector3.up * _jumpForce * _burstScale.y * _rb.mass), ForceMode.Impulse);
                 _jetFuel -= _burstBurn;
             }
-            _burnTime = 0;
         }
-        _doJet = true;
     }
-    public void TerminateJump()
-    {
-        Debug.Log("Jump terminated");
-        _doJet = false;
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(transform.position + _feetPosition, -Vector3.up * _legLength);
-    }
-}
+    public void JetPack()
+    { 
+        //If we have fuel...
+        if (_jetFuel > 0)
+        {
+            //...reduce burn delay...
+            if (_burnTime > 0)
+            {
+                _burnTime -= Time.deltaTime;
+            }
+            //...otherwise push the player up and reduce the fuel
+            else
+            {
+                _rb.AddForce(_jetForce * Vector3.up * _rb.mass * Time.deltaTime, ForceMode.Force);
+                _jetFuel = Mathf.Clamp(_jetFuel - _burnRate * Time.deltaTime, 0f, 1f);
+                _refuelTime = _refuelDelay;
+            }
+        }
+    }                                                                    
+    public void ReturnToLastGrounedPoint() 
+    {                                      
+        _rb.velocity = Vector3.zero;       
+        transform.position = _lastGroundPoint + RespawnOffset;
+    }                                      
+}                                          

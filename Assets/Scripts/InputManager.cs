@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
-using UnityEngine.UIElements;
 
 /// <summary>
 /// Interperates the new unity input manager into listeners
@@ -17,109 +15,146 @@ public class InputManager : MonoBehaviour
 //OK, so I'm using listeners here as it makes it posible to change the invoked function in the
 //editor so the other disciplines can make changes easier.
 {
-    [Header("Movement")]
-    [SerializeField] private UnityEvent<Vector2> _movementAction = new UnityEvent<Vector2>();
-    [SerializeField] private UnityEvent _sprintAction = new UnityEvent();
-    [SerializeField] private UnityEvent _crouchAction = new UnityEvent();
+    [Serializable]
+    public class HoldEvent
+    {
+        public UnityEvent Action = new UnityEvent();
+        public InputActionReference InputReference;
+        public float ActionDelay = 0.01f;
+        private InputAction _inputAction;
+        private bool _doAction;
 
-    [Header("Jump actions")]
-    [SerializeField] private UnityEvent _jumpAction = new UnityEvent();
-    [SerializeField] private UnityEvent _endJumpAction = new UnityEvent();
-    [SerializeField] private InputActionReference _jumpActRef;
-    private InputAction _jumpInputAct;
+        //DOES NOT WORK AS A CONSTRUCTOR
+        /// <summary>
+        /// Sets up the input action and called the action
+        /// </summary>
+        public void InitializeAction()
+        {
+            _inputAction = InputReference.action;
+            DoEvent();
+        }
+
+        /// <summary>
+        /// Invokes the desiered actions.
+        /// </summary>
+        public bool DoEvent()
+        {
+            //Debug.Log("Hold action called.");
+            _inputAction.started +=
+                _s =>
+                {
+                    Debug.Log("Starting action");
+                    _doAction = true;
+                };
+            _inputAction.canceled +=
+                _e =>
+                {
+                    Debug.Log("Ending action.");
+                    _doAction = false;
+                };
+
+            return _doAction;
+        }
+
+        public IEnumerator RepeatAction(float delay)
+        {
+            while(_doAction)
+            {
+                yield return new WaitForSeconds(delay);
+                Debug.Log("Doing action");
+                Action.Invoke();
+            }
+        }
+    }
+
+    [Header("Game Settings")]
+    [SerializeField] private bool _lockCursor;
+
+    [Header("Movement")]
+    public UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
+    public UnityEvent SprintAction = new UnityEvent();
+    public UnityEvent CrouchAction = new UnityEvent();
+    public UnityEvent JumpAction = new UnityEvent();
+    public HoldEvent JetPackAction = new HoldEvent();
 
     [Header("Tool actions")]
-    [SerializeField] private UnityEvent _trapInteractionAction = new UnityEvent();
-    [SerializeField] private UnityEvent _enableTrapAction = new UnityEvent();
-    [SerializeField] private UnityEvent _tabletAction = new UnityEvent();
-    [SerializeField] private UnityEvent _fireAction = new UnityEvent();
-    [SerializeField] private UnityEvent _endFireAction = new UnityEvent();
-    [SerializeField] private InputActionReference _fireActRef;
-    private InputAction _fireInputAct;
-    [SerializeField] private UnityEvent _altFireAction = new UnityEvent();
-    [SerializeField] private UnityEvent _returnToShipAction = new UnityEvent();
-    [SerializeField] private UnityEvent _switchToolAction = new UnityEvent();
+    public UnityEvent TrapInteractionAction = new UnityEvent();
+    public UnityEvent EnableTrapAction = new UnityEvent();
+    public UnityEvent TabletAction = new UnityEvent();
+    public HoldEvent FireAction = new HoldEvent();
+    public UnityEvent AltFireAction = new UnityEvent();
+    public UnityEvent ReturnToShipAction = new UnityEvent();
+    public UnityEvent SwitchToolAction = new UnityEvent();
+
 
     private void Awake()
     {
-        _jumpInputAct = _jumpActRef.action;
-        _fireInputAct = _fireActRef.action;
+        if(_lockCursor)
+            Cursor.lockState = CursorLockMode.Locked;
+        else
+            Cursor.lockState = CursorLockMode.None;
+            
+        JetPackAction.InitializeAction();
+        FireAction.InitializeAction();
     }
     void OnJump()
     {
-        Debug.Log("Jump input recived.");
-        _jumpInputAct.started +=
-            context =>
-            {
-                Debug.Log("Jump started");
-                _jumpAction.Invoke();
-            };
-        _jumpInputAct.canceled +=
-            _ =>
-            {
-                Debug.Log("Jump ended");
-                _endJumpAction.Invoke();
-            };
+        Debug.Log("OnJump called.");
+        JumpAction.Invoke();
+    }
+    void OnJetPack()
+    {
+        Debug.Log("OnJetPack called.");
+        if (JetPackAction.DoEvent()) StartCoroutine(JetPackAction.RepeatAction(JetPackAction.ActionDelay));
     }
     void OnSprint()
     {
         Debug.Log("OnSprint called.");
-        _sprintAction.Invoke();
+        SprintAction.Invoke();
     }
     void OnEnableTrap()
     {
         Debug.Log("Enabling trap.");
-        _enableTrapAction.Invoke();
+        EnableTrapAction.Invoke();
     }
     void OnPickupTrap()
     {
         Debug.Log("OnPickupTrap called.");
-        _trapInteractionAction.Invoke();
+        TrapInteractionAction.Invoke();
     }
     void OnMove(InputValue value)
     {
         Debug.Log("OnMove called.");
-        _movementAction.Invoke(value.Get<Vector2>());
+        MovementAction.Invoke(value.Get<Vector2>());
     }
     void OnCrouch()
     {
         Debug.Log("OnCrouch called.");
-        _crouchAction.Invoke();
+        CrouchAction.Invoke();
     }
     void OnTablet()
     {
         Debug.Log("OnTablet called.");
-        _tabletAction.Invoke();
+        TabletAction.Invoke();
     }
     void OnFire()
     {
         Debug.Log("OnFire called.");
-        _fireInputAct.started +=
-            context =>
-            {
-                Debug.Log("Fire started");
-                _fireAction.Invoke();
-            };
-        _fireInputAct.canceled +=
-            _ =>
-            {
-                Debug.Log("Stopped firing.");
-                _endFireAction.Invoke();
-            };
+        if(FireAction.DoEvent()) StartCoroutine(FireAction.RepeatAction(FireAction.ActionDelay));
     }
     void OnAltFire()
     {
         Debug.Log("OnAltFire called.");
-        _altFireAction.Invoke();
+        AltFireAction.Invoke();
     }
     void OnReturnToShip()
     {
         Debug.Log("Attempting ship return.");
-        _returnToShipAction.Invoke();
+        ReturnToShipAction.Invoke();
     }
     void OnSwitchTool()
     {
         Debug.Log("Switching Tools");
-        _switchToolAction.Invoke();
+        SwitchToolAction.Invoke();
     }
 }
