@@ -2789,6 +2789,10 @@ PrefabInstance:
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 141340887}
+    - target: {fileID: 1445501854533856224, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: playerMovement
+      value: 
+      objectReference: {fileID: 1854626329}
     - target: {fileID: 1750011440768277443, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2841,6 +2845,10 @@ PrefabInstance:
       propertyPath: m_DefaultActionMap
       value: 5489c5d1-4714-4508-858c-cf4669c3fcc3
       objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: _tabletScript
+      value: 
+      objectReference: {fileID: 978888969}
     - target: {fileID: 4052482119666946230, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: MoveTabLeft.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -6221,6 +6229,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1725585228}
   m_CullTransparentMesh: 1
+--- !u!114 &1854626329 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8109913824263524885, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+  m_PrefabInstance: {fileID: 1262626118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fd6208e01511d64899e3275fcddfd97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1921092160
 GameObject:
   m_ObjectHideFlags: 0

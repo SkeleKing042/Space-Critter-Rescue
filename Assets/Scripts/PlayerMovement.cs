@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody _rb;
     Camera _camera;
-    Vector2 _movementInput;
+    [SerializeField] public Vector2 _movementInput;
     [Header("Ground movement")]
     [SerializeField, Tooltip("The speed at which the player moves forwards and backwards.")]
     private float _moveAccel;

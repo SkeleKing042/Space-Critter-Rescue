@@ -7,11 +7,11 @@ using UnityEngine.InputSystem;
 public class Tablet : MonoBehaviour
 {
     [Header("Enums")]
-    [SerializeField] TabletState tabletState;
+    [SerializeField] public TabletState tabletState;
 
     [Header("Components")]
     [SerializeField] Animator animator;
-    [SerializeField] PlayerInput playerInput;
+    [SerializeField] PlayerMovement playerMovement;
 
     [Header("Tabs")]
     [SerializeField] GameObject[] tabs;
@@ -46,6 +46,8 @@ public class Tablet : MonoBehaviour
         {
             animator.SetTrigger("Raise Tablet");
             SetTabletState(TabletState.on);
+
+            playerMovement._movementInput = Vector2.zero;
         }
     }
 
