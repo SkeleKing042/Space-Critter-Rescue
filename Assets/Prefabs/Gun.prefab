@@ -175,6 +175,7 @@ MonoBehaviour:
   AlienUICount: {fileID: 0}
   mouseDown: 0
   Vac: {fileID: 2025321121461694840}
+  collection: {fileID: 0}
 --- !u!1 &2025321122122528732
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,11 +278,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Alien: {fileID: 0}
   _alienRigid: {fileID: 0}
-  _mouseDown: 0
   AlienAI: {fileID: 0}
+  trap: {fileID: 0}
+  Bubble: {fileID: 0}
   SuckSpeed: 5
   OffsetFixSpeed: 1
-  trap: {fileID: 0}
+  StunTime: 1
+  Pulling: 0
 --- !u!114 &2025321121461694841
 MonoBehaviour:
   m_ObjectHideFlags: 0
