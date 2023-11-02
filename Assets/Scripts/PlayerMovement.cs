@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Tooltip("Modifies how aggresive the breaking is at maximum speed.")]
     private float _breakAggresion = 1;
     private float _movementModifier = 1; //Unused ATM
+    [SerializeField, Tooltip("The maximum distance that the last ground check can reach.")]
+    private float _lastGroundCheckMaxDistance;
 
     [Header("Jump movement")]
     [SerializeField, Tooltip("The force that the player jumps with.")]
@@ -69,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         GrabGroundBelow();
+        GetGroundNormal();
         //Get the horizontal velocity. We don't want to affect/clamp the vertial movement
         Vector2 horizontalVel = new Vector2(_rb.velocity.x, _rb.velocity.z);
         //Check the current movement speed
@@ -90,9 +93,11 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             //Move the player forwards based on the camera rotation
-            _rb.AddForce(
-                (Vector3.Cross(_camera.transform.right, Vector3.up) * _movementInput.y * (_moveAccel * _rb.mass) * _movementModifier +
-                _camera.transform.right * _movementInput.x * (_strafeAccel * _rb.mass) * _movementModifier) * Time.deltaTime);
+            Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
+            Vector3 forwardForce = camForward * _movementInput.y * _moveAccel * _rb.mass * _movementModifier;
+            Vector3 sideForce = _camera.transform.right * _movementInput.x * _strafeAccel * _rb.mass * _movementModifier;
+            Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
+            _rb.AddForce(orientedForce * Time.deltaTime);
         }
 
         //...otherwise, if on the ground & out of fuel...
@@ -116,7 +121,8 @@ public class PlayerMovement : MonoBehaviour
     }
     public void UpdateMovementAxis(Vector2 v)
     {
-        _movementInput = v;
+        //Movement got flipped when I added slope calcs and i don't really wanna implement a proper fix rn (2/11 - Jackson)
+        _movementInput = new Vector2(v.y, -v.x);
     }
     /// <summary>
     /// Checks right below the player for objects tagged ground
@@ -138,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
     private void GrabGroundBelow()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, -Vector3.up * 1000f, out hit, 1000f))
+        if(Physics.Raycast(transform.position, -Vector3.up * _lastGroundCheckMaxDistance, out hit, _lastGroundCheckMaxDistance))
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             if (hit.collider.tag == "Ground")
@@ -146,6 +152,23 @@ public class PlayerMovement : MonoBehaviour
                 _lastGroundPoint = hit.point + new Vector3(0, PlayerHeight, 0);
             }
         }
+    }
+    public Vector3 GetGroundNormal()
+    {
+        Vector3 dir = Vector3.up;
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, -Vector3.up * PlayerHeight, out hit, PlayerHeight))
+        {
+            //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
+            if (hit.collider.tag == "Ground")
+            {
+                dir = hit.normal;
+                Debug.DrawRay(hit.point, dir, Color.red);
+            }
+        }
+
+        return dir;
     }
     public void Jump()
     {
