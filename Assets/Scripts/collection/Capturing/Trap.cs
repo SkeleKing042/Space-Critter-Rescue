@@ -57,9 +57,6 @@ public class Trap : MonoBehaviour
                 if (!Catchable && alien.transform.position != lerpPathDestination)
                     alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - offSet, 2f * Time.deltaTime);
             }
-
-          
-
         }
     }
     private void OnTriggerStay(Collider alien)

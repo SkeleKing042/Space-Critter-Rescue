@@ -13,6 +13,9 @@ public class Collection : MonoBehaviour
 
     public int SmallAliens;
     public int BigAliens;
+
+    public bool SpaceForSmall;
+    public bool SpaceForBig;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,19 +32,29 @@ public class Collection : MonoBehaviour
     {
         if (SmallAliens < 12)
         {
+            SpaceForSmall = true;
             if (alien.tag == "alien")
             {
                 SmallAliens++;
                 Collected++;
             }
         }
+        else
+        {
+            SpaceForSmall = false;
+        }
         if(BigAliens < 2)
         {
+            SpaceForBig = true;
             if (alien.tag == "bigAlien")
             {
                 BigAliens++;
                 Collected ++;
             }
+        }
+        else
+        {
+           SpaceForBig = false;
         }
         TextNumber = Collected;
     }

@@ -64,6 +64,7 @@ public class VacuumGun : MonoBehaviour
         if (Input.GetButtonUp("Fire1"))
         {
             _mouseDown = false;
+            
         }
     }
 
@@ -130,15 +131,15 @@ public class VacuumGun : MonoBehaviour
             dir = Vector3.Normalize(dir);
             //move the alien towards the player
             _alienRigid.AddForce(dir * SuckSpeed);
-        }
 
+        }
+        
     }
     public void EndPull()
     {
         Pulling = false;
         if (Alien != null)
         {
-       
             Debug.Log("Ending pull");
             // set the alien states
             StartCoroutine(AlienAI.UpdateState(new StunnedState(AlienAI), 0f));
@@ -146,9 +147,7 @@ public class VacuumGun : MonoBehaviour
             StartCoroutine(AlienAI.UpdateState(new PanicState(AlienAI), StunTime));
             UnassignAlien();
         }
-       
     }
-
     /// <summary>
     /// find the alien and setting the values when in range 
     /// </summary>
@@ -188,6 +187,7 @@ public class VacuumGun : MonoBehaviour
            _alienRigid = null;
            Alien = null;
            AlienAI = null;
+            EndPull();
         }
     }
 

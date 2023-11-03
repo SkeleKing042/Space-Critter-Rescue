@@ -12,8 +12,10 @@ public class CollectAlien : MonoBehaviour
     public bool mouseDown = false;
 
     public VacuumGun Vac;
-
     public Collection collection;
+    public Inventory PlayerInventory;
+
+    GameObject Alien;
 
     private void Update()
     {
@@ -42,13 +44,19 @@ public class CollectAlien : MonoBehaviour
         if ((creature.gameObject.tag == "alien" || creature.gameObject.tag == "bigAlien") && mouseDown)
         {
             collection.AddAlienToCollection(creature.gameObject);
-          
-           // AlienCount++;
-            
+
+            // AlienCount++;
+            Alien = creature.gameObject;
+
 
             Vac.UnassignAlien();
-
             Destroy(creature.gameObject);
+            PlayerInventory.AddToPlayerInventory(Alien);
+
+
+
+            //Vac.EndPull();
+            
         }
     }
 }
