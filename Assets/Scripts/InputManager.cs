@@ -111,7 +111,7 @@ public class InputManager : MonoBehaviour
     }
     void OnJump()
     {
-        if (_tabletScript.tabletState == Tablet.TabletState.off)
+        if (!_tabletScript.tabletState)
         {
             Debug.Log("OnJump called.");
             JumpAction.Invoke();
@@ -123,7 +123,7 @@ public class InputManager : MonoBehaviour
     }
     void OnJetPack()
     {
-        if (_tabletScript.tabletState == Tablet.TabletState.off)
+        if (!_tabletScript.tabletState)
         {
             Debug.Log("OnJetPack called.");
             if (JetPackAction.DoEvent()) StartCoroutine(JetPackAction.RepeatAction(JetPackAction.ActionDelay));
@@ -135,7 +135,7 @@ public class InputManager : MonoBehaviour
     }
     void OnSprint()
     {
-        if (_tabletScript.tabletState == Tablet.TabletState.off)
+        if (!_tabletScript.tabletState)
         {
             Debug.Log("OnSprint called.");
             SprintAction.Invoke();
@@ -147,7 +147,7 @@ public class InputManager : MonoBehaviour
     }
     void OnEnableTrap()
     {
-        if (_tabletScript.tabletState == Tablet.TabletState.off)
+        if (!_tabletScript.tabletState)
         {
             Debug.Log("Enabling trap.");
             EnableTrapAction.Invoke();
@@ -159,7 +159,7 @@ public class InputManager : MonoBehaviour
     }
     void OnPickupTrap()
     {
-        if (_tabletScript.tabletState == Tablet.TabletState.off)
+        if (!_tabletScript.tabletState)
         {
             Debug.Log("OnPickupTrap called.");
             TrapInteractionAction.Invoke();
@@ -171,7 +171,7 @@ public class InputManager : MonoBehaviour
     }
     void OnMove(InputValue value)
     {
-        if (_tabletScript.tabletState == Tablet.TabletState.off)
+        if (!_tabletScript.tabletState)
         {
             Debug.Log("OnMove called.");
             MovementAction.Invoke(value.Get<Vector2>());
@@ -183,7 +183,7 @@ public class InputManager : MonoBehaviour
     }
     void OnCrouch()
     {
-        if (_tabletScript.tabletState == Tablet.TabletState.off)
+        if (!_tabletScript.tabletState)
         {
             Debug.Log("OnCrouch called.");
             CrouchAction.Invoke();
@@ -200,7 +200,7 @@ public class InputManager : MonoBehaviour
     }
     void OnFire()
     {
-        if (_tabletScript.tabletState == Tablet.TabletState.off)
+        if (!_tabletScript.tabletState)
         {
             Debug.Log("OnFire called.");
             if (FireAction.DoEvent()) StartCoroutine(FireAction.RepeatAction(FireAction.ActionDelay));
@@ -212,7 +212,7 @@ public class InputManager : MonoBehaviour
     }
     void OnAltFire()
     {
-        if (_tabletScript.tabletState == Tablet.TabletState.off)
+        if (!_tabletScript.tabletState)
         {
             Debug.Log("OnAltFire called.");
             AltFireAction.Invoke();
@@ -235,28 +235,63 @@ public class InputManager : MonoBehaviour
 
     void OnMoveTabLeft()
     {
-        Debug.Log("Move tab left called");
-        MoveTabLeft.Invoke();
+        if (_tabletScript.tabletState)
+        {
+            Debug.Log("Move tab left called");
+            MoveTabLeft.Invoke();
+        }
+        else
+        {
+            return;
+        }
     }
     void OnMoveTabRight()
     {
-        Debug.Log("Move tab right called");
-        MoveTabRight.Invoke();
+        if (_tabletScript.tabletState)
+        {
+            Debug.Log("Move tab right called");
+            MoveTabRight.Invoke();
+        }
+        else
+        {
+            return;
+        }
     }
     void OnMoveTeleportLeft()
     {
-        Debug.Log("Move Teleport Left Called");
-        MoveTeleportLeft.Invoke();
+        if (_tabletScript.tabletState)
+        {
+            Debug.Log("Move Teleport Left Called");
+            MoveTeleportLeft.Invoke();
+        }
+        else
+        {
+            return;
+        }
     }
     void OnMoveTeleportRight()
     {
-        Debug.Log("Move Teleport Right Called");
-        MoveTeleportRight.Invoke();
+        if (_tabletScript.tabletState)
+        {
+            Debug.Log("Move Teleport Right Called");
+            MoveTeleportRight.Invoke();
+        }
+        else
+        {
+            return;
+        }
     }
     void OnSelectTeleport()
     {
-        Debug.Log("On select teleport called");
-        SelectTeleport.Invoke();
+        if (_tabletScript.tabletState && _tabletScript.tabIndex == _tabletScript.mapTabIndex)
+        {
+            Debug.Log("On select teleport called");
+            SelectTeleport.Invoke();
+        }
+        else
+        {
+            return;
+        }
     }
 
 

@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class TeleportPylon : MonoBehaviour
 {
+    [SerializeField] int pylonIndex;
+
+
     public bool[] PassOnRotation = new bool[3];
     public bool OffsetAffectedByRotation;
     public void PullObjectHere(GameObject sender)
@@ -20,4 +23,14 @@ public class TeleportPylon : MonoBehaviour
         //z inheritance
         if (PassOnRotation[2]) sender.transform.eulerAngles = new Vector3(sender.transform.rotation.eulerAngles.x, sender.transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            FindObjectOfType<Tablet>().SethasTeleportBeenActivated(pylonIndex);
+        }
+    }
+
+
 }
