@@ -472,30 +472,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6edafec02c85e2e4bbae1972ed61d85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabletState: 0
-  animator: {fileID: 269067938191016609}
-  playerMovement: {fileID: 8109913824263524885}
-  pylonManager: {fileID: 0}
-  tabIndex: 0
-  mapTabIndex: 2
-  tabs:
+  TabletState: 0
+  TabIndex: 0
+  MapTabIndex: 2
+  _tabs:
   - {fileID: 1406963999393896615}
   - {fileID: 1406963999804983825}
   - {fileID: 6301454334917330050}
   - {fileID: 4025380578348167846}
   - {fileID: 1747910524068917669}
   - {fileID: 3206961690596290877}
-  teleportIndex: 0
-  teleportLocationImages:
+  _teleportIndex: 0
+  _teleportLocationImages:
   - {fileID: 89256731605433438}
   - {fileID: 1880446608420258799}
   - {fileID: 8188553072251472892}
   - {fileID: 6665274468118033872}
   - {fileID: 5868668819944549855}
-  hasTeleportLocationBeenActivated: 0000000000
-  color_currentlySelectedTeleport: {r: 0, g: 0.123636246, b: 1, a: 1}
-  color_unavailableTeleport: {r: 1, g: 0, b: 0, a: 1}
-  color_availableTeleport: {r: 0, g: 1, b: 0.11066723, a: 1}
+  _color_currentlySelectedTeleport: {r: 0, g: 0, b: 1, a: 1}
+  _color_unavailableTeleport: {r: 1, g: 0, b: 0, a: 1}
+  _color_availableTeleport: {r: 0, g: 1, b: 0, a: 1}
 --- !u!95 &269067938191016609
 Animator:
   serializedVersion: 4
