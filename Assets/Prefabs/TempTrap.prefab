@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2593659595682189754}
   - component: {fileID: 2593659595682189757}
   - component: {fileID: 2593659595682189756}
-  - component: {fileID: 2593659595682189759}
   - component: {fileID: 2593659595682189755}
   m_Layer: 2
   m_Name: Temp Bubble
@@ -85,19 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2593659595682189759
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2593659595682189758}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2593659595682189755
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -217,6 +203,8 @@ MonoBehaviour:
   Check: {fileID: 0}
   Bubble: {fileID: 2593659595682189758}
   playerGun: {fileID: 0}
+  Vacuum: {fileID: 0}
+  AlienAI: {fileID: 0}
 --- !u!135 &2593659596840871068
 SphereCollider:
   m_ObjectHideFlags: 0

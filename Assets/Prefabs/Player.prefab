@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 8109913824263524885}
   - component: {fileID: 4350766435216775347}
   - component: {fileID: 5548061563661460222}
+  - component: {fileID: 4154564876419378259}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -437,6 +438,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1251ca7ecd85463418b8892c525762dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4154564876419378259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8109913824263524884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9504f259a028343b70c011837196a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Collected: 0
+  DropDistance: 0
+  TextNumber: 0
+  SmallAliens: 0
+  BigAliens: 0
 --- !u!1001 &634134650638373183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -504,6 +522,10 @@ PrefabInstance:
       propertyPath: Check
       value: 
       objectReference: {fileID: 4350766435216775347}
+    - target: {fileID: 2593659596840871071, guid: aa3f8bb3a47283a428c4f60d8c954fda, type: 3}
+      propertyPath: Vacuum
+      value: 
+      objectReference: {fileID: 5918693712695712689}
     - target: {fileID: 2593659596840871071, guid: aa3f8bb3a47283a428c4f60d8c954fda, type: 3}
       propertyPath: playerGun
       value: 
@@ -1267,6 +1289,10 @@ PrefabInstance:
       propertyPath: Bubble
       value: 
       objectReference: {fileID: 3112657717315666049}
+    - target: {fileID: 2025321122069800002, guid: d2167cf6b7411224a825142711ba489d, type: 3}
+      propertyPath: collection
+      value: 
+      objectReference: {fileID: 4154564876419378259}
     - target: {fileID: 2025321122069800002, guid: d2167cf6b7411224a825142711ba489d, type: 3}
       propertyPath: AlienUICount
       value: 
