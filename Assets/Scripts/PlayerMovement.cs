@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
@@ -58,13 +59,15 @@ public class PlayerMovement : MonoBehaviour
     public bool _holdAfterJump;
     private bool _jetInputReady;
 
-    [Header("Debug")]
+    [Header("Fuel Display")]
     [SerializeField, Tooltip("The display for the jet fuel.")]
-    private Image _fuelBar;
+    private Image _fuelBarMain;
+    [SerializeField]
+    private Image _delayedBar;
     [SerializeField]
     private Image _fuelBarBackground;
     [SerializeField]
-    private Color[] _jetColors;
+    private Color[] _jetBackgroundColor;
 
     void Start()
     {
@@ -116,12 +119,15 @@ public class PlayerMovement : MonoBehaviour
 
         //Always update the ui
         if (_refuelTime > 0)
-            _fuelBarBackground.color = _jetColors[1];
+            _fuelBarBackground.color = _jetBackgroundColor[1];
         else
-            _fuelBarBackground.color = _jetColors[0];
+            _fuelBarBackground.color = _jetBackgroundColor[0];
 
-        _fuelBar.fillAmount = _jetFuel;
-
+        _fuelBarMain.fillAmount = _jetFuel;
+        if (_delayedBar.fillAmount > _fuelBarMain.fillAmount)
+            _delayedBar.fillAmount = iTween.FloatUpdate(_delayedBar.fillAmount, _fuelBarMain.fillAmount, 10);
+        else
+            _delayedBar.fillAmount = _fuelBarMain.fillAmount;
     }
     public void UpdateMovementAxis(Vector2 v)
     {
@@ -200,8 +206,8 @@ public class PlayerMovement : MonoBehaviour
                     Vector3 forwardForce = camForward * _movementInput.y * _jumpForce * _burstScale.x * _rb.mass * _movementModifier;
                     Vector3 sideForce = _camera.transform.right * _movementInput.x * _jumpForce * _burstScale.x * _rb.mass * _movementModifier;
                     Vector3 upForce = Vector3.up * _jumpForce * _burstScale.y * _rb.mass;
-                    Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce + upForce, GetGroundNormal());
-                    _rb.AddForce(orientedForce, ForceMode.Impulse);
+                    Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
+                    _rb.AddForce(orientedForce + upForce, ForceMode.Impulse);
                     _jetFuel -= _burstBurn;
                 }
             }

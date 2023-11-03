@@ -766,6 +766,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3364685986447403330}
     m_Modifications:
+    - target: {fileID: 455927032994382737, guid: a466649d09c0ae6478efd7ac9f5f2169, type: 3}
+      propertyPath: m_FillAmount
+      value: 0.395
+      objectReference: {fileID: 0}
     - target: {fileID: 455927034092423835, guid: a466649d09c0ae6478efd7ac9f5f2169, type: 3}
       propertyPath: m_Name
       value: JetPackBar
@@ -800,7 +804,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 455927034092423836, guid: a466649d09c0ae6478efd7ac9f5f2169, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 320
       objectReference: {fileID: 0}
     - target: {fileID: 455927034092423836, guid: a466649d09c0ae6478efd7ac9f5f2169, type: 3}
       propertyPath: m_SizeDelta.y
@@ -853,6 +857,22 @@ PrefabInstance:
     - target: {fileID: 455927034092423836, guid: a466649d09c0ae6478efd7ac9f5f2169, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150287207311116245, guid: a466649d09c0ae6478efd7ac9f5f2169, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150287207311116245, guid: a466649d09c0ae6478efd7ac9f5f2169, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150287207311116245, guid: a466649d09c0ae6478efd7ac9f5f2169, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1854368135854877514, guid: a466649d09c0ae6478efd7ac9f5f2169, type: 3}
+      propertyPath: m_FillAmount
+      value: 0.705
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a466649d09c0ae6478efd7ac9f5f2169, type: 3}
