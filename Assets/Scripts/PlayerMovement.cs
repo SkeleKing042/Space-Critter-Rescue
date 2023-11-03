@@ -53,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
     private float _refuelDelay;
     private float _refuelTime;
     private float _jetFuel = 1;
+    public bool _holdAfterJump;
+    private bool _jetInputReady;
 
     [Header("Debug")]
     [SerializeField, Tooltip("The display for the jet fuel.")]
@@ -177,40 +179,46 @@ public class PlayerMovement : MonoBehaviour
         {
             _rb.AddForce(Vector3.up * _jumpForce * _rb.mass, ForceMode.Impulse);
             _burnTime = _burnDelay;
+
+            _jetInputReady = false;
         }
         else
         {
-            _burnTime = 0;
-
-            if (_jetFuel >= _burstBurn)
+            if (_jetInputReady || _holdAfterJump)
             {
-                _rb.AddForce(
-                    (Vector3.Cross(_camera.transform.right, Vector3.up) * _movementInput.y * _jumpForce * _burstScale.x * _rb.mass * _movementModifier +
-                    _camera.transform.right * _movementInput.x * _jumpForce * _burstScale.x * _rb.mass * _movementModifier +
-                    Vector3.up * _jumpForce * _burstScale.y * _rb.mass), ForceMode.Impulse);
-                _jetFuel -= _burstBurn;
+                _burnTime = 0;
+
+                if (_jetFuel >= _burstBurn)
+                {
+                    Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
+                    Vector3 forwardForce = camForward * _movementInput.y * _jumpForce * _burstScale.x * _rb.mass * _movementModifier;
+                    Vector3 sideForce = _camera.transform.right * _movementInput.x * _jumpForce * _burstScale.x * _rb.mass * _movementModifier;
+                    Vector3 upForce = Vector3.up * _jumpForce * _burstScale.y * _rb.mass;
+                    Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce + upForce, GetGroundNormal());
+                    _rb.AddForce(orientedForce, ForceMode.Impulse);
+                    _jetFuel -= _burstBurn;
+                }
             }
+            _jetInputReady = true;
         }
     }
     public void JetPack()
-    { 
+    {
         //If we have fuel...
         if (_jetFuel > 0)
-        {
-            //...reduce burn delay...
-            if (_burnTime > 0)
-            {
-                _burnTime -= Time.deltaTime;
-            }
-            //...otherwise push the player up and reduce the fuel
-            else
+            //... push the player up and reduce the fuel
+            if((_holdAfterJump && _burnTime <= 0) || (_jetInputReady))
             {
                 _rb.AddForce(_jetForce * Vector3.up * _rb.mass * Time.deltaTime, ForceMode.Force);
                 _jetFuel = Mathf.Clamp(_jetFuel - _burnRate * Time.deltaTime, 0f, 1f);
                 _refuelTime = _refuelDelay;
             }
-        }
-    }                                                                    
+            //...otherwise reduce burn delay
+            else if (_burnTime > 0 && _holdAfterJump)
+            {
+                _burnTime -= Time.deltaTime;
+            }
+    }                                                         
     public void ReturnToLastGrounedPoint() 
     {                                      
         _rb.velocity = Vector3.zero;       
