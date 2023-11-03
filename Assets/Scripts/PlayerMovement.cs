@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     private float _movementModifier = 1; //Unused ATM
     [SerializeField, Tooltip("The maximum distance that the last ground check can reach.")]
     private float _lastGroundCheckMaxDistance;
+    [SerializeField, Tooltip("The maximum angle that the player can move up smoothly.")]
+    private float _maxAngle;
 
     [Header("Jump movement")]
     [SerializeField, Tooltip("The force that the player jumps with.")]
@@ -165,8 +167,12 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             if (hit.collider.tag == "Ground")
             {
-                dir = hit.normal;
-                Debug.DrawRay(hit.point, dir, Color.red);
+                if ((Mathf.Acos(hit.normal.y / Vector3.up.y) * Mathf.Rad2Deg) < _maxAngle)
+                {
+                    dir = hit.normal;
+                    Debug.DrawRay(hit.point, dir, Color.red);
+                }
+
             }
         }
 
