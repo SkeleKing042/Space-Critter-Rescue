@@ -382,20 +382,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd6208e01511d64899e3275fcddfd97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveAccel: 0
-  _strafeAccel: 0
+  _moveAccel: 5000
+  _strafeAccel: 5000
   _maxSpeed: 5
-  _breakAggresion: 1
+  _breakAggresion: 10
+  _lastGroundCheckMaxDistance: 10
+  _maxAngle: 40
   _jumpForce: 5
-  PlayerHeight: 1.5
+  PlayerHeight: 2
   RespawnOffset: {x: 0, y: 0.2, z: 0}
-  _jetForce: 15
+  _jetForce: 700
   _burnRate: 0.5
   _burnDelay: 0.5
   _burstBurn: 0.2
   _burstScale: {x: 1, y: 0.2}
   _refuelRate: 1.5
   _refuelDelay: 0.4
+  _holdAfterJump: 0
   _fuelBar: {fileID: 0}
   _fuelBarBackground: {fileID: 0}
   _jetColors:
