@@ -2,82 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Tablet : MonoBehaviour
 {
     [Header("Enums")]
-    [SerializeField] TabletState tabletState;
-    [SerializeField] TabletTab tabletTab;
+    [Tooltip("if the tablet is on or off")]
+    public bool tabletState;
 
     [Header("Components")]
     [SerializeField] Animator animator;
+    [SerializeField] PlayerMovement playerMovement;
+    [SerializeField] PylonManager pylonManager;
 
     [Header("Tabs")]
+    [Tooltip("index that stores the current tab in the tablet")]
+    [SerializeField] public int tabIndex;
+    [Tooltip("index that stores which tab is the map tab")]
+    [SerializeField] public int mapTabIndex;
+    [Tooltip("Array that stores the tabs of the tablet in order")]
     [SerializeField] GameObject[] tabs;
-    [SerializeField] int tabIndex;
 
-    public enum TabletState
-    {
-        on,
-        off,
-    }
+    [Header("Teleport Locations")]
+    [Tooltip("index that stores what teleport location is currently selected")]
+    [SerializeField] public int teleportIndex;
+    [Tooltip("array that stores the location image components")]
+    [SerializeField] Image[] teleportLocationImages;
+    [Tooltip("array that stores if the teleport location has been activated")]
+    [SerializeField] public bool[] hasTeleportLocationBeenActivated;
+    [Space]
+    [SerializeField] Color color_currentlySelectedTeleport;
+    [SerializeField] Color color_unavailableTeleport;
+    [SerializeField] Color color_availableTeleport;
 
-    enum TabletTab
-    {
-        Backpack,
-        Progress,
-        Options,
-        Controls,
-        Quit
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        ToggleTablet();
-        MoveTabs();
-    }
-
+    #region ToggleTablet
+    /// <summary>
+    /// Turns the tablet on and off
+    /// </summary>
     public void ToggleTablet()
     {
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if(tabletState)
         {
-            if(tabletState == TabletState.on)
-            {
-                TurnTabletOff();
-            }
-            else
-            {
-                TurnTabletOn();
-            }
+            animator.SetTrigger("Lower Tablet");
+            SetTabletState(false);
+        }
+        else if(!tabletState)
+        {
+            animator.SetTrigger("Raise Tablet");
+            SetTabletState(true);
+
+            playerMovement._movementInput = Vector2.zero;
         }
     }
 
-
-    public void SetTabletState(Tablet.TabletState inputTabletState)
+    /// <summary>
+    /// Method that sets the bool tabletState
+    /// </summary>
+    /// <param name="inputBool"></param>
+    public void SetTabletState(bool inputBool)
     {
-        tabletState = inputTabletState;
+        tabletState = inputBool;
     }
 
-    public void TurnTabletOff()
-    {
-        animator.SetTrigger("Lower Tablet");
-        SetTabletState(TabletState.off);
-    }
-
-    public void TurnTabletOn()
-    {
-        animator.SetTrigger("Raise Tablet");
-        SetTabletState(TabletState.on);
-    }
-
-
-
+    /// <summary>
+    /// turns all the tabs off and then activates the correct one
+    /// also resets the colors of the teleport icons
+    /// </summary>
     public void ActivateCorrectTab()
     {
         foreach(GameObject tab in tabs)
@@ -86,24 +78,139 @@ public class Tablet : MonoBehaviour
         }
 
         tabs[tabIndex].SetActive(true);
-    }
 
-    public void MoveTabs()
-    {
-        if(tabletState == TabletState.on)
+        if(tabIndex == mapTabIndex)
         {
-            if(Input.GetKeyDown(KeyCode.Z) && tabIndex > 0)
-            {
-                tabIndex--;
-                ActivateCorrectTab();
-            }
-            if(Input.GetKeyDown(KeyCode.X) && tabIndex < tabs.Length-1)
-            {
-                tabIndex++;
-                ActivateCorrectTab();
-            }
+            SetTeleportLocationColors();
         }
     }
 
+    /// <summary>
+    /// moves the tablet tab to the left
+    /// </summary>
+    public void MoveTabLeft()
+    {
+        if (tabletState)
+        {
+            if (tabIndex > 0)
+            {
+                tabIndex--;
+            }
+            else
+            {
+                tabIndex = tabs.Length - 1;
+            }
+        }
 
+        ActivateCorrectTab();
+    }
+
+    /// <summary>
+    /// moves tab right
+    /// </summary>
+    public void MoveTabRight()
+    {
+        if (tabletState)
+        {
+            if (tabIndex < tabs.Length - 1)
+            {
+                tabIndex++;
+            }
+            else
+            {
+                tabIndex = 0;
+            }
+        }
+
+        ActivateCorrectTab();
+    }
+
+    #endregion
+
+    #region MapTab
+
+    /// <summary>
+    /// sets the teleport locations to the correct colours
+    /// </summary>
+    private void SetTeleportLocationColors()
+    {
+        for(int i = 0; i < teleportLocationImages.Length; i++)
+        {
+            if (hasTeleportLocationBeenActivated[i])
+            {
+                teleportLocationImages[i].color = color_availableTeleport;
+            }
+            else
+            {
+                teleportLocationImages[i].color = Color.red;
+            }
+        }
+
+        teleportLocationImages[teleportIndex].color = color_currentlySelectedTeleport;
+    }
+
+    /// <summary>
+    /// move teleport index left and update colours
+    /// </summary>
+    public void MoveTeleportIndexLeft()
+    {
+        if (tabIndex == mapTabIndex)
+        {
+            if (teleportIndex > 0)
+            {
+                teleportIndex--;
+            }
+            else
+            {
+                teleportIndex = teleportLocationImages.Length - 1;
+            }
+
+            SetTeleportLocationColors();
+        }
+    }
+
+    /// <summary>
+    /// move teleport index right and update colours
+    /// </summary>
+    public void MoveTeleportIndexRight()
+    {
+        if (tabIndex == mapTabIndex)
+        {
+            if (teleportIndex < teleportLocationImages.Length - 1)
+            {
+                teleportIndex++;
+            }
+            else
+            {
+                teleportIndex = 0;
+            }
+
+            SetTeleportLocationColors();
+        }
+    }
+
+    /// <summary>
+    /// select teleport location
+    /// </summary>
+    public void SelectTeleport()
+    {
+        if (hasTeleportLocationBeenActivated[teleportIndex])
+        {
+            ToggleTablet();
+            pylonManager.GoToPylon(teleportIndex);
+        }
+    }
+
+    public void SethasTeleportBeenActivated(int pylonIndex)
+    {
+        hasTeleportLocationBeenActivated[pylonIndex] = true;
+    }
+
+
+
+
+
+
+
+    #endregion
 }
