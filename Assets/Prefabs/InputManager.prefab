@@ -162,13 +162,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   JumpAction:
-    StartAction:
+    m_PersistentCalls:
+      m_Calls: []
+  JetPackAction:
+    Action:
       m_PersistentCalls:
         m_Calls: []
-    EndAction:
-      m_PersistentCalls:
-        m_Calls: []
-    InputReference: {fileID: 5088532250290582717, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
+    InputReference: {fileID: 0}
+    ActionDelay: 0.01
   TrapInteractionAction:
     m_PersistentCalls:
       m_Calls: []
@@ -179,13 +180,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   FireAction:
-    StartAction:
-      m_PersistentCalls:
-        m_Calls: []
-    EndAction:
+    Action:
       m_PersistentCalls:
         m_Calls: []
     InputReference: {fileID: 4804567128121380101, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
+    ActionDelay: 0.01
   AltFireAction:
     m_PersistentCalls:
       m_Calls: []
