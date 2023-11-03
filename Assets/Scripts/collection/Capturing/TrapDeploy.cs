@@ -13,25 +13,31 @@ public class TrapDeploy : MonoBehaviour
      */
 
     // inputs
+    [Header("Inputs")]
     public PlayerInput Input;
     private InputAction _PickUp;
 
 
     // Trap Components 
+    [Header("Trap Components")]
     public GameObject Trap;
     private Rigidbody _trapRigid;
     public GameObject Bubble;
 
     // player Components
+    [Header("Player Components")]
     public GameObject PlayerGun;
     public GameObject Player;
 
     // trap forces 
+    [Header("Trap Forces")]
     public float PickUpRange = 10;
     public float TrapThrowForce;
 
     // misc
+    [Header("Misc")]
     private bool trapDeployed;
+    private float distance;
 
 
     /// <summary>
@@ -51,6 +57,7 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     void Start()
     {
+        
 
         // input declaration
         Input = new PlayerInput();
@@ -121,7 +128,7 @@ public class TrapDeploy : MonoBehaviour
 
             // " throw" the trap out
             _trapRigid.AddForce(Camera.main.transform.forward * TrapThrowForce, ForceMode.Impulse);
-            Debug.Log("entered iff function");
+
             // set currently holding to the vacuum
             currentlyHolding = CurrentlyHolding.vacuum;
             PlayerGun.SetActive(true);
@@ -141,15 +148,18 @@ public class TrapDeploy : MonoBehaviour
     /// <param name="trap"></param>
     /// 
                  
-    public void pickUp()
+    public void pickUp(bool DoDistace)
     {
-        //find the distance between the player and the trap
-        float distance = Vector3.Distance(Trap.transform.position, transform.position);
-        Debug.Log(distance);
-        distance = Mathf.Abs(distance);
-        
+        //if(DoDistace)
+       // {
+            distance = Vector3.Distance(Trap.transform.position, transform.position);
+            //find the distance between the player and the trap
+            Debug.Log(distance);
+            distance = Mathf.Abs(distance);
+       // }
+       
         // check if the player is within the range, not holding the trap and the trap is not active
-        if (PickUpRange >= distance && currentlyHolding != CurrentlyHolding.trap && Bubble.activeSelf == false)
+        if ((PickUpRange >= distance || !DoDistace) && currentlyHolding != CurrentlyHolding.trap && Bubble.activeSelf == false)
         {
            // set parent to the player
             Trap.transform.SetParent(transform);

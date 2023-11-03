@@ -6,24 +6,19 @@ using static UnityEditor.Progress;
 public class Collection : MonoBehaviour
 {
     // fixed varibles
+    [Header("Fixed Varibles")]
     [SerializeField]
     public float Collected;
     public float DropDistance;
     public float TextNumber;
 
+    [Header("Alien Counts")]
     public int SmallAliens;
     public int BigAliens;
 
     public bool SpaceForSmall;
     public bool SpaceForBig;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-    // MAKE THEM INTS  
 
-    // Update is called once per frame
     void Update()
     {
        CollectionDropOff();
