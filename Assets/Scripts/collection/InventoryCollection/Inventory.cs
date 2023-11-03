@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    // writing stuff for merge
-    // Start is called before the first frame update
+    // creat list of the collected aqliens
+    // refrence the Collect Alien Script
     void Start()
     {
         

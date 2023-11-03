@@ -15,6 +15,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "JetPack",
+                    "type": "Button",
+                    "id": "9896a99f-d05a-453a-8d75-e058c9b8d8b7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Sprint",
                     "type": "Button",
                     "id": "77f697f6-cd6a-4406-b0c7-5341ccdb5355",
@@ -464,6 +473,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchTool",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b86ce2f-829e-4655-8411-b1d7aac0563e",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "JetPack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b9357d9d-cb60-4378-8ff6-3791b44542e4",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "JetPack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

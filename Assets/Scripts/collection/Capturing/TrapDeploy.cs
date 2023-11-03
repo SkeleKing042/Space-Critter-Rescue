@@ -68,7 +68,7 @@ public class TrapDeploy : MonoBehaviour
     }
     void Update()
     {
-        if (currentlyHolding == CurrentlyHolding.vacuum || Trap.transform.parent !=null)
+        if ((trapDeployed ==false) && currentlyHolding == CurrentlyHolding.vacuum || Trap.transform.parent !=null)
         {
             // match the vacuums position and rotation
             Trap.transform.position = PlayerGun.transform.position;
@@ -111,6 +111,7 @@ public class TrapDeploy : MonoBehaviour
     {
         if(currentlyHolding == CurrentlyHolding.trap)
         {
+            
             // unassign the trap parent
             Trap.transform.parent = null;
           
@@ -120,7 +121,7 @@ public class TrapDeploy : MonoBehaviour
 
             // " throw" the trap out
             _trapRigid.AddForce(Camera.main.transform.forward * TrapThrowForce, ForceMode.Impulse);
-
+            Debug.Log("entered iff function");
             // set currently holding to the vacuum
             currentlyHolding = CurrentlyHolding.vacuum;
             PlayerGun.SetActive(true);

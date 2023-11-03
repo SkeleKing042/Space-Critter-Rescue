@@ -2,6 +2,7 @@
 //Last Edited by Jackson Lucas
 
 using System;
+using System.Collections;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,10 +18,11 @@ public class InputManager : MonoBehaviour
     [Serializable]
     public class HoldEvent
     {
-        public UnityEvent _startAction = new UnityEvent();
-        public UnityEvent _endAction = new UnityEvent();
-        public InputActionReference _inputReference; 
+        public UnityEvent Action = new UnityEvent();
+        public InputActionReference InputReference;
+        public float ActionDelay = 0.01f;
         private InputAction _inputAction;
+        private bool _doAction;
 
         //DOES NOT WORK AS A CONSTRUCTOR
         /// <summary>
@@ -28,28 +30,40 @@ public class InputManager : MonoBehaviour
         /// </summary>
         public void InitializeAction()
         {
-            _inputAction = _inputReference.action;
+            _inputAction = InputReference.action;
             DoEvent();
         }
 
         /// <summary>
         /// Invokes the desiered actions.
         /// </summary>
-        public void DoEvent()
+        public bool DoEvent()
         {
-            Debug.Log("Hold action called.");
+            //Debug.Log("Hold action called.");
             _inputAction.started +=
-                context =>
+                _s =>
                 {
-                    Debug.Log("Start action");
-                    _startAction.Invoke();
+                    Debug.Log("Starting action");
+                    _doAction = true;
                 };
             _inputAction.canceled +=
-                _ =>
+                _e =>
                 {
                     Debug.Log("Ending action.");
-                    _endAction.Invoke();
+                    _doAction = false;
                 };
+
+            return _doAction;
+        }
+
+        public IEnumerator RepeatAction(float delay)
+        {
+            while(_doAction)
+            {
+                yield return new WaitForSeconds(delay);
+                Debug.Log("Doing action");
+                Action.Invoke();
+            }
         }
     }
 
@@ -57,19 +71,20 @@ public class InputManager : MonoBehaviour
     [SerializeField] private bool _lockCursor;
 
     [Header("Movement")]
-    [SerializeField] private UnityEvent<Vector2> _movementAction = new UnityEvent<Vector2>();
-    [SerializeField] private UnityEvent _sprintAction = new UnityEvent();
-    [SerializeField] private UnityEvent _crouchAction = new UnityEvent();
-    [SerializeField] private HoldEvent _jumpAction = new HoldEvent();
+    public UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
+    public UnityEvent SprintAction = new UnityEvent();
+    public UnityEvent CrouchAction = new UnityEvent();
+    public UnityEvent JumpAction = new UnityEvent();
+    public HoldEvent JetPackAction = new HoldEvent();
 
     [Header("Tool actions")]
-    [SerializeField] private UnityEvent _trapInteractionAction = new UnityEvent();
-    [SerializeField] private UnityEvent _enableTrapAction = new UnityEvent();
-    [SerializeField] private UnityEvent _tabletAction = new UnityEvent();
-    [SerializeField] private HoldEvent _fireAction = new HoldEvent();
-    [SerializeField] private UnityEvent _altFireAction = new UnityEvent();
-    [SerializeField] private UnityEvent _returnToShipAction = new UnityEvent();
-    [SerializeField] private UnityEvent _switchToolAction = new UnityEvent();
+    public UnityEvent TrapInteractionAction = new UnityEvent();
+    public UnityEvent EnableTrapAction = new UnityEvent();
+    public UnityEvent TabletAction = new UnityEvent();
+    public HoldEvent FireAction = new HoldEvent();
+    public UnityEvent AltFireAction = new UnityEvent();
+    public UnityEvent ReturnToShipAction = new UnityEvent();
+    public UnityEvent SwitchToolAction = new UnityEvent();
 
 
     private void Awake()
@@ -79,62 +94,67 @@ public class InputManager : MonoBehaviour
         else
             Cursor.lockState = CursorLockMode.None;
             
-        _jumpAction.InitializeAction();
-        _fireAction.InitializeAction();
+        JetPackAction.InitializeAction();
+        FireAction.InitializeAction();
     }
     void OnJump()
     {
         Debug.Log("OnJump called.");
-        _jumpAction.DoEvent();
+        JumpAction.Invoke();
+    }
+    void OnJetPack()
+    {
+        Debug.Log("OnJetPack called.");
+        if (JetPackAction.DoEvent()) StartCoroutine(JetPackAction.RepeatAction(JetPackAction.ActionDelay));
     }
     void OnSprint()
     {
         Debug.Log("OnSprint called.");
-        _sprintAction.Invoke();
+        SprintAction.Invoke();
     }
     void OnEnableTrap()
     {
         Debug.Log("Enabling trap.");
-        _enableTrapAction.Invoke();
+        EnableTrapAction.Invoke();
     }
     void OnPickupTrap()
     {
         Debug.Log("OnPickupTrap called.");
-        _trapInteractionAction.Invoke();
+        TrapInteractionAction.Invoke();
     }
     void OnMove(InputValue value)
     {
         Debug.Log("OnMove called.");
-        _movementAction.Invoke(value.Get<Vector2>());
+        MovementAction.Invoke(value.Get<Vector2>());
     }
     void OnCrouch()
     {
         Debug.Log("OnCrouch called.");
-        _crouchAction.Invoke();
+        CrouchAction.Invoke();
     }
     void OnTablet()
     {
         Debug.Log("OnTablet called.");
-        _tabletAction.Invoke();
+        TabletAction.Invoke();
     }
     void OnFire()
     {
         Debug.Log("OnFire called.");
-        _fireAction.DoEvent();
+        if(FireAction.DoEvent()) StartCoroutine(FireAction.RepeatAction(FireAction.ActionDelay));
     }
     void OnAltFire()
     {
         Debug.Log("OnAltFire called.");
-        _altFireAction.Invoke();
+        AltFireAction.Invoke();
     }
     void OnReturnToShip()
     {
         Debug.Log("Attempting ship return.");
-        _returnToShipAction.Invoke();
+        ReturnToShipAction.Invoke();
     }
     void OnSwitchTool()
     {
         Debug.Log("Switching Tools");
-        _switchToolAction.Invoke();
+        SwitchToolAction.Invoke();
     }
 }
