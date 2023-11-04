@@ -20,18 +20,18 @@ public class Tablet : MonoBehaviour
     private PylonManager _pylonManager;
 
     [Header("Tabs")]
-    [Tooltip("index that stores the current tab in the tablet")]
-    [SerializeField] public int TabIndex;
-    [Tooltip("index that stores which tab is the map tab")]
-    [SerializeField] public int MapTabIndex;
     [Tooltip("Array that stores the tabs of the tablet in order")]
     [SerializeField] private GameObject[] _tabs;
+    [Tooltip("index that stores which tab is the map tab")]
+    [SerializeField] public int MapTabIndex;
+    //[Tooltip("index that stores the current tab in the tablet")]
+    [HideInInspector] public int TabIndex;
 
     [Header("Teleport Locations")]
-    [Tooltip("index that stores what teleport location is currently selected")]
-    [SerializeField] private int _teleportIndex;
     [Tooltip("array that stores the location image components")]
     [SerializeField] private Image[] _teleportLocationImages;
+    //[Tooltip("index that stores what teleport location is currently selected")]
+    private int _teleportIndex;
     //[Tooltip("array that stores if the teleport location has been activated")]
     private bool[] _hasTeleportLocationBeenActivated;
     [Space]
