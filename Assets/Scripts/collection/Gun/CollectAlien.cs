@@ -48,7 +48,7 @@ public class CollectAlien : MonoBehaviour
 
             // AlienCount++;
             Alien = creature.gameObject;
-            PlayerInventory.AddToPlayerInventory(Alien);
+            //PlayerInventory.AddToPlayerInventory(Alien);
 
             Vac.UnassignAlien();
             Destroy(creature.gameObject);

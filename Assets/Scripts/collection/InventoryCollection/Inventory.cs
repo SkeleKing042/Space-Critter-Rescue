@@ -29,13 +29,13 @@ public class Inventory : MonoBehaviour
     // refrence the Collect Alien Script
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
 
 
     }
@@ -43,8 +43,8 @@ public class Inventory : MonoBehaviour
     {
         if (alien.tag == "alien" && SpaceCheck.SpaceForSmall == true)
         {
-            _alien =alien;
-            if (_alienCollection.Contains(_alien)!)
+            _alien = alien;
+            if (!_alienCollection.Contains(_alien))
             {
                 _alienCollection.Add(_alien);
                 _alienType = _alien.GetComponent<CreatureAI>();
@@ -84,6 +84,35 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void AddSmallShroom(GameObject alien)
+    {
+
+    }
+
+    public void AddBigShroom(GameObject alien)
+    {
+
+    }
+    // here
+    public void AddSmallCrystal(GameObject alien)
+    {
+        if (!_alienCollection.Contains(_alien))
+        {
+            _alienCollection.Add(_alien);
+            _alienType = _alien.GetComponent<CreatureAI>();
+
+            if (CreatureAI.creatureType.Crystal == _alienType.type)
+            {
+                // get image and display depending on type
+
+                CrystalAliens++;
+            }
+        }
+    }
+    public void AddBigCrystal(GameObject alien)
+    {
+
+    }
 
     public void PlayerInventory()
     {

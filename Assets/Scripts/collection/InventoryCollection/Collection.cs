@@ -32,6 +32,12 @@ public class Collection : MonoBehaviour
             {
                 SmallAliens++;
                 Collected++;
+
+
+
+
+
+
             }
         }
         else
@@ -45,6 +51,11 @@ public class Collection : MonoBehaviour
             {
                 BigAliens++;
                 Collected ++;
+
+
+
+
+
             }
         }
         else
