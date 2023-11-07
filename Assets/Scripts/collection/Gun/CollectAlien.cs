@@ -8,10 +8,12 @@ using Unity.VisualScripting;
 public class CollectAlien : MonoBehaviour
 {
     public TMP_Text AlienUICount;
-    private int AlienCount;
+    private float AlienCount;
     public bool mouseDown = false;
 
     public VacuumGun Vac;
+
+    public Collection collection;
 
     private void Update()
     {
@@ -29,24 +31,24 @@ public class CollectAlien : MonoBehaviour
         {
             Application.Quit();
         }
+        AlienUICount.text = ": " + collection.TextNumber.ToString();
 
-       
     }
 
 
     void OnTriggerEnter(Collider creature)
     {
-        Debug.Log("collision");
+
         if ((creature.gameObject.tag == "alien" || creature.gameObject.tag == "bigAlien") && mouseDown)
         {
-       
+            collection.AddAlienToCollection(creature.gameObject);
           
-            AlienCount++;
-            AlienUICount.text = ": " + AlienCount.ToString();
+           // AlienCount++;
+            
 
             Vac.UnassignAlien();
 
-            creature.transform.gameObject.SetActive(false);
+            Destroy(creature.gameObject);
         }
     }
 }

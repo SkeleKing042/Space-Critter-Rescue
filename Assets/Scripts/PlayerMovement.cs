@@ -24,6 +24,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Tooltip("Modifies how aggresive the breaking is at maximum speed.")]
     private float _breakAggresion = 1;
     private float _movementModifier = 1; //Unused ATM
+    [SerializeField, Tooltip("The maximum distance that the last ground check can reach.")]
+    private float _lastGroundCheckMaxDistance;
+    [SerializeField, Tooltip("The maximum angle that the player can move up smoothly.")]
+    private float _maxAngle;
 
     [Header("Jump movement")]
     [SerializeField, Tooltip("The force that the player jumps with.")]
@@ -51,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
     private float _refuelDelay;
     private float _refuelTime;
     private float _jetFuel = 1;
+    public bool _holdAfterJump;
+    private bool _jetInputReady;
 
     [Header("Debug")]
     [SerializeField, Tooltip("The display for the jet fuel.")]
@@ -69,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         GrabGroundBelow();
+        GetGroundNormal();
         //Get the horizontal velocity. We don't want to affect/clamp the vertial movement
         Vector2 horizontalVel = new Vector2(_rb.velocity.x, _rb.velocity.z);
         //Check the current movement speed
@@ -90,9 +97,11 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             //Move the player forwards based on the camera rotation
-            _rb.AddForce(
-                (Vector3.Cross(_camera.transform.right, Vector3.up) * _movementInput.y * (_moveAccel * _rb.mass) * _movementModifier +
-                _camera.transform.right * _movementInput.x * (_strafeAccel * _rb.mass) * _movementModifier) * Time.deltaTime);
+            Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
+            Vector3 forwardForce = camForward * _movementInput.y * _moveAccel * _rb.mass * _movementModifier;
+            Vector3 sideForce = _camera.transform.right * _movementInput.x * _strafeAccel * _rb.mass * _movementModifier;
+            Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
+            _rb.AddForce(orientedForce * Time.deltaTime);
         }
 
         //...otherwise, if on the ground & out of fuel...
@@ -116,7 +125,8 @@ public class PlayerMovement : MonoBehaviour
     }
     public void UpdateMovementAxis(Vector2 v)
     {
-        _movementInput = v;
+        //Movement got flipped when I added slope calcs and i don't really wanna implement a proper fix rn (2/11 - Jackson)
+        _movementInput = new Vector2(v.y, -v.x);
     }
     /// <summary>
     /// Checks right below the player for objects tagged ground
@@ -138,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
     private void GrabGroundBelow()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, -Vector3.up * 1000f, out hit, 1000f))
+        if(Physics.Raycast(transform.position, -Vector3.up * _lastGroundCheckMaxDistance, out hit, _lastGroundCheckMaxDistance))
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             if (hit.collider.tag == "Ground")
@@ -147,6 +157,27 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    public Vector3 GetGroundNormal()
+    {
+        Vector3 dir = Vector3.up;
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, -Vector3.up * PlayerHeight, out hit, PlayerHeight))
+        {
+            //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
+            if (hit.collider.tag == "Ground")
+            {
+                if ((Mathf.Acos(hit.normal.y / Vector3.up.y) * Mathf.Rad2Deg) < _maxAngle)
+                {
+                    dir = hit.normal;
+                    Debug.DrawRay(hit.point, dir, Color.red);
+                }
+
+            }
+        }
+
+        return dir;
+    }
     public void Jump()
     {
         //Debug.Log("Jump initiated");       
@@ -154,40 +185,46 @@ public class PlayerMovement : MonoBehaviour
         {
             _rb.AddForce(Vector3.up * _jumpForce * _rb.mass, ForceMode.Impulse);
             _burnTime = _burnDelay;
+
+            _jetInputReady = false;
         }
         else
         {
-            _burnTime = 0;
-
-            if (_jetFuel >= _burstBurn)
+            if (_jetInputReady || _holdAfterJump)
             {
-                _rb.AddForce(
-                    (Vector3.Cross(_camera.transform.right, Vector3.up) * _movementInput.y * _jumpForce * _burstScale.x * _rb.mass * _movementModifier +
-                    _camera.transform.right * _movementInput.x * _jumpForce * _burstScale.x * _rb.mass * _movementModifier +
-                    Vector3.up * _jumpForce * _burstScale.y * _rb.mass), ForceMode.Impulse);
-                _jetFuel -= _burstBurn;
+                _burnTime = 0;
+
+                if (_jetFuel >= _burstBurn)
+                {
+                    Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
+                    Vector3 forwardForce = camForward * _movementInput.y * _jumpForce * _burstScale.x * _rb.mass * _movementModifier;
+                    Vector3 sideForce = _camera.transform.right * _movementInput.x * _jumpForce * _burstScale.x * _rb.mass * _movementModifier;
+                    Vector3 upForce = Vector3.up * _jumpForce * _burstScale.y * _rb.mass;
+                    Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce + upForce, GetGroundNormal());
+                    _rb.AddForce(orientedForce, ForceMode.Impulse);
+                    _jetFuel -= _burstBurn;
+                }
             }
+            _jetInputReady = true;
         }
     }
     public void JetPack()
-    { 
+    {
         //If we have fuel...
         if (_jetFuel > 0)
-        {
-            //...reduce burn delay...
-            if (_burnTime > 0)
-            {
-                _burnTime -= Time.deltaTime;
-            }
-            //...otherwise push the player up and reduce the fuel
-            else
+            //... push the player up and reduce the fuel
+            if((_holdAfterJump && _burnTime <= 0) || (_jetInputReady))
             {
                 _rb.AddForce(_jetForce * Vector3.up * _rb.mass * Time.deltaTime, ForceMode.Force);
                 _jetFuel = Mathf.Clamp(_jetFuel - _burnRate * Time.deltaTime, 0f, 1f);
                 _refuelTime = _refuelDelay;
             }
-        }
-    }                                                                    
+            //...otherwise reduce burn delay
+            else if (_burnTime > 0 && _holdAfterJump)
+            {
+                _burnTime -= Time.deltaTime;
+            }
+    }                                                         
     public void ReturnToLastGrounedPoint() 
     {                                      
         _rb.velocity = Vector3.zero;       
