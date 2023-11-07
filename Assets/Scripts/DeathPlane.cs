@@ -10,5 +10,9 @@ public class DeathPlane : MonoBehaviour
         {
             other.GetComponent<PlayerMovement>().ReturnToLastGrounedPoint();
         }
+        if(other.tag.ToLower() == "trap")
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<TrapDeploy>().pickUp(false);
+        }
     }
 }

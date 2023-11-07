@@ -429,6 +429,8 @@ MonoBehaviour:
   TextNumber: 0
   SmallAliens: 0
   BigAliens: 0
+  SpaceForSmall: 0
+  SpaceForBig: 0
 --- !u!114 &4720249680905998455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,8 +475,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TabletState: 0
-  TabIndex: 0
-  MapTabIndex: 2
   _tabs:
   - {fileID: 1406963999393896615}
   - {fileID: 1406963999804983825}
@@ -482,7 +482,8 @@ MonoBehaviour:
   - {fileID: 4025380578348167846}
   - {fileID: 1747910524068917669}
   - {fileID: 3206961690596290877}
-  _teleportIndex: 0
+  MapTabIndex: 2
+  TabIndex: 0
   _teleportLocationImages:
   - {fileID: 89256731605433438}
   - {fileID: 1880446608420258799}
@@ -789,7 +790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: TrapInteractionAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: EnableTrapAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -1026,6 +1027,10 @@ PrefabInstance:
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: JumpAction._startAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PlayerMovement, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: TrapInteractionAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: JumpAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
