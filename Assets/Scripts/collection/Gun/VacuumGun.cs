@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.InputSystem.HID;
 
 public class VacuumGun : MonoBehaviour
-{   
+{
     // alien components 
+    [Header("Alien Components")]
     public GameObject Alien;
     public Rigidbody _alienRigid;
     public CreatureAI AlienAI;
@@ -14,27 +15,25 @@ public class VacuumGun : MonoBehaviour
     public GameObject Bubble;
 
     // movement and position vectors
+    [Header ("Movement and Position Vectors")]
     Vector3 AlienPosition;
     Vector3 forward;
 
     // ajustable variables
+    [Header("Ajustable Varibles")]
     [SerializeField]
     private float SuckSpeed = 5;
     public float OffsetFixSpeed;
     public float StunTime;
 
     // fixed varibles 
+    [Header("Fixed Varibles")]
     private float _centralOffset;
     private bool _mouseDown;
     public bool Pulling = false;
 
     void Update()
     {
-   
-
-
-        
-
 
         //  collect alien cosine value in relation to the player
         if (Alien)

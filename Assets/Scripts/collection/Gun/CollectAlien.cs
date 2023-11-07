@@ -11,6 +11,7 @@ public class CollectAlien : MonoBehaviour
     private float AlienCount;
     public bool mouseDown = false;
 
+    [Header("Script Refrences")]
     public VacuumGun Vac;
     public Collection collection;
     public Inventory PlayerInventory;
@@ -51,9 +52,6 @@ public class CollectAlien : MonoBehaviour
 
             Vac.UnassignAlien();
             Destroy(creature.gameObject);
-            
-
-
 
             //Vac.EndPull();
             

@@ -7,24 +7,28 @@ using static UnityEditor.Progress;
 public class Trap : MonoBehaviour
 {
     // refrenced gun shoot function later after shoot function is made properly
-
+    [Header("Script Refrences")]
     public TrapDeploy Check;
-
-    [SerializeField]
-    public static bool Catchable = false;
-    public GameObject Bubble;
-    // use this to refrence traps
-    public GameObject playerGun;
     public VacuumGun Vacuum;
     public CreatureAI AlienAI;
 
+    
 
+    [Header("Tool GameObjects")]
+    public GameObject Bubble;
+    public GameObject playerGun;
+
+
+    [Header("Movement Vectors")]
     Vector3 offSet;
     Vector3 lerpPathDestination;
 
-    private List<GameObject> _alienList = new List<GameObject> ();
+    [Header("Catchable")]
+    [SerializeField]
+    public static bool Catchable = false;
 
-
+    
+    private List<GameObject> _alienList = new List<GameObject>();
 
     private void Start()
     {
