@@ -71,7 +71,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Color[] _jetBackgroundColor;
     [SerializeField]
-    private bool _jetpackUI;
+    private RectTransform jetpackUI_RectTransform;
+    [SerializeField]
+    private float[] jetpackUIPositions;
+    [SerializeField]
+    private float _jetpackUISpeed;
 
     void Start()
     {
@@ -135,9 +139,15 @@ public class PlayerMovement : MonoBehaviour
             _delayedBar.fillAmount = _fuelBarMain.fillAmount;
 
 
-        if(_jetpackUI && _jetFuel == 1 && !GroundedCheck())
+       
+
+        if (GroundedCheck() && _jetFuel == 1)
         {
-            SetJetpackUI_OFF();
+            jetpackUI_RectTransform.anchoredPosition = iTween.Vector2Update(jetpackUI_RectTransform.anchoredPosition, new Vector2(jetpackUIPositions[1], jetpackUI_RectTransform.anchoredPosition.y), _jetpackUISpeed);
+        }
+        else
+        {
+            jetpackUI_RectTransform.anchoredPosition = iTween.Vector2Update(jetpackUI_RectTransform.anchoredPosition, new Vector2(jetpackUIPositions[0], jetpackUI_RectTransform.anchoredPosition.y), _jetpackUISpeed);
         }
 
     }
@@ -254,26 +264,4 @@ public class PlayerMovement : MonoBehaviour
         _rb.velocity = Vector3.zero;       
         transform.position = _lastGroundPoint + RespawnOffset;
     }
-
-    public void SetJetpackUI_ON()
-    {
-        if (!_jetpackUI)
-        {
-            _animator.SetTrigger("Jetpack UI IN Trigger");
-            _jetpackUI = true;
-        }
-    }
-
-    public void SetJetpackUI_OFF()
-    {
-        if (_jetpackUI && GroundedCheck())
-        {
-            _animator.SetTrigger("Jetpack UI OUT Trigger");
-            _jetpackUI = false;
-        }
-    }
-
-
-
-
 }                                          

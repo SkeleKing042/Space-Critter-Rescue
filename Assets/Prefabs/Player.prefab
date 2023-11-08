@@ -406,12 +406,18 @@ MonoBehaviour:
   _refuelRate: 1.5
   _refuelDelay: 0.4
   _holdAfterJump: 0
+  _animator: {fileID: 0}
   _fuelBarMain: {fileID: 6682796798686207434}
   _delayedBar: {fileID: 4850902975700350225}
   _fuelBarBackground: {fileID: 8774943430054345508}
   _jetBackgroundColor:
   - {r: 0.3773585, g: 0, b: 0, a: 1}
   - {r: 0, g: 0, b: 0, a: 1}
+  jetpackUI_RectTransform: {fileID: 6682796799704192199}
+  jetpackUIPositions:
+  - -25
+  - 110
+  _jetpackUISpeed: 10
 --- !u!114 &8003232834291435406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1569,6 +1575,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &6682796799704192199 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2945920590488001469, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
+  m_PrefabInstance: {fileID: 8384597924142092154}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8774943430054345508 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 980324488614704222, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
