@@ -12,7 +12,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
-    Rigidbody _rb;
+    public Rigidbody PlayerRigidbody;
     Camera _camera;
     [SerializeField] public Vector2 _movementInput;
     [Header("Ground movement")]
@@ -33,10 +33,18 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump movement")]
     [SerializeField, Tooltip("The force that the player jumps with.")]
     private float _jumpForce;
-    [Tooltip("The distance from the feet position that the ground check reaches.")]
-    public float PlayerHeight;
     private Vector3 _lastGroundPoint;
     public Vector3 RespawnOffset;
+
+    [Header("Ground Checks")]
+    [Min(1), Tooltip("The distance from the feet position that the ground check reaches.")]
+    public float PlayerHeight;
+    [SerializeField, Tooltip("The distance ahead of the player that ground will be detected")]
+    public float StrideLength;
+    [SerializeField, Tooltip("The distance to the side of the player that ground will be detected")]
+    public float StrideWidth;
+    [SerializeField]
+    public bool VelocityBasedChecks;
 
     [Header("Jetpack Settings")]
     [SerializeField, Tooltip("The force that the jetpack outputs.")]
@@ -75,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();
+        PlayerRigidbody = GetComponent<Rigidbody>();
         _camera = Camera.main;
         _animator = GetComponent<Animator>();
     }
@@ -85,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
         GrabGroundBelow();
         GetGroundNormal();
         //Get the horizontal velocity. We don't want to affect/clamp the vertial movement
-        Vector2 horizontalVel = new Vector2(_rb.velocity.x, _rb.velocity.z);
+        Vector2 horizontalVel = new Vector2(PlayerRigidbody.velocity.x, PlayerRigidbody.velocity.z);
         //Check the current movement speed
         if (horizontalVel.magnitude > _maxSpeed)
         {
@@ -100,16 +108,16 @@ public class PlayerMovement : MonoBehaviour
             //Lock that force to the x and z axi
             Vector3 triBreakVelocity = new Vector3(breakVelocity.x, 0, breakVelocity.y);
             //Apply the force
-            _rb.AddForce(-triBreakVelocity);
+            PlayerRigidbody.AddForce(-triBreakVelocity);
         }
         else
         {
             //Move the player forwards based on the camera rotation
             Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
-            Vector3 forwardForce = camForward * _movementInput.y * _moveAccel * _rb.mass * _movementModifier;
-            Vector3 sideForce = _camera.transform.right * _movementInput.x * _strafeAccel * _rb.mass * _movementModifier;
+            Vector3 forwardForce = camForward * _movementInput.y * _moveAccel * PlayerRigidbody.mass * _movementModifier;
+            Vector3 sideForce = _camera.transform.right * _movementInput.x * _strafeAccel * PlayerRigidbody.mass * _movementModifier;
             Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
-            _rb.AddForce(orientedForce * Time.deltaTime);
+            PlayerRigidbody.AddForce(orientedForce * Time.deltaTime);
         }
 
         //...otherwise, if on the ground & out of fuel...
@@ -155,8 +163,19 @@ public class PlayerMovement : MonoBehaviour
     /// <returns></returns>
     private bool GroundedCheck()
     {
+        Vector3 playerForwards = Vector3.Cross(_camera.transform.forward, Vector3.up);
+        if(VelocityBasedChecks)
+        {
+            playerForwards = Vector3.Cross(PlayerRigidbody.velocity.normalized, Vector3.up);
+        }
+
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, -Vector3.up * PlayerHeight, out hit, PlayerHeight))
+        if(
+            Physics.Raycast(transform.position + Vector3.Cross(playerForwards, Vector3.up) * StrideLength, -Vector3.up * PlayerHeight, out hit, PlayerHeight) ||
+            Physics.Raycast(transform.position + playerForwards * StrideWidth, -Vector3.up * PlayerHeight, out hit, PlayerHeight) ||
+            Physics.Raycast(transform.position + Vector3.Cross(playerForwards, Vector3.up) * -StrideLength, -Vector3.up * PlayerHeight, out hit, PlayerHeight) ||
+            Physics.Raycast(transform.position + playerForwards * StrideWidth, -Vector3.up * -PlayerHeight, out hit, PlayerHeight)
+            )
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             if (hit.collider.tag == "Ground")
@@ -204,7 +223,7 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("Jump initiated");       
         if (GroundedCheck())
         {
-            _rb.AddForce(Vector3.up * _jumpForce * _rb.mass, ForceMode.Impulse);
+            PlayerRigidbody.AddForce(Vector3.up * _jumpForce * PlayerRigidbody.mass, ForceMode.Impulse);
             _burnTime = _burnDelay;
 
             _jetInputReady = false;
@@ -221,11 +240,11 @@ public class PlayerMovement : MonoBehaviour
                 if (_jetFuel >= _burstBurn)
                 {
                     Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
-                    Vector3 forwardForce = camForward * _movementInput.y * _jumpForce * _burstScale.x * _rb.mass * _movementModifier;
-                    Vector3 sideForce = _camera.transform.right * _movementInput.x * _jumpForce * _burstScale.x * _rb.mass * _movementModifier;
-                    Vector3 upForce = Vector3.up * _jumpForce * _burstScale.y * _rb.mass;
+                    Vector3 forwardForce = camForward * _movementInput.y * _jumpForce * _burstScale.x * PlayerRigidbody.mass * _movementModifier;
+                    Vector3 sideForce = _camera.transform.right * _movementInput.x * _jumpForce * _burstScale.x * PlayerRigidbody.mass * _movementModifier;
+                    Vector3 upForce = Vector3.up * _jumpForce * _burstScale.y * PlayerRigidbody.mass;
                     Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
-                    _rb.AddForce(orientedForce + upForce, ForceMode.Impulse);
+                    PlayerRigidbody.AddForce(orientedForce + upForce, ForceMode.Impulse);
                     _jetFuel -= _burstBurn;
                 }
             }
@@ -239,7 +258,7 @@ public class PlayerMovement : MonoBehaviour
             //... push the player up and reduce the fuel
             if((_holdAfterJump && _burnTime <= 0) || (_jetInputReady))
             {
-                _rb.AddForce(_jetForce * Vector3.up * _rb.mass * Time.deltaTime, ForceMode.Force);
+                PlayerRigidbody.AddForce(_jetForce * Vector3.up * PlayerRigidbody.mass * Time.deltaTime, ForceMode.Force);
                 _jetFuel = Mathf.Clamp(_jetFuel - _burnRate * Time.deltaTime, 0f, 1f);
                 _refuelTime = _refuelDelay;
             }
@@ -251,7 +270,7 @@ public class PlayerMovement : MonoBehaviour
     }                                                         
     public void ReturnToLastGrounedPoint() 
     {                                      
-        _rb.velocity = Vector3.zero;       
+        PlayerRigidbody.velocity = Vector3.zero;       
         transform.position = _lastGroundPoint + RespawnOffset;
     }
 
