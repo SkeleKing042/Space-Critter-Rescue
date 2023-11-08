@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class DeathPlane : MonoBehaviour
 {
+    public List<string> AlienTags = new List<string>();
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Something has hit the deathplane...");
         if(other.tag == "Player")
         {
             other.GetComponent<PlayerMovement>().ReturnToLastGrounedPoint();
+        }
+        if (AlienTags.Contains(other.tag))
+        {
+            Debug.Log(other.name + " fell in to the deathplane...");
+            other.GetComponent<CreatureAI>().ReturnToLastGrounedPoint();
         }
     }
 }

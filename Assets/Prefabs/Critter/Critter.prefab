@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 3390830656048057691}
   - component: {fileID: 1320662727876106449}
   - component: {fileID: 3390830656048057689}
+  - component: {fileID: 3070088481512173707}
   - component: {fileID: 3390830656048057688}
   - component: {fileID: 7534540182548985643}
   - component: {fileID: 2050349986674664729}
@@ -226,6 +227,26 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3070088481512173707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3390830656048057695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fee2e6b0cc1db64bba51030d4ef7f8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsBig: 0
+  Type: 0
+  _critterHeight: 1
+  _thirstiness: 50
+  _lazyness: 50
+  _panicVelocity: 5
+  _explorationRange: 15
+  _moveSpeed: 3
 --- !u!114 &3390830656048057688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,18 +260,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _theState: 
-  isBig: 0
-  type: 0
-  _travelableDistanceFromHome: 15
-  _velocityToPanic: 5
-  _thirstiness: 50
   _thirstCheckDelay: 1
-  _lazyness: 50
   _lazyCheckDelay: 1
   Hydration: 100
   Energy: 100
+  _respawnOffset: {x: 0, y: 0, z: 0}
+  _groundCheckDelay: 1
   _playerTag: Player
-  FacePlayerRate: 0.025
+  _facePlayerRate: 0.025
 --- !u!114 &7534540182548985643
 MonoBehaviour:
   m_ObjectHideFlags: 0
