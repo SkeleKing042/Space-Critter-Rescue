@@ -64,7 +64,7 @@ public class Tablet : MonoBehaviour
             _animator.SetTrigger("Raise Tablet");
             SetTabletState(true);
 
-            _playerMovement._movementInput = Vector2.zero;
+            _playerMovement.MovementInput = Vector2.zero;
         }
     }
 

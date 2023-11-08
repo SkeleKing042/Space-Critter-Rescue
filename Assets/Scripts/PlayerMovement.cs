@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public Rigidbody PlayerRigidbody;
     Camera _camera;
-    Vector2 _movementInput;
+    public Vector2 MovementInput;
     [Header("Ground movement")]
     [SerializeField, Tooltip("The speed at which the player moves forwards and backwards.")]
     private float _moveAccel;
@@ -124,8 +124,8 @@ public class PlayerMovement : MonoBehaviour
         {
             //Move the player forwards based on the camera rotation
             Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
-            Vector3 forwardForce = camForward * _movementInput.y * _moveAccel * PlayerRigidbody.mass;
-            Vector3 sideForce = _camera.transform.right * _movementInput.x * _strafeAccel * PlayerRigidbody.mass;
+            Vector3 forwardForce = camForward * MovementInput.y * _moveAccel * PlayerRigidbody.mass;
+            Vector3 sideForce = _camera.transform.right * MovementInput.x * _strafeAccel * PlayerRigidbody.mass;
             Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
             PlayerRigidbody.AddForce(orientedForce * Time.deltaTime);
         }
@@ -157,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
     public void UpdateMovementAxis(Vector2 v)
     {
         //Movement got flipped when I added slope calcs and i don't really wanna implement a proper fix rn (2/11 - Jackson)
-        _movementInput = new Vector2(v.y, -v.x);
+        MovementInput = new Vector2(v.y, -v.x);
     }
     /// <summary>
     /// Checks right below the player for objects tagged ground
@@ -239,8 +239,8 @@ public class PlayerMovement : MonoBehaviour
                 if (_jetFuel >= _burstBurn)
                 {
                     Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
-                    Vector3 forwardForce = camForward * _movementInput.y * _jumpForce * _burstScale.x * PlayerRigidbody.mass * _movementModifier;
-                    Vector3 sideForce = _camera.transform.right * _movementInput.x * _jumpForce * _burstScale.x * PlayerRigidbody.mass * _movementModifier;
+                    Vector3 forwardForce = camForward * MovementInput.y * _jumpForce * _burstScale.x * PlayerRigidbody.mass * _movementModifier;
+                    Vector3 sideForce = _camera.transform.right * MovementInput.x * _jumpForce * _burstScale.x * PlayerRigidbody.mass * _movementModifier;
                     Vector3 upForce = Vector3.up * _jumpForce * _burstScale.y * PlayerRigidbody.mass;
                     Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
                     PlayerRigidbody.AddForce(orientedForce + upForce, ForceMode.Impulse);

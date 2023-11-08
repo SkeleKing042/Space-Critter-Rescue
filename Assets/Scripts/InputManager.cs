@@ -171,7 +171,7 @@ public class InputManager : MonoBehaviour
         Debug.Log("OnCrouch called.");
         CrouchAction.DoEvent();
     }
-    void OnTablet()
+    void OnToggleTablet()
     {
         Debug.Log("OnTablet called.");
         TabletAction.Invoke();
