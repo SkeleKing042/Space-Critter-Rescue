@@ -63,33 +63,22 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Tooltip("The time it takes for the jetpack to begin refueling.")]
     private float _refuelDelay;
     private float _refuelTime;
+    public float RefuelTime { get { return _refuelTime; } }
     private float _jetFuel = 1;
+    public float JetFuel { get { return _jetFuel; } }
     public bool _holdAfterJump;
     private bool _jetInputReady;
-    
 
-    [Header("Fuel Display")]
-    [SerializeField] Animator _animator;
-    [SerializeField, Tooltip("The display for the jet fuel.")]
-    private Image _fuelBarMain;
+    [Header("UI")]
     [SerializeField]
-    private Image _delayedBar;
-    [SerializeField]
-    private Image _fuelBarBackground;
-    [SerializeField]
-    private Color[] _jetBackgroundColor;
-    [SerializeField]
-    private RectTransform jetpackUI_RectTransform;
-    [SerializeField]
-    private float[] jetpackUIPositions;
-    [SerializeField]
-    private float _jetpackUISpeed;
+    private UI_Manager ui_Manager;
+
+    
 
     void Start()
     {
         PlayerRigidbody = GetComponent<Rigidbody>();
         _camera = Camera.main;
-        _animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -134,28 +123,20 @@ public class PlayerMovement : MonoBehaviour
                 _jetFuel = Mathf.Clamp(_jetFuel + _refuelRate * Time.deltaTime, 0f, 1f);
         }
 
-        //Always update the ui
-        if (_refuelTime > 0)
-            _fuelBarBackground.color = _jetBackgroundColor[1];
-        else
-            _fuelBarBackground.color = _jetBackgroundColor[0];
 
-        _fuelBarMain.fillAmount = _jetFuel;
-        if (_delayedBar.fillAmount > _fuelBarMain.fillAmount)
-            _delayedBar.fillAmount = iTween.FloatUpdate(_delayedBar.fillAmount, _fuelBarMain.fillAmount, 10);
-        else
-            _delayedBar.fillAmount = _fuelBarMain.fillAmount;
 
 
        
 
         if (GroundedCheck() && _jetFuel == 1)
         {
-            jetpackUI_RectTransform.anchoredPosition = iTween.Vector2Update(jetpackUI_RectTransform.anchoredPosition, new Vector2(jetpackUIPositions[1], jetpackUI_RectTransform.anchoredPosition.y), _jetpackUISpeed);
+            //off
+            ui_Manager.isJetpackUI = false;
         }
         else
         {
-            jetpackUI_RectTransform.anchoredPosition = iTween.Vector2Update(jetpackUI_RectTransform.anchoredPosition, new Vector2(jetpackUIPositions[0], jetpackUI_RectTransform.anchoredPosition.y), _jetpackUISpeed);
+            //on
+            ui_Manager.isJetpackUI = true;
         }
 
     }
