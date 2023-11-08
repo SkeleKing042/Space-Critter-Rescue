@@ -12,9 +12,12 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField]
+    private Transform _head;
+    [HideInInspector]
     public Rigidbody PlayerRigidbody;
     Camera _camera;
-    [SerializeField] public Vector2 _movementInput;
+    Vector2 _movementInput;
     [Header("Ground movement")]
     [SerializeField, Tooltip("The speed at which the player moves forwards and backwards.")]
     private float _moveAccel;
@@ -29,6 +32,11 @@ public class PlayerMovement : MonoBehaviour
     private float _lastGroundCheckMaxDistance;
     [SerializeField, Tooltip("The maximum angle that the player can move up smoothly.")]
     private float _maxAngle;
+    private bool _flooringIt;
+    [SerializeField, Tooltip("The increase in speed granted by sprinting")]
+    private float _sprintScale;
+    [SerializeField, Tooltip("The speed that the player stops sprinting at.")]
+    private float _sprintCancelLevel;
 
     [Header("Jump movement")]
     [SerializeField, Tooltip("The force that the player jumps with.")]
@@ -66,10 +74,8 @@ public class PlayerMovement : MonoBehaviour
     private float _jetFuel = 1;
     public bool _holdAfterJump;
     private bool _jetInputReady;
-    
 
     [Header("Fuel Display")]
-    [SerializeField] Animator _animator;
     [SerializeField, Tooltip("The display for the jet fuel.")]
     private Image _fuelBarMain;
     [SerializeField]
@@ -78,14 +84,18 @@ public class PlayerMovement : MonoBehaviour
     private Image _fuelBarBackground;
     [SerializeField]
     private Color[] _jetBackgroundColor;
-    [SerializeField]
-    private bool _jetpackUI;
+
+    [Header("Crouch Settings")]
+    [SerializeField, Tooltip("The amount to scale the player by.")]
+    private float _crouchScale;
+    private float _headHeight;
+    private bool _crouched;
 
     void Start()
     {
+        _headHeight = _head.localPosition.y;
         PlayerRigidbody = GetComponent<Rigidbody>();
         _camera = Camera.main;
-        _animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -95,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
         //Get the horizontal velocity. We don't want to affect/clamp the vertial movement
         Vector2 horizontalVel = new Vector2(PlayerRigidbody.velocity.x, PlayerRigidbody.velocity.z);
         //Check the current movement speed
-        if (horizontalVel.magnitude > _maxSpeed)
+        if (horizontalVel.magnitude > _maxSpeed * _movementModifier)
         {
             //If to high, start breaking
             //Get the amount over the max speed that the player is moving
@@ -114,8 +124,8 @@ public class PlayerMovement : MonoBehaviour
         {
             //Move the player forwards based on the camera rotation
             Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
-            Vector3 forwardForce = camForward * _movementInput.y * _moveAccel * PlayerRigidbody.mass * _movementModifier;
-            Vector3 sideForce = _camera.transform.right * _movementInput.x * _strafeAccel * PlayerRigidbody.mass * _movementModifier;
+            Vector3 forwardForce = camForward * _movementInput.y * _moveAccel * PlayerRigidbody.mass;
+            Vector3 sideForce = _camera.transform.right * _movementInput.x * _strafeAccel * PlayerRigidbody.mass;
             Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
             PlayerRigidbody.AddForce(orientedForce * Time.deltaTime);
         }
@@ -129,6 +139,8 @@ public class PlayerMovement : MonoBehaviour
             else
                 _jetFuel = Mathf.Clamp(_jetFuel + _refuelRate * Time.deltaTime, 0f, 1f);
         }
+        if (horizontalVel.magnitude < _sprintCancelLevel)
+            DoSprint(false);
 
         //Always update the ui
         if (_refuelTime > 0)
@@ -141,17 +153,7 @@ public class PlayerMovement : MonoBehaviour
             _delayedBar.fillAmount = iTween.FloatUpdate(_delayedBar.fillAmount, _fuelBarMain.fillAmount, 10);
         else
             _delayedBar.fillAmount = _fuelBarMain.fillAmount;
-
-
-        if(_jetpackUI && _jetFuel == 1 && !GroundedCheck())
-        {
-            SetJetpackUI_OFF();
-        }
-
     }
-
-    
-
     public void UpdateMovementAxis(Vector2 v)
     {
         //Movement got flipped when I added slope calcs and i don't really wanna implement a proper fix rn (2/11 - Jackson)
@@ -230,12 +232,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-
             if (_jetInputReady || _holdAfterJump)
             {
                 _burnTime = 0;
-
-                
 
                 if (_jetFuel >= _burstBurn)
                 {
@@ -272,27 +271,46 @@ public class PlayerMovement : MonoBehaviour
     {                                      
         PlayerRigidbody.velocity = Vector3.zero;       
         transform.position = _lastGroundPoint + RespawnOffset;
-    }
-
-    public void SetJetpackUI_ON()
+    }     
+    
+    public void CrouchPlayer()
     {
-        if (!_jetpackUI)
-        {
-            _animator.SetTrigger("Jetpack UI IN Trigger");
-            _jetpackUI = true;
-        }
-    }
+        DoSprint(false);
+        _flooringIt = false;
+        _crouched = true;
+        _headHeight *= _crouchScale;
+        _movementModifier *= _crouchScale;
+        gameObject.GetComponent<CapsuleCollider>().height *= _crouchScale;
+        PlayerHeight *= _crouchScale;
 
-    public void SetJetpackUI_OFF()
+        transform.position = new Vector3(transform.position.x, transform.position.y - (PlayerHeight / 2), transform.position.z);
+    }
+    public void UncrouchPlayer()
     {
-        if (_jetpackUI && GroundedCheck())
-        {
-            _animator.SetTrigger("Jetpack UI OUT Trigger");
-            _jetpackUI = false;
-        }
+        transform.position = new Vector3(transform.position.x, transform.position.y + (PlayerHeight / 2), transform.position.z);
+
+        _crouched = false;
+        _headHeight /= _crouchScale;
+        _movementModifier /= _crouchScale;
+        gameObject.GetComponent<CapsuleCollider>().height /= _crouchScale;
+        PlayerHeight /= _crouchScale;
     }
 
+    public void DoSprint()
+    {
+        if (!_crouched)
+        {
+            if(!_flooringIt)
+                _movementModifier = _sprintScale;
+            else
+                _movementModifier = 1;
+            _flooringIt = !_flooringIt;
+        }
 
-
-
+    }
+    public void DoSprint(bool run)
+    {
+        _flooringIt = !run;
+        DoSprint();
+    }
 }                                          

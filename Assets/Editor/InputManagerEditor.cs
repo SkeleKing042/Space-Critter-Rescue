@@ -23,7 +23,8 @@ public class InputManagerEditor : Editor
 
 
         DrawToEvents(iM.SprintAction);
-        DrawToEvents(iM.CrouchAction);
+        DrawToEvents(iM.CrouchAction.FirstAction);
+        DrawToEvents(iM.CrouchAction.SecondAction);
         DrawToEvents(iM.JumpAction);
         DrawToEvents(iM.JetPackAction.Action);
         DrawToEvents(iM.TrapInteractionAction);
