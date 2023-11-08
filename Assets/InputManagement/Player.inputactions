@@ -96,15 +96,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ReturnToShip",
-                    "type": "Button",
-                    "id": "55a4b40f-bf12-4990-9cb6-666ee1e13cdd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Hold",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "SwitchTool",
                     "type": "Button",
                     "id": "f66e18a3-ceeb-4439-a854-dc91452d67e7",
@@ -457,28 +448,6 @@
                 },
                 {
                     "name": "",
-                    "id": "1aa24071-3774-4365-bceb-112fced05690",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ReturnToShip",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3311698e-5042-444b-9bef-ed13af2a46c5",
-                    "path": "<Keyboard>/t",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ReturnToShip",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "0af20c0a-059b-4dfb-9b9f-1144a444d2a9",
                     "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
@@ -506,17 +475,6 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "JetPack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b9357d9d-cb60-4378-8ff6-3791b44542e4",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
                     "action": "JetPack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -650,6 +608,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "SelectTeleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ee46129c-1ec2-4814-ad54-0663d87288aa",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JetPack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "daa4e258-30d3-4251-8317-38111cc1b783",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "JetPack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9d919583-c346-4ace-9d58-fcbaf5f8039c",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -118,15 +118,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ReturnToShip"",
-                    ""type"": ""Button"",
-                    ""id"": ""55a4b40f-bf12-4990-9cb6-666ee1e13cdd"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Hold"",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""SwitchTool"",
                     ""type"": ""Button"",
                     ""id"": ""f66e18a3-ceeb-4439-a854-dc91452d67e7"",
@@ -479,28 +470,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1aa24071-3774-4365-bceb-112fced05690"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ReturnToShip"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3311698e-5042-444b-9bef-ed13af2a46c5"",
-                    ""path"": ""<Keyboard>/t"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ReturnToShip"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""0af20c0a-059b-4dfb-9b9f-1144a444d2a9"",
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
@@ -528,17 +497,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""JetPack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b9357d9d-cb60-4378-8ff6-3791b44542e4"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
                     ""action"": ""JetPack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -674,6 +632,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""SelectTeleport"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee46129c-1ec2-4814-ad54-0663d87288aa"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JetPack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""daa4e258-30d3-4251-8317-38111cc1b783"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""JetPack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9d919583-c346-4ace-9d58-fcbaf5f8039c"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -759,7 +750,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_AltFire = m_Player.FindAction("AltFire", throwIfNotFound: true);
         m_Player_EnableTrap = m_Player.FindAction("EnableTrap", throwIfNotFound: true);
-        m_Player_ReturnToShip = m_Player.FindAction("ReturnToShip", throwIfNotFound: true);
         m_Player_SwitchTool = m_Player.FindAction("SwitchTool", throwIfNotFound: true);
         m_Player_ToggleTablet = m_Player.FindAction("ToggleTablet", throwIfNotFound: true);
         m_Player_SelectTeleport = m_Player.FindAction("SelectTeleport", throwIfNotFound: true);
@@ -838,7 +828,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_AltFire;
     private readonly InputAction m_Player_EnableTrap;
-    private readonly InputAction m_Player_ReturnToShip;
     private readonly InputAction m_Player_SwitchTool;
     private readonly InputAction m_Player_ToggleTablet;
     private readonly InputAction m_Player_SelectTeleport;
@@ -860,7 +849,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @AltFire => m_Wrapper.m_Player_AltFire;
         public InputAction @EnableTrap => m_Wrapper.m_Player_EnableTrap;
-        public InputAction @ReturnToShip => m_Wrapper.m_Player_ReturnToShip;
         public InputAction @SwitchTool => m_Wrapper.m_Player_SwitchTool;
         public InputAction @ToggleTablet => m_Wrapper.m_Player_ToggleTablet;
         public InputAction @SelectTeleport => m_Wrapper.m_Player_SelectTeleport;
@@ -907,9 +895,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @EnableTrap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnableTrap;
                 @EnableTrap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnableTrap;
                 @EnableTrap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnableTrap;
-                @ReturnToShip.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToShip;
-                @ReturnToShip.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToShip;
-                @ReturnToShip.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToShip;
                 @SwitchTool.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
                 @SwitchTool.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
                 @SwitchTool.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
@@ -965,9 +950,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @EnableTrap.started += instance.OnEnableTrap;
                 @EnableTrap.performed += instance.OnEnableTrap;
                 @EnableTrap.canceled += instance.OnEnableTrap;
-                @ReturnToShip.started += instance.OnReturnToShip;
-                @ReturnToShip.performed += instance.OnReturnToShip;
-                @ReturnToShip.canceled += instance.OnReturnToShip;
                 @SwitchTool.started += instance.OnSwitchTool;
                 @SwitchTool.performed += instance.OnSwitchTool;
                 @SwitchTool.canceled += instance.OnSwitchTool;
@@ -1075,7 +1057,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnAltFire(InputAction.CallbackContext context);
         void OnEnableTrap(InputAction.CallbackContext context);
-        void OnReturnToShip(InputAction.CallbackContext context);
         void OnSwitchTool(InputAction.CallbackContext context);
         void OnToggleTablet(InputAction.CallbackContext context);
         void OnSelectTeleport(InputAction.CallbackContext context);

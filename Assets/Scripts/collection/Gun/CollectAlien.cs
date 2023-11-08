@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 
 public class CollectAlien : MonoBehaviour
 {
-    public TMP_Text AlienUICount;
+    //public TMP_Text AlienUICount;
     private float AlienCount;
     public bool mouseDown = false;
 
@@ -34,7 +34,7 @@ public class CollectAlien : MonoBehaviour
         {
             Application.Quit();
         }
-        AlienUICount.text = ": " + collection.TextNumber.ToString();
+        //AlienUICount.text = ": " + collection.TextNumber.ToString();
 
     }
 
