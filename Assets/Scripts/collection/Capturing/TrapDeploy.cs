@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,7 @@ public class TrapDeploy : MonoBehaviour
     public GameObject Trap;
     private Rigidbody _trapRigid;
     public GameObject Bubble;
+    public GameObject Detonator;
 
     // player Components
     [Header("Player Components")]
@@ -36,8 +38,10 @@ public class TrapDeploy : MonoBehaviour
 
     // misc
     [Header("Misc")]
+    [SerializeField]
     private bool trapDeployed;
     private float distance;
+    public bool _detonator;
 
 
     /// <summary>
@@ -57,7 +61,7 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     void Start()
     {
-        
+       Detonator.SetActive(false);
 
         // input declaration
         Input = new PlayerInput();
@@ -90,6 +94,7 @@ public class TrapDeploy : MonoBehaviour
         // make sure the player isnt holding the trap & that the trap is still with the player
        if (currentlyHolding == CurrentlyHolding.vacuum && trapDeployed == false)
        {
+            _detonator = false;
            // set game objects appropriatly
            PlayerGun.SetActive(false);
            Trap.SetActive(true);
@@ -98,15 +103,34 @@ public class TrapDeploy : MonoBehaviour
            currentlyHolding = CurrentlyHolding.trap;
            return;      // return to avoid toggle loop
        }
-        // else if chap deployed == true then show detinator
 
-       if(currentlyHolding == CurrentlyHolding.trap)
+
+
+        if(currentlyHolding == CurrentlyHolding.vacuum && trapDeployed == true)
        {
+         _detonator = true;
+            PlayerGun.SetActive(false);
+            Detonator.SetActive(true);
+            currentlyHolding= CurrentlyHolding.trap;
+        }
+      
+       
+
+       if(currentlyHolding == CurrentlyHolding.trap && trapDeployed == false)
+       {
+            _detonator = false;
            PlayerGun.SetActive(true);
            Trap.SetActive(false);
-           
-           currentlyHolding = CurrentlyHolding.vacuum;
+            Detonator.SetActive(false);
+            currentlyHolding = CurrentlyHolding.vacuum;
            return;  // return to avoid toggle loop
+       }
+        if (currentlyHolding == CurrentlyHolding.trap && trapDeployed == true)
+        {
+            PlayerGun.SetActive(true);
+            Detonator.SetActive(false);
+            currentlyHolding = CurrentlyHolding.vacuum;
+            return;  // return to avoid toggle loop
         }
     }
 
@@ -116,7 +140,8 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     public void DeployTrap()
     {
-        if(currentlyHolding == CurrentlyHolding.trap)
+        if(currentlyHolding == CurrentlyHolding.trap && trapDeployed == false)
+
         {
             
             // unassign the trap parent
@@ -130,8 +155,8 @@ public class TrapDeploy : MonoBehaviour
             _trapRigid.AddForce(Camera.main.transform.forward * TrapThrowForce, ForceMode.Impulse);
 
             // set currently holding to the vacuum
-            currentlyHolding = CurrentlyHolding.vacuum;
-            PlayerGun.SetActive(true);
+           // currentlyHolding = CurrentlyHolding.vacuum;
+            Detonator.SetActive(true);
 
             // set to true
             trapDeployed = true;
@@ -159,7 +184,7 @@ public class TrapDeploy : MonoBehaviour
        // }
        
         // check if the player is within the range, not holding the trap and the trap is not active
-        if ((PickUpRange >= distance || !DoDistace) && currentlyHolding != CurrentlyHolding.trap && Bubble.activeSelf == false)
+        if ((PickUpRange >= distance || !DoDistace) && (currentlyHolding != CurrentlyHolding.trap || _detonator ==true)  && Bubble.activeSelf == false)
         {
            // set parent to the player
             Trap.transform.SetParent(transform);
@@ -174,7 +199,7 @@ public class TrapDeploy : MonoBehaviour
             // set game objects apprpriatly
             PlayerGun.SetActive(true);
             Trap.SetActive(false);
-
+            Detonator.SetActive(false);
             // set to false
             trapDeployed = false;
         }
