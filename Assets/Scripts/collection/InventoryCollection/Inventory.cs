@@ -115,10 +115,10 @@ public class Inventory : MonoBehaviour
         if(_distance < DropOffRange)
         {
 
-            InvShroomAliens =+ ShroomAliens;
-            InvCrystalAliens =+ CrystalAliens;
-            InvShroomAliensBig =+ ShroomAliensBig;
-            InvCrystalAliensBig =+ CrystalAliensBig;
+            InvShroomAliens += ShroomAliens;
+            InvCrystalAliens += CrystalAliens;
+            InvShroomAliensBig += ShroomAliensBig;
+            InvCrystalAliensBig += CrystalAliensBig;
 
 
             ShroomAliens = 0;

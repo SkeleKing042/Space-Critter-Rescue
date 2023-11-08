@@ -32,7 +32,7 @@ public class Collection : MonoBehaviour
         if (SmallAliens <= 11)
         {
             SpaceForSmall = true;
-            if (alien.tag == "alien")
+            if (alien.tag == "alien"  && SpaceForSmall == true)
             {
                 SmallAliens++;
                 Collected++;
@@ -41,14 +41,14 @@ public class Collection : MonoBehaviour
                 Inventory.AddSmallCrystal(alien);
             }
         }
-        else if(SmallAliens >=12)
+        else
         {
             SpaceForSmall = false;
         }
         if(BigAliens <= 1)
         {
             SpaceForBig = true;
-            if (alien.tag == "bigAlien")
+            if (alien.tag == "bigAlien" && SpaceForBig == true)
             {
                 BigAliens++;
                 Collected ++;
@@ -57,7 +57,7 @@ public class Collection : MonoBehaviour
 
             }
         }
-        else if(BigAliens >=2)
+        else
         {
            SpaceForBig = false;
         }
