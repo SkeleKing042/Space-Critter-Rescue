@@ -513,10 +513,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LargeCrystalCritter
       objectReference: {fileID: 0}
-    - target: {fileID: 3390830656048057695, guid: fdd02a1fb8416f244a10747d245c8d9d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdd02a1fb8416f244a10747d245c8d9d, type: 3}
 --- !u!4 &631610755 stripped
@@ -1240,10 +1236,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LargeShroomCritter
       objectReference: {fileID: 0}
-    - target: {fileID: 3390830656048057695, guid: 1522a61010508d94ead8e05958959bcc, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1522a61010508d94ead8e05958959bcc, type: 3}
 --- !u!114 &1460529188 stripped
@@ -1592,6 +1584,10 @@ PrefabInstance:
       propertyPath: _fireAction._startAction.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4052482119666946231, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5918693712070823563, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: AlienUICount
       value: 
@@ -1600,9 +1596,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5918693712681221864, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5918693712695712689, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: SuckSpeed
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109913823639281490, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109913824006202797, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109913824117969375, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8109913824263524882, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: m_RootOrder
@@ -1651,6 +1663,10 @@ PrefabInstance:
     - target: {fileID: 8109913824263524884, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109913824263524884, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8109913824263524885, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: _fuelBar
@@ -1934,10 +1950,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallShroomCritter
       objectReference: {fileID: 0}
-    - target: {fileID: 7534540182548985643, guid: 2a2484ee2e2eb704aab803184a46f483, type: 3}
-      propertyPath: Radius
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a2484ee2e2eb704aab803184a46f483, type: 3}
 --- !u!1001 &1989786589
@@ -1994,14 +2006,6 @@ PrefabInstance:
     - target: {fileID: 3390830656048057695, guid: 805f45bc0cf3abb4981ef288f2b38c98, type: 3}
       propertyPath: m_Name
       value: SmallCrystalCritter
-      objectReference: {fileID: 0}
-    - target: {fileID: 3390830656048057695, guid: 805f45bc0cf3abb4981ef288f2b38c98, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7534540182548985643, guid: 805f45bc0cf3abb4981ef288f2b38c98, type: 3}
-      propertyPath: Radius
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 805f45bc0cf3abb4981ef288f2b38c98, type: 3}
