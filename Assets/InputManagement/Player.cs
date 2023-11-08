@@ -143,6 +143,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AlienDrop"",
+                    ""type"": ""Button"",
+                    ""id"": ""dd3dfa5d-a027-461e-804d-05047444c09a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -517,6 +526,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""JetPack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0416940e-521f-4aad-bbf0-2ac081132728"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""AlienDrop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1117,6 +1137,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_EnableTrap = m_Player.FindAction("EnableTrap", throwIfNotFound: true);
         m_Player_ReturnToShip = m_Player.FindAction("ReturnToShip", throwIfNotFound: true);
         m_Player_SwitchTool = m_Player.FindAction("SwitchTool", throwIfNotFound: true);
+        m_Player_AlienDrop = m_Player.FindAction("AlienDrop", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1201,6 +1222,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_EnableTrap;
     private readonly InputAction m_Player_ReturnToShip;
     private readonly InputAction m_Player_SwitchTool;
+    private readonly InputAction m_Player_AlienDrop;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -1218,6 +1240,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @EnableTrap => m_Wrapper.m_Player_EnableTrap;
         public InputAction @ReturnToShip => m_Wrapper.m_Player_ReturnToShip;
         public InputAction @SwitchTool => m_Wrapper.m_Player_SwitchTool;
+        public InputAction @AlienDrop => m_Wrapper.m_Player_AlienDrop;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1266,6 +1289,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SwitchTool.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
                 @SwitchTool.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
                 @SwitchTool.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
+                @AlienDrop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
+                @AlienDrop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
+                @AlienDrop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1309,6 +1335,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SwitchTool.started += instance.OnSwitchTool;
                 @SwitchTool.performed += instance.OnSwitchTool;
                 @SwitchTool.canceled += instance.OnSwitchTool;
+                @AlienDrop.started += instance.OnAlienDrop;
+                @AlienDrop.performed += instance.OnAlienDrop;
+                @AlienDrop.canceled += instance.OnAlienDrop;
             }
         }
     }
@@ -1478,6 +1507,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnEnableTrap(InputAction.CallbackContext context);
         void OnReturnToShip(InputAction.CallbackContext context);
         void OnSwitchTool(InputAction.CallbackContext context);
+        void OnAlienDrop(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

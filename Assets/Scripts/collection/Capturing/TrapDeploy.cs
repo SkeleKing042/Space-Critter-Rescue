@@ -81,7 +81,6 @@ public class TrapDeploy : MonoBehaviour
             Trap.transform.position = PlayerGun.transform.position;
             Trap.transform.rotation = PlayerGun.transform.rotation;
         }
-
     }
     /// <summary>
     /// toggle between Vacuum and Trap
@@ -99,12 +98,13 @@ public class TrapDeploy : MonoBehaviour
            currentlyHolding = CurrentlyHolding.trap;
            return;      // return to avoid toggle loop
        }
+        // else if chap deployed == true then show detinator
 
        if(currentlyHolding == CurrentlyHolding.trap)
        {
            PlayerGun.SetActive(true);
            Trap.SetActive(false);
-
+           
            currentlyHolding = CurrentlyHolding.vacuum;
            return;  // return to avoid toggle loop
         }

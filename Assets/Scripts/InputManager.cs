@@ -85,7 +85,7 @@ public class InputManager : MonoBehaviour
     public UnityEvent AltFireAction = new UnityEvent();
     public UnityEvent ReturnToShipAction = new UnityEvent();
     public UnityEvent SwitchToolAction = new UnityEvent();
-
+    public UnityEvent DropAliensToShip = new UnityEvent();
 
     private void Awake()
     {
@@ -156,5 +156,10 @@ public class InputManager : MonoBehaviour
     {
         Debug.Log("Switching Tools");
         SwitchToolAction.Invoke();
+    }
+    void OnAlienDrop()
+    {
+        Debug.Log("Dropping of aliens...");
+        DropAliensToShip.Invoke();
     }
 }

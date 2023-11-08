@@ -16,8 +16,12 @@ public class Collection : MonoBehaviour
     public int SmallAliens;
     public int BigAliens;
 
+    [Header("bool")]
     public bool SpaceForSmall;
     public bool SpaceForBig;
+
+    [Header("Invetory Refrence")]
+    public Inventory Inventory;
 
     void Update()
     {
@@ -25,7 +29,7 @@ public class Collection : MonoBehaviour
     }
     public void AddAlienToCollection(GameObject alien)
     {
-        if (SmallAliens < 12)
+        if (SmallAliens <= 11)
         {
             SpaceForSmall = true;
             if (alien.tag == "alien")
@@ -33,32 +37,27 @@ public class Collection : MonoBehaviour
                 SmallAliens++;
                 Collected++;
 
-
-
-
-
-
+                Inventory.AddSmallShroom(alien);
+                Inventory.AddSmallCrystal(alien);
             }
         }
-        else
+        else if(SmallAliens >=12)
         {
             SpaceForSmall = false;
         }
-        if(BigAliens < 2)
+        if(BigAliens <= 1)
         {
             SpaceForBig = true;
             if (alien.tag == "bigAlien")
             {
                 BigAliens++;
                 Collected ++;
-
-
-
-
+                Inventory.AddBigShroom(alien);
+                Inventory.AddBigCrystal(alien);
 
             }
         }
-        else
+        else if(BigAliens >=2)
         {
            SpaceForBig = false;
         }

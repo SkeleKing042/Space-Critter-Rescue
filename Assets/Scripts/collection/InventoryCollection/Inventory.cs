@@ -6,117 +6,136 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using static UnityEditor.Progress;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class Inventory : MonoBehaviour
 {
+
+    //
     CollectAlien AlienCollection;
     private List<GameObject> _alienCollection = new List<GameObject>();
     private CreatureAI _alienType;
-
     private GameObject _alien;
+    public GameObject ShipDropOff;
+    public GameObject Player;
 
+    private float _distance;
+    public float DropOffRange;
     // create enum later for the different alien types
+
+
+    [Header("Inventory collection types")]
+    // Change these to arrays later
     public int ShroomAliens;
     public int CrystalAliens;
-
     public int ShroomAliensBig;
     public int CrystalAliensBig;
 
-    public Collection SpaceCheck;
+    [Header ("Ship Inventory")]
+    public int InvShroomAliens;
+    public int InvCrystalAliens;
+    public int InvShroomAliensBig;
+    public int InvCrystalAliensBig;
 
-
-    // creat list of the collected aqliens
-    // refrence the Collect Alien Script
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
-
-    }
-    public void AddToPlayerInventory(GameObject alien)
-    {
-        if (alien.tag == "alien" && SpaceCheck.SpaceForSmall == true)
-        {
-            _alien = alien;
-            if (!_alienCollection.Contains(_alien))
-            {
-                _alienCollection.Add(_alien);
-                _alienType = _alien.GetComponent<CreatureAI>();
-
-                if (CreatureAI.creatureType.Crystal == _alienType.type)
-                {
-                    // get image and display depending on type
-
-                    ShroomAliens++;
-                }
-                if (CreatureAI.creatureType.Shroom == _alienType.type)
-                {
-                    // get image and display
-                    CrystalAliens++;
-                }
-            }
-        }
-
-        if (alien.tag == "bigAlien" && SpaceCheck.SpaceForBig == true)
-        {
-            if (_alienCollection.Contains(alien)!)
-            {
-                _alienCollection.Add(alien);
-                _alienType = alien.GetComponent<CreatureAI>();
-
-                if (CreatureAI.creatureType.Crystal == _alienType.type)
-                {
-                    // get image and display depending on type
-                    ShroomAliensBig++;
-                }
-                if (CreatureAI.creatureType.Shroom == _alienType.type)
-                {
-                    // get image and display
-                    CrystalAliensBig++;
-                }
-            }
-        }
-    }
+    public int TotalShipInventory;
 
     public void AddSmallShroom(GameObject alien)
     {
+       _alienType = alien.GetComponent<CreatureAI>();
 
+       if (CreatureAI.creatureType.Shroom == _alienType.type)
+       {
+           // get image and display
+           ShroomAliens++;
+           Destroy(alien.gameObject);
+
+            // add function for ui desplay
+        }
+        _alienType = null;
+        
     }
 
     public void AddBigShroom(GameObject alien)
     {
 
+       _alienType = alien.GetComponent<CreatureAI>();
+
+       if (CreatureAI.creatureType.Shroom == _alienType.type)
+       {
+           // get image and display
+           ShroomAliensBig++;
+           Destroy(alien.gameObject);
+
+            // add function for ui desplay
+        }
+        _alienType = null;
     }
+
     // here
     public void AddSmallCrystal(GameObject alien)
     {
-        if (!_alienCollection.Contains(_alien))
+
+        _alienType = alien.GetComponent<CreatureAI>();
+
+        if (CreatureAI.creatureType.Crystal == _alienType.type)
         {
-            _alienCollection.Add(_alien);
-            _alienType = _alien.GetComponent<CreatureAI>();
+            // get image and display depending on type
 
-            if (CreatureAI.creatureType.Crystal == _alienType.type)
-            {
-                // get image and display depending on type
+            CrystalAliens++;
+            Destroy(alien.gameObject);
 
-                CrystalAliens++;
-            }
+            // add function for ui desplay
         }
+        _alienType = null;
     }
     public void AddBigCrystal(GameObject alien)
     {
+        _alienType = alien.GetComponent<CreatureAI>();
+
+        if (CreatureAI.creatureType.Crystal == _alienType.type)
+        {
+            // get image and display depending on type
+
+            CrystalAliensBig++;
+            Destroy(alien.gameObject);
+
+            // add function for ui desplay
+        }
+        _alienType = null;
+    }
+
+
+    public void MoveToShip()
+    {
+        _distance = Vector3.Distance(ShipDropOff.transform.position, Player.transform.position);
+        //find the distance between the player and the trap
+        Debug.Log(_distance);
+        _distance = Mathf.Abs(_distance);
+
+        if(_distance < DropOffRange)
+        {
+
+            InvShroomAliens =+ ShroomAliens;
+            InvCrystalAliens =+ CrystalAliens;
+            InvShroomAliensBig =+ ShroomAliensBig;
+            InvCrystalAliensBig =+ CrystalAliensBig;
+
+
+            ShroomAliens = 0;
+            ShroomAliensBig = 0;
+            CrystalAliens = 0;
+            CrystalAliensBig = 0;
+        }
 
     }
 
+
+
+
+
     public void PlayerInventory()
     {
-        
+
 
 
         
@@ -124,6 +143,11 @@ public class Inventory : MonoBehaviour
 
     public void ShipInventory()
     {
+        // crreat ship UI teling player how many is in the ship
+
+       //       TotalShipInventory =
+
+
 
     }
 }
