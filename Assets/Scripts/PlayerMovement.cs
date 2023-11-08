@@ -58,8 +58,10 @@ public class PlayerMovement : MonoBehaviour
     private float _jetFuel = 1;
     public bool _holdAfterJump;
     private bool _jetInputReady;
+    
 
     [Header("Fuel Display")]
+    [SerializeField] Animator _animator;
     [SerializeField, Tooltip("The display for the jet fuel.")]
     private Image _fuelBarMain;
     [SerializeField]
@@ -68,11 +70,14 @@ public class PlayerMovement : MonoBehaviour
     private Image _fuelBarBackground;
     [SerializeField]
     private Color[] _jetBackgroundColor;
+    [SerializeField]
+    private bool _jetpackUI;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _camera = Camera.main;
+        _animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -128,7 +133,17 @@ public class PlayerMovement : MonoBehaviour
             _delayedBar.fillAmount = iTween.FloatUpdate(_delayedBar.fillAmount, _fuelBarMain.fillAmount, 10);
         else
             _delayedBar.fillAmount = _fuelBarMain.fillAmount;
+
+
+        if(_jetpackUI && _jetFuel == 1 && !GroundedCheck())
+        {
+            SetJetpackUI_OFF();
+        }
+
     }
+
+    
+
     public void UpdateMovementAxis(Vector2 v)
     {
         //Movement got flipped when I added slope calcs and i don't really wanna implement a proper fix rn (2/11 - Jackson)
@@ -196,9 +211,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+
             if (_jetInputReady || _holdAfterJump)
             {
                 _burnTime = 0;
+
+                
 
                 if (_jetFuel >= _burstBurn)
                 {
@@ -235,5 +253,27 @@ public class PlayerMovement : MonoBehaviour
     {                                      
         _rb.velocity = Vector3.zero;       
         transform.position = _lastGroundPoint + RespawnOffset;
-    }                                      
+    }
+
+    public void SetJetpackUI_ON()
+    {
+        if (!_jetpackUI)
+        {
+            _animator.SetTrigger("Jetpack UI IN Trigger");
+            _jetpackUI = true;
+        }
+    }
+
+    public void SetJetpackUI_OFF()
+    {
+        if (_jetpackUI && GroundedCheck())
+        {
+            _animator.SetTrigger("Jetpack UI OUT Trigger");
+            _jetpackUI = false;
+        }
+    }
+
+
+
+
 }                                          
