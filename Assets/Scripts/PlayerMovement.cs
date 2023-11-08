@@ -12,6 +12,9 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField]
+    private Transform _head;
+    [HideInInspector]
     public Rigidbody PlayerRigidbody;
     Camera _camera;
     Vector2 _movementInput;
@@ -29,6 +32,11 @@ public class PlayerMovement : MonoBehaviour
     private float _lastGroundCheckMaxDistance;
     [SerializeField, Tooltip("The maximum angle that the player can move up smoothly.")]
     private float _maxAngle;
+    private bool _flooringIt;
+    [SerializeField, Tooltip("The increase in speed granted by sprinting")]
+    private float _sprintScale;
+    [SerializeField, Tooltip("The speed that the player stops sprinting at.")]
+    private float _sprintCancelLevel;
 
     [Header("Jump movement")]
     [SerializeField, Tooltip("The force that the player jumps with.")]
@@ -77,8 +85,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Color[] _jetBackgroundColor;
 
+    [Header("Crouch Settings")]
+    [SerializeField, Tooltip("The amount to scale the player by.")]
+    private float _crouchScale;
+    private float _headHeight;
+    private bool _crouched;
+
     void Start()
     {
+        _headHeight = _head.localPosition.y;
         PlayerRigidbody = GetComponent<Rigidbody>();
         _camera = Camera.main;
     }
@@ -90,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
         //Get the horizontal velocity. We don't want to affect/clamp the vertial movement
         Vector2 horizontalVel = new Vector2(PlayerRigidbody.velocity.x, PlayerRigidbody.velocity.z);
         //Check the current movement speed
-        if (horizontalVel.magnitude > _maxSpeed)
+        if (horizontalVel.magnitude > _maxSpeed * _movementModifier)
         {
             //If to high, start breaking
             //Get the amount over the max speed that the player is moving
@@ -109,8 +124,8 @@ public class PlayerMovement : MonoBehaviour
         {
             //Move the player forwards based on the camera rotation
             Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
-            Vector3 forwardForce = camForward * _movementInput.y * _moveAccel * PlayerRigidbody.mass * _movementModifier;
-            Vector3 sideForce = _camera.transform.right * _movementInput.x * _strafeAccel * PlayerRigidbody.mass * _movementModifier;
+            Vector3 forwardForce = camForward * _movementInput.y * _moveAccel * PlayerRigidbody.mass;
+            Vector3 sideForce = _camera.transform.right * _movementInput.x * _strafeAccel * PlayerRigidbody.mass;
             Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
             PlayerRigidbody.AddForce(orientedForce * Time.deltaTime);
         }
@@ -124,6 +139,8 @@ public class PlayerMovement : MonoBehaviour
             else
                 _jetFuel = Mathf.Clamp(_jetFuel + _refuelRate * Time.deltaTime, 0f, 1f);
         }
+        if (horizontalVel.magnitude < _sprintCancelLevel)
+            DoSprint(false);
 
         //Always update the ui
         if (_refuelTime > 0)
@@ -254,5 +271,46 @@ public class PlayerMovement : MonoBehaviour
     {                                      
         PlayerRigidbody.velocity = Vector3.zero;       
         transform.position = _lastGroundPoint + RespawnOffset;
-    }                                      
+    }     
+    
+    public void CrouchPlayer()
+    {
+        DoSprint(false);
+        _flooringIt = false;
+        _crouched = true;
+        _headHeight *= _crouchScale;
+        _movementModifier *= _crouchScale;
+        gameObject.GetComponent<CapsuleCollider>().height *= _crouchScale;
+        PlayerHeight *= _crouchScale;
+
+        transform.position = new Vector3(transform.position.x, transform.position.y - (PlayerHeight / 2), transform.position.z);
+    }
+    public void UncrouchPlayer()
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y + (PlayerHeight / 2), transform.position.z);
+
+        _crouched = false;
+        _headHeight /= _crouchScale;
+        _movementModifier /= _crouchScale;
+        gameObject.GetComponent<CapsuleCollider>().height /= _crouchScale;
+        PlayerHeight /= _crouchScale;
+    }
+
+    public void DoSprint()
+    {
+        if (!_crouched)
+        {
+            if(!_flooringIt)
+                _movementModifier = _sprintScale;
+            else
+                _movementModifier = 1;
+            _flooringIt = !_flooringIt;
+        }
+
+    }
+    public void DoSprint(bool run)
+    {
+        _flooringIt = !run;
+        DoSprint();
+    }
 }                                          

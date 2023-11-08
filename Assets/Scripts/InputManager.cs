@@ -66,6 +66,44 @@ public class InputManager : MonoBehaviour
             }
         }
     }
+    [System.Serializable]
+    public class WhileDownEvent
+    {
+        public UnityEvent FirstAction = new UnityEvent();
+        public UnityEvent SecondAction = new UnityEvent();
+        public InputActionReference InputReference;
+        private InputAction _inputAction;
+
+        //DOES NOT WORK AS A CONSTRUCTOR
+        /// <summary>
+        /// Sets up the input action and called the action
+        /// </summary>
+        public void InitializeAction()
+        {
+            _inputAction = InputReference.action;
+            DoEvent();
+        }
+
+        /// <summary>
+        /// Invokes the desiered actions.
+        /// </summary>
+        public void DoEvent()
+        {
+            //Debug.Log("Hold action called.");
+            _inputAction.started +=
+                _s =>
+                {
+                    Debug.Log("Starting action");
+                   FirstAction.Invoke();
+                };
+            _inputAction.canceled +=
+                _e =>
+                {
+                    Debug.Log("Ending action.");
+                    SecondAction.Invoke();
+                };
+        }
+    }
 
     [Header("Game Settings")]
     [SerializeField] private bool _lockCursor;
@@ -73,7 +111,7 @@ public class InputManager : MonoBehaviour
     [Header("Movement")]
     public UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
     public UnityEvent SprintAction = new UnityEvent();
-    public UnityEvent CrouchAction = new UnityEvent();
+    public WhileDownEvent CrouchAction = new WhileDownEvent();
     public UnityEvent JumpAction = new UnityEvent();
     public HoldEvent JetPackAction = new HoldEvent();
 
@@ -96,6 +134,7 @@ public class InputManager : MonoBehaviour
             
         JetPackAction.InitializeAction();
         FireAction.InitializeAction();
+        CrouchAction.InitializeAction();
     }
     void OnJump()
     {
@@ -130,7 +169,7 @@ public class InputManager : MonoBehaviour
     void OnCrouch()
     {
         Debug.Log("OnCrouch called.");
-        CrouchAction.Invoke();
+        CrouchAction.DoEvent();
     }
     void OnTablet()
     {
