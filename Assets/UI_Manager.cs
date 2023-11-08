@@ -5,12 +5,30 @@ using UnityEngine.UI;
 
 public class UI_Manager : MonoBehaviour
 {
+    [Header("Scripts")]
     [SerializeField]
     private PlayerMovement _playerMovement;
     private TrapDeploy _trapDeploy;
 
+
+    [Header("Universal Variables")]
+    [SerializeField]
+    private float UI_speed;
+    [SerializeField]
+    private Sprite inputIcon_LT;
+    [SerializeField]
+    private Sprite inputIcon_RT;
+    [SerializeField]
+    private Sprite inputIcon_LB;
+    [SerializeField]
+    private Sprite inputIcon_RB;
+    [SerializeField]
+    private Sprite inputIcon_Y;
+    [SerializeField]
+    private Sprite inputIcon_X;
+
     #region Jetpack Variables
-    [Header("Fuel Display")]
+    [Header("Jetpack Variables")]
     [SerializeField, Tooltip("The display for the jet fuel.")]
     private Image _fuelBarMain;
     [SerializeField]
@@ -28,8 +46,7 @@ public class UI_Manager : MonoBehaviour
     private RectTransform _jetpackRectTransform;
     [SerializeField]
     private float[] _jetpack_Positions;
-    [SerializeField]
-    private float UI_speed;
+    
 
     #endregion
 
@@ -39,6 +56,8 @@ public class UI_Manager : MonoBehaviour
     RectTransform _VC_RectTransform;
     [SerializeField] 
     float[] VC_Positions;
+    [SerializeField]
+    Image VC_InputIcon;
 
     #endregion
 
@@ -49,6 +68,8 @@ public class UI_Manager : MonoBehaviour
     RectTransform _Trap_RectTransform;
     [SerializeField]
     float[] Trap_Positions;
+    [SerializeField]
+    Image Trap_InputIcon;
     #endregion
 
     // Start is called before the first frame update
@@ -69,14 +90,29 @@ public class UI_Manager : MonoBehaviour
     private void TrapUI_Manager()
     {
         //ON
-        if (_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.trap)
+        if (_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.trap || _trapDeploy.trapDeployed == true)
         {
             _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[0], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
+            Trap_InputIcon.sprite = inputIcon_RT;
         }
         //OFF
         else
         {
             _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[1], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
+            Trap_InputIcon.sprite = inputIcon_LB;
+        }
+
+        //pickup trap / activate trap
+        if(_trapDeploy.trapDeployed == true)
+        {
+            if(_trapDeploy.canPickUpTrap == false)
+            {
+                Trap_InputIcon.sprite = inputIcon_Y;
+            }
+            else
+            {
+                Trap_InputIcon.sprite = inputIcon_X;
+            }
         }
     }
 
@@ -87,11 +123,13 @@ public class UI_Manager : MonoBehaviour
         if(_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.vacuum)
         {
             _VC_RectTransform.anchoredPosition = Vector2.Lerp(_VC_RectTransform.anchoredPosition, new Vector2(VC_Positions[0], _VC_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
+            VC_InputIcon.sprite = inputIcon_RT;
         }
         //OFF
         else
         {
             _VC_RectTransform.anchoredPosition = Vector2.Lerp(_VC_RectTransform.anchoredPosition, new Vector2(VC_Positions[1], _VC_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
+            VC_InputIcon.sprite = inputIcon_LB;
         }
     }
 

@@ -36,7 +36,8 @@ public class TrapDeploy : MonoBehaviour
 
     // misc
     [Header("Misc")]
-    private bool trapDeployed;
+    public bool trapDeployed;
+    public bool canPickUpTrap;
     private float distance;
 
 
@@ -81,6 +82,27 @@ public class TrapDeploy : MonoBehaviour
             Trap.transform.position = PlayerGun.transform.position;
             Trap.transform.rotation = PlayerGun.transform.rotation;
         }
+
+        //check if can pick up trap
+        if(trapDeployed == true && Bubble.activeSelf == false)
+        {
+            distance = Vector3.Distance(Trap.transform.position, transform.position);
+            distance = Mathf.Abs(distance);
+
+            if(PickUpRange >= distance)
+            {
+                canPickUpTrap = true;
+            }
+            else
+            {
+                canPickUpTrap = false;
+            }
+        }
+        else
+        {
+            canPickUpTrap = false;
+        }
+
 
     }
     /// <summary>
@@ -154,7 +176,7 @@ public class TrapDeploy : MonoBehaviour
        // {
             distance = Vector3.Distance(Trap.transform.position, transform.position);
             //find the distance between the player and the trap
-            Debug.Log(distance);
+            //Debug.Log(distance);
             distance = Mathf.Abs(distance);
        // }
        
