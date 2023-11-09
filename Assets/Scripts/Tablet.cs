@@ -50,6 +50,8 @@ public class Tablet : MonoBehaviour
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
 
         _tutorRead = false;
+
+        ToggleTablet();
     }
 
     #region ToggleTablet

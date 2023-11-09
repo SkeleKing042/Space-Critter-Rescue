@@ -86,7 +86,7 @@ public class TrapDeploy : MonoBehaviour
             Trap.transform.rotation = PlayerGun.transform.rotation;
         }
 
-        if (_trapDeployed)
+        if (_trapDeployed && Bubble.activeSelf == false)
         {
             _distance = Mathf.Abs(Vector3.Distance(Trap.transform.position, transform.position));
 
