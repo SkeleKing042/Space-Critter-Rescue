@@ -41,11 +41,14 @@ public class Tablet : MonoBehaviour
     [SerializeField] private Color _color_unavailableTeleport = Color.red;
     [SerializeField] private Color _color_availableTeleport = Color.green;
 
+    private UI_Manager _Manager;
+
     private void Start()
     {
         _animator = GetComponentInParent<Animator>();
         _playerMovement = GetComponentInParent<PlayerMovement>();
         _pylonManager = FindObjectOfType<PylonManager>();
+        _Manager = FindObjectOfType<UI_Manager>();
 
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
 
@@ -85,6 +88,11 @@ public class Tablet : MonoBehaviour
             SetTabletState(true);
 
             _playerMovement.DoMovement = false;
+            
+            if (TabIndex == 1)
+            {
+                FindObjectOfType<GameManager>().UpdateAllBars();
+            }
         }
     }
 
@@ -117,6 +125,11 @@ public class Tablet : MonoBehaviour
         if(TabIndex == MapTabIndex)
         {
             SetTeleportLocationColors();
+        }
+
+        if (TabIndex == 1)
+        {
+            FindObjectOfType<GameManager>().UpdateAllBars();
         }
     }
 
