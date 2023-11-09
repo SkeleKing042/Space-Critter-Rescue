@@ -1,3 +1,6 @@
+// Created By Adanna Okoye
+//Last Edited by Adanna Okoye
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,13 +10,24 @@ using Unity.VisualScripting;
 
 public class CollectAlien : MonoBehaviour
 {
-    public TMP_Text AlienUICount;
+    //public TMP_Text AlienUICount;
     private float AlienCount;
     public bool mouseDown = false;
 
-    public VacuumGun Vac;
+    [Header("Script Refrences")]
+    private VacuumGun Vac;
+    private Collection collection;
 
-    public Collection collection;
+
+    GameObject Alien;
+
+    private void Start()
+    {
+        Vac = FindObjectOfType<VacuumGun>();
+        collection = FindObjectOfType<Collection>();
+
+    }
+
 
     private void Update()
     {
@@ -21,7 +35,6 @@ public class CollectAlien : MonoBehaviour
         {
             mouseDown = true;
             //Vector3 position = PlayerGun.GetComponent<Vector3>;
-
         }
         if (Input.GetButtonUp("Fire1"))
         {
@@ -31,7 +44,7 @@ public class CollectAlien : MonoBehaviour
         {
             Application.Quit();
         }
-        AlienUICount.text = ": " + collection.TextNumber.ToString();
+        //AlienUICount.text = ": " + collection.TextNumber.ToString();
 
     }
 
@@ -39,16 +52,19 @@ public class CollectAlien : MonoBehaviour
     void OnTriggerEnter(Collider creature)
     {
 
-        if ((creature.gameObject.tag == "alien" || creature.gameObject.tag == "bigAlien") && mouseDown)
+        if ((creature.gameObject.tag == "alien" || creature.gameObject.tag == "bigAlien") && Vac.Pulling == true)
         {
             collection.AddAlienToCollection(creature.gameObject);
-          
-           // AlienCount++;
+
+            // AlienCount++;
+            Alien = creature.gameObject;
             
 
-            Vac.UnassignAlien();
-
+            Vac.UnassignAlien(creature.gameObject);
             Destroy(creature.gameObject);
+
+            //Vac.EndPull();
+            
         }
     }
 }

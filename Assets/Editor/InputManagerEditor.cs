@@ -21,17 +21,21 @@ public class InputManagerEditor : Editor
             Handles.DrawLine(iM.transform.position, iM.MovementAction.GetPersistentTarget(i).GameObject().transform.position);
         }
 
+
         DrawToEvents(iM.SprintAction);
-        DrawToEvents(iM.CrouchAction);
+        DrawToEvents(iM.CrouchAction.FirstAction);
+        DrawToEvents(iM.CrouchAction.SecondAction);
         DrawToEvents(iM.JumpAction);
         DrawToEvents(iM.JetPackAction.Action);
         DrawToEvents(iM.TrapInteractionAction);
         DrawToEvents(iM.EnableTrapAction);
         DrawToEvents(iM.TabletAction);
-        DrawToEvents(iM.FireAction.Action);
+        //DrawToEvents(iM.PullAction.Action);
         DrawToEvents(iM.AltFireAction);
         DrawToEvents(iM.ReturnToShipAction);
         DrawToEvents(iM.SwitchToolAction);
+
+
     }
     private void DrawToEvents(UnityEvent incomingEvent)
     {

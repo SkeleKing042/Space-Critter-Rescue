@@ -58,11 +58,95 @@ public class InputManager : MonoBehaviour
 
         public IEnumerator RepeatAction(float delay)
         {
-            while(_doAction)
+            while (_doAction)
             {
                 yield return new WaitForSeconds(delay);
                 Debug.Log("Doing action");
                 Action.Invoke();
+            }
+        }
+    }
+    [System.Serializable]
+    public class WhileDownEvent
+    {
+        public UnityEvent FirstAction = new UnityEvent();
+        public UnityEvent SecondAction = new UnityEvent();
+        public InputActionReference InputReference;
+        private InputAction _inputAction;
+        private bool _doAction;
+        //DOES NOT WORK AS A CONSTRUCTOR
+        /// <summary>
+        /// Sets up the input action and called the action
+        /// </summary>
+        public void InitializeAction()
+        {
+            _inputAction = InputReference.action;
+            DoEvent();
+        }
+
+        /// <summary>
+        /// Invokes the desiered actions.
+        /// </summary>
+        public void DoEvent()
+        {
+            //Debug.Log("Hold action called.");
+            _inputAction.started +=
+                _s =>
+                {
+                    Debug.Log("Starting action");
+                    FirstAction.Invoke();
+                };
+            _inputAction.canceled +=
+                _e =>
+                {
+                    Debug.Log("Ending action.");
+                    SecondAction.Invoke();
+                };
+        }
+    }
+    [System.Serializable]
+    public class DoWhileDownEvent
+    {
+        public UnityEvent FirstAction = new UnityEvent();
+        public UnityEvent SecondAction = new UnityEvent();
+        public InputActionReference InputReference;
+        public float ActionDelay = 0.01f;
+        private InputAction _inputAction;
+        private bool _doAction;
+        //DOES NOT WORK AS A CONSTRUCTOR
+        /// <summary>
+        /// Sets up the input action and called the action
+        /// </summary>
+        public void InitializeAction()
+        {
+            _inputAction = InputReference.action;
+            DoEvent();
+        }
+        public bool DoEvent()
+        {
+            _inputAction.started +=
+                _s =>
+                {
+                    Debug.Log("Starting action");
+                    _doAction = true;
+                };
+            _inputAction.canceled +=
+                _e =>
+                {
+                    Debug.Log("Ending action.");
+                    SecondAction.Invoke();
+                    _doAction = false;
+                };
+            return _doAction;
+        }
+
+        public IEnumerator RepeatAction(float delay)
+        {
+            while (_doAction)
+            {
+                yield return new WaitForSeconds(delay);
+                Debug.Log("Doing action");
+                FirstAction.Invoke();
             }
         }
     }
@@ -73,7 +157,7 @@ public class InputManager : MonoBehaviour
     [Header("Movement")]
     public UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
     public UnityEvent SprintAction = new UnityEvent();
-    public UnityEvent CrouchAction = new UnityEvent();
+    public WhileDownEvent CrouchAction = new WhileDownEvent();
     public UnityEvent JumpAction = new UnityEvent();
     public HoldEvent JetPackAction = new HoldEvent();
 
@@ -81,21 +165,32 @@ public class InputManager : MonoBehaviour
     public UnityEvent TrapInteractionAction = new UnityEvent();
     public UnityEvent EnableTrapAction = new UnityEvent();
     public UnityEvent TabletAction = new UnityEvent();
-    public HoldEvent FireAction = new HoldEvent();
+    public DoWhileDownEvent PullAction = new DoWhileDownEvent();
+    public UnityEvent ThrowTrapAction = new UnityEvent();
+    public UnityEvent DetonateAction = new UnityEvent();
     public UnityEvent AltFireAction = new UnityEvent();
     public UnityEvent ReturnToShipAction = new UnityEvent();
     public UnityEvent SwitchToolAction = new UnityEvent();
+    public UnityEvent DropAliensToShip = new UnityEvent();
+
+    [Header("UI actions")]
+    public UnityEvent MoveTabLeft = new UnityEvent();
+    public UnityEvent MoveTabRight = new UnityEvent();
+    public UnityEvent MoveTeleportLeft = new UnityEvent();
+    public UnityEvent MoveTeleportRight = new UnityEvent();
+    public UnityEvent SelectTeleport = new UnityEvent();
 
 
     private void Awake()
     {
-        if(_lockCursor)
+        if (_lockCursor)
             Cursor.lockState = CursorLockMode.Locked;
         else
             Cursor.lockState = CursorLockMode.None;
-            
+
         JetPackAction.InitializeAction();
-        FireAction.InitializeAction();
+        CrouchAction.InitializeAction();
+        PullAction.InitializeAction();
     }
     void OnJump()
     {
@@ -130,9 +225,9 @@ public class InputManager : MonoBehaviour
     void OnCrouch()
     {
         Debug.Log("OnCrouch called.");
-        CrouchAction.Invoke();
+        CrouchAction.DoEvent();
     }
-    void OnTablet()
+    void OnToggleTablet()
     {
         Debug.Log("OnTablet called.");
         TabletAction.Invoke();
@@ -140,7 +235,9 @@ public class InputManager : MonoBehaviour
     void OnFire()
     {
         Debug.Log("OnFire called.");
-        if(FireAction.DoEvent()) StartCoroutine(FireAction.RepeatAction(FireAction.ActionDelay));
+        if (PullAction.DoEvent()) StartCoroutine(PullAction.RepeatAction(PullAction.ActionDelay));
+        ThrowTrapAction.Invoke();
+        DetonateAction.Invoke();
     }
     void OnAltFire()
     {
@@ -156,5 +253,37 @@ public class InputManager : MonoBehaviour
     {
         Debug.Log("Switching Tools");
         SwitchToolAction.Invoke();
+    }
+
+    void OnMoveTabLeft()
+    {
+        Debug.Log("Move tab left called");
+        MoveTabLeft.Invoke();
+    }
+    void OnMoveTabRight()
+    {
+        Debug.Log("Move tab right called");
+        MoveTabRight.Invoke();
+    }
+    void OnMoveTeleportLeft()
+    {
+        Debug.Log("Move Teleport Left Called");
+        MoveTeleportLeft.Invoke();
+    }
+    void OnMoveTeleportRight()
+    {
+        Debug.Log("Move Teleport Right Called");
+        MoveTeleportRight.Invoke();
+    }
+    void OnSelectTeleport()
+    {
+        Debug.Log("On select teleport called");
+        SelectTeleport.Invoke();
+    }
+
+    void OnAlienDrop()
+    {
+        Debug.Log("Droping aliens");
+        DropAliensToShip.Invoke();
     }
 }

@@ -159,8 +159,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   CrouchAction:
-    m_PersistentCalls:
-      m_Calls: []
+    FirstAction:
+      m_PersistentCalls:
+        m_Calls: []
+    SecondAction:
+      m_PersistentCalls:
+        m_Calls: []
+    InputReference: {fileID: 1364454352160142719, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
   JumpAction:
     m_PersistentCalls:
       m_Calls: []
@@ -179,12 +184,21 @@ MonoBehaviour:
   TabletAction:
     m_PersistentCalls:
       m_Calls: []
-  FireAction:
-    Action:
+  PullAction:
+    FirstAction:
+      m_PersistentCalls:
+        m_Calls: []
+    SecondAction:
       m_PersistentCalls:
         m_Calls: []
     InputReference: {fileID: 4804567128121380101, guid: 26ec40c69d023ee489f0e6dbf5b73de9, type: 3}
-    ActionDelay: 0.01
+    ActionDelay: 0
+  ThrowTrapAction:
+    m_PersistentCalls:
+      m_Calls: []
+  DetonateAction:
+    m_PersistentCalls:
+      m_Calls: []
   AltFireAction:
     m_PersistentCalls:
       m_Calls: []
@@ -192,5 +206,23 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   SwitchToolAction:
+    m_PersistentCalls:
+      m_Calls: []
+  DropAliensToShip:
+    m_PersistentCalls:
+      m_Calls: []
+  MoveTabLeft:
+    m_PersistentCalls:
+      m_Calls: []
+  MoveTabRight:
+    m_PersistentCalls:
+      m_Calls: []
+  MoveTeleportLeft:
+    m_PersistentCalls:
+      m_Calls: []
+  MoveTeleportRight:
+    m_PersistentCalls:
+      m_Calls: []
+  SelectTeleport:
     m_PersistentCalls:
       m_Calls: []
