@@ -8,9 +8,13 @@ public class DeathPlane : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Something has hit the deathplane...");
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
             other.GetComponent<PlayerMovement>().ReturnToLastGrounedPoint();
+        }
+        if (other.tag.ToLower() == "trap")
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<TrapDeploy>().pickUp(false);
         }
         if (AlienTags.Contains(other.tag))
         {

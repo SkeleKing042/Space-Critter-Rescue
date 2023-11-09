@@ -7,11 +7,13 @@ public class CheckPlayerFire : MonoBehaviour
 {
     private TrapDeploy trapDeploy;
     private VacuumGun gun;
+    private Trap trap;
 
     void Start()
     {
         trapDeploy = GetComponent<TrapDeploy>();
         gun = GetComponentInChildren<VacuumGun>();
+        trap = GetComponentInChildren<Trap>();
     }
 
     /// <summary>
@@ -26,6 +28,9 @@ public class CheckPlayerFire : MonoBehaviour
                 break;
             case TrapDeploy.CurrentlyHolding.trap:
                 trapDeploy.DeployTrap();
+                break;
+            case TrapDeploy.CurrentlyHolding.detinator:
+                trap.TrapCatching();
                 break;
         }
     }

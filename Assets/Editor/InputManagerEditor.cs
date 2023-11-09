@@ -30,7 +30,7 @@ public class InputManagerEditor : Editor
         DrawToEvents(iM.TrapInteractionAction);
         DrawToEvents(iM.EnableTrapAction);
         DrawToEvents(iM.TabletAction);
-        DrawToEvents(iM.FireAction.Action);
+        //DrawToEvents(iM.PullAction.Action);
         DrawToEvents(iM.AltFireAction);
         DrawToEvents(iM.ReturnToShipAction);
         DrawToEvents(iM.SwitchToolAction);

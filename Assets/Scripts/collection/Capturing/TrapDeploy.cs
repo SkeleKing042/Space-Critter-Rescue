@@ -37,7 +37,8 @@ public class TrapDeploy : MonoBehaviour
 
     // misc
     [Header("Misc")]
-    private bool trapDeployed;
+    [HideInInspector]
+    public bool TrapDeployed;
     private float distance;
 
 
@@ -77,7 +78,7 @@ public class TrapDeploy : MonoBehaviour
     }
     void Update()
     {
-        if ((trapDeployed ==false) && currentlyHolding == CurrentlyHolding.vacuum || Trap.transform.parent !=null)
+        if ((TrapDeployed ==false) && currentlyHolding == CurrentlyHolding.vacuum || Trap.transform.parent !=null)
         {
             // match the vacuums position and rotation
             Trap.transform.position = PlayerGun.transform.position;
@@ -90,7 +91,7 @@ public class TrapDeploy : MonoBehaviour
     public void Toggle()
     {
         // make sure the player isnt holding the trap & that the trap is still with the player
-       if (currentlyHolding == CurrentlyHolding.vacuum && trapDeployed == false)
+       if (currentlyHolding == CurrentlyHolding.vacuum && TrapDeployed == false)
        {
            // set game objects appropriatly
            PlayerGun.SetActive(false);
@@ -100,7 +101,7 @@ public class TrapDeploy : MonoBehaviour
            currentlyHolding = CurrentlyHolding.trap;
            return;      // return to avoid toggle loop
        }
-       if (trapDeployed == true && currentlyHolding == CurrentlyHolding.vacuum)
+       if (TrapDeployed == true && currentlyHolding == CurrentlyHolding.vacuum)
        {
            Detenator.SetActive(true);
            PlayerGun.SetActive(false);
@@ -110,7 +111,7 @@ public class TrapDeploy : MonoBehaviour
 
         // else if chap deployed == true then show detinator
 
-       if((currentlyHolding == CurrentlyHolding.trap) && trapDeployed == false)
+       if((currentlyHolding == CurrentlyHolding.trap) && TrapDeployed == false)
        {
            PlayerGun.SetActive(true);
            Trap.SetActive(false);
@@ -118,7 +119,7 @@ public class TrapDeploy : MonoBehaviour
             currentlyHolding = CurrentlyHolding.vacuum;
            return;  // return to avoid toggle loop
        }
-        if ((currentlyHolding == CurrentlyHolding.trap || currentlyHolding == CurrentlyHolding.detinator) && trapDeployed == true)
+        if ((currentlyHolding == CurrentlyHolding.trap || currentlyHolding == CurrentlyHolding.detinator) && TrapDeployed == true)
         {
             PlayerGun.SetActive(true);
             Detenator.SetActive(false);
@@ -151,7 +152,7 @@ public class TrapDeploy : MonoBehaviour
             Detenator.SetActive(true);
 
             // set to true
-            trapDeployed = true;
+            TrapDeployed = true;
 
         }
     
@@ -193,7 +194,7 @@ public class TrapDeploy : MonoBehaviour
             Trap.SetActive(false);
 
             // set to false
-            trapDeployed = false;
+            TrapDeployed = false;
         }
 
     }

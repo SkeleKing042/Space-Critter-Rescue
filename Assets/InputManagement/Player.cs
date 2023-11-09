@@ -179,6 +179,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AlienDrop"",
+                    ""type"": ""Button"",
+                    ""id"": ""a614358b-78c4-42f6-86b2-6e5fc122df38"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -665,6 +674,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a51103e-1849-4a13-b292-65d01598f5f4"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AlienDrop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2550c8b8-1f67-4f9b-bad3-0f1cfd6cae49"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AlienDrop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -757,6 +788,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_MoveTeleportLeft = m_Player.FindAction("MoveTeleportLeft", throwIfNotFound: true);
         m_Player_MoveTabRight = m_Player.FindAction("MoveTabRight", throwIfNotFound: true);
         m_Player_MoveTabLeft = m_Player.FindAction("MoveTabLeft", throwIfNotFound: true);
+        m_Player_AlienDrop = m_Player.FindAction("AlienDrop", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -835,6 +867,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MoveTeleportLeft;
     private readonly InputAction m_Player_MoveTabRight;
     private readonly InputAction m_Player_MoveTabLeft;
+    private readonly InputAction m_Player_AlienDrop;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -856,6 +889,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @MoveTeleportLeft => m_Wrapper.m_Player_MoveTeleportLeft;
         public InputAction @MoveTabRight => m_Wrapper.m_Player_MoveTabRight;
         public InputAction @MoveTabLeft => m_Wrapper.m_Player_MoveTabLeft;
+        public InputAction @AlienDrop => m_Wrapper.m_Player_AlienDrop;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -916,6 +950,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @MoveTabLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabLeft;
                 @MoveTabLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabLeft;
                 @MoveTabLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabLeft;
+                @AlienDrop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
+                @AlienDrop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
+                @AlienDrop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -971,6 +1008,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @MoveTabLeft.started += instance.OnMoveTabLeft;
                 @MoveTabLeft.performed += instance.OnMoveTabLeft;
                 @MoveTabLeft.canceled += instance.OnMoveTabLeft;
+                @AlienDrop.started += instance.OnAlienDrop;
+                @AlienDrop.performed += instance.OnAlienDrop;
+                @AlienDrop.canceled += instance.OnAlienDrop;
             }
         }
     }
@@ -1064,6 +1104,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnMoveTeleportLeft(InputAction.CallbackContext context);
         void OnMoveTabRight(InputAction.CallbackContext context);
         void OnMoveTabLeft(InputAction.CallbackContext context);
+        void OnAlienDrop(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

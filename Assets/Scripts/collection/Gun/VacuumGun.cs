@@ -55,7 +55,7 @@ public class VacuumGun : MonoBehaviour
          //     OffsetCorrection(aData.Rigidbody, offset);
          // }
 
-        if(!Pulling)
+        /*if(!Pulling)
         {
 
             foreach (AlienData aData in aData)
@@ -72,7 +72,7 @@ public class VacuumGun : MonoBehaviour
 
                 //UnassignAlien();
             }
-        }
+        }*/
 
         // id the value in -1,0 then the item is to the left
         // if the vale is 1,0 then the object is to the right
@@ -173,11 +173,14 @@ public class VacuumGun : MonoBehaviour
         Pulling = false;
         foreach(AlienData aData in aData)
         {
-            Debug.Log("Ending pull");
-            // set the alien states
-            StartCoroutine(aData.AI.UpdateState(new StunnedState(aData.AI), 0f));
-            // stun time: wait beforethe new state being set changes
-            StartCoroutine(aData.AI.UpdateState(new PanicState(aData.AI), StunTime));
+            if ((aData.AI._currentState.GetType() == typeof(CaptureState)))
+            {
+                Debug.Log("Ending pull");
+                // set the alien states
+                StartCoroutine(aData.AI.UpdateState(new StunnedState(aData.AI), 0f));
+                // stun time: wait beforethe new state being set changes
+                StartCoroutine(aData.AI.UpdateState(new PanicState(aData.AI), StunTime));
+            }
 
             //UnassignAlien();
         }

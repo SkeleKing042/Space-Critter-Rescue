@@ -73,7 +73,7 @@ public class InputManager : MonoBehaviour
         public UnityEvent SecondAction = new UnityEvent();
         public InputActionReference InputReference;
         private InputAction _inputAction;
-
+        private bool _doAction;
         //DOES NOT WORK AS A CONSTRUCTOR
         /// <summary>
         /// Sets up the input action and called the action
@@ -104,6 +104,52 @@ public class InputManager : MonoBehaviour
                 };
         }
     }
+    [System.Serializable]
+    public class DoWhileDownEvent
+    {
+        public UnityEvent FirstAction = new UnityEvent();
+        public UnityEvent SecondAction = new UnityEvent();
+        public InputActionReference InputReference;
+        public float ActionDelay = 0.01f;
+        private InputAction _inputAction;
+        private bool _doAction;
+        //DOES NOT WORK AS A CONSTRUCTOR
+        /// <summary>
+        /// Sets up the input action and called the action
+        /// </summary>
+        public void InitializeAction()
+        {
+            _inputAction = InputReference.action;
+            DoEvent();
+        }
+        public bool DoEvent()
+        {
+            _inputAction.started +=
+                _s =>
+                {
+                    Debug.Log("Starting action");
+                    _doAction = true;
+                };
+            _inputAction.canceled +=
+                _e =>
+                {
+                    Debug.Log("Ending action.");
+                    SecondAction.Invoke();
+                    _doAction = false;
+                };
+            return _doAction;
+        }
+
+        public IEnumerator RepeatAction(float delay)
+        {
+            while (_doAction)
+            {
+                yield return new WaitForSeconds(delay);
+                Debug.Log("Doing action");
+                FirstAction.Invoke();
+            }
+        }
+    }
 
     [Header("Game Settings")]
     [SerializeField] private bool _lockCursor;
@@ -119,10 +165,13 @@ public class InputManager : MonoBehaviour
     public UnityEvent TrapInteractionAction = new UnityEvent();
     public UnityEvent EnableTrapAction = new UnityEvent();
     public UnityEvent TabletAction = new UnityEvent();
-    public HoldEvent FireAction = new HoldEvent();
+    public DoWhileDownEvent PullAction = new DoWhileDownEvent();
+    public UnityEvent ThrowTrapAction = new UnityEvent();
+    public UnityEvent DetonateAction = new UnityEvent();
     public UnityEvent AltFireAction = new UnityEvent();
     public UnityEvent ReturnToShipAction = new UnityEvent();
     public UnityEvent SwitchToolAction = new UnityEvent();
+    public UnityEvent DropAliensToShip = new UnityEvent();
 
     [Header("UI actions")]
     public UnityEvent MoveTabLeft = new UnityEvent();
@@ -140,8 +189,8 @@ public class InputManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
 
         JetPackAction.InitializeAction();
-        FireAction.InitializeAction();
         CrouchAction.InitializeAction();
+        PullAction.InitializeAction();
     }
     void OnJump()
     {
@@ -186,7 +235,9 @@ public class InputManager : MonoBehaviour
     void OnFire()
     {
         Debug.Log("OnFire called.");
-        if (FireAction.DoEvent()) StartCoroutine(FireAction.RepeatAction(FireAction.ActionDelay));
+        if (PullAction.DoEvent()) StartCoroutine(PullAction.RepeatAction(PullAction.ActionDelay));
+        ThrowTrapAction.Invoke();
+        DetonateAction.Invoke();
     }
     void OnAltFire()
     {
@@ -228,5 +279,11 @@ public class InputManager : MonoBehaviour
     {
         Debug.Log("On select teleport called");
         SelectTeleport.Invoke();
+    }
+
+    void OnAlienDrop()
+    {
+        Debug.Log("Droping aliens");
+        DropAliensToShip.Invoke();
     }
 }
