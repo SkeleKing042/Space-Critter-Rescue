@@ -84,19 +84,16 @@ public class TrapDeploy : MonoBehaviour
             // match the vacuums position and rotation
             Trap.transform.position = PlayerGun.transform.position;
             Trap.transform.rotation = PlayerGun.transform.rotation;
+        }
+
+        if (_trapDeployed)
+        {
+            _distance = Mathf.Abs(Vector3.Distance(Trap.transform.position, transform.position));
 
             if (PickUpRange >= _distance)
-            {
                 _canPickUpTrap = true;
-            }
             else
-            {
                 _canPickUpTrap = false;
-            }
-        }
-        else
-        {
-            _canPickUpTrap = false;
         }
     }
     /// <summary>
@@ -206,6 +203,7 @@ public class TrapDeploy : MonoBehaviour
             // set game objects apprpriatly
             PlayerGun.SetActive(true);
             Trap.SetActive(false);
+            Detenator.SetActive(false);
 
             // set to false
             _trapDeployed = false;
