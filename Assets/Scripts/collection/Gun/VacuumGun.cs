@@ -44,17 +44,35 @@ public class VacuumGun : MonoBehaviour
     {
 
         //  collect alien cosine value in relation to the player
-        if (Pulling)
+       
+         // foreach (AlienData aData in aData)
+         // {
+         //     forward = transform.right;
+         //     AlienPosition = aData.gObject.transform.position - transform.position;
+         //
+         //     float offset = Vector3.Dot(forward, AlienPosition);
+         //
+         //     OffsetCorrection(aData.Rigidbody, offset);
+         // }
+
+        if(!Pulling)
+        {
+
             foreach (AlienData aData in aData)
             {
-                forward = transform.right;
-                AlienPosition = aData.gObject.transform.position - transform.position;
+                Debug.Log("Ending pull");
+                // set the alien states
+                if (aData.AI._currentState.GetType() == typeof(CaptureState))
+                {
+                    StartCoroutine(aData.AI.UpdateState(new StunnedState(aData.AI), 0f));
+                    // stun time: wait beforethe new state being set changes
+                    StartCoroutine(aData.AI.UpdateState(new PanicState(aData.AI), StunTime));
+                }
+            
 
-                float offset = Vector3.Dot(forward, AlienPosition);
-
-                OffsetCorrection(aData.Rigidbody, offset);
+                //UnassignAlien();
             }
-
+        }
 
         // id the value in -1,0 then the item is to the left
         // if the vale is 1,0 then the object is to the right
@@ -128,6 +146,7 @@ public class VacuumGun : MonoBehaviour
         Pulling = true;
         foreach(AlienData aData in aData)
         {
+            if ((aData.AI._currentState.GetType() != typeof(CaptureState)))
             // set alien state to captures
             StartCoroutine(aData.AI.UpdateState(new CaptureState(aData.AI), 0f));
             // find what direction the alien is in 
@@ -218,7 +237,7 @@ public class VacuumGun : MonoBehaviour
                 aData.Remove(dData);
                 break;
             }
-
+       
         /*if (Alien != null)
         {
            // StartCoroutine(AlienAI.UpdateState(new PanicState(AlienAI), 0f));
