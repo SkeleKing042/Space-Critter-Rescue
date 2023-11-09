@@ -384,6 +384,7 @@ GameObject:
   - component: {fileID: 7207852762652227241}
   - component: {fileID: 7571919666021747437}
   - component: {fileID: 9095043188927162977}
+  - component: {fileID: 8599652253496983181}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -528,9 +529,9 @@ MonoBehaviour:
   _refuelRate: 1.5
   _refuelDelay: 0.4
   _holdAfterJump: 0
-  _fuelBarMain: {fileID: 7868927028299836603}
-  _delayedBar: {fileID: 8276426129792173152}
-  _fuelBarBackground: {fileID: 5209758453694614101}
+  _fuelBarMain: {fileID: 0}
+  _delayedBar: {fileID: 0}
+  _fuelBarBackground: {fileID: 0}
   _jetBackgroundColor:
   - {r: 0.23584908, g: 0.065667786, b: 0, a: 1}
   - {r: 0.24528301, g: 0.1631942, b: 0.13074046, a: 1}
@@ -549,12 +550,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Trap: {fileID: 7975821152235093209}
   Bubble: {fileID: 7975821153225984261}
-  Detenator: {fileID: 1134042784733048000}
   PlayerGun: {fileID: 5918693712291192085}
   Player: {fileID: 8109913824263524884}
   PickUpRange: 10
   TrapThrowForce: 5
-  TrapDeployed: 0
+  trapDeployed: 0
+  canPickUpTrap: 0
   currentlyHolding: 0
 --- !u!95 &7571919666021747437
 Animator:
@@ -595,7 +596,39 @@ MonoBehaviour:
   BigAliens: 0
   SpaceForSmall: 0
   SpaceForBig: 0
-  Inventory: {fileID: 0}
+--- !u!114 &8599652253496983181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8109913824263524884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d31b7db5f99a3804f8b29399384739a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerMovement: {fileID: 0}
+  UI_speed: 0
+  inputIcon_LT: {fileID: 0}
+  inputIcon_RT: {fileID: 0}
+  inputIcon_LB: {fileID: 0}
+  inputIcon_RB: {fileID: 0}
+  inputIcon_Y: {fileID: 0}
+  inputIcon_X: {fileID: 0}
+  _fuelBarMain: {fileID: 0}
+  _delayedBar: {fileID: 0}
+  _fuelBarBackground: {fileID: 0}
+  _jetBackgroundColor: []
+  isJetpackUI: 0
+  _jetpackRectTransform: {fileID: 0}
+  _jetpack_Positions: []
+  _VC_RectTransform: {fileID: 0}
+  VC_Positions: []
+  VC_InputIcon: {fileID: 0}
+  _Trap_RectTransform: {fileID: 0}
+  Trap_Positions: []
+  Trap_InputIcon: {fileID: 0}
 --- !u!1001 &1115007304038046142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1652,44 +1685,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
---- !u!114 &5209758453694614101 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 980324488614704222, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
-  m_PrefabInstance: {fileID: 5032218823293451787}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &7739379095487518537 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3364685986447403330, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
   m_PrefabInstance: {fileID: 5032218823293451787}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7868927028299836603 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2945920591606616752, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
-  m_PrefabInstance: {fileID: 5032218823293451787}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8276426129792173152 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3967053266024839787, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
-  m_PrefabInstance: {fileID: 5032218823293451787}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5636270631344483017
 PrefabInstance:
   m_ObjectHideFlags: 0

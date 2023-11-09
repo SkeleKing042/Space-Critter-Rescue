@@ -73,7 +73,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Tooltip("The time it takes for the jetpack to begin refueling.")]
     private float _refuelDelay;
     private float _refuelTime;
+    public float RefuelTime { get { return _refuelTime; } }
     private float _jetFuel = 1;
+    public float JetFuel { get { return _jetFuel; } } 
     public bool _holdAfterJump;
     private bool _jetInputReady;
 

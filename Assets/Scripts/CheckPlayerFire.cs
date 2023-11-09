@@ -29,9 +29,9 @@ public class CheckPlayerFire : MonoBehaviour
             case TrapDeploy.CurrentlyHolding.trap:
                 trapDeploy.DeployTrap();
                 break;
-            case TrapDeploy.CurrentlyHolding.detinator:
-                trap.TrapCatching();
-                break;
+            //case TrapDeploy.CurrentlyHolding.detinator:
+              //  trap.TrapCatching();
+                //break;
         }
     }
 }
