@@ -146,18 +146,6 @@ public class PlayerMovement : MonoBehaviour
         }
         if (horizontalVel.magnitude < _sprintCancelLevel)
             DoSprint(false);
-
-        //Always update the ui
-        if (_refuelTime > 0)
-            _fuelBarBackground.color = _jetBackgroundColor[1];
-        else
-            _fuelBarBackground.color = _jetBackgroundColor[0];
-
-        _fuelBarMain.fillAmount = _jetFuel;
-        if (_delayedBar.fillAmount > _fuelBarMain.fillAmount)
-            _delayedBar.fillAmount = iTween.FloatUpdate(_delayedBar.fillAmount, _fuelBarMain.fillAmount, 10);
-        else
-            _delayedBar.fillAmount = _fuelBarMain.fillAmount;
     }
     public void UpdateMovementAxis(Vector2 v)
     {
@@ -168,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
     /// Checks right below the player for objects tagged ground
     /// </summary>
     /// <returns></returns>
-    private bool GroundedCheck()
+    public bool GroundedCheck()
     {
         Vector3 playerForwards = Vector3.Cross(_camera.transform.forward, Vector3.up);
         if(VelocityBasedChecks)

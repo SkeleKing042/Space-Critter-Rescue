@@ -78,7 +78,7 @@ public class UI_Manager : MonoBehaviour
     {
         _playerMovement = GetComponent<PlayerMovement>();
         _trapDeploy = GetComponent<TrapDeploy>();
-        _tablet = GetComponent<Tablet>();
+        _tablet = GetComponentInChildren<Tablet>();
     }
 
     // Update is called once per frame
@@ -156,7 +156,7 @@ public class UI_Manager : MonoBehaviour
 
     private void JetPackUI_Manager()
     {
-        if (isJetpackUI)
+        if (!_playerMovement.GroundedCheck() || _playerMovement.JetFuel < 1)
         {
             //on
             _jetpackRectTransform.anchoredPosition = Vector2.Lerp(_jetpackRectTransform.anchoredPosition, new Vector2(_jetpack_Positions[0], 2), UI_speed * Time.deltaTime);
