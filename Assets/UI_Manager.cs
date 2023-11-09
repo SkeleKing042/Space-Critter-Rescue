@@ -9,6 +9,7 @@ public class UI_Manager : MonoBehaviour
     [SerializeField]
     private PlayerMovement _playerMovement;
     private TrapDeploy _trapDeploy;
+    private Tablet _tablet;
 
 
     [Header("Universal Variables")]
@@ -77,15 +78,34 @@ public class UI_Manager : MonoBehaviour
     {
         _playerMovement = GetComponent<PlayerMovement>();
         _trapDeploy = GetComponent<TrapDeploy>();
+        _tablet = GetComponent<Tablet>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        JetPackUI_Manager();
-        VacuumCatcherUI_Manager();
-        TrapUI_Manager();
+        if (!_tablet.TabletState)
+        {
+            JetPackUI_Manager();
+            VacuumCatcherUI_Manager();
+            TrapUI_Manager();
+        }
+        else
+        {
+            RemoveUI();
+        }
+
+
     }
+
+
+    private void RemoveUI()
+    {
+        _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[2], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
+        _VC_RectTransform.anchoredPosition = Vector2.Lerp(_VC_RectTransform.anchoredPosition, new Vector2(VC_Positions[2], _VC_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
+        _jetpackRectTransform.anchoredPosition = Vector2.Lerp(_jetpackRectTransform.anchoredPosition, new Vector2(_jetpack_Positions[2], 2), UI_speed * Time.deltaTime);
+    }
+
 
     private void TrapUI_Manager()
     {
