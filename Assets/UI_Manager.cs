@@ -110,7 +110,7 @@ public class UI_Manager : MonoBehaviour
     private void TrapUI_Manager()
     {
         //ON
-        if (_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.trap || _trapDeploy.trapDeployed == true)
+        if (_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.trap || _trapDeploy.TrapDeployed == true)
         {
             _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[0], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
             Trap_InputIcon.sprite = inputIcon_RT;
@@ -123,9 +123,9 @@ public class UI_Manager : MonoBehaviour
         }
 
         //pickup trap / activate trap
-        if(_trapDeploy.trapDeployed == true)
+        if(_trapDeploy.TrapDeployed == true)
         {
-            if(_trapDeploy.canPickUpTrap == false)
+            if(_trapDeploy.CanPickUpTrap == false)
             {
                 Trap_InputIcon.sprite = inputIcon_Y;
             }

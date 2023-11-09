@@ -550,12 +550,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Trap: {fileID: 7975821152235093209}
   Bubble: {fileID: 7975821153225984261}
+  Detenator: {fileID: 1134042784733048000}
   PlayerGun: {fileID: 5918693712291192085}
   Player: {fileID: 8109913824263524884}
   PickUpRange: 10
   TrapThrowForce: 5
-  trapDeployed: 0
-  canPickUpTrap: 0
   currentlyHolding: 0
 --- !u!95 &7571919666021747437
 Animator:
@@ -693,10 +692,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: AltFireAction.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
-      propertyPath: DetonateAction.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}

@@ -142,9 +142,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseDown: 0
-  Vac: {fileID: 2025321121461694840}
-  collection: {fileID: 0}
-  PlayerInventory: {fileID: 0}
 --- !u!1 &2025321122122528732
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,6 +320,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2593659596840871071, guid: aa3f8bb3a47283a428c4f60d8c954fda, type: 3}
+      propertyPath: playerGun
+      value: 
+      objectReference: {fileID: 2025321122122528732}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa3f8bb3a47283a428c4f60d8c954fda, type: 3}
 --- !u!1 &2348558289187759052 stripped
