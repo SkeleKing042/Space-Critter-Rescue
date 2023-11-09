@@ -22,6 +22,8 @@ public class Tablet : MonoBehaviour
     [Header("Tabs")]
     [Tooltip("Array that stores the tabs of the tablet in order")]
     [SerializeField] private GameObject[] _tabs;
+    [SerializeField] private GameObject _tutorialTab;
+    private bool _tutorRead = false;
     [Tooltip("index that stores which tab is the map tab")]
     [SerializeField] public int MapTabIndex;
     //[Tooltip("index that stores the current tab in the tablet")]
@@ -41,11 +43,13 @@ public class Tablet : MonoBehaviour
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();
-        _playerMovement = GetComponent<PlayerMovement>();
+        _animator = GetComponentInParent<Animator>();
+        _playerMovement = GetComponentInParent<PlayerMovement>();
         _pylonManager = FindObjectOfType<PylonManager>();
 
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
+
+        _tutorRead = false;
     }
 
     #region ToggleTablet
@@ -54,10 +58,21 @@ public class Tablet : MonoBehaviour
     /// </summary>
     public void ToggleTablet()
     {
-        if(TabletState)
+        if (TabletState)
         {
             _animator.SetTrigger("Lower Tablet");
             SetTabletState(false);
+
+            if (!_tutorRead)
+            {
+                _tutorialTab.SetActive(false);
+                foreach (GameObject tab in _tabs)
+                {
+                    tab.SetActive(false);
+                }
+                _tabs[0].SetActive(true);
+                _tutorRead = true;
+            }  
 
             _playerMovement.DoMovement = true;
 
@@ -86,6 +101,10 @@ public class Tablet : MonoBehaviour
     /// </summary>
     public void ActivateCorrectTab()
     {
+        if(_tutorRead && _tutorialTab.activeSelf)
+        {
+            _tutorialTab.SetActive(false);
+        }
         foreach(GameObject tab in _tabs)
         {
             tab.SetActive(false);
