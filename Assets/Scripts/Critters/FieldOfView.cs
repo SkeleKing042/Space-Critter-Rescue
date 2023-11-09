@@ -27,19 +27,11 @@ public class FieldOfView : MonoBehaviour
         StartCoroutine(FOVRoutine());
         AI = GetComponent<CreatureAI>();
     }
-    private void Update()
-    {
-       //if (CanSeeTarget)
-       //    AI.PrepareUpdateState(new PanicState(AI));
-    }
-
     private IEnumerator FOVRoutine()
     { 
-        WaitForSeconds wait = new WaitForSeconds(0.2f);
-
         while (true)
         {
-            yield return wait;
+            yield return new WaitForSeconds(0.2f);
 
             FieldOfViewCheck();
         }

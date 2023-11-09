@@ -17,6 +17,7 @@ public class Trap : MonoBehaviour
     [Header("Tool GameObjects")]
     public GameObject Bubble;
     public GameObject playerGun;
+    public GameObject Detinator;
 
 
     [Header("Movement Vectors")]
@@ -45,7 +46,11 @@ public class Trap : MonoBehaviour
     /// </summary>
     public void TrapCatching()
     {
-        StartCoroutine(BubbleTimer());
+        if(Detinator.gameObject.activeSelf ==true)
+        {
+            StartCoroutine(BubbleTimer());
+        }
+        
     }
 
     /// <summary>

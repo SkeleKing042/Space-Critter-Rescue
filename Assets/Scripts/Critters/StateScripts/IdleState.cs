@@ -11,6 +11,7 @@ public class IdleState : State
     public override void StartState()
     {
         AI.Animator.SetBool("IdleState", true);
+        AI.RigidMode(false);
     }
     public override void Update()
     {
