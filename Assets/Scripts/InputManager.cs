@@ -58,7 +58,7 @@ public class InputManager : MonoBehaviour
 
         public IEnumerator RepeatAction(float delay)
         {
-            while(_doAction)
+            while (_doAction)
             {
                 yield return new WaitForSeconds(delay);
                 Debug.Log("Doing action");
@@ -94,7 +94,7 @@ public class InputManager : MonoBehaviour
                 _s =>
                 {
                     Debug.Log("Starting action");
-                   FirstAction.Invoke();
+                    FirstAction.Invoke();
                 };
             _inputAction.canceled +=
                 _e =>
@@ -124,14 +124,21 @@ public class InputManager : MonoBehaviour
     public UnityEvent ReturnToShipAction = new UnityEvent();
     public UnityEvent SwitchToolAction = new UnityEvent();
 
+    [Header("UI actions")]
+    public UnityEvent MoveTabLeft = new UnityEvent();
+    public UnityEvent MoveTabRight = new UnityEvent();
+    public UnityEvent MoveTeleportLeft = new UnityEvent();
+    public UnityEvent MoveTeleportRight = new UnityEvent();
+    public UnityEvent SelectTeleport = new UnityEvent();
+
 
     private void Awake()
     {
-        if(_lockCursor)
+        if (_lockCursor)
             Cursor.lockState = CursorLockMode.Locked;
         else
             Cursor.lockState = CursorLockMode.None;
-            
+
         JetPackAction.InitializeAction();
         FireAction.InitializeAction();
         CrouchAction.InitializeAction();
@@ -179,7 +186,7 @@ public class InputManager : MonoBehaviour
     void OnFire()
     {
         Debug.Log("OnFire called.");
-        if(FireAction.DoEvent()) StartCoroutine(FireAction.RepeatAction(FireAction.ActionDelay));
+        if (FireAction.DoEvent()) StartCoroutine(FireAction.RepeatAction(FireAction.ActionDelay));
     }
     void OnAltFire()
     {
@@ -195,5 +202,31 @@ public class InputManager : MonoBehaviour
     {
         Debug.Log("Switching Tools");
         SwitchToolAction.Invoke();
+    }
+
+    void OnMoveTabLeft()
+    {
+        Debug.Log("Move tab left called");
+        MoveTabLeft.Invoke();
+    }
+    void OnMoveTabRight()
+    {
+        Debug.Log("Move tab right called");
+        MoveTabRight.Invoke();
+    }
+    void OnMoveTeleportLeft()
+    {
+        Debug.Log("Move Teleport Left Called");
+        MoveTeleportLeft.Invoke();
+    }
+    void OnMoveTeleportRight()
+    {
+        Debug.Log("Move Teleport Right Called");
+        MoveTeleportRight.Invoke();
+    }
+    void OnSelectTeleport()
+    {
+        Debug.Log("On select teleport called");
+        SelectTeleport.Invoke();
     }
 }

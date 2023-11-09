@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody PlayerRigidbody;
     Camera _camera;
     public Vector2 MovementInput;
+    [HideInInspector]
+    public bool DoMovement;
     [Header("Ground movement")]
     [SerializeField, Tooltip("The speed at which the player moves forwards and backwards.")]
     private float _moveAccel;
@@ -27,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private float _maxSpeed;
     [SerializeField, Tooltip("Modifies how aggresive the breaking is at maximum speed.")]
     private float _breakAggresion = 1;
-    private float _movementModifier = 1; //Unused ATM
+    private float _movementModifier = 1;
     [SerializeField, Tooltip("The maximum distance that the last ground check can reach.")]
     private float _lastGroundCheckMaxDistance;
     [SerializeField, Tooltip("The maximum angle that the player can move up smoothly.")]
@@ -96,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
         _headHeight = _head.localPosition.y;
         PlayerRigidbody = GetComponent<Rigidbody>();
         _camera = Camera.main;
+        DoMovement = true;
     }
 
     void FixedUpdate()
@@ -120,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
             //Apply the force
             PlayerRigidbody.AddForce(-triBreakVelocity);
         }
-        else
+        else if(DoMovement)
         {
             //Move the player forwards based on the camera rotation
             Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
@@ -222,6 +225,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Jump()
     {
+        if(DoMovement)
         //Debug.Log("Jump initiated");       
         if (GroundedCheck())
         {
@@ -252,6 +256,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void JetPack()
     {
+        if(DoMovement)
         //If we have fuel...
         if (_jetFuel > 0)
             //... push the player up and reduce the fuel
@@ -275,36 +280,45 @@ public class PlayerMovement : MonoBehaviour
     
     public void CrouchPlayer()
     {
-        DoSprint(false);
-        _flooringIt = false;
-        _crouched = true;
-        _headHeight *= _crouchScale;
-        _movementModifier *= _crouchScale;
-        gameObject.GetComponent<CapsuleCollider>().height *= _crouchScale;
-        PlayerHeight *= _crouchScale;
+        if (DoMovement)
+        {
+            DoSprint(false);
+            _flooringIt = false;
+            _crouched = true;
+            _headHeight *= _crouchScale;
+            _movementModifier *= _crouchScale;
+            gameObject.GetComponent<CapsuleCollider>().height *= _crouchScale;
+            PlayerHeight *= _crouchScale;
 
-        transform.position = new Vector3(transform.position.x, transform.position.y - (PlayerHeight / 2), transform.position.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y - (PlayerHeight / 2), transform.position.z);
+        }
     }
     public void UncrouchPlayer()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y + (PlayerHeight / 2), transform.position.z);
+        if (DoMovement)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + (PlayerHeight / 2), transform.position.z);
 
-        _crouched = false;
-        _headHeight /= _crouchScale;
-        _movementModifier /= _crouchScale;
-        gameObject.GetComponent<CapsuleCollider>().height /= _crouchScale;
-        PlayerHeight /= _crouchScale;
+            _crouched = false;
+            _headHeight /= _crouchScale;
+            _movementModifier /= _crouchScale;
+            gameObject.GetComponent<CapsuleCollider>().height /= _crouchScale;
+            PlayerHeight /= _crouchScale;
+        }
     }
 
     public void DoSprint()
     {
-        if (!_crouched)
+        if (DoMovement)
         {
-            if(!_flooringIt)
-                _movementModifier = _sprintScale;
-            else
-                _movementModifier = 1;
-            _flooringIt = !_flooringIt;
+            if (!_crouched)
+            {
+                if (!_flooringIt)
+                    _movementModifier = _sprintScale;
+                else
+                    _movementModifier = 1;
+                _flooringIt = !_flooringIt;
+            }
         }
 
     }

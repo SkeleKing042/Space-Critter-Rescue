@@ -58,13 +58,16 @@ public class Tablet : MonoBehaviour
         {
             _animator.SetTrigger("Lower Tablet");
             SetTabletState(false);
+
+            _playerMovement.DoMovement = true;
+
         }
         else if(!TabletState)
         {
             _animator.SetTrigger("Raise Tablet");
             SetTabletState(true);
 
-            _playerMovement.MovementInput = Vector2.zero;
+            _playerMovement.DoMovement = false;
         }
     }
 
