@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 using UnityEngine.InputSystem.HID;
 
 public class VacuumGun : MonoBehaviour
@@ -144,6 +145,8 @@ public class VacuumGun : MonoBehaviour
         Pulling = true;
         foreach(AlienData aData in aData)
         {
+            try
+            {
             if ((aData.AI._currentState.GetType() != typeof(CaptureState)))
             // set alien state to captures
             StartCoroutine(aData.AI.UpdateState(new CaptureState(aData.AI), 0f));
@@ -154,6 +157,12 @@ public class VacuumGun : MonoBehaviour
 
             aData.Rigidbody.AddForce(dir * SuckSpeed);
 
+
+            }
+            catch(Exception e)
+            {
+                Debug.Log(e);
+            }
             //Need to increase force when in bubble
 /*
             if (Bubble.gameObject.activeSelf == true)
