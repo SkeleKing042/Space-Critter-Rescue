@@ -41,7 +41,7 @@ public class CollectAlien : MonoBehaviour
 
     void OnTriggerEnter(Collider creature)
     {
-        
+
         if ((creature.gameObject.tag == "alien" || creature.gameObject.tag == "bigAlien") && mouseDown)
         {
             collection.AddAlienToCollection(creature.gameObject);
@@ -50,8 +50,8 @@ public class CollectAlien : MonoBehaviour
             Alien = creature.gameObject;
             //PlayerInventory.AddToPlayerInventory(Alien);
 
-            Vac.UnassignAlien();
-            //Destroy(creature.gameObject);
+            Vac.UnassignAlien(creature.gameObject);
+            Destroy(creature.gameObject);
 
             //Vac.EndPull();
             

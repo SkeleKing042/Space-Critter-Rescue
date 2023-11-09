@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour
     //
     CollectAlien AlienCollection;
     private List<GameObject> _alienCollection = new List<GameObject>();
-    private CreatureAI _alienType;
+    private CreatureStats _alienType;
     private GameObject _alien;
     public GameObject ShipDropOff;
     public GameObject Player;
@@ -41,9 +41,9 @@ public class Inventory : MonoBehaviour
 
     public void AddSmallShroom(GameObject alien)
     {
-       _alienType = alien.GetComponent<CreatureAI>();
+       _alienType = alien.GetComponent<CreatureStats>();
 
-       if (CreatureAI.creatureType.Shroom == _alienType.type)
+       if (CreatureStats.creatureType.Shroom == _alienType.Type)
        {
            // get image and display
            ShroomAliens++;
@@ -58,9 +58,9 @@ public class Inventory : MonoBehaviour
     public void AddBigShroom(GameObject alien)
     {
 
-       _alienType = alien.GetComponent<CreatureAI>();
+       _alienType = alien.GetComponent<CreatureStats>();
 
-       if (CreatureAI.creatureType.Shroom == _alienType.type)
+       if (CreatureStats.creatureType.Shroom == _alienType.Type)
        {
            // get image and display
            ShroomAliensBig++;
@@ -75,9 +75,9 @@ public class Inventory : MonoBehaviour
     public void AddSmallCrystal(GameObject alien)
     {
 
-        _alienType = alien.GetComponent<CreatureAI>();
+        _alienType = alien.GetComponent<CreatureStats>();
 
-        if (CreatureAI.creatureType.Crystal == _alienType.type)
+        if (CreatureStats.creatureType.Crystal == _alienType.Type)
         {
             // get image and display depending on type
 
@@ -90,9 +90,9 @@ public class Inventory : MonoBehaviour
     }
     public void AddBigCrystal(GameObject alien)
     {
-        _alienType = alien.GetComponent<CreatureAI>();
+        _alienType = alien.GetComponent<CreatureStats>();
 
-        if (CreatureAI.creatureType.Crystal == _alienType.type)
+        if (CreatureStats.creatureType.Crystal == _alienType.Type)
         {
             // get image and display depending on type
 

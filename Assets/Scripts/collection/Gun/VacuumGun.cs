@@ -1,3 +1,6 @@
+// Created by Adanna Okoye
+// Last edited by Jackson Lucas
+
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,11 +9,16 @@ using UnityEngine.InputSystem.HID;
 
 public class VacuumGun : MonoBehaviour
 {
+    [System.Serializable]
+    public class AlienData
+    {
+        public GameObject gObject;
+        public Rigidbody Rigidbody;
+        public CreatureAI AI;
+    }
     // alien components 
     [Header("Alien Components")]
-    public GameObject Alien;
-    public Rigidbody _alienRigid;
-    public CreatureAI AlienAI;
+    public List<AlienData> aData;
     public Trap trap;
     public GameObject Bubble;
 
@@ -28,29 +36,32 @@ public class VacuumGun : MonoBehaviour
 
     // fixed varibles 
     [Header("Fixed Varibles")]
-    private float _centralOffset;
-    private bool _mouseDown;
+    //private float _centralOffset;
+    //private bool _mouseDown;
     public bool Pulling = false;
 
     void Update()
     {
 
         //  collect alien cosine value in relation to the player
-        if (Alien)
-        {
-            forward = transform.right;
-            AlienPosition = Alien.transform.position - transform.position;
-            
-           _centralOffset = Vector3.Dot(forward, AlienPosition);
-        }
+        if (Pulling)
+            foreach (AlienData aData in aData)
+            {
+                forward = transform.right;
+                AlienPosition = aData.gObject.transform.position - transform.position;
+
+                float offset = Vector3.Dot(forward, AlienPosition);
+
+                OffsetCorrection(aData.Rigidbody, offset);
+            }
 
 
         // id the value in -1,0 then the item is to the left
         // if the vale is 1,0 then the object is to the right
 
-        CheckMouseDown();
+        //CheckMouseDown();
     }
-    public void CheckMouseDown()
+    /*public void CheckMouseDown()
     {
 
         if (Input.GetButtonDown("Fire1"))
@@ -65,27 +76,27 @@ public class VacuumGun : MonoBehaviour
             _mouseDown = false;
             
         }
-    }
+    }*/
 
     /// <summary>
     /// use the sine position collected to correct the offset
     /// </summary>
-    void OffsetCorrection()
+    void OffsetCorrection(Rigidbody alien, float offset)
     {
         bool _comingLeft;
         // check if coming from the left
-        if (_centralOffset < -0.01) // -1
+        if (offset < -0.01) // -1
         {
            // add force to the right
-            _alienRigid.AddForce(Vector3.right * OffsetFixSpeed);
+            alien.AddForce(Vector3.right * OffsetFixSpeed);
             // set bool
             _comingLeft = true;
         }
         // check if coming from right
-        if (_centralOffset > 0.01) // 1
+        if (offset > 0.01) // 1
         {
             // add force to the left
-            _alienRigid.AddForce(-Vector3.right * OffsetFixSpeed); // (-right == left)
+            alien.AddForce(-Vector3.right * OffsetFixSpeed); // (-right == left)
             // set bool
             _comingLeft = false;
         }
@@ -113,44 +124,66 @@ public class VacuumGun : MonoBehaviour
 
     public void Pull()
     {
-     
+        Debug.Log("starting");
         Pulling = true;
-        if (Pulling && Alien != null)
+        foreach(AlienData aData in aData)
         {
+            // set alien state to captures
+            StartCoroutine(aData.AI.UpdateState(new CaptureState(aData.AI), 0f));
+            // find what direction the alien is in 
+            Vector3 dir = transform.position - aData.Rigidbody.transform.position;
+            dir = Vector3.Normalize(dir);
+            //move the alien towards the player
+
+            aData.Rigidbody.AddForce(dir * SuckSpeed);
+
+            //Need to increase force when in bubble
+/*
             if (Bubble.gameObject.activeSelf == true)
                 SuckSpeed = 100;
             else
                 SuckSpeed = 5;
-
-            Debug.Log("starting");
-            // set alien state to captures
-            StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
-            // find what direction the alien is in 
-            Vector3 dir = transform.position - _alienRigid.transform.position;
-            dir = Vector3.Normalize(dir);
-            //move the alien towards the player
-            _alienRigid.AddForce(dir * SuckSpeed);
-
+*/
         }
+
+        
         
     }
     public void EndPull()
     {
         Pulling = false;
-        if (Alien != null)
+        foreach(AlienData aData in aData)
         {
             Debug.Log("Ending pull");
             // set the alien states
-            StartCoroutine(AlienAI.UpdateState(new StunnedState(AlienAI), 0f));
+            StartCoroutine(aData.AI.UpdateState(new StunnedState(aData.AI), 0f));
             // stun time: wait beforethe new state being set changes
-            StartCoroutine(AlienAI.UpdateState(new PanicState(AlienAI), StunTime));
-            UnassignAlien();
+            StartCoroutine(aData.AI.UpdateState(new PanicState(aData.AI), StunTime));
+
+            //UnassignAlien();
         }
     }
     /// <summary>
     /// find the alien and setting the values when in range 
     /// </summary>
     /// <param name="alien"></param>
+    private void OnTriggerEnter(Collider alien)
+    {
+        if (alien.gameObject.tag == "alien" || (Trap.Catchable == true && alien.gameObject.tag == "bigAlien"))
+        {
+            AlienData ad = new AlienData();
+            ad.gObject = alien.gameObject;
+            ad.AI = alien.GetComponent<CreatureAI>();
+            ad.Rigidbody = alien.GetComponent<Rigidbody>();
+            aData.Add(ad);
+        }
+    }
+    private void OnTriggerExit(Collider alien)
+    {
+        if (alien.gameObject.tag == "alien" || (Trap.Catchable == true && alien.gameObject.tag == "bigAlien") && aData.Count < 0)
+            UnassignAlien(alien.gameObject);
+    }
+    /*
     private void OnTriggerStay(Collider alien)
     {
         if (alien.gameObject.tag == "alien" || (Trap.Catchable == true && alien.gameObject.tag == "bigAlien") && Alien == null)
@@ -159,27 +192,34 @@ public class VacuumGun : MonoBehaviour
             AlienAI = Alien.GetComponent<CreatureAI>();
             _alienRigid = alien.GetComponent<Rigidbody>();
         }
-    }
+    }*/
 
 
     /// <summary>
     /// i may delete this 
     /// </summary>
     /// <param name="alien"></param>
-   //private void OnTriggerExit(Collider alien)
-   //{
-   //    if (alien.gameObject.tag == "alien" || alien.gameObject.tag == "bigAlien")
-   //    {
-   //        Debug.Log(" Alien left range");
-   //        Trap.Catchable = false;
-   //        Debug.Log("Big alien catchable: "+Trap.Catchable);
-   //    }       
-   //}
+    //private void OnTriggerExit(Collider alien)
+    //{
+    //    if (alien.gameObject.tag == "alien" || alien.gameObject.tag == "bigAlien")
+    //    {
+    //        Debug.Log(" Alien left range");
+    //        Trap.Catchable = false;
+    //        Debug.Log("Big alien catchable: "+Trap.Catchable);
+    //    }       
+    //}
 
-    public void UnassignAlien()
+    public void UnassignAlien(GameObject alien)
     {
         Debug.Log("Unassign Creature");
-        if (Alien != null)
+        foreach (AlienData dData in aData)
+            if (dData.gObject == alien)
+            {
+                aData.Remove(dData);
+                break;
+            }
+
+        /*if (Alien != null)
         {
            // StartCoroutine(AlienAI.UpdateState(new PanicState(AlienAI), 0f));
            //_alienRigid.useGravity = true;
@@ -187,7 +227,7 @@ public class VacuumGun : MonoBehaviour
            Alien = null;
            AlienAI = null;
             EndPull();
-        }
+        }*/
     }
 
 
