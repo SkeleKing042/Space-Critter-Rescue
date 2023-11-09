@@ -1,3 +1,5 @@
+// Created By Adanna Okoye
+// Last edited by Adanna Okoye
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,12 +23,19 @@ public class Collection : MonoBehaviour
     public bool SpaceForBig;
 
     [Header("Invetory Refrence")]
-    public Inventory Inventory;
+    private Inventory Inventory;
 
-    void Update()
+
+    private void Start()
     {
-       CollectionDropOff();
+        Inventory = FindObjectOfType<Inventory>();
     }
+
+
+    /// <summary>
+    /// add aliens to the collection
+    /// </summary>
+    /// <param name="alien"></param>
     public void AddAlienToCollection(GameObject alien)
     {
         if (SmallAliens <= 11)
@@ -63,14 +72,5 @@ public class Collection : MonoBehaviour
         }
         TextNumber = Collected;
     }
-    public void CollectionDropOff()
-    {
-        if(Input.GetKeyDown(KeyCode.P))
-        Collected = 0;
-
-        // add a check for dfistance from ship
-        // if whithing distance thenn allow to be put donw
-
-        // use the small and bg alien ints to despences the correct type of alien 
-    }
+    
 }

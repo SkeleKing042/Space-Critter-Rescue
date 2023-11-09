@@ -68,8 +68,6 @@ public class VacuumGun : MonoBehaviour
                     // stun time: wait beforethe new state being set changes
                     StartCoroutine(aData.AI.UpdateState(new PanicState(aData.AI), StunTime));
                 }
-            
-
                 //UnassignAlien();
             }
         }
