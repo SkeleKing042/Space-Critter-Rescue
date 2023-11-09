@@ -61,7 +61,7 @@ public class CollectAlien : MonoBehaviour
             
 
             Vac.UnassignAlien(creature.gameObject);
-            Destroy(creature.gameObject);
+           // Destroy(creature.gameObject);
 
             //Vac.EndPull();
             

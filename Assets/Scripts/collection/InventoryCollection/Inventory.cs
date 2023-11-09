@@ -19,6 +19,8 @@ public class Inventory : MonoBehaviour
     public GameObject ShipDropOff;
     public GameObject Player;
 
+    private Collection _collection;
+
     private float _distance;
     public float DropOffRange;
     // create enum later for the different alien types
@@ -38,6 +40,14 @@ public class Inventory : MonoBehaviour
     public int InvCrystalAliensBig;
 
     public int TotalShipInventory;
+
+
+    private void Start()
+    {
+        _collection = FindObjectOfType<Collection>();
+    }
+
+
 
     public void AddSmallShroom(GameObject alien)
     {
@@ -120,6 +130,7 @@ public class Inventory : MonoBehaviour
             InvShroomAliensBig += ShroomAliensBig;
             InvCrystalAliensBig += CrystalAliensBig;
 
+            
 
             ShroomAliens = 0;
             ShroomAliensBig = 0;
@@ -131,6 +142,11 @@ public class Inventory : MonoBehaviour
                 InvCrystalAliens +
                 InvShroomAliensBig +
                 InvCrystalAliensBig;
+
+            _collection.SmallAliens = 0;
+            _collection.BigAliens = 0;
+
+
 
         }
 
