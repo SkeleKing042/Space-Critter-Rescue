@@ -125,6 +125,13 @@ public class Inventory : MonoBehaviour
             ShroomAliensBig = 0;
             CrystalAliens = 0;
             CrystalAliensBig = 0;
+
+            TotalShipInventory =
+                InvShroomAliens +
+                InvCrystalAliens +
+                InvShroomAliensBig +
+                InvCrystalAliensBig;
+
         }
 
     }
