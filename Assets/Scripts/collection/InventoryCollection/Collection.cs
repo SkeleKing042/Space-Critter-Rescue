@@ -11,7 +11,7 @@ public class Collection : MonoBehaviour
     [Header("Fixed Varibles")]
     [SerializeField]
     public float Collected;
-    public float DropDistance;
+  //  public float DropDistance;
     public float TextNumber;
 
     [Header("Alien Counts")]
