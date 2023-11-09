@@ -52,7 +52,7 @@ public class CollectAlien : MonoBehaviour
     void OnTriggerEnter(Collider creature)
     {
 
-        if ((creature.gameObject.tag == "alien" || creature.gameObject.tag == "bigAlien") && mouseDown)
+        if ((creature.gameObject.tag == "alien" || creature.gameObject.tag == "bigAlien") && Vac.Pulling == true)
         {
             collection.AddAlienToCollection(creature.gameObject);
 
