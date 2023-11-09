@@ -1,3 +1,6 @@
+// Created By Adanna Okoye
+//Last Edited by Adanna Okoye
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,11 +15,19 @@ public class CollectAlien : MonoBehaviour
     public bool mouseDown = false;
 
     [Header("Script Refrences")]
-    public VacuumGun Vac;
-    public Collection collection;
-    public Inventory PlayerInventory;
+    private VacuumGun Vac;
+    private Collection collection;
+
 
     GameObject Alien;
+
+    private void Start()
+    {
+        Vac = FindObjectOfType<VacuumGun>();
+        collection = FindObjectOfType<Collection>();
+
+    }
+
 
     private void Update()
     {
@@ -24,7 +35,6 @@ public class CollectAlien : MonoBehaviour
         {
             mouseDown = true;
             //Vector3 position = PlayerGun.GetComponent<Vector3>;
-
         }
         if (Input.GetButtonUp("Fire1"))
         {
@@ -42,13 +52,13 @@ public class CollectAlien : MonoBehaviour
     void OnTriggerEnter(Collider creature)
     {
 
-        if ((creature.gameObject.tag == "alien" || creature.gameObject.tag == "bigAlien") && mouseDown)
+        if ((creature.gameObject.tag == "alien" || creature.gameObject.tag == "bigAlien") && Vac.Pulling == true)
         {
             collection.AddAlienToCollection(creature.gameObject);
 
             // AlienCount++;
             Alien = creature.gameObject;
-            //PlayerInventory.AddToPlayerInventory(Alien);
+            
 
             Vac.UnassignAlien(creature.gameObject);
             Destroy(creature.gameObject);
