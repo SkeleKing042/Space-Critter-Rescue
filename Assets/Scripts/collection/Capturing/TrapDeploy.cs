@@ -29,6 +29,7 @@ public class TrapDeploy : MonoBehaviour
     [Header("Player Components")]
     public GameObject PlayerGun;
     public GameObject Player;
+    private Tablet _tablet;
 
     // trap forces 
     [Header("Trap Forces")]
@@ -61,6 +62,8 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     void Start()
     {
+
+        _tablet = FindObjectOfType<Tablet>();
 
         Detenator.SetActive(false);
         // input declaration
@@ -102,7 +105,7 @@ public class TrapDeploy : MonoBehaviour
     public void Toggle()
     {
         // make sure the player isnt holding the trap & that the trap is still with the player
-        if (currentlyHolding == CurrentlyHolding.vacuum && _trapDeployed == false)
+        if (currentlyHolding == CurrentlyHolding.vacuum && _trapDeployed == false && !_tablet.TabletState)
         {
             // set game objects appropriatly
             PlayerGun.SetActive(false);
@@ -112,7 +115,7 @@ public class TrapDeploy : MonoBehaviour
             currentlyHolding = CurrentlyHolding.trap;
             return;      // return to avoid toggle loop
         }
-        if (_trapDeployed == true && currentlyHolding == CurrentlyHolding.vacuum)
+        if (_trapDeployed == true && currentlyHolding == CurrentlyHolding.vacuum && !_tablet.TabletState)
         {
             Detenator.SetActive(true);
             PlayerGun.SetActive(false);
@@ -122,7 +125,7 @@ public class TrapDeploy : MonoBehaviour
 
         // else if chap deployed == true then show detinator
 
-        if ((currentlyHolding == CurrentlyHolding.trap) && _trapDeployed == false)
+        if ((currentlyHolding == CurrentlyHolding.trap) && _trapDeployed == false && !_tablet.TabletState)
         {
             PlayerGun.SetActive(true);
             Trap.SetActive(false);
@@ -130,7 +133,7 @@ public class TrapDeploy : MonoBehaviour
             currentlyHolding = CurrentlyHolding.vacuum;
             return;  // return to avoid toggle loop
         }
-        if ((currentlyHolding == CurrentlyHolding.trap || currentlyHolding == CurrentlyHolding.detinator) && _trapDeployed == true)
+        if ((currentlyHolding == CurrentlyHolding.trap || currentlyHolding == CurrentlyHolding.detinator) && _trapDeployed == true && !_tablet.TabletState)
         {
             PlayerGun.SetActive(true);
             Detenator.SetActive(false);
@@ -145,7 +148,7 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     public void DeployTrap()
     {
-        if (currentlyHolding == CurrentlyHolding.trap)
+        if (currentlyHolding == CurrentlyHolding.trap && !_tablet.TabletState)
         {
 
             // unassign the trap parent

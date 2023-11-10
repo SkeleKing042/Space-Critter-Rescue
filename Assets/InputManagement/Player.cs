@@ -188,6 +188,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DisplayPopup"",
+                    ""type"": ""Button"",
+                    ""id"": ""f6b5285e-f9c8-4739-ab9c-304d2e1e99b2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -696,6 +705,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""AlienDrop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""790ad9c0-8e7b-4f71-9ab8-a30ff1abc752"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DisplayPopup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -789,6 +809,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_MoveTabRight = m_Player.FindAction("MoveTabRight", throwIfNotFound: true);
         m_Player_MoveTabLeft = m_Player.FindAction("MoveTabLeft", throwIfNotFound: true);
         m_Player_AlienDrop = m_Player.FindAction("AlienDrop", throwIfNotFound: true);
+        m_Player_DisplayPopup = m_Player.FindAction("DisplayPopup", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -868,6 +889,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MoveTabRight;
     private readonly InputAction m_Player_MoveTabLeft;
     private readonly InputAction m_Player_AlienDrop;
+    private readonly InputAction m_Player_DisplayPopup;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -890,6 +912,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @MoveTabRight => m_Wrapper.m_Player_MoveTabRight;
         public InputAction @MoveTabLeft => m_Wrapper.m_Player_MoveTabLeft;
         public InputAction @AlienDrop => m_Wrapper.m_Player_AlienDrop;
+        public InputAction @DisplayPopup => m_Wrapper.m_Player_DisplayPopup;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -953,6 +976,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @AlienDrop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
                 @AlienDrop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
                 @AlienDrop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
+                @DisplayPopup.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDisplayPopup;
+                @DisplayPopup.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDisplayPopup;
+                @DisplayPopup.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDisplayPopup;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1011,6 +1037,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @AlienDrop.started += instance.OnAlienDrop;
                 @AlienDrop.performed += instance.OnAlienDrop;
                 @AlienDrop.canceled += instance.OnAlienDrop;
+                @DisplayPopup.started += instance.OnDisplayPopup;
+                @DisplayPopup.performed += instance.OnDisplayPopup;
+                @DisplayPopup.canceled += instance.OnDisplayPopup;
             }
         }
     }
@@ -1105,6 +1134,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnMoveTabRight(InputAction.CallbackContext context);
         void OnMoveTabLeft(InputAction.CallbackContext context);
         void OnAlienDrop(InputAction.CallbackContext context);
+        void OnDisplayPopup(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

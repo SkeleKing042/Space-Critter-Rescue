@@ -180,6 +180,8 @@ public class InputManager : MonoBehaviour
     public UnityEvent MoveTeleportRight = new UnityEvent();
     public UnityEvent SelectTeleport = new UnityEvent();
 
+    public UnityEvent PopupAction = new UnityEvent();
+
 
     private void Awake()
     {
@@ -285,5 +287,10 @@ public class InputManager : MonoBehaviour
     {
         Debug.Log("Droping aliens");
         DropAliensToShip.Invoke();
+    }
+    void OnDisplayPopup()
+    {
+        Debug.Log("Poping up");
+        PopupAction.Invoke();
     }
 }
