@@ -2,11 +2,9 @@
 // Last Edited by Adanna
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
 using UnityEngine;
-using static UnityEditor.Progress;
 using UnityEngine.UI;
-using Unity.VisualScripting;
+
 
 public class Inventory : MonoBehaviour
 {

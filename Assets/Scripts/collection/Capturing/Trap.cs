@@ -2,9 +2,7 @@
 // Last edited by Adanna Okoye
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class Trap : MonoBehaviour
 {
