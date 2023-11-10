@@ -32,7 +32,7 @@ public class TrapDeploy : MonoBehaviour
 
     // trap forces 
     [Header("Trap Forces")]
-    public float PickUpRange = 10;
+    public float PickUpRange;
     public float TrapThrowForce;
 
     // misc
