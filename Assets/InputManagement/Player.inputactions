@@ -166,6 +166,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DisplayPopup",
+                    "type": "Button",
+                    "id": "f6b5285e-f9c8-4739-ab9c-304d2e1e99b2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -672,6 +681,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "AlienDrop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "790ad9c0-8e7b-4f71-9ab8-a30ff1abc752",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DisplayPopup",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
