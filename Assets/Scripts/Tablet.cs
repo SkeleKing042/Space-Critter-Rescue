@@ -77,18 +77,18 @@ public class Tablet : MonoBehaviour
                 }
                 _tabs[0].SetActive(true);
                 _tutorRead = true;
-            }  
+            }
 
             _playerMovement.DoMovement = true;
 
         }
-        else if(!TabletState)
+        else if (!TabletState)
         {
             _animator.SetTrigger("Raise Tablet");
             SetTabletState(true);
 
             _playerMovement.DoMovement = false;
-            
+
             if (TabIndex == 1)
             {
                 FindObjectOfType<GameManager>().UpdateAllBars();
@@ -111,18 +111,18 @@ public class Tablet : MonoBehaviour
     /// </summary>
     public void ActivateCorrectTab()
     {
-        if(_tutorRead && _tutorialTab.activeSelf)
+        if (_tutorRead && _tutorialTab.activeSelf)
         {
             _tutorialTab.SetActive(false);
         }
-        foreach(GameObject tab in _tabs)
+        foreach (GameObject tab in _tabs)
         {
             tab.SetActive(false);
         }
 
         _tabs[TabIndex].SetActive(true);
 
-        if(TabIndex == MapTabIndex)
+        if (TabIndex == MapTabIndex)
         {
             SetTeleportLocationColors();
         }
@@ -182,7 +182,7 @@ public class Tablet : MonoBehaviour
     /// </summary>
     private void SetTeleportLocationColors()
     {
-        for(int i = 0; i < _teleportLocationImages.Length; i++)
+        for (int i = 0; i < _teleportLocationImages.Length; i++)
         {
             if (_hasTeleportLocationBeenActivated[i])
             {
@@ -202,19 +202,20 @@ public class Tablet : MonoBehaviour
     /// </summary>
     public void MoveTeleportIndexLeft()
     {
-        if (TabIndex == MapTabIndex)
-        {
-            if (_teleportIndex > 0)
+        if (TabletState)
+            if (TabIndex == MapTabIndex)
             {
-                _teleportIndex--;
-            }
-            else
-            {
-                _teleportIndex = _teleportLocationImages.Length - 1;
-            }
+                if (_teleportIndex > 0)
+                {
+                    _teleportIndex--;
+                }
+                else
+                {
+                    _teleportIndex = _teleportLocationImages.Length - 1;
+                }
 
-            SetTeleportLocationColors();
-        }
+                SetTeleportLocationColors();
+            }
     }
 
     /// <summary>
@@ -222,19 +223,20 @@ public class Tablet : MonoBehaviour
     /// </summary>
     public void MoveTeleportIndexRight()
     {
-        if (TabIndex == MapTabIndex)
-        {
-            if (_teleportIndex < _teleportLocationImages.Length - 1)
+        if (TabletState)
+            if (TabIndex == MapTabIndex)
             {
-                _teleportIndex++;
-            }
-            else
-            {
-                _teleportIndex = 0;
-            }
+                if (_teleportIndex < _teleportLocationImages.Length - 1)
+                {
+                    _teleportIndex++;
+                }
+                else
+                {
+                    _teleportIndex = 0;
+                }
 
-            SetTeleportLocationColors();
-        }
+                SetTeleportLocationColors();
+            }
     }
 
     /// <summary>
@@ -242,11 +244,13 @@ public class Tablet : MonoBehaviour
     /// </summary>
     public void SelectTeleport()
     {
-        if (_hasTeleportLocationBeenActivated[_teleportIndex])
-        {
-            ToggleTablet();
-            _pylonManager.GoToPylon(_teleportIndex);
-        }
+        if (TabletState)
+
+            if (_hasTeleportLocationBeenActivated[_teleportIndex])
+            {
+                ToggleTablet();
+                _pylonManager.GoToPylon(_teleportIndex);
+            }
     }
 
     public void SethasTeleportBeenActivated(int pylonIndex)
