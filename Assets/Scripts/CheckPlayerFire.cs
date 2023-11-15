@@ -19,19 +19,19 @@ public class CheckPlayerFire : MonoBehaviour
     /// <summary>
     /// Checks what the player is holding out and calls the correct fire func
     /// </summary>
-    public void FireCheck()
-    {
-        switch (trapDeploy.currentlyHolding)
-        {
-            case TrapDeploy.CurrentlyHolding.vacuum:
-                gun.Pull();
-                break;
-            case TrapDeploy.CurrentlyHolding.trap:
-                trapDeploy.DeployTrap();
-                break;
-            //case TrapDeploy.CurrentlyHolding.detinator:
-              //  trap.TrapCatching();
-                //break;
-        }
-    }
+ //  public void FireCheck()
+ //  {
+ //      switch (trapDeploy.currentlyHolding)
+ //      {
+ //          case TrapDeploy.CurrentlyHolding.vacuum:
+ //              gun.Pull();
+ //              break;
+ //          case TrapDeploy.CurrentlyHolding.trap:
+ //              trapDeploy.DeployTrap();
+ //              break;
+ //          //case TrapDeploy.CurrentlyHolding.detinator:
+ //            //  trap.TrapCatching();
+ //              //break;
+ //      }
+ //  }
 }

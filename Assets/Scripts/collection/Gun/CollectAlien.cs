@@ -53,11 +53,19 @@ public class CollectAlien : MonoBehaviour
     void OnTriggerEnter(Collider creature)
     {
 
-        if ((creature.gameObject.tag == "alien" || (creature.gameObject.tag == "bigAlien" && Trap.Catchable == true)) && _vac.Pulling == true)
+        
+        if ((creature.gameObject.tag == "alien" || (creature.gameObject.tag == "bigAlien" && Trap.Catchable == true)))
         {
-            _collection.AddAlienToCollection(creature.gameObject);
+            Debug.Log("tags passed");
+            if(_vac.Pulling == true)
+            {
+                Debug.Log("Pulling check passed");
+                _collection.AddAlienToCollection(creature.gameObject);
 
-            _vac.UnassignAlien(creature.gameObject);
+                _vac.UnassignAlien(creature.gameObject);
+
+            }
+        
            // Destroy(creature.gameObject);
 
             //Vac.EndPull();

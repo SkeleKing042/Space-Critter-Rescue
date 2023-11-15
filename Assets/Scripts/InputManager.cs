@@ -144,9 +144,10 @@ public class InputManager : MonoBehaviour
         {
             while (_doAction)
             {
-                yield return new WaitForSeconds(delay);
+               
                 Debug.Log("Doing action");
                 FirstAction.Invoke();
+                yield return new WaitForSeconds(delay);
             }
         }
     }

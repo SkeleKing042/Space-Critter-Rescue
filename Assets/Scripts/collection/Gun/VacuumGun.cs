@@ -172,12 +172,12 @@ public class VacuumGun : MonoBehaviour
 */
         }
 
-        
-        
+
+
     }
     public void EndPull()
     {
-        Pulling = false;
+       Pulling = false;
         foreach(AlienData aData in aData)
         {
             if ((aData.AI._currentState.GetType() == typeof(CaptureState)))
@@ -188,9 +188,10 @@ public class VacuumGun : MonoBehaviour
                 // stun time: wait beforethe new state being set changes
                 StartCoroutine(aData.AI.UpdateState(new PanicState(aData.AI), StunTime));
             }
-
+            
             //UnassignAlien();
         }
+  
     }
     /// <summary>
     /// find the alien and setting the values when in range 
