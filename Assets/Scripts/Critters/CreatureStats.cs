@@ -32,14 +32,16 @@ public class CreatureStats : MonoBehaviour
     public float ExplorationRange;
     [SerializeField, Tooltip("The speed of the creature.")]
     private float _moveSpeed;
+    [SerializeField, Tooltip("The increase in speed the creature has while panicing")]
+    private float _panicMulti;
 
 
     private CreatureAI _ai;
 
-    void Start()
+    public void GetStats()
     {
         _ai = GetComponent<CreatureAI>();
 
-        _ai.InitStats(_critterHeight, _thirstiness, _lazyness, ExplorationRange, _panicVelocity, _moveSpeed);
+        _ai.InitStats(_critterHeight, _thirstiness, _lazyness, ExplorationRange, _panicVelocity, _moveSpeed, _panicMulti);
     }
 }

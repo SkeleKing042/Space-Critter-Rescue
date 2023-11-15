@@ -17,7 +17,7 @@ public class PanicState : State
             AI.Animator.SetBool("PanicState", true);
         }
         //Double movement speed
-        Agent.speed = AI.BaseSpeed * 2f;
+        Agent.speed = AI.BaseSpeed * AI.PanicSpeedIncrease;
 
         //Find place to move to
         Vector3 dir = (AI.transform.position - AI.Player.transform.position).normalized;

@@ -69,6 +69,8 @@ public class CreatureAI : MonoBehaviour
     [SerializeField, Tooltip("How quickly the creature should turn to face the player during the capture state.")]
     private float _facePlayerRate;
     public float FacePlayerRate { get { return _facePlayerRate; } }
+    private float _panicSpeedIncrease;
+    public float PanicSpeedIncrease { get { return _panicSpeedIncrease; } }
 
     private void Start()
     {
@@ -80,6 +82,8 @@ public class CreatureAI : MonoBehaviour
         _animator = GetComponent<Animator>();
         _drinkingSources = GetComponentInChildren<DrinkenFinden>();
         _rb = GetComponent<Rigidbody>();
+
+        GetComponent<CreatureStats>().GetStats();
 
         //Saftey checks
         _thirstCheckDelay = Mathf.Abs(_thirstCheckDelay);
@@ -93,7 +97,7 @@ public class CreatureAI : MonoBehaviour
 
         StartCoroutine(GrabGroundBelow());
     }
-    public void InitStats(float height, float thirst, float lazy, float dis, float vel, float spd)
+    public void InitStats(float height, float thirst, float lazy, float dis, float vel, float spd, float pMul)
     {
         if (_agent == null)
             _agent = GetComponent<NavMeshAgent>();
@@ -104,6 +108,7 @@ public class CreatureAI : MonoBehaviour
         _travelableDistanceFromHome = dis;
         _velocityToPanic = vel;
         _agent.speed = _baseSpeed = spd;
+        _panicSpeedIncrease = pMul;
     }
     void Update()
     {
