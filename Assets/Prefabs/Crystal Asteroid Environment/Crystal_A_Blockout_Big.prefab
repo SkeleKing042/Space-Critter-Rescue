@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 586580611620568788}
   - component: {fileID: 3852681838352865270}
   - component: {fileID: 2195100011868468319}
-  - component: {fileID: 119153368617434459}
+  - component: {fileID: 4496509492750331353}
   m_Layer: 0
   m_Name: Crystal_A_Blockout_Big
   m_TagString: Ground
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &119153368617434459
-MeshCollider:
+--- !u!65 &4496509492750331353
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,7 +94,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 917883657882589733, guid: 6f413713b30bd074f86451f59d1fa074, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 210.06268, y: 307.50403, z: 180.23639}
+  m_Center: {x: 0, y: 125.52472, z: 0}
