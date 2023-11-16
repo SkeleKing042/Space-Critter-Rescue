@@ -1,5 +1,5 @@
 // Created by Adanna Okoye
-// Last edited by Jackson Lucas
+// Last edited by Adanna Okoye
 
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ using UnityEngine.InputSystem.HID;
 
 public class VacuumGun : MonoBehaviour
 {
+    #region Variables
     [System.Serializable]
     public class AlienData
     {
@@ -35,65 +36,33 @@ public class VacuumGun : MonoBehaviour
     public float OffsetFixSpeed;
     public float StunTime;
 
+
     // fixed varibles 
     [Header("Fixed Varibles")]
     //private float _centralOffset;
     //private bool _mouseDown;
     public bool Pulling = false;
+    private float  _alienOffset;
+    private bool _wasJustPulling;
+
+    #endregion
+
+    #region Offset Correction
 
     void Update()
     {
 
         //  collect alien cosine value in relation to the player
        
-         // foreach (AlienData aData in aData)
-         // {
-         //     forward = transform.right;
-         //     AlienPosition = aData.gObject.transform.position - transform.position;
-         //
-         //     float offset = Vector3.Dot(forward, AlienPosition);
-         //
-         //     OffsetCorrection(aData.Rigidbody, offset);
-         // }
+         foreach (AlienData aData in aData)
+         {
+             forward = transform.right;
+             AlienPosition = aData.gObject.transform.position - transform.position;
+        
+              _alienOffset = Vector3.Dot(forward, AlienPosition);
+         }
 
-        /*if(!Pulling)
-        {
-
-            foreach (AlienData aData in aData)
-            {
-                Debug.Log("Ending pull");
-                // set the alien states
-                if (aData.AI._currentState.GetType() == typeof(CaptureState))
-                {
-                    StartCoroutine(aData.AI.UpdateState(new StunnedState(aData.AI), 0f));
-                    // stun time: wait beforethe new state being set changes
-                    StartCoroutine(aData.AI.UpdateState(new PanicState(aData.AI), StunTime));
-                }
-                //UnassignAlien();
-            }
-        }*/
-
-        // id the value in -1,0 then the item is to the left
-        // if the vale is 1,0 then the object is to the right
-
-        //CheckMouseDown();
     }
-    /*public void CheckMouseDown()
-    {
-
-        if (Input.GetButtonDown("Fire1"))
-        {
-            _mouseDown = true;
-
-
-        }
-
-        if (Input.GetButtonUp("Fire1"))
-        {
-            _mouseDown = false;
-            
-        }
-    }*/
 
     /// <summary>
     /// use the sine position collected to correct the offset
@@ -118,29 +87,17 @@ public class VacuumGun : MonoBehaviour
             _comingLeft = false;
         }
 
-        // RE WORK CODE
-
-      // if(_centralOffset  < 0.01f && _centralOffset > -0.01)
-      // {
-      //   //  float _jiggle = Random.value;
-      //
-      //     if(_comingLeft)
-      //     {
-      //         for (int i = 0; i < 10; i++)
-      //             Alien.transform.position -= transform.right * 0.5f;
-      //         //Debug.Log(" right ajusting...");
-      //     }
-      //     if(_comingLeft!)
-      //     {
-      //         for (int i = 0; i < 10; i++)
-      //             Alien.transform.position += transform.right * 0.5f;
-      //         //Debug.Log(" left ajusting...");
-      //     } 
-      // }
+        // add jiggly/spinning when close to the vacuum catcher.
+        
     }
 
+    #endregion
+
+    #region Pulling
     public void Pull()
     {
+        // proprapgate sound
+
         Debug.Log("starting");
         Pulling = true;
         foreach(AlienData aData in aData)
@@ -163,17 +120,8 @@ public class VacuumGun : MonoBehaviour
             {
                 Debug.Log(e);
             }
-            //Need to increase force when in bubble
-/*
-            if (Bubble.gameObject.activeSelf == true)
-                SuckSpeed = 100;
-            else
-                SuckSpeed = 5;
-*/
+            OffsetCorrection(aData.Rigidbody, _alienOffset);
         }
-
-
-
     }
     public void EndPull()
     {
@@ -188,11 +136,13 @@ public class VacuumGun : MonoBehaviour
                 // stun time: wait beforethe new state being set changes
                 StartCoroutine(aData.AI.UpdateState(new PanicState(aData.AI), StunTime));
             }
-            
-            //UnassignAlien();
         }
   
     }
+
+    #endregion
+
+    #region Collect and Destroy Objects
     /// <summary>
     /// find the alien and setting the values when in range 
     /// </summary>
@@ -210,8 +160,17 @@ public class VacuumGun : MonoBehaviour
     }
     private void OnTriggerExit(Collider alien)
     {
-        if (alien.gameObject.tag == "alien" || (Trap.Catchable == true && alien.gameObject.tag == "bigAlien") && aData.Count < 0)
-            UnassignAlien(alien.gameObject);
+        Debug.Log("on trigger exit called");
+        if (alien.gameObject.tag == "alien" || (Trap.Catchable == true && alien.gameObject.tag == "bigAlien") && aData.Count > 0)
+        {
+ 
+                Debug.Log("tag check passed");
+                UnassignAlien(alien.gameObject);
+
+            // add state change
+                  
+        }
+
     }
     /*
     private void OnTriggerStay(Collider alien)
@@ -224,46 +183,20 @@ public class VacuumGun : MonoBehaviour
         }
     }*/
 
-
-    /// <summary>
-    /// i may delete this 
-    /// </summary>
-    /// <param name="alien"></param>
-    //private void OnTriggerExit(Collider alien)
-    //{
-    //    if (alien.gameObject.tag == "alien" || alien.gameObject.tag == "bigAlien")
-    //    {
-    //        Debug.Log(" Alien left range");
-    //        Trap.Catchable = false;
-    //        Debug.Log("Big alien catchable: "+Trap.Catchable);
-    //    }       
-    //}
-
     public void UnassignAlien(GameObject alien)
     {
         Debug.Log("Unassign Creature");
         foreach (AlienData dData in aData)
+        {
             if (dData.gObject == alien)
             {
+                
                 aData.Remove(dData);
                 break;
             }
-       
-        /*if (Alien != null)
-        {
-           // StartCoroutine(AlienAI.UpdateState(new PanicState(AlienAI), 0f));
-           //_alienRigid.useGravity = true;
-           _alienRigid = null;
-           Alien = null;
-           AlienAI = null;
-            EndPull();
-        }*/
+        }
+          
     }
-
-
-    // if alien is in collision of the cone collider 
-    // get th
-
 }
 
-
+#endregion

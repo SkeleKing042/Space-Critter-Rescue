@@ -117,7 +117,7 @@ public class Inventory : MonoBehaviour
     {
         _distance = Vector3.Distance(ShipDropOff.transform.position, Player.transform.position);
         //find the distance between the player and the trap
-        Debug.Log(_distance);
+      //  Debug.Log(_distance);
         _distance = Mathf.Abs(_distance);
 
         if(_distance < DropOffRange)
