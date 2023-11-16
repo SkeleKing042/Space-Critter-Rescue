@@ -27,8 +27,8 @@ public class SoundPropagation : MonoBehaviour
     {
         foreach(GameObject goob in _goobs)
         {
-            if(Vector3.Distance(transform.position, goob.transform.position) >= _proaDistance * scale)
-            goob.GetComponent<CreatureAI>().RunFromPlayer(0);
+            if(Vector3.Distance(transform.position, goob.transform.position) <= _proaDistance * scale)
+                goob.GetComponent<CreatureAI>().RunFromPlayer(0);
         }
     }
 
