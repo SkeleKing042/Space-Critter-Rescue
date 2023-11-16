@@ -302,12 +302,14 @@ public class CreatureAI : MonoBehaviour
     }
     public void RunFromPlayer(float panicDelay)
     {
-        PrepareUpdateState(new AlertState(this));
+        if(panicDelay > 0f)
+            PrepareUpdateState(new AlertState(this));
         PrepareUpdateState(new PanicState(this), panicDelay);
     }
     public void StunThenRun(float stunTime)
     {
-        PrepareUpdateState(new StunnedState(this));
+        if(stunTime > 0f)
+            PrepareUpdateState(new StunnedState(this));
         PrepareUpdateState(new PanicState(this), stunTime);
     }
     #endregion
