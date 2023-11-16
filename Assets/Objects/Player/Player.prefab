@@ -576,10 +576,13 @@ MonoBehaviour:
   _sprintCancelLevel: 5
   _jumpForce: 5
   RespawnOffset: {x: 0, y: 0.2, z: 0}
-  PlayerHeight: 2
-  StrideLength: 0
-  StrideWidth: 0
+  PlayerHeight: 1.1
+  StrideLength: 1.25
+  StrideWidth: 0.7
   VelocityBasedChecks: 0
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
   _jetForce: 700
   _burnRate: 0.5
   _burnDelay: 0.5
@@ -595,6 +598,11 @@ MonoBehaviour:
   - {r: 0.23584908, g: 0.065667786, b: 0, a: 1}
   - {r: 0.24528301, g: 0.1631942, b: 0.13074046, a: 1}
   _crouchScale: 0.5
+  GroundPoints:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!114 &7207852762652227241
 MonoBehaviour:
   m_ObjectHideFlags: 0

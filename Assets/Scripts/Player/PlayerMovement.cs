@@ -57,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
     public float StrideWidth;
     [SerializeField]
     public bool VelocityBasedChecks;
+    [SerializeField]
+    private LayerMask _groundLayer;
 
     [Header("Jetpack Settings")]
     [SerializeField, Tooltip("The force that the jetpack outputs.")]
@@ -97,6 +99,8 @@ public class PlayerMovement : MonoBehaviour
     private float _headHeight;
     private bool _crouched;
 
+    [HideInInspector]
+    public Vector3[] GroundPoints = new Vector3[4];
     void Start()
     {
         _headHeight = _head.localPosition.y;
@@ -130,9 +134,9 @@ public class PlayerMovement : MonoBehaviour
         else if(DoMovement)
         {
             //Move the player forwards based on the camera rotation
-            Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
-            Vector3 forwardForce = camForward * MovementInput.y * _moveAccel * PlayerRigidbody.mass;
-            Vector3 sideForce = _camera.transform.right * MovementInput.x * _strafeAccel * PlayerRigidbody.mass;
+            Vector3 camForward = new Vector3(Mathf.Sin(_camera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad), 0, Mathf.Cos(_camera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad));
+            Vector3 forwardForce = camForward * MovementInput.x * _moveAccel * PlayerRigidbody.mass;
+            Vector3 sideForce = _camera.transform.right * MovementInput.y * _strafeAccel * PlayerRigidbody.mass;
             Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
             PlayerRigidbody.AddForce(orientedForce * Time.deltaTime);
 
@@ -153,12 +157,14 @@ public class PlayerMovement : MonoBehaviour
         }
         if (horizontalVel.magnitude < _sprintCancelLevel)
             DoSprint(false);
+
+
     }
     #region Movement
     public void UpdateMovementAxis(Vector2 v)
     {
         //Movement got flipped when I added slope calcs and i don't really wanna implement a proper fix rn (2/11 - Jackson)
-        MovementInput = new Vector2(v.y, -v.x);
+        MovementInput = new Vector2(v.y, v.x);
     }
     public void CrouchPlayer()
     {
@@ -217,18 +223,20 @@ public class PlayerMovement : MonoBehaviour
     /// <returns></returns>
     public bool GroundedCheck()
     {
-        Vector3 playerForwards = Vector3.Cross(_camera.transform.forward, Vector3.up);
-        if(VelocityBasedChecks)
-        {
-            playerForwards = Vector3.Cross(PlayerRigidbody.velocity.normalized, Vector3.up);
-        }
+        float camY = _camera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
+        Vector3 playerForwards = new Vector3(Mathf.Sin(camY), 0, Mathf.Cos(camY));
+        Vector3 playerRights = new Vector3(Mathf.Cos(camY), 0, Mathf.Sin(-camY));
+        GroundPoints[0] = transform.position + playerForwards * StrideLength;
+        GroundPoints[1] = transform.position + playerRights * StrideWidth;
+        GroundPoints[2] = transform.position + playerForwards * -StrideLength;
+        GroundPoints[3] = transform.position + playerRights * -StrideWidth;
 
         RaycastHit hit;
         if(
-            Physics.Raycast(transform.position + Vector3.Cross(playerForwards, Vector3.up) * StrideLength, -Vector3.up * PlayerHeight, out hit, PlayerHeight) ||
-            Physics.Raycast(transform.position + playerForwards * StrideWidth, -Vector3.up * PlayerHeight, out hit, PlayerHeight) ||
-            Physics.Raycast(transform.position + Vector3.Cross(playerForwards, Vector3.up) * -StrideLength, -Vector3.up * PlayerHeight, out hit, PlayerHeight) ||
-            Physics.Raycast(transform.position + playerForwards * StrideWidth, -Vector3.up * -PlayerHeight, out hit, PlayerHeight)
+            Physics.Raycast(GroundPoints[0], Vector3.down * PlayerHeight, out hit, PlayerHeight, _groundLayer) ||
+            Physics.Raycast(GroundPoints[1], Vector3.down * PlayerHeight, out hit, PlayerHeight, _groundLayer) ||
+            Physics.Raycast(GroundPoints[2], Vector3.down * PlayerHeight, out hit, PlayerHeight, _groundLayer) ||
+            Physics.Raycast(GroundPoints[3], Vector3.down * PlayerHeight, out hit, PlayerHeight, _groundLayer)
             )
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
