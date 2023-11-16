@@ -25,6 +25,7 @@ public class SoundPropagation : MonoBehaviour
     /// <param name="scale"></param>
     public void PropagateSound(float scale)
     {
+        Debug.Log("LOUD NOISE");
         foreach(GameObject goob in _goobs)
         {
             if(Vector3.Distance(transform.position, goob.transform.position) >= _proaDistance * scale)

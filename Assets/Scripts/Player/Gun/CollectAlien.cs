@@ -17,6 +17,7 @@ public class CollectAlien : MonoBehaviour
     private VacuumGun _vac;
     private Collection _collection;
     private Trap _catchable;
+    public SoundPropagation Sound;
 
     private void Start()
     {
@@ -29,6 +30,8 @@ public class CollectAlien : MonoBehaviour
         if ((creature.gameObject.tag == "alien" || (creature.gameObject.tag == "bigAlien" && Trap.Catchable == true)))
         {
             Debug.Log("tags passed");
+            Sound.PropagateSound(0.5f);
+
             if(_vac.Pulling == true)
             {
                 // add propagate sound 

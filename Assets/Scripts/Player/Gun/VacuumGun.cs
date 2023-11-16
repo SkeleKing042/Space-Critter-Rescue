@@ -23,6 +23,7 @@ public class VacuumGun : MonoBehaviour
     public List<AlienData> aData;
     public Trap trap;
     public GameObject Bubble;
+    public SoundPropagation Sound;
 
     // movement and position vectors
     [Header ("Movement and Position Vectors")]
@@ -97,6 +98,8 @@ public class VacuumGun : MonoBehaviour
     public void Pull()
     {
         // proprapgate sound
+
+        Sound.PropagateSound(0.2f);
 
         Debug.Log("starting");
         Pulling = true;
