@@ -78,22 +78,7 @@ public class VacuumGun : MonoBehaviour
 
         //CheckMouseDown();
     }
-    /*public void CheckMouseDown()
-    {
 
-        if (Input.GetButtonDown("Fire1"))
-        {
-            _mouseDown = true;
-
-
-        }
-
-        if (Input.GetButtonUp("Fire1"))
-        {
-            _mouseDown = false;
-            
-        }
-    }*/
 
     /// <summary>
     /// use the sine position collected to correct the offset
@@ -262,7 +247,7 @@ public class VacuumGun : MonoBehaviour
 
 
     // if alien is in collision of the cone collider 
-    // get th
+    // get th   
 
 }
 

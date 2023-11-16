@@ -10,6 +10,7 @@ public class UI_Manager : MonoBehaviour
     private PlayerMovement _playerMovement;
     private TrapDeploy _trapDeploy;
     private Tablet _tablet;
+    private Collection _collection;
 
 
     [Header("Universal Variables")]
@@ -90,8 +91,6 @@ public class UI_Manager : MonoBehaviour
         {
             RemoveUI();
         }
-
-
     }
 
 
@@ -105,7 +104,7 @@ public class UI_Manager : MonoBehaviour
 
     private void TrapUI_Manager()
     {
-        //ON
+        /*//ON
         if (_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.trap || _trapDeploy.TrapDeployed == true)
         {
             _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[0], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
@@ -116,7 +115,7 @@ public class UI_Manager : MonoBehaviour
         {
             _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[1], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
             Trap_InputIcon.sprite = inputIcon_LB;
-        }
+        }*/
 
         //pickup trap / activate trap
         if(_trapDeploy.TrapDeployed == true)

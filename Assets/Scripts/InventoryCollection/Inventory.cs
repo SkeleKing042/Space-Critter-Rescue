@@ -43,6 +43,7 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         _collection = FindObjectOfType<Collection>();
+        Player = FindObjectOfType<PlayerMovement>().gameObject;
     }
 
 

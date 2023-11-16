@@ -18,6 +18,7 @@ public class Tablet : MonoBehaviour
     private Animator _animator;
     private PlayerMovement _playerMovement;
     private PylonManager _pylonManager;
+    private TrapDeploy _trapDeploy;
 
     [Header("Tabs")]
     [Tooltip("Array that stores the tabs of the tablet in order")]
@@ -55,14 +56,14 @@ public class Tablet : MonoBehaviour
         _pylonManager = FindObjectOfType<PylonManager>();
         _Manager = FindObjectOfType<UI_Manager>();
         _invRef = FindObjectOfType<Inventory>();
+        _trapDeploy = FindObjectOfType<TrapDeploy>();
 
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
 
         _tutorRead = false;
 
-        ToggleTablet();
         SetupBackpack();
-        FindObjectOfType<GameManager>().UpdateAllBars();
+        //FindObjectOfType<GameManager>().UpdateAllBars();
         SetTeleportLocationColors();
     }
 
@@ -74,8 +75,10 @@ public class Tablet : MonoBehaviour
     {
         if (TabletState)
         {
-            _animator.SetTrigger("Lower Tablet");
             SetTabletState(false);
+            _animator.SetTrigger("UI_Tablet_OFF");
+
+            
 
             if (!_tutorRead)
             {
@@ -93,7 +96,7 @@ public class Tablet : MonoBehaviour
         }
         else if (!TabletState)
         {
-            _animator.SetTrigger("Raise Tablet");
+            _animator.SetTrigger("UI_Tablet_ON");
             SetTabletState(true);
 
             _playerMovement.DoMovement = false;
@@ -101,6 +104,8 @@ public class Tablet : MonoBehaviour
             UpdateCurrentTab();
         }
     }
+
+    
 
     /// <summary>
     /// Method that sets the bool tabletState
@@ -138,7 +143,7 @@ public class Tablet : MonoBehaviour
                 SetupBackpack();
                 break;
             case 1:
-                FindObjectOfType<GameManager>().UpdateAllBars();
+                //FindObjectOfType<GameManager>().UpdateAllBars();
                 break;
             case 2:
                 SetTeleportLocationColors();
