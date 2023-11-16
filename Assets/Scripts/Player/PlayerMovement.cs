@@ -3,6 +3,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 MovementInput;
     [HideInInspector]
     public bool DoMovement;
+    private SoundPropagation _soundPropagation;
     [Header("Ground movement")]
     [SerializeField, Tooltip("The speed at which the player moves forwards and backwards.")]
     private float _moveAccel;
@@ -101,8 +103,8 @@ public class PlayerMovement : MonoBehaviour
         PlayerRigidbody = GetComponent<Rigidbody>();
         _camera = Camera.main;
         DoMovement = true;
+        _soundPropagation = GetComponentInChildren<SoundPropagation>();
     }
-
     void FixedUpdate()
     {
         GrabGroundBelow();
@@ -133,6 +135,11 @@ public class PlayerMovement : MonoBehaviour
             Vector3 sideForce = _camera.transform.right * MovementInput.x * _strafeAccel * PlayerRigidbody.mass;
             Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
             PlayerRigidbody.AddForce(orientedForce * Time.deltaTime);
+
+            if(!_crouched && horizontalVel.magnitude > _maxSpeed * 0.1f)
+            {
+                _soundPropagation.PropagateSound(Mathf.Clamp(horizontalVel.magnitude / _maxSpeed, 0, 1));
+            }
         }
 
         //...otherwise, if on the ground & out of fuel...
@@ -147,11 +154,63 @@ public class PlayerMovement : MonoBehaviour
         if (horizontalVel.magnitude < _sprintCancelLevel)
             DoSprint(false);
     }
+    #region Movement
     public void UpdateMovementAxis(Vector2 v)
     {
         //Movement got flipped when I added slope calcs and i don't really wanna implement a proper fix rn (2/11 - Jackson)
         MovementInput = new Vector2(v.y, -v.x);
     }
+    public void CrouchPlayer()
+    {
+        if (DoMovement)
+        {
+            DoSprint(false);
+            _flooringIt = false;
+            _crouched = true;
+            _headHeight *= _crouchScale;
+            _movementModifier *= _crouchScale;
+            gameObject.GetComponent<CapsuleCollider>().height *= _crouchScale;
+            PlayerHeight *= _crouchScale;
+
+            transform.position = new Vector3(transform.position.x, transform.position.y - (PlayerHeight / 2), transform.position.z);
+        }
+    }
+    public void UncrouchPlayer()
+    {
+        if (DoMovement)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y + (PlayerHeight / 2), transform.position.z);
+
+            _crouched = false;
+            _headHeight /= _crouchScale;
+            _movementModifier /= _crouchScale;
+            gameObject.GetComponent<CapsuleCollider>().height /= _crouchScale;
+            PlayerHeight /= _crouchScale;
+        }
+    }
+
+    public void DoSprint()
+    {
+        if (DoMovement)
+        {
+            if (!_crouched)
+            {
+                if (!_flooringIt)
+                    _movementModifier = _sprintScale;
+                else
+                    _movementModifier = 1;
+                _flooringIt = !_flooringIt;
+            }
+        }
+
+    }
+    public void DoSprint(bool run)
+    {
+        _flooringIt = !run;
+        DoSprint();
+    }
+    #endregion
+    #region Grounded
     /// <summary>
     /// Checks right below the player for objects tagged ground
     /// </summary>
@@ -213,12 +272,20 @@ public class PlayerMovement : MonoBehaviour
 
         return dir;
     }
+    public void ReturnToLastGrounedPoint() 
+    {                                      
+        PlayerRigidbody.velocity = Vector3.zero;       
+        transform.position = _lastGroundPoint + RespawnOffset;
+    }     
+    #endregion
+    #region Jumping
     public void Jump()
     {
         if(DoMovement)
         //Debug.Log("Jump initiated");       
         if (GroundedCheck())
         {
+            _soundPropagation.PropagateSound(0.5f);
             PlayerRigidbody.AddForce(Vector3.up * _jumpForce * PlayerRigidbody.mass, ForceMode.Impulse);
             _burnTime = _burnDelay;
 
@@ -232,7 +299,8 @@ public class PlayerMovement : MonoBehaviour
 
                 if (_jetFuel >= _burstBurn)
                 {
-                    Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
+                        _soundPropagation.PropagateSound(1);
+                        Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
                     Vector3 forwardForce = camForward * MovementInput.y * _jumpForce * _burstScale.x * PlayerRigidbody.mass * _movementModifier;
                     Vector3 sideForce = _camera.transform.right * MovementInput.x * _jumpForce * _burstScale.x * PlayerRigidbody.mass * _movementModifier;
                     Vector3 upForce = Vector3.up * _jumpForce * _burstScale.y * PlayerRigidbody.mass;
@@ -246,75 +314,24 @@ public class PlayerMovement : MonoBehaviour
     }
     public void JetPack()
     {
-        if(DoMovement)
-        //If we have fuel...
-        if (_jetFuel > 0)
-            //... push the player up and reduce the fuel
-            if((_holdAfterJump && _burnTime <= 0) || (_jetInputReady))
-            {
-                PlayerRigidbody.AddForce(_jetForce * Vector3.up * PlayerRigidbody.mass * Time.deltaTime, ForceMode.Force);
-                _jetFuel = Mathf.Clamp(_jetFuel - _burnRate * Time.deltaTime, 0f, 1f);
-                _refuelTime = _refuelDelay;
-            }
-            //...otherwise reduce burn delay
-            else if (_burnTime > 0 && _holdAfterJump)
-            {
-                _burnTime -= Time.deltaTime;
-            }
-    }                                                         
-    public void ReturnToLastGrounedPoint() 
-    {                                      
-        PlayerRigidbody.velocity = Vector3.zero;       
-        transform.position = _lastGroundPoint + RespawnOffset;
-    }     
-    
-    public void CrouchPlayer()
-    {
         if (DoMovement)
-        {
-            DoSprint(false);
-            _flooringIt = false;
-            _crouched = true;
-            _headHeight *= _crouchScale;
-            _movementModifier *= _crouchScale;
-            gameObject.GetComponent<CapsuleCollider>().height *= _crouchScale;
-            PlayerHeight *= _crouchScale;
-
-            transform.position = new Vector3(transform.position.x, transform.position.y - (PlayerHeight / 2), transform.position.z);
-        }
-    }
-    public void UncrouchPlayer()
-    {
-        if (DoMovement)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y + (PlayerHeight / 2), transform.position.z);
-
-            _crouched = false;
-            _headHeight /= _crouchScale;
-            _movementModifier /= _crouchScale;
-            gameObject.GetComponent<CapsuleCollider>().height /= _crouchScale;
-            PlayerHeight /= _crouchScale;
-        }
-    }
-
-    public void DoSprint()
-    {
-        if (DoMovement)
-        {
-            if (!_crouched)
+            //If we have fuel...
+            if (_jetFuel > 0)
             {
-                if (!_flooringIt)
-                    _movementModifier = _sprintScale;
-                else
-                    _movementModifier = 1;
-                _flooringIt = !_flooringIt;
+                _soundPropagation.PropagateSound(0.85f);
+                //... push the player up and reduce the fuel
+                if ((_holdAfterJump && _burnTime <= 0) || (_jetInputReady))
+                {
+                    PlayerRigidbody.AddForce(_jetForce * Vector3.up * PlayerRigidbody.mass * Time.deltaTime, ForceMode.Force);
+                    _jetFuel = Mathf.Clamp(_jetFuel - _burnRate * Time.deltaTime, 0f, 1f);
+                    _refuelTime = _refuelDelay;
+                }
+                //...otherwise reduce burn delay
+                else if (_burnTime > 0 && _holdAfterJump)
+                {
+                    _burnTime -= Time.deltaTime;
+                }
             }
-        }
-
     }
-    public void DoSprint(bool run)
-    {
-        _flooringIt = !run;
-        DoSprint();
-    }
-}                                          
+    #endregion}
+}
