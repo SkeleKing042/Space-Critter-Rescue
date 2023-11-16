@@ -18,7 +18,7 @@ public class IdleState : State
         //Call check
         if (AI.GetComponent<FieldOfView>().CanSeeTarget)
         {
-            AI.PrepareUpdateState(new PanicState(AI));
+            AI.RunFromPlayer(1);
             return;
         }
         if (AI.CheckForPOIs(1)) return;
