@@ -43,18 +43,27 @@ public class Tablet : MonoBehaviour
 
     private UI_Manager _Manager;
 
+    private Inventory _invRef;
+    [SerializeField] private List<Image> _largeBackpackSlots;
+    [SerializeField] private List<Image> _smallBackpackSlots;
+    [SerializeField] private List<Sprite> _critterIcons;
+
     private void Start()
     {
         _animator = GetComponentInParent<Animator>();
         _playerMovement = GetComponentInParent<PlayerMovement>();
         _pylonManager = FindObjectOfType<PylonManager>();
         _Manager = FindObjectOfType<UI_Manager>();
+        _invRef = FindObjectOfType<Inventory>();
 
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
 
         _tutorRead = false;
 
         ToggleTablet();
+        SetupBackpack();
+        FindObjectOfType<GameManager>().UpdateAllBars();
+        SetTeleportLocationColors();
     }
 
     #region ToggleTablet
@@ -89,10 +98,7 @@ public class Tablet : MonoBehaviour
 
             _playerMovement.DoMovement = false;
 
-            if (TabIndex == 1)
-            {
-                FindObjectOfType<GameManager>().UpdateAllBars();
-            }
+            UpdateCurrentTab();
         }
     }
 
@@ -122,14 +128,21 @@ public class Tablet : MonoBehaviour
 
         _tabs[TabIndex].SetActive(true);
 
-        if (TabIndex == MapTabIndex)
+        UpdateCurrentTab();
+    }
+    private void UpdateCurrentTab() 
+    { 
+        switch (TabIndex)
         {
-            SetTeleportLocationColors();
-        }
-
-        if (TabIndex == 1)
-        {
-            FindObjectOfType<GameManager>().UpdateAllBars();
+            case 0:
+                SetupBackpack();
+                break;
+            case 1:
+                FindObjectOfType<GameManager>().UpdateAllBars();
+                break;
+            case 2:
+                SetTeleportLocationColors();
+                break;
         }
     }
 
@@ -264,5 +277,45 @@ public class Tablet : MonoBehaviour
 
 
 
+    #endregion
+
+    #region BackpackTab
+    private void EmptySlots()
+    {
+        foreach(Image slot in _largeBackpackSlots)
+        {
+            slot.gameObject.SetActive(false);
+        }
+        foreach(Image slot in _smallBackpackSlots)
+        {
+            slot.gameObject.SetActive(false);
+        }
+    }
+    private void SetupBackpack()
+    {
+        EmptySlots();
+        Vector2 totalCounts = new Vector2(_invRef.ShroomAliensBig + _invRef.CrystalAliensBig, _invRef.ShroomAliens + _invRef.CrystalAliens);
+        
+        for(int i = 0; i < totalCounts.x; i++)
+        {
+            _largeBackpackSlots[i].gameObject.SetActive(true);
+            if(i < _invRef.ShroomAliensBig)
+                _largeBackpackSlots[i].sprite = _critterIcons[0];
+            else
+                _largeBackpackSlots[i].sprite = _critterIcons[1];
+            if (i >= _largeBackpackSlots.Count - 1)
+                break;
+        }
+        for(int i = 0; i < totalCounts.y; i++)
+        {
+            _smallBackpackSlots[i].gameObject.SetActive(true);
+            if(i < _invRef.ShroomAliens)
+                _smallBackpackSlots[i].sprite = _critterIcons[2];
+            else
+                _smallBackpackSlots[i].sprite = _critterIcons[3];
+            if (i >= _smallBackpackSlots.Count - 1)
+                break;
+        }
+    }
     #endregion
 }
