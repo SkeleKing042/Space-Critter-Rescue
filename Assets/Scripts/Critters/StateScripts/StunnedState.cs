@@ -12,6 +12,7 @@ public class StunnedState : State
         AI.Animator.SetBool("StunnedState", true);
         AI.RigidMode(true);
         AI.Rb.useGravity = true;
+            AI.PrepareUpdateState(new IdleState(AI),5);
     }
     public override void Update()
     {

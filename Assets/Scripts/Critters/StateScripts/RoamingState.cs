@@ -21,7 +21,7 @@ public class RoamingState : State
         //Call checks
         if (AI.GetComponent<FieldOfView>().CanSeeTarget)
         {
-            AI.PrepareUpdateState(new PanicState(AI));
+            AI.RunFromPlayer(1);
             return;
         }
         if (AI.GoingForDrink)

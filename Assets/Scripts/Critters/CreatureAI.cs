@@ -72,6 +72,7 @@ public class CreatureAI : MonoBehaviour
     private float _panicSpeedIncrease;
     public float PanicSpeedIncrease { get { return _panicSpeedIncrease; } }
 
+    #region Setup
     private void Start()
     {
         //Sets the center of the area that the AI will move around
@@ -110,6 +111,8 @@ public class CreatureAI : MonoBehaviour
         _agent.speed = _baseSpeed = spd;
         _panicSpeedIncrease = pMul;
     }
+    #endregion
+    #region BrainFunctions
     void Update()
     {
         if (_currentState != null)
@@ -127,36 +130,6 @@ public class CreatureAI : MonoBehaviour
 
         //Debuging
         _theState = _currentState.GetType().ToString();
-    }
-    /// <summary>
-    /// State chaging function. Will update this creature's state.
-    /// </summary>
-    /// <param name="newState"></param>
-    /// <param name="delay"></param>
-    /// <returns></returns>
-    public void PrepareUpdateState(State newState)
-    {
-        StartCoroutine(UpdateState(newState, 0f));
-    }
-    /// <summary>
-    /// State chaging function. Will update this creature's state after a given time.
-    /// </summary>
-    /// <param name="newState"></param>
-    /// <param name="delay"></param>
-    /// <returns></returns>
-    public void PrepareUpdateState(State newState, float delay)
-    {
-        StartCoroutine(UpdateState(newState, delay));
-    }
-    public IEnumerator UpdateState(State newState, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        if (newState.GetType() != _currentState.GetType())
-        {
-            _currentState.EndState();
-            _currentState = newState;
-            _currentState.StartState();
-        }
     }
     /// <summary>
     /// Checks for any nearby POIs (Drinkable sources)
@@ -233,32 +206,6 @@ public class CreatureAI : MonoBehaviour
             }
         }
     }
-    /// <summary>
-    /// Either enables or disables the rigidbody mode of the creature.
-    /// </summary>
-    public void RigidMode()
-    {
-        if (_naving)
-        {
-            _agent.isStopped = true;
-            _agent.enabled = false;
-            _rb.isKinematic = false;
-        }
-        else if (!_naving)
-        {
-            _rb.isKinematic = true;
-            _agent.enabled = true;
-            _agent.isStopped = false;
-        }
-    }
-    /// <summary>
-    /// Enables or disables the rigidbody mode of the creature depending on the incoming bool
-    /// </summary>
-    public void RigidMode(bool b)
-    {
-        _naving = b;
-        RigidMode();
-    }
     private IEnumerator GrabGroundBelow()
     {
         while (true)
@@ -266,13 +213,19 @@ public class CreatureAI : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(transform.position, -Vector3.up * 1000f, out hit, 1000f))
             {
-                Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
+                //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
                 if (hit.collider.tag == "Ground")
                 {
                     _lastGroundPoint = hit.point + new Vector3(0, _critterHeight, 0);
                 }
             }
-            yield return new WaitForSeconds(_groundCheckDelay);
+            float randTime = 2654435769 * Time.deltaTime * UnityEngine.Random.Range(0.1f, 1.0f) / Mathf.Pow(10, 8);
+            while (randTime > 10)
+                randTime /= 10;
+            float waitTime = _groundCheckDelay + randTime;
+            //Debug.Log("Done AI ground check, waiting for " + waitTime);
+            yield return new WaitForSeconds(waitTime);
+            //Debug.Log("Doing AI ground check");
         }
     }
     public void ReturnToLastGrounedPoint()
@@ -290,6 +243,74 @@ public class CreatureAI : MonoBehaviour
             PrepareUpdateState(new IdleState(this), 2f);
         }
     }
+    #endregion
+    #region StateStuff
+    /// <summary>
+    /// State chaging function. Will update this creature's state.
+    /// </summary>
+    /// <param name="newState"></param>
+    /// <param name="delay"></param>
+    /// <returns></returns>
+    public void PrepareUpdateState(State newState)
+    {
+        StartCoroutine(UpdateState(newState, 0f));
+    }
+    /// <summary>
+    /// State chaging function. Will update this creature's state after a given time.
+    /// </summary>
+    /// <param name="newState"></param>
+    /// <param name="delay"></param>
+    /// <returns></returns>
+    public void PrepareUpdateState(State newState, float delay)
+    {
+        StartCoroutine(UpdateState(newState, delay));
+    }
+    public IEnumerator UpdateState(State newState, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (newState.GetType() != _currentState.GetType())
+        {
+            _currentState.EndState();
+            _currentState = newState;
+            _currentState.StartState();
+        }
+    }
+    /// <summary>
+    /// Either enables or disables the rigidbody mode of the creature.
+    /// </summary>
+    public void RigidMode()
+    {
+        if (_naving)
+        {
+            _agent.isStopped = _rb.useGravity = true;
+            _agent.enabled =_rb.isKinematic = false;
+        }
+        else if (!_naving)
+        {
+            _rb.isKinematic = _agent.enabled = true;
+            transform.rotation = Quaternion.identity;
+            _rb.useGravity = _agent.isStopped = false;
+        }
+    }
+    /// <summary>
+    /// Enables or disables the rigidbody mode of the creature depending on the incoming bool
+    /// </summary>
+    public void RigidMode(bool b)
+    {
+        _naving = b;
+        RigidMode();
+    }
+    public void RunFromPlayer(float panicDelay)
+    {
+        PrepareUpdateState(new AlertState(this));
+        PrepareUpdateState(new PanicState(this), panicDelay);
+    }
+    public void StunThenRun(float stunTime)
+    {
+        PrepareUpdateState(new StunnedState(this));
+        PrepareUpdateState(new PanicState(this), stunTime);
+    }
+    #endregion
     public void DEBUG_CauseBrainRot()
     {
         Debug.Log("Causing brain rot");

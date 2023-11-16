@@ -33,7 +33,7 @@ public class PanicState : State
             Vector3 dir = (AI.transform.position - AI.Player.transform.position).normalized;
             Agent.SetDestination(AI.transform.position + dir * AI.GetComponent<FieldOfView>().Radius);
         }
-        else if (Vector2.Distance(AI.transform.position, Agent.destination) < 2f)
+        else if (Vector2.Distance(AI.transform.position, Agent.destination) < 1f)
             AI.PrepareUpdateState(new IdleState(AI));
     }
     public override void EndState()

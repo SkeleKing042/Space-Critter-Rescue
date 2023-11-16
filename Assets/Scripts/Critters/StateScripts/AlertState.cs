@@ -13,6 +13,7 @@ public class AlertState : State
     {
         AI.Animator.SetBool("AlertState", true);
         AI.RigidMode(false);
+        AI.GetAgent.isStopped = true;
     }
     public override void Update()
     {

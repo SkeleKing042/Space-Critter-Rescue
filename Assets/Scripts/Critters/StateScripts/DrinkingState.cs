@@ -19,7 +19,7 @@ public class DrinkingState : State
         //Replenish hydration
         if (AI.GetComponent<FieldOfView>().CanSeeTarget)
         {
-            AI.PrepareUpdateState(new PanicState(AI));
+            AI.RunFromPlayer(1);
             return;
         }
         if (AI.Hydration >= 100)
