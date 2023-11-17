@@ -1,5 +1,5 @@
 // Created By Adanna Okoye
-//Last Edited by Adanna Okoye
+//Last Edited by Jackson Lucas
 
 using System.Collections;
 using System.Collections.Generic;
@@ -10,17 +10,18 @@ using Unity.VisualScripting;
 
 public class CollectAlien : MonoBehaviour
 {
-    [Header("Script Refrences")]
+    //[Header("Script Refrences")]
     private VacuumGun _vac;
-    private PlayerInventory _playerInventory;
+    private Inventory _inv;
 
+
+    GameObject Alien;
 
     private void Start()
     {
         _vac = FindObjectOfType<VacuumGun>();
-        _playerInventory = FindObjectOfType<PlayerInventory>();
+        _inv = FindObjectOfType<Inventory>();
     }
-
 
     void OnTriggerEnter(Collider creature)
     {
@@ -30,10 +31,9 @@ public class CollectAlien : MonoBehaviour
             if(_vac.Pulling == true)
             {
                 Debug.Log("Pulling check passed");
-                _playerInventory.AddAlienToCollection(creature.gameObject);
-
+                _inv.AddCritterToInv(creature.gameObject);
                 _vac.UnassignAlien(creature.gameObject);
-            }            
+            }           
         }
     }
 }

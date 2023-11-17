@@ -8901,7 +8901,6 @@ GameObject:
   - component: {fileID: 7571919666021747437}
   - component: {fileID: 8109913824263524885}
   - component: {fileID: 7207852762652227241}
-  - component: {fileID: 9095043188927162977}
   - component: {fileID: 8599652253496983181}
   m_Layer: 6
   m_Name: Player
@@ -9095,23 +9094,6 @@ MonoBehaviour:
   TrapThrowForce: 5
   _animator: {fileID: 7571919666021747437}
   currentlyHolding: 0
---- !u!114 &9095043188927162977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8109913824263524884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9504f259a028343b70c011837196a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Collected: 0
-  SmallAliens: 0
-  BigAliens: 0
-  SpaceForSmall: 0
-  SpaceForBig: 0
 --- !u!114 &8599652253496983181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10902,7 +10884,7 @@ PrefabInstance:
     - target: {fileID: 2025321122069800002, guid: d2167cf6b7411224a825142711ba489d, type: 3}
       propertyPath: collection
       value: 
-      objectReference: {fileID: 9095043188927162977}
+      objectReference: {fileID: 0}
     - target: {fileID: 2025321122122528732, guid: d2167cf6b7411224a825142711ba489d, type: 3}
       propertyPath: m_Name
       value: Vacuum Catcher

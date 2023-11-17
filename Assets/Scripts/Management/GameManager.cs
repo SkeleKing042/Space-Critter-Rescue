@@ -62,11 +62,11 @@ public class GameManager : MonoBehaviour
     private CreatureTrackers _shroomCreatures;
     public CreatureTrackers ShroomCreatures { get { return _shroomCreatures; } }
 
-    private ShipInventory _shipInventory;
+    private Inventory _inv;
     // Start is called before the first frame update
     void Start()
     {
-        _shipInventory = GetComponent<ShipInventory>();
+        _inv = GetComponent<Inventory>();
 
         CreatureStats[] stats = FindObjectsOfType<CreatureStats>();
         foreach(CreatureStats creature in stats)
@@ -99,12 +99,13 @@ public class GameManager : MonoBehaviour
 
     void VicCheck()
     {
-        _shroomCreatures.PercentCheck(_shipInventory.ShroomAliensBig, _shipInventory.ShroomAliens);
-        _crystalCreatures.PercentCheck(_shipInventory.CrystalAliensBig, _shipInventory.CrystalAliens);
+        _shroomCreatures.PercentCheck(_inv.PlayerShroomAliensBig, _inv.PlayerShroomAliens);
+        _crystalCreatures.PercentCheck(_inv.PlayerCrystalAliensBig, _inv.PlayerCrystalAliens);
     }
+    //MOVE TO TABLET
     public void UpdateAllBars()
     {
-        _shroomCreatures.UpdateBars(_shipInventory.InvShroomAliensBig, _shipInventory.InvShroomAliens);
-        _crystalCreatures.UpdateBars(_shipInventory.InvCrystalAliensBig, _shipInventory.InvCrystalAliens);
+        _shroomCreatures.UpdateBars(_inv.ShipShroomAliensBig, _inv.ShipShroomAliens);
+        _crystalCreatures.UpdateBars(_inv.ShipCrystalAliensBig, _inv.ShipCrystalAliens);
     }
 }

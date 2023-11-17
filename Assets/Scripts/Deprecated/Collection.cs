@@ -1,14 +1,13 @@
 // Created By Adanna Okoye
-// Last edited by Adanna Okoye
+// Last edited by Jackson Lucas
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    // fixed varibles
+ /*   // fixed varibles
     [Header("Fixed Varibles")]
-    [SerializeField]
     public float Collected;
   //  public float DropDistance;
 
@@ -16,9 +15,12 @@ public class PlayerInventory : MonoBehaviour
     public int SmallAliens;
     public int BigAliens;
 
+    [Header("Size Limits")]
+    [SerializeField] private int _smallCap;
+    [SerializeField] private int _bigCap;
     [Header("bool")]
-    public bool SpaceForSmall;
-    public bool SpaceForBig;
+    //public bool SpaceForSmall;
+    //public bool SpaceForBig;
 
     [Header("Invetory")]
 
@@ -39,8 +41,15 @@ public class PlayerInventory : MonoBehaviour
     /// <param name="alien"></param>
     public void AddAlienToCollection(GameObject alien)
     {
-        if (SmallAliens <= 11)
+        if (SmallAliens < _smallCap && alien.tag == "alien")//  && SpaceForSmall == true)
         {
+<<<<<<<< HEAD:Assets/Scripts/Deprecated/Collection.cs
+            SmallAliens++;
+            Collected++;
+
+            Inventory.AddSmallShroom(alien);
+            Inventory.AddSmallCrystal(alien);
+========
             SpaceForSmall = true;
             if (alien.tag == "alien"  && SpaceForSmall == true)
             {
@@ -49,10 +58,21 @@ public class PlayerInventory : MonoBehaviour
                 _shipInventory.AddSmallShroom(alien);
                 _shipInventory.AddSmallCrystal(alien);
             }
+>>>>>>>> origin/S2_UI/UX:Assets/Scripts/InventoryCollection/PlayerInventory.cs
         }
-        else
+
+        *//*else
         {
             SpaceForSmall = false;
+<<<<<<<< HEAD:Assets/Scripts/Deprecated/Collection.cs
+        }*//*
+        if (BigAliens < _bigCap && alien.tag == "bigAlien")// && SpaceForBig == true)
+        {
+            BigAliens++;
+            Collected++;
+            Inventory.AddBigShroom(alien);
+            Inventory.AddBigCrystal(alien);
+========
         }
 
         if(BigAliens <= 1)
@@ -63,13 +83,19 @@ public class PlayerInventory : MonoBehaviour
                 BigAliens++;
                 _shipInventory.AddBigShroom(alien);
                 _shipInventory.AddBigCrystal(alien);
+>>>>>>>> origin/S2_UI/UX:Assets/Scripts/InventoryCollection/PlayerInventory.cs
 
-            }
         }
-        else
+
+        *//*else
         {
            SpaceForBig = false;
+<<<<<<<< HEAD:Assets/Scripts/Deprecated/Collection.cs
+        }*//*
+        TextNumber = Collected;
+========
         }
+>>>>>>>> origin/S2_UI/UX:Assets/Scripts/InventoryCollection/PlayerInventory.cs
     }
-    
+*/    
 }

@@ -3,38 +3,26 @@
 
 using UnityEngine;
 
-public class CaptureState : State
+public class AlertState : State
 {
-    private float stateTime;
-    public CaptureState(CreatureAI ai) : base(ai)
+    public AlertState(CreatureAI ai) : base(ai)
     {
 
     }
     public override void StartState()
     {
-        AI.Animator.SetBool("CaptureState", true);
-        AI.RigidMode(true);
+        AI.Animator.SetBool("AlertState", true);
+        AI.RigidMode(false);
+        AI.GetAgent.isStopped = true;
     }
     public override void Update()
     {
         Quaternion targetRot = Quaternion.LookRotation(AI.Player.transform.position - AI.transform.position);
         AI.transform.rotation = Quaternion.Slerp(AI.transform.rotation, targetRot, AI.FacePlayerRate);
-        Failsafe();
     }
     public override void EndState()
     {
-        AI.Animator.SetBool("CaptureState", false);
-        AI.RigidMode(false);
-    }
-
-    private void Failsafe()
-    {
-        stateTime += Time.deltaTime;
-        if(stateTime >= 5)
-        {
-            AI.StunThenRun(2);
-        }
-
+        AI.Animator.SetBool("AlertState", false);
     }
 
 }

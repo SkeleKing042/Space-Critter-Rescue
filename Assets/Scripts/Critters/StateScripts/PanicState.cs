@@ -17,7 +17,7 @@ public class PanicState : State
             AI.Animator.SetBool("PanicState", true);
         }
         //Double movement speed
-        Agent.speed = AI.BaseSpeed * 2f;
+        Agent.speed = AI.BaseSpeed * AI.PanicSpeedIncrease;
 
         //Find place to move to
         Vector3 dir = (AI.transform.position - AI.Player.transform.position).normalized;
@@ -33,7 +33,7 @@ public class PanicState : State
             Vector3 dir = (AI.transform.position - AI.Player.transform.position).normalized;
             Agent.SetDestination(AI.transform.position + dir * AI.GetComponent<FieldOfView>().Radius);
         }
-        else if (Vector2.Distance(AI.transform.position, Agent.destination) < 2f)
+        else if (Vector2.Distance(AI.transform.position, Agent.destination) < 1f)
             AI.PrepareUpdateState(new IdleState(AI));
     }
     public override void EndState()

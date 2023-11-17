@@ -67,15 +67,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587944797dacb15439815ed5c405fe54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShipDropOff: {fileID: 0}
-  Player: {fileID: 0}
-  DropOffRange: 10
-  ShroomAliens: 0
-  CrystalAliens: 0
-  ShroomAliensBig: 0
-  CrystalAliensBig: 0
-  InvShroomAliens: 0
-  InvCrystalAliens: 0
-  InvShroomAliensBig: 0
-  InvCrystalAliensBig: 0
-  TotalShipInventory: 0
+  _shipDropOff: {fileID: 0}
+  _smallCap: 12
+  _bigCap: 2

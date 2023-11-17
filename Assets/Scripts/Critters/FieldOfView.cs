@@ -49,7 +49,7 @@ public class FieldOfView : MonoBehaviour
             {
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, _obstructionMask))
+                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, _obstructionMask) && Vector3.Distance(transform.position, target.position) < Radius)
                     CanSeeTarget = true;
                 else
                     CanSeeTarget = false;

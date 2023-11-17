@@ -18,7 +18,6 @@ public class Tablet : MonoBehaviour
     private Animator _animator;
     private PlayerMovement _playerMovement;
     private PylonManager _pylonManager;
-    private TrapDeploy _trapDeploy;
 
     [Header("Tabs")]
     [Tooltip("Array that stores the tabs of the tablet in order")]
@@ -44,7 +43,7 @@ public class Tablet : MonoBehaviour
 
     private UI_Manager _Manager;
 
-    private ShipInventory _shipInventory;
+    private Inventory _invRef;
     [SerializeField] private List<Image> _largeBackpackSlots;
     [SerializeField] private List<Image> _smallBackpackSlots;
     [SerializeField] private List<Sprite> _critterIcons;
@@ -55,15 +54,15 @@ public class Tablet : MonoBehaviour
         _playerMovement = GetComponentInParent<PlayerMovement>();
         _pylonManager = FindObjectOfType<PylonManager>();
         _Manager = FindObjectOfType<UI_Manager>();
-        _shipInventory = FindObjectOfType<ShipInventory>();
-        _trapDeploy = FindObjectOfType<TrapDeploy>();
+        _invRef = FindObjectOfType<Inventory>();
 
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
 
         _tutorRead = false;
 
+        ToggleTablet();
         SetupBackpack();
-        //FindObjectOfType<GameManager>().UpdateAllBars();
+        FindObjectOfType<GameManager>().UpdateAllBars();
         SetTeleportLocationColors();
     }
 
@@ -75,10 +74,8 @@ public class Tablet : MonoBehaviour
     {
         if (TabletState)
         {
+            _animator.SetTrigger("Lower Tablet");
             SetTabletState(false);
-            _animator.SetTrigger("UI_Tablet_OFF");
-
-            
 
             if (!_tutorRead)
             {
@@ -96,7 +93,7 @@ public class Tablet : MonoBehaviour
         }
         else if (!TabletState)
         {
-            _animator.SetTrigger("UI_Tablet_ON");
+            _animator.SetTrigger("Raise Tablet");
             SetTabletState(true);
 
             _playerMovement.DoMovement = false;
@@ -104,8 +101,6 @@ public class Tablet : MonoBehaviour
             UpdateCurrentTab();
         }
     }
-
-    
 
     /// <summary>
     /// Method that sets the bool tabletState
@@ -143,7 +138,7 @@ public class Tablet : MonoBehaviour
                 SetupBackpack();
                 break;
             case 1:
-                //FindObjectOfType<GameManager>().UpdateAllBars();
+                FindObjectOfType<GameManager>().UpdateAllBars();
                 break;
             case 2:
                 SetTeleportLocationColors();
@@ -299,22 +294,21 @@ public class Tablet : MonoBehaviour
     private void SetupBackpack()
     {
         EmptySlots();
-        Vector2 totalCounts = new Vector2(_shipInventory.ShroomAliensBig + _shipInventory.CrystalAliensBig, _shipInventory.ShroomAliens + _shipInventory.CrystalAliens);
         
-        for(int i = 0; i < totalCounts.x; i++)
+        for(int i = 0; i < _invRef.BigCount; i++)
         {
             _largeBackpackSlots[i].gameObject.SetActive(true);
-            if(i < _shipInventory.ShroomAliensBig)
+            if(i < _invRef.PlayerShroomAliensBig)
                 _largeBackpackSlots[i].sprite = _critterIcons[0];
             else
                 _largeBackpackSlots[i].sprite = _critterIcons[1];
             if (i >= _largeBackpackSlots.Count - 1)
                 break;
         }
-        for(int i = 0; i < totalCounts.y; i++)
+        for(int i = 0; i < _invRef.SmallCount; i++)
         {
             _smallBackpackSlots[i].gameObject.SetActive(true);
-            if(i < _shipInventory.ShroomAliens)
+            if(i < _invRef.PlayerShroomAliens)
                 _smallBackpackSlots[i].sprite = _critterIcons[2];
             else
                 _smallBackpackSlots[i].sprite = _critterIcons[3];

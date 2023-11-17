@@ -13,5 +13,6 @@ public class CreatureAIEditor : Editor
             Handles.color = Color.blue;
             Handles.DrawLine(cAI.transform.position, cAI.GetAgent.destination);
         }
+
     }
 }

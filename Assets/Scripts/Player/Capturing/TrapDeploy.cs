@@ -210,12 +210,12 @@ public class TrapDeploy : MonoBehaviour
         // {
         _distance = Vector3.Distance(Trap.transform.position, transform.position);
         //find the distance between the player and the trap
-        Debug.Log(_distance);
+        Debug.Log( "distance frfom trap: " + _distance);
         _distance = Mathf.Abs(_distance);
         // }
 
         // check if the player is within the range, not holding the trap and the trap is not active
-        if ((PickUpRange >= _distance || !DoDistace) && currentlyHolding != CurrentlyHolding.trap && Bubble.activeSelf == false)
+        if ((PickUpRange >= _distance || DoDistace) && currentlyHolding != CurrentlyHolding.trap && Bubble.activeSelf == false)
         {
             // set parent to the player
             Trap.transform.SetParent(transform);
@@ -225,11 +225,11 @@ public class TrapDeploy : MonoBehaviour
             Trap.GetComponent<Rigidbody>().isKinematic = true;
 
             // set enum state
-            currentlyHolding = CurrentlyHolding.vacuum;
+            currentlyHolding = CurrentlyHolding.trap;
 
             // set game objects apprpriatly
-            PlayerGun.SetActive(true);
-            Trap.SetActive(false);
+            PlayerGun.SetActive(false);
+            Trap.SetActive(true);
             Detenator.SetActive(false);
 
             // set to false
