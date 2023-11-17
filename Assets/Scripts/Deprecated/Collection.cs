@@ -4,13 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collection : MonoBehaviour
+public class PlayerInventory : MonoBehaviour
 {
  /*   // fixed varibles
     [Header("Fixed Varibles")]
     public float Collected;
   //  public float DropDistance;
-    public float TextNumber;
 
     [Header("Alien Counts")]
     public int SmallAliens;
@@ -23,13 +22,16 @@ public class Collection : MonoBehaviour
     //public bool SpaceForSmall;
     //public bool SpaceForBig;
 
+    [Header("Invetory")]
+
     [Header("Invetory Refrence")]
-    private Inventory Inventory;
+    private ShipInventory _shipInventory;
 
 
     private void Start()
     {
-        Inventory = FindObjectOfType<Inventory>();
+        //find reference of inventory
+        _shipInventory = FindObjectOfType<ShipInventory>();
     }
 
 
@@ -41,16 +43,28 @@ public class Collection : MonoBehaviour
     {
         if (SmallAliens < _smallCap && alien.tag == "alien")//  && SpaceForSmall == true)
         {
+<<<<<<<< HEAD:Assets/Scripts/Deprecated/Collection.cs
             SmallAliens++;
             Collected++;
 
             Inventory.AddSmallShroom(alien);
             Inventory.AddSmallCrystal(alien);
+========
+            SpaceForSmall = true;
+            if (alien.tag == "alien"  && SpaceForSmall == true)
+            {
+                SmallAliens++;
+
+                _shipInventory.AddSmallShroom(alien);
+                _shipInventory.AddSmallCrystal(alien);
+            }
+>>>>>>>> origin/S2_UI/UX:Assets/Scripts/InventoryCollection/PlayerInventory.cs
         }
 
         *//*else
         {
             SpaceForSmall = false;
+<<<<<<<< HEAD:Assets/Scripts/Deprecated/Collection.cs
         }*//*
         if (BigAliens < _bigCap && alien.tag == "bigAlien")// && SpaceForBig == true)
         {
@@ -58,14 +72,30 @@ public class Collection : MonoBehaviour
             Collected++;
             Inventory.AddBigShroom(alien);
             Inventory.AddBigCrystal(alien);
+========
+        }
+
+        if(BigAliens <= 1)
+        {
+            SpaceForBig = true;
+            if (alien.tag == "bigAlien" && SpaceForBig == true)
+            {
+                BigAliens++;
+                _shipInventory.AddBigShroom(alien);
+                _shipInventory.AddBigCrystal(alien);
+>>>>>>>> origin/S2_UI/UX:Assets/Scripts/InventoryCollection/PlayerInventory.cs
 
         }
 
         *//*else
         {
            SpaceForBig = false;
+<<<<<<<< HEAD:Assets/Scripts/Deprecated/Collection.cs
         }*//*
         TextNumber = Collected;
+========
+        }
+>>>>>>>> origin/S2_UI/UX:Assets/Scripts/InventoryCollection/PlayerInventory.cs
     }
 */    
 }

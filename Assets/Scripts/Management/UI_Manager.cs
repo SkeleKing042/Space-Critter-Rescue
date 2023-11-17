@@ -10,6 +10,7 @@ public class UI_Manager : MonoBehaviour
     private PlayerMovement _playerMovement;
     private TrapDeploy _trapDeploy;
     private Tablet _tablet;
+    private PlayerInventory _playerInventory;
 
 
     [Header("Universal Variables")]
@@ -32,31 +33,37 @@ public class UI_Manager : MonoBehaviour
     [Header("Jetpack Variables")]
     [SerializeField, Tooltip("The display for the jet fuel.")]
     private Image _fuelBarMain;
-    [SerializeField]
-    private Image _delayedBar;
-    [SerializeField]
-    private Image _fuelBarBackground;
-    [Space]
-    [SerializeField]
-    private Color[] _jetBackgroundColor;
 
     [Space]
     [SerializeField]
-    public bool isJetpackUI;
+    private float _fuelSliderMax;
     [SerializeField]
-    private RectTransform _jetpackRectTransform;
+    private float _fuelSliderMin;
     [SerializeField]
-    private float[] _jetpack_Positions;
-    
+    private float _fuelSliderDelta;
+
+
+
 
     #endregion
 
+    #region Backpack HUD
+    [SerializeField, Tooltip("Slider that displays the amount of LC the player has collected")]
+    private Image _LC_Slider;
+    //[SerializeField, Tooltip("Max")]
+    [SerializeField, Tooltip("Slider that displays the amount of SC the player has collected")]
+    private Image _SC_Slider;
+
+
+
+
+
+    #endregion
+
+
+
     #region Vacuum Catcher Variables
     [Header("Vacuum Catcher Variables")]
-    [SerializeField]
-    RectTransform _VC_RectTransform;
-    [SerializeField] 
-    float[] VC_Positions;
     [SerializeField]
     Image VC_InputIcon;
 
@@ -65,10 +72,6 @@ public class UI_Manager : MonoBehaviour
 
     #region Trap Variables
     [Header("Trap Variables")]
-    [SerializeField]
-    RectTransform _Trap_RectTransform;
-    [SerializeField]
-    float[] Trap_Positions;
     [SerializeField]
     Image Trap_InputIcon;
     #endregion
@@ -79,6 +82,8 @@ public class UI_Manager : MonoBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
         _trapDeploy = GetComponent<TrapDeploy>();
         _tablet = GetComponentInChildren<Tablet>();
+
+        _fuelSliderDelta = _fuelSliderMax - _fuelSliderMin;
     }
 
     // Update is called once per frame
@@ -89,27 +94,20 @@ public class UI_Manager : MonoBehaviour
             JetPackUI_Manager();
             VacuumCatcherUI_Manager();
             TrapUI_Manager();
+            BackpackHUDManager();
         }
         else
         {
-            RemoveUI();
+
         }
-
-
     }
 
 
-    private void RemoveUI()
-    {
-        _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[2], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
-        _VC_RectTransform.anchoredPosition = Vector2.Lerp(_VC_RectTransform.anchoredPosition, new Vector2(VC_Positions[2], _VC_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
-        _jetpackRectTransform.anchoredPosition = Vector2.Lerp(_jetpackRectTransform.anchoredPosition, new Vector2(_jetpack_Positions[2], 2), UI_speed * Time.deltaTime);
-    }
 
 
     private void TrapUI_Manager()
     {
-        //ON
+        /*//ON
         if (_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.trap || _trapDeploy.TrapDeployed == true)
         {
             _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[0], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
@@ -120,7 +118,7 @@ public class UI_Manager : MonoBehaviour
         {
             _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[1], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
             Trap_InputIcon.sprite = inputIcon_LB;
-        }
+        }*/
 
         //pickup trap / activate trap
         if(_trapDeploy.TrapDeployed == true)
@@ -142,13 +140,13 @@ public class UI_Manager : MonoBehaviour
         //ON
         if(_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.vacuum)
         {
-            _VC_RectTransform.anchoredPosition = Vector2.Lerp(_VC_RectTransform.anchoredPosition, new Vector2(VC_Positions[0], _VC_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
+            
             VC_InputIcon.sprite = inputIcon_RT;
         }
         //OFF
         else
         {
-            _VC_RectTransform.anchoredPosition = Vector2.Lerp(_VC_RectTransform.anchoredPosition, new Vector2(VC_Positions[1], _VC_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
+            
             VC_InputIcon.sprite = inputIcon_LB;
         }
     }
@@ -156,7 +154,12 @@ public class UI_Manager : MonoBehaviour
 
     private void JetPackUI_Manager()
     {
-        if (!_playerMovement.GroundedCheck() || _playerMovement.JetFuel < 1)
+
+        _fuelBarMain.fillAmount = (_fuelSliderDelta * _playerMovement.JetFuel) + _fuelSliderMin;
+
+
+
+        /*if (!_playerMovement.GroundedCheck() || _playerMovement.JetFuel < 1)
         {
             //on
             _jetpackRectTransform.anchoredPosition = Vector2.Lerp(_jetpackRectTransform.anchoredPosition, new Vector2(_jetpack_Positions[0], 2), UI_speed * Time.deltaTime);
@@ -181,6 +184,11 @@ public class UI_Manager : MonoBehaviour
         if (_delayedBar.fillAmount > _fuelBarMain.fillAmount)
             _delayedBar.fillAmount = iTween.FloatUpdate(_delayedBar.fillAmount, _fuelBarMain.fillAmount, 10);
         else
-            _delayedBar.fillAmount = _fuelBarMain.fillAmount;
+            _delayedBar.fillAmount = _fuelBarMain.fillAmount;*/
+    }
+
+    private void BackpackHUDManager()
+    {
+
     }
 }

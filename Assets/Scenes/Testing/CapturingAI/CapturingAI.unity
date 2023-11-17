@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7739379095487518536, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8109913824263524882, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -178,7 +182,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9095043188927162977, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
 --- !u!1001 &146438541
 PrefabInstance:
