@@ -108,7 +108,7 @@ public class TrapDeploy : MonoBehaviour
     public void Toggle()
     {
         // make sure the player isnt holding the trap & that the trap is still with the player
-        if (currentlyHolding == CurrentlyHolding.vacuum && _trapDeployed == false && !_tablet.TabletState)
+        if (currentlyHolding == CurrentlyHolding.vacuum && _trapDeployed == false )
         {
             // set game objects appropriatly
             PlayerGun.SetActive(false);
@@ -120,7 +120,7 @@ public class TrapDeploy : MonoBehaviour
             _animator.SetTrigger("UI_Trap");
             return;      // return to avoid toggle loop
         }
-        if (_trapDeployed == true && currentlyHolding == CurrentlyHolding.vacuum && !_tablet.TabletState)
+        if (_trapDeployed == true && currentlyHolding == CurrentlyHolding.vacuum)
         {
             Detenator.SetActive(true);
             PlayerGun.SetActive(false);
@@ -133,7 +133,7 @@ public class TrapDeploy : MonoBehaviour
 
         // else if chap deployed == true then show detinator
 
-        if ((currentlyHolding == CurrentlyHolding.trap) && _trapDeployed == false && !_tablet.TabletState)
+        if ((currentlyHolding == CurrentlyHolding.trap) && _trapDeployed == false)
         {
             PlayerGun.SetActive(true);
             Trap.SetActive(false);
@@ -143,7 +143,7 @@ public class TrapDeploy : MonoBehaviour
             _animator.SetTrigger("UI_Vacuum");
             return;  // return to avoid toggle loop
         }
-        if ((currentlyHolding == CurrentlyHolding.trap || currentlyHolding == CurrentlyHolding.detinator) && _trapDeployed == true && !_tablet.TabletState)
+        if ((currentlyHolding == CurrentlyHolding.trap || currentlyHolding == CurrentlyHolding.detinator) && _trapDeployed == true)
         {
             PlayerGun.SetActive(true);
             Detenator.SetActive(false);
@@ -172,7 +172,7 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     public void DeployTrap()
     {
-        if (currentlyHolding == CurrentlyHolding.trap && !_tablet.TabletState)
+        if (currentlyHolding == CurrentlyHolding.trap)
         {
 
             // unassign the trap parent

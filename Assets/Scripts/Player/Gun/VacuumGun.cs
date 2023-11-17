@@ -24,6 +24,7 @@ public class VacuumGun : MonoBehaviour
     public Trap trap;
     public GameObject Bubble;
     public SoundPropagation Sound;
+    private SafteyCheck _obsticleCheck;
 
     // movement and position vectors
     [Header ("Movement and Position Vectors")]
@@ -45,9 +46,14 @@ public class VacuumGun : MonoBehaviour
     public bool Pulling = false;
     private float  _alienOffset;
     private bool _wasJustPulling;
+     
 
     #endregion
 
+    private void Start()
+    {
+        _obsticleCheck = FindObjectOfType<SafteyCheck>();
+    }
     #region Offset Correction
 
     void Update()
@@ -62,7 +68,6 @@ public class VacuumGun : MonoBehaviour
         
               _alienOffset = Vector3.Dot(forward, AlienPosition);
          }
-
     }
 
     /// <summary>
@@ -101,31 +106,45 @@ public class VacuumGun : MonoBehaviour
 
         //Sound.PropagateSound(0.00001f);
 
-        Debug.Log("starting");
-        Pulling = true;
-        foreach(AlienData aData in aData)
-        {
-            try
+            Pulling = true;
+            foreach (AlienData aData in aData)
             {
-            if ((aData.AI._currentState.GetType() != typeof(CaptureState)))
-            // set alien state to captures
-            StartCoroutine(aData.AI.UpdateState(new CaptureState(aData.AI), 0f));
-            // find what direction the alien is in 
-            Vector3 dir = transform.position - aData.Rigidbody.transform.position;
-            dir = Vector3.Normalize(dir);
-            //move the alien towards the player
-
-            aData.Rigidbody.AddForce(dir * SuckSpeed);
+                try
+                {
 
 
+                
+                    if (Physics.Linecast(transform.position, aData.AI.transform.position))
+                    {
+                    Debug.DrawRay(transform.position, aData.AI.transform.position, Color.black);
+                    Debug.Log("Nothing inbewtween the alien and the player");
+                        // set alien state to captures
+                        if ((aData.AI._currentState.GetType() != typeof(CaptureState)))
+                        StartCoroutine(aData.AI.UpdateState(new CaptureState(aData.AI), 0f));
+
+                         // find what direction the alien is in 
+                         Vector3 dir = transform.position - aData.Rigidbody.transform.position;
+                         dir = Vector3.Normalize(dir);
+                         //move the alien towards the player
+                         aData.Rigidbody.AddForce(dir * SuckSpeed);
+                    }
+                    else if ((!Physics.Linecast(transform.position, aData.AI.transform.position)))
+                    {
+                        Debug.Log("cannot suck something is in the way");
+                    }
+
+
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+                OffsetCorrection(aData.Rigidbody, _alienOffset);
             }
-            catch(Exception e)
-            {
-                Debug.Log(e);
-            }
-            OffsetCorrection(aData.Rigidbody, _alienOffset);
-        }
+
+      
     }
+
     public void EndPull()
     {
        Pulling = false;
