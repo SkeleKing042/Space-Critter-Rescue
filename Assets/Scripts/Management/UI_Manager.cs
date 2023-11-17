@@ -50,8 +50,7 @@ public class UI_Manager : MonoBehaviour
     #region Backpack HUD
     [SerializeField, Tooltip("Slider that displays the amount of LC the player has collected")]
     private Image _LC_Slider;
-    [SerializeField, Tooltip("Max")]
-    private 
+    //[SerializeField, Tooltip("Max")]
     [SerializeField, Tooltip("Slider that displays the amount of SC the player has collected")]
     private Image _SC_Slider;
 

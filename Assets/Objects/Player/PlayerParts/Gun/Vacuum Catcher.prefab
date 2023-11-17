@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2025321122069800013}
   - component: {fileID: 2025321122069800003}
   - component: {fileID: 2025321122069800002}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Collect Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4996aa634ed2ce8438b965e99373785f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseDown: 0
 --- !u!1 &2025321122122528732
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,7 +69,7 @@ GameObject:
   - component: {fileID: 2025321122122528733}
   - component: {fileID: 2025321121461694840}
   - component: {fileID: 2025321121461694841}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Vacuum Catcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}

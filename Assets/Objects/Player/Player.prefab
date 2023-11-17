@@ -8610,7 +8610,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8158462702801962326}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Detonator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8657,7 +8657,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5290467076294365581}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.98300004, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8719,8 +8719,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 8185330604015002651}
+  m_Follow: {fileID: 8185330604015002651}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 5
@@ -9136,17 +9136,9 @@ MonoBehaviour:
   _fuelSliderMax: 0.6
   _fuelSliderMin: 0.17
   _fuelSliderDelta: 0
-  _VC_RectTransform: {fileID: 7760104379944469934}
-  VC_Positions:
-  - 0
-  - -200
-  - -400
+  _LC_Slider: {fileID: 0}
+  _SC_Slider: {fileID: 0}
   VC_InputIcon: {fileID: 6233906587653134939}
-  _Trap_RectTransform: {fileID: 4402139300976956922}
-  Trap_Positions:
-  - 0
-  - -200
-  - -400
   Trap_InputIcon: {fileID: 6189512743427136286}
 --- !u!1001 &1115007304038046142
 PrefabInstance:
@@ -10141,9 +10133,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -518470674339455465, guid: c5469038d795e52479899b9755dd956c, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c5469038d795e52479899b9755dd956c, type: 3}
       propertyPath: m_Name
       value: Model_Equipment_Trap_Trigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c5469038d795e52479899b9755dd956c, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5530701255766440318, guid: c5469038d795e52479899b9755dd956c, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6821887585681450876, guid: c5469038d795e52479899b9755dd956c, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5469038d795e52479899b9755dd956c, type: 3}
@@ -10732,10 +10740,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerHUD
       objectReference: {fileID: 0}
-    - target: {fileID: 3364685986447403334, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 3385794693018694029, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
       propertyPath: m_SizeDelta.x
       value: -40
@@ -10845,11 +10849,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4402139300976956922 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8701378914199809009, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
-  m_PrefabInstance: {fileID: 5032218823293451787}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6189512743427136286 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1167445298751661333, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
@@ -10875,11 +10874,6 @@ MonoBehaviour:
 --- !u!224 &7739379095487518537 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3364685986447403330, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
-  m_PrefabInstance: {fileID: 5032218823293451787}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &7760104379944469934 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3343752892681796517, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
   m_PrefabInstance: {fileID: 5032218823293451787}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5636270631344483017
