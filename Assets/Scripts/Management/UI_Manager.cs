@@ -10,6 +10,7 @@ public class UI_Manager : MonoBehaviour
     private PlayerMovement _playerMovement;
     private TrapDeploy _trapDeploy;
     private Tablet _tablet;
+    private GameManager _gameManager;
 
 
     [Header("Universal Variables")]
@@ -34,10 +35,13 @@ public class UI_Manager : MonoBehaviour
     [Header("Backpack HUD")]
     [SerializeField, Tooltip("Slider that displays the amount of LC the player has collected")]
     private Image _LC_Slider;
-    //[SerializeField, Tooltip("Max")]
+    [SerializeField, Tooltip("Maximum LC's the player can store in their inventory")]
+    private int _LC_MAX;
+
     [SerializeField, Tooltip("Slider that displays the amount of SC the player has collected")]
     private Image _SC_Slider;
-
+    [SerializeField, Tooltip("Maximum SC's the player can store in their inventory")]
+    private int _SC_MAX;
 
 
 
@@ -81,6 +85,7 @@ public class UI_Manager : MonoBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
         _trapDeploy = GetComponent<TrapDeploy>();
         _tablet = GetComponentInChildren<Tablet>();
+        _gameManager = FindObjectOfType<GameManager>();
 
         _fuelSliderDelta = _fuelSliderMax - _fuelSliderMin;
     }
@@ -106,19 +111,6 @@ public class UI_Manager : MonoBehaviour
 
     private void TrapUI_Manager()
     {
-        /*//ON
-        if (_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.trap || _trapDeploy.TrapDeployed == true)
-        {
-            _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[0], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
-            Trap_InputIcon.sprite = inputIcon_RT;
-        }
-        //OFF
-        else
-        {
-            _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[1], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
-            Trap_InputIcon.sprite = inputIcon_LB;
-        }*/
-
         //pickup trap / activate trap
         if(_trapDeploy.TrapDeployed == true)
         {
@@ -139,13 +131,11 @@ public class UI_Manager : MonoBehaviour
         //ON
         if(_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.vacuum)
         {
-            
             VC_InputIcon.sprite = inputIcon_RT;
         }
         //OFF
         else
         {
-            
             VC_InputIcon.sprite = inputIcon_LB;
         }
     }
@@ -188,6 +178,6 @@ public class UI_Manager : MonoBehaviour
 
     private void BackpackHUDManager()
     {
-
+        //_LC_Slider.fillAmount = _gameManager.Small
     }
 }

@@ -47,14 +47,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _crystalCreatures:
     _smallPercent: 0.5
+    _smallCount: 0
     _largePercent: 0.5
-    _smallBar: {fileID: 0}
-    _largeBar: {fileID: 0}
+    _largeCount: 0
   _shroomCreatures:
     _smallPercent: 0.5
+    _smallCount: 0
     _largePercent: 0.5
-    _smallBar: {fileID: 0}
-    _largeBar: {fileID: 0}
+    _largeCount: 0
 --- !u!114 &4785168938131265541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,5 +68,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shipDropOff: {fileID: 0}
+  _playerTransform: {fileID: 0}
+  _dropOffRange: 5
+  _player_fungiCritter_Small: 0
+  _player_crystalCritter_Small: 0
+  _player_fungiCritter_Large: 0
+  _player_crystalCritter_Large: 0
+  _smallCount: 0
+  _largeCount: 0
   _smallCap: 12
-  _bigCap: 2
+  _largeCap: 2
+  _ship_FungiCritter_Small: 0
+  _ship_CrystalCritter_Small: 0
+  _ship_FungiCritter_Large: 0
+  _ship_CrystalCritter_Large: 0

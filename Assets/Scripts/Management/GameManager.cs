@@ -1,5 +1,5 @@
 //Created by Jackson Lucas
-//Last edited by Jackson Lucas
+//Last edited by Ru McPharlin
 
 using System.Collections;
 using System.Collections.Generic;
@@ -13,20 +13,22 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class CreatureTrackers
     {
-        [SerializeField, Range(0f, 1f)]
+        [SerializeField, Range(0f, 1f), Tooltip("The % of Small Critters the player needs to collect to win")]
         private float _smallPercent;
+        public float SmallPercent { get { return _smallPercent; } }
+
+        [SerializeField, Tooltip("Amount of Small Critters the player has collected")]
         private float _smallCount;
         public float SmallCount { get { return _smallCount; } set { _smallCount = value; } }
-        [SerializeField, Range(0f, 1f)]
+
+        [SerializeField, Range(0f, 1f), Tooltip("The % of Small Critters the player needs to collect to win")]
         private float _largePercent;
+        public float LargePercent { get { return _largePercent; } }
+        [SerializeField, Tooltip("Amount of Small Critters the player has collected")]
         private float _largeCount;
         public float LargeCount { get { return _largeCount; } set { _largeCount = value; } }
 
-        [SerializeField]
-        private Image _smallBar;
-        [SerializeField]
-        private Image _largeBar;
-
+        #region Sets Gets and Checks
         public void GetCounts(CreatureStats.creatureType type)
         {
             CreatureStats[] stats = FindObjectsOfType<CreatureStats>();
@@ -39,20 +41,19 @@ public class GameManager : MonoBehaviour
                         _smallCount++;
             }
         }
-        public void SetCounts(float bigCount, float smallCount)
+
+        public void SetCounts(float largeCount, float smallCount)
         {
-            _largeCount = bigCount;
+            _largeCount = largeCount;
             _smallCount = smallCount;
         }
-        public bool PercentCheck(float bigs, float smalls)
+
+        public bool PercentCheck(float larges, float smalls)
         {
-            return (bigs / _largeCount > _largePercent && smalls / _smallCount > _smallPercent);
+            return (larges / _largeCount > _largePercent && smalls / _smallCount > _smallPercent);
         }
-        public void UpdateBars(int largeCount, int smallCount)
-        {
-            _smallBar.fillAmount = smallCount / SmallCount;
-            _largeBar.fillAmount = largeCount / LargeCount;
-        }
+
+        #endregion
     }
 
     [SerializeField]
@@ -91,21 +92,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void VicCheck()
+    /*void VicCheck()
     {
         _shroomCreatures.PercentCheck(_inv.PlayerShroomAliensBig, _inv.PlayerShroomAliens);
         _crystalCreatures.PercentCheck(_inv.PlayerCrystalAliensBig, _inv.PlayerCrystalAliens);
-    }
-    //MOVE TO TABLET
-    public void UpdateAllBars()
-    {
-        _shroomCreatures.UpdateBars(_inv.ShipShroomAliensBig, _inv.ShipShroomAliens);
-        _crystalCreatures.UpdateBars(_inv.ShipCrystalAliensBig, _inv.ShipCrystalAliens);
-    }
+    }*/
 }

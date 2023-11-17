@@ -8,81 +8,110 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-
-    //
-    //CollectAlien AlienCollection;
-    //private List<GameObject> _alienCollection = new List<GameObject>();
-    //private CreatureStats _alienType;
-    //private GameObject _alien;
-    [SerializeField]
+    #region Variables
+    [Header("Drop off")]
+    [SerializeField, Tooltip("The transform of the drop off GameObject")]
     private Transform _shipDropOff;
+    [SerializeField, Tooltip("Players transform"), HideInInspector]
     private Transform _playerTransform;
-
-    //private Collection _collection;
-
+    [SerializeField, Tooltip("Range in which the player can put critters into the ship")]
     private float _dropOffRange;
-    // create enum later for the different alien types
 
+    [Header("Player Inventory")]
+    [SerializeField, Tooltip("The number of small fungi critters the player has in their inventory")]
+    private int _player_fungiCritter_Small;
+    public int Player_Fungi_Small { get { return _player_fungiCritter_Small; } }
 
-    [Header("Inventory collection types")]
-    // Change these to arrays later
-    private int _shroomAliens;
-    public int PlayerShroomAliens { get { return _shroomAliens; } }
-    private int _crystalAliens;
-    public int PlayerCrystalAliens { get { return _crystalAliens; } }
-    private int _shroomAliensBig;
-    public int PlayerShroomAliensBig { get { return _shroomAliensBig; } }
-    private int _crystalAliensBig;
-    public int PlayerCrystalAliensBig { get { return _crystalAliensBig; } }
+    [SerializeField, Tooltip("The number of small crystal critters the player has in their inventory")]
+    private int _player_crystalCritter_Small;
+    public int Player_Crystal_Small { get { return _player_crystalCritter_Small; } }
 
-    private int _smallCount;
-    public int SmallCount { get { return _smallCount; } }
-    private int _bigCount;
-    public int BigCount { get { return _bigCount; } }
+    [SerializeField, Tooltip("The number of large fungi critters the player has in their inventory")]
+    private int _player_fungiCritter_Large;
+    public int Player_Fungi_Large { get { return _player_fungiCritter_Large; } }
 
-    [SerializeField] private int _smallCap;
-    public int SmallCap { get { return _smallCap; } }
-    [SerializeField] private int _bigCap;
-    public int BigCap { get { return _bigCap; } }
+    [SerializeField, Tooltip("The number of small fungi critters the player has in their inventory")]
+    private int _player_crystalCritter_Large;
+    public int Player_Crystal_Large { get { return _player_crystalCritter_Large; } }
+
+    [Space]
+
+    [SerializeField, Tooltip("The number of small critters the player has in their inventory")]
+    private int _player_smallCount;
+    public int SmallCount { get { return _player_smallCount; } }
+
+    [SerializeField, Tooltip("The number of large critters the player has in their inventory")]
+    private int _player_largeCount;
+    public int LargeCount { get { return _player_largeCount; } }
+
+    [SerializeField, Tooltip("The maximum number of small critters the player can have in their inventory")] 
+    private int _player_smallCap;
+    public int SmallCap { get { return _player_smallCap; } }
+
+    [SerializeField, Tooltip("The maximum number of large critters the player can have in their inventory")] 
+    private int _player_largeCap;
+    public int LargeCap { get { return _player_largeCap; } }
 
     [Header ("Ship Inventory")]
-    private int _shipShroomAliens;
-    public int ShipShroomAliens { get { return _shipShroomAliens; } }
-    private int _shipCrystalAliens;
-    public int ShipCrystalAliens { get { return _shipCrystalAliens; } }
-    private int _shipShroomAliensBig;
-    public int ShipShroomAliensBig { get { return _shipShroomAliensBig; } }
-    private int _shipCrystalAliensBig;
-    public int ShipCrystalAliensBig { get { return _shipCrystalAliensBig; } }
+    [SerializeField, Tooltip("The number of small fungi critters on the ship")]
+    private int _ship_FungiCritter_Small;
+    public int Ship_Fungi_Small { get { return _ship_FungiCritter_Small; } }
 
-    //public int TotalShipInventory;
+    [SerializeField, Tooltip("The number of small crystal critters on the ship")]
+    private int _ship_CrystalCritter_Small;
+    public int ShipCrystalAliens { get { return _ship_CrystalCritter_Small; } }
 
+    [SerializeField, Tooltip("The number of large fungi critters on the ship")]
+    private int _ship_FungiCritter_Large;
+    public int Ship_FungiCritter_Large { get { return _ship_FungiCritter_Large; } }
+
+    [SerializeField, Tooltip("The number of large crystal critters on the ship")]
+    private int _ship_CrystalCritter_Large;
+    public int Ship_CrystalCritter_Large { get { return _ship_CrystalCritter_Large; } }
+
+    #endregion
 
     private void Start()
     {
+        //find the player transform
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        //_collection = FindObjectOfType<Collection>();
+        //find drop off transform
+        _shipDropOff = GameObject.FindGameObjectWithTag("DropOff").transform;
     }
 
+    #region Inventory Management Methods
+
+    //method to update inventories when critter is sucked up
     public void AddCritterToInv(GameObject alien)
     {
+        //assign critter stats
         CreatureStats alienType = alien.GetComponent<CreatureStats>();
+
+        //used for if the critter can be sucked up
         bool added = true;
         switch (alienType.Type)
         {
+            //crystal critter
             case CreatureStats.creatureType.Crystal:
-                if (alienType.IsBig && _bigCount < _bigCap)
-                    _crystalAliensBig++;
-                else if (!alienType.IsBig && _smallCount < _smallCap)
-                    _crystalAliens++;
+                //large critter + is room
+                if (alienType.IsBig && _player_largeCount < _player_largeCap)
+                    _player_crystalCritter_Large++;
+                //small critter + is room
+                else if (!alienType.IsBig && _player_smallCount < _player_smallCap)
+                    _player_crystalCritter_Small++;
+                //is NOT room
                 else
                     added = false;
                 break;
+            //fungi critter
             case CreatureStats.creatureType.Shroom:
-                if (alienType.IsBig && _bigCount < _bigCap)
-                    _shroomAliensBig++;
-                else if (!alienType.IsBig && _smallCount < _smallCap)
-                    _shroomAliens++;
+                //large critter + is room
+                if (alienType.IsBig && _player_largeCount < _player_largeCap)
+                    _player_fungiCritter_Large++;
+                //small critter + is room
+                else if (!alienType.IsBig && _player_smallCount < _player_smallCap)
+                    _player_fungiCritter_Small++;
+                //none of the above (no room)
                 else
                     added = false;
                 break;
@@ -91,129 +120,101 @@ public class Inventory : MonoBehaviour
                 Debug.Log("Typeless creature found, idk what caused it or how it happened but if you are getting this error you might wanna restart.");
                 break;
         }
+        //if the critter has been added (there was room)
         if (added)
+            //play sucked in animation?
+
+            //destroy alien
             Destroy(alien);
 
-        _smallCount = _shroomAliens + _crystalAliens;
-        _bigCount = _crystalAliensBig + _shroomAliensBig;
+        //update counts
+        _player_smallCount = _player_fungiCritter_Small + _player_crystalCritter_Small;
+        _player_largeCount = _player_crystalCritter_Large + _player_fungiCritter_Large;
     }
 
-    /*public void AddSmallShroom(GameObject alien)
-    {
-       _alienType = alien.GetComponent<CreatureStats>();
-
-       if (CreatureStats.creatureType.Shroom == _alienType.Type)
-       {
-           // get image and display
-           ShroomAliens++;
-           Destroy(alien.gameObject);
-
-            // add function for ui desplay
-        }
-        _alienType = null;
-        
-    }
-
-    public void AddBigShroom(GameObject alien)
-    {
-
-       _alienType = alien.GetComponent<CreatureStats>();
-
-       if (CreatureStats.creatureType.Shroom == _alienType.Type)
-       {
-           // get image and display
-           ShroomAliensBig++;
-           Destroy(alien.gameObject);
-
-            // add function for ui desplay
-        }
-        _alienType = null;
-    }
-
-    // here
-    public void AddSmallCrystal(GameObject alien)
-    {
-
-        _alienType = alien.GetComponent<CreatureStats>();
-
-        if (CreatureStats.creatureType.Crystal == _alienType.Type)
-        {
-            // get image and display depending on type
-
-            CrystalAliens++;
-            Destroy(alien.gameObject);
-
-            // add function for ui desplay
-        }
-        _alienType = null;
-    }
-    public void AddBigCrystal(GameObject alien)
-    {
-        _alienType = alien.GetComponent<CreatureStats>();
-
-        if (CreatureStats.creatureType.Crystal == _alienType.Type)
-        {
-            // get image and display depending on type
-
-            CrystalAliensBig++;
-            Destroy(alien.gameObject);
-
-            // add function for ui desplay
-        }
-        _alienType = null;
-    }*/
-
-
+    //moves all critter stored in player inventory to ship inventory
     public void MoveToShip()
     {
-        float distance = Mathf.Abs(Vector3.Distance(_shipDropOff.position, _playerTransform.position));
         //find the distance between the player and the trap
-        //Debug.Log(distance);
+        float distance = Mathf.Abs(Vector3.Distance(_shipDropOff.position, _playerTransform.position));
 
-        if(distance < _dropOffRange)
+        //if the distance between the drop off and the player is less than the drop off range
+        if (distance < _dropOffRange)
         {
+            //update ship inventory
+            _ship_FungiCritter_Small += _player_fungiCritter_Small;
+            _ship_CrystalCritter_Small += _player_crystalCritter_Small;
+            _ship_FungiCritter_Large += _player_fungiCritter_Large;
+            _ship_CrystalCritter_Large += _player_crystalCritter_Large;
 
-            _shipShroomAliens += _shroomAliens;
-            _shipCrystalAliens += _crystalAliens;
-            _shipShroomAliensBig += _shroomAliensBig;
-            _shipCrystalAliensBig += _crystalAliensBig;
-
-            _shroomAliens = _shroomAliensBig = _crystalAliens = _crystalAliensBig = 0;
-
-            /*TotalShipInventory =
-                _shipShroomAliens +
-                _shipCrystalAliens +
-                _shipShroomAliensBig +
-                _shipCrystalAliensBig;
-*/
-            //_collection.SmallAliens = 0;
-            //_collection.BigAliens = 0;
-
-
-
+            //reset player inventory
+            _player_fungiCritter_Small = _player_fungiCritter_Large = _player_crystalCritter_Small = _player_crystalCritter_Large = 0;
         }
-
     }
-
-
-
-
-
-    public void PlayerInventory()
-    {
-
-
-
-        
-    }
-
-    public void ShipInventory()
-    {
-        // crreat ship UI teling player how many is in the ship
-
-       //       TotalShipInventory =
-
-
-
-    }
+    #endregion
 }
+
+/*public void AddSmallShroom(GameObject alien)
+{
+   _alienType = alien.GetComponent<CreatureStats>();
+
+   if (CreatureStats.creatureType.Shroom == _alienType.Type)
+   {
+       // get image and display
+       ShroomAliens++;
+       Destroy(alien.gameObject);
+
+        // add function for ui desplay
+    }
+    _alienType = null;
+
+}
+
+public void AddBigShroom(GameObject alien)
+{
+
+   _alienType = alien.GetComponent<CreatureStats>();
+
+   if (CreatureStats.creatureType.Shroom == _alienType.Type)
+   {
+       // get image and display
+       ShroomAliensBig++;
+       Destroy(alien.gameObject);
+
+        // add function for ui desplay
+    }
+    _alienType = null;
+}
+
+// here
+public void AddSmallCrystal(GameObject alien)
+{
+
+    _alienType = alien.GetComponent<CreatureStats>();
+
+    if (CreatureStats.creatureType.Crystal == _alienType.Type)
+    {
+        // get image and display depending on type
+
+        CrystalAliens++;
+        Destroy(alien.gameObject);
+
+        // add function for ui desplay
+    }
+    _alienType = null;
+}
+public void AddBigCrystal(GameObject alien)
+{
+    _alienType = alien.GetComponent<CreatureStats>();
+
+    if (CreatureStats.creatureType.Crystal == _alienType.Type)
+    {
+        // get image and display depending on type
+
+        CrystalAliensBig++;
+        Destroy(alien.gameObject);
+
+        // add function for ui desplay
+    }
+    _alienType = null;
+}*/
