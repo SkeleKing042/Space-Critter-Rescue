@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2661877897229169175}
   - component: {fileID: 6298387277023896320}
   - component: {fileID: 1374927061807709919}
-  - component: {fileID: 2357586346216726466}
+  - component: {fileID: 5480876906982864579}
   m_Layer: 0
   m_Name: Model_crystal_caveWall_A
   m_TagString: Untagged
@@ -84,14 +84,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2357586346216726466
+--- !u!64 &5480876906982864579
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3501717263608763076}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: be1d6dec3da32aa49aedd3d904d443b7, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
