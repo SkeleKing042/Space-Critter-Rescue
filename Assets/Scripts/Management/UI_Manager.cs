@@ -10,7 +10,6 @@ public class UI_Manager : MonoBehaviour
     private PlayerMovement _playerMovement;
     private TrapDeploy _trapDeploy;
     private Tablet _tablet;
-    private PlayerInventory _playerInventory;
 
 
     [Header("Universal Variables")]
@@ -28,6 +27,22 @@ public class UI_Manager : MonoBehaviour
     private Sprite inputIcon_Y;
     [SerializeField]
     private Sprite inputIcon_X;
+
+    
+
+    #region Backpack HUD
+    [Header("Backpack HUD")]
+    [SerializeField, Tooltip("Slider that displays the amount of LC the player has collected")]
+    private Image _LC_Slider;
+    //[SerializeField, Tooltip("Max")]
+    [SerializeField, Tooltip("Slider that displays the amount of SC the player has collected")]
+    private Image _SC_Slider;
+
+
+
+
+
+    #endregion
 
     #region Jetpack Variables
     [Header("Jetpack Variables")]
@@ -47,28 +62,12 @@ public class UI_Manager : MonoBehaviour
 
     #endregion
 
-    #region Backpack HUD
-    [SerializeField, Tooltip("Slider that displays the amount of LC the player has collected")]
-    private Image _LC_Slider;
-    //[SerializeField, Tooltip("Max")]
-    [SerializeField, Tooltip("Slider that displays the amount of SC the player has collected")]
-    private Image _SC_Slider;
-
-
-
-
-
-    #endregion
-
-
-
     #region Vacuum Catcher Variables
     [Header("Vacuum Catcher Variables")]
     [SerializeField]
     Image VC_InputIcon;
 
     #endregion
-
 
     #region Trap Variables
     [Header("Trap Variables")]
