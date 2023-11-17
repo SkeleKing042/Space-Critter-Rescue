@@ -294,22 +294,21 @@ public class Tablet : MonoBehaviour
     private void SetupBackpack()
     {
         EmptySlots();
-        Vector2 totalCounts = new Vector2(_invRef.ShroomAliensBig + _invRef.CrystalAliensBig, _invRef.ShroomAliens + _invRef.CrystalAliens);
         
-        for(int i = 0; i < totalCounts.x; i++)
+        for(int i = 0; i < _invRef.BigCount; i++)
         {
             _largeBackpackSlots[i].gameObject.SetActive(true);
-            if(i < _invRef.ShroomAliensBig)
+            if(i < _invRef.PlayerShroomAliensBig)
                 _largeBackpackSlots[i].sprite = _critterIcons[0];
             else
                 _largeBackpackSlots[i].sprite = _critterIcons[1];
             if (i >= _largeBackpackSlots.Count - 1)
                 break;
         }
-        for(int i = 0; i < totalCounts.y; i++)
+        for(int i = 0; i < _invRef.SmallCount; i++)
         {
             _smallBackpackSlots[i].gameObject.SetActive(true);
-            if(i < _invRef.ShroomAliens)
+            if(i < _invRef.PlayerShroomAliens)
                 _smallBackpackSlots[i].sprite = _critterIcons[2];
             else
                 _smallBackpackSlots[i].sprite = _critterIcons[3];

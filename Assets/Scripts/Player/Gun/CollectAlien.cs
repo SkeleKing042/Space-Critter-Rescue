@@ -1,5 +1,5 @@
 // Created By Adanna Okoye
-//Last Edited by Adanna Okoye
+//Last Edited by Jackson Lucas
 
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ public class CollectAlien : MonoBehaviour
 
     [Header("Script Refrences")]
     private VacuumGun _vac;
-    private Collection _collection;
+    private Inventory _inv;
     private Trap _catchable;
 
 
@@ -25,7 +25,7 @@ public class CollectAlien : MonoBehaviour
     private void Start()
     {
         _vac = FindObjectOfType<VacuumGun>();
-        _collection = FindObjectOfType<Collection>();
+        _inv = FindObjectOfType<Inventory>();
         _catchable = FindObjectOfType<Trap>();
     }
 
@@ -60,10 +60,8 @@ public class CollectAlien : MonoBehaviour
             if(_vac.Pulling == true)
             {
                 Debug.Log("Pulling check passed");
-                _collection.AddAlienToCollection(creature.gameObject);
-
+                _inv.AddCritterToInv(creature.gameObject);
                 _vac.UnassignAlien(creature.gameObject);
-
             }
         
            // Destroy(creature.gameObject);

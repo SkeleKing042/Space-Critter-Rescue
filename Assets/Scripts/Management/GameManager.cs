@@ -99,12 +99,13 @@ public class GameManager : MonoBehaviour
 
     void VicCheck()
     {
-        _shroomCreatures.PercentCheck(_inv.ShroomAliensBig, _inv.ShroomAliens);
-        _crystalCreatures.PercentCheck(_inv.CrystalAliensBig, _inv.CrystalAliens);
+        _shroomCreatures.PercentCheck(_inv.PlayerShroomAliensBig, _inv.PlayerShroomAliens);
+        _crystalCreatures.PercentCheck(_inv.PlayerCrystalAliensBig, _inv.PlayerCrystalAliens);
     }
+    //MOVE TO TABLET
     public void UpdateAllBars()
     {
-        _shroomCreatures.UpdateBars(_inv.InvShroomAliensBig, _inv.InvShroomAliens);
-        _crystalCreatures.UpdateBars(_inv.InvCrystalAliensBig, _inv.InvCrystalAliens);
+        _shroomCreatures.UpdateBars(_inv.ShipShroomAliensBig, _inv.ShipShroomAliens);
+        _crystalCreatures.UpdateBars(_inv.ShipCrystalAliensBig, _inv.ShipCrystalAliens);
     }
 }

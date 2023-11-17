@@ -1,14 +1,13 @@
 // Created By Adanna Okoye
-// Last edited by Adanna Okoye
+// Last edited by Jackson Lucas
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Collection : MonoBehaviour
 {
-    // fixed varibles
+ /*   // fixed varibles
     [Header("Fixed Varibles")]
-    [SerializeField]
     public float Collected;
   //  public float DropDistance;
     public float TextNumber;
@@ -17,9 +16,12 @@ public class Collection : MonoBehaviour
     public int SmallAliens;
     public int BigAliens;
 
+    [Header("Size Limits")]
+    [SerializeField] private int _smallCap;
+    [SerializeField] private int _bigCap;
     [Header("bool")]
-    public bool SpaceForSmall;
-    public bool SpaceForBig;
+    //public bool SpaceForSmall;
+    //public bool SpaceForBig;
 
     [Header("Invetory Refrence")]
     private Inventory Inventory;
@@ -37,39 +39,33 @@ public class Collection : MonoBehaviour
     /// <param name="alien"></param>
     public void AddAlienToCollection(GameObject alien)
     {
-        if (SmallAliens <= 11)
+        if (SmallAliens < _smallCap && alien.tag == "alien")//  && SpaceForSmall == true)
         {
-            SpaceForSmall = true;
-            if (alien.tag == "alien"  && SpaceForSmall == true)
-            {
-                SmallAliens++;
-                Collected++;
+            SmallAliens++;
+            Collected++;
 
-                Inventory.AddSmallShroom(alien);
-                Inventory.AddSmallCrystal(alien);
-            }
+            Inventory.AddSmallShroom(alien);
+            Inventory.AddSmallCrystal(alien);
         }
-        else
+
+        *//*else
         {
             SpaceForSmall = false;
-        }
-        if(BigAliens <= 1)
+        }*//*
+        if (BigAliens < _bigCap && alien.tag == "bigAlien")// && SpaceForBig == true)
         {
-            SpaceForBig = true;
-            if (alien.tag == "bigAlien" && SpaceForBig == true)
-            {
-                BigAliens++;
-                Collected ++;
-                Inventory.AddBigShroom(alien);
-                Inventory.AddBigCrystal(alien);
+            BigAliens++;
+            Collected++;
+            Inventory.AddBigShroom(alien);
+            Inventory.AddBigCrystal(alien);
 
-            }
         }
-        else
+
+        *//*else
         {
            SpaceForBig = false;
-        }
+        }*//*
         TextNumber = Collected;
     }
-    
+*/    
 }
