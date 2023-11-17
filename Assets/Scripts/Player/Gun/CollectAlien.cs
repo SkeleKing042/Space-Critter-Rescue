@@ -10,14 +10,9 @@ using Unity.VisualScripting;
 
 public class CollectAlien : MonoBehaviour
 {
-    //public TMP_Text AlienUICount;
-    private float AlienCount;
-    public bool mouseDown = false;
-
-    [Header("Script Refrences")]
+    //[Header("Script Refrences")]
     private VacuumGun _vac;
     private Inventory _inv;
-    private Trap _catchable;
 
 
     GameObject Alien;
@@ -26,34 +21,10 @@ public class CollectAlien : MonoBehaviour
     {
         _vac = FindObjectOfType<VacuumGun>();
         _inv = FindObjectOfType<Inventory>();
-        _catchable = FindObjectOfType<Trap>();
     }
-
-
-    private void Update()
-    {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            mouseDown = true;
-            //Vector3 position = PlayerGun.GetComponent<Vector3>;
-        }
-        if (Input.GetButtonUp("Fire1"))
-        {
-            mouseDown = false;
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-        //AlienUICount.text = ": " + collection.TextNumber.ToString();
-
-    }
-
 
     void OnTriggerEnter(Collider creature)
     {
-
-        
         if ((creature.gameObject.tag == "alien" || (creature.gameObject.tag == "bigAlien" && Trap.Catchable == true)))
         {
             Debug.Log("tags passed");
@@ -62,12 +33,7 @@ public class CollectAlien : MonoBehaviour
                 Debug.Log("Pulling check passed");
                 _inv.AddCritterToInv(creature.gameObject);
                 _vac.UnassignAlien(creature.gameObject);
-            }
-        
-           // Destroy(creature.gameObject);
-
-            //Vac.EndPull();
-            
+            }           
         }
     }
 }
