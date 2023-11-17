@@ -30,7 +30,7 @@ public class CollectAlien : MonoBehaviour
         if ((creature.gameObject.tag == "alien" || (creature.gameObject.tag == "bigAlien" && Trap.Catchable == true)))
         {
             Debug.Log("tags passed");
-            Sound.PropagateSound(0.5f);
+           // Sound.PropagateSound(0.0000001f);
 
             if(_vac.Pulling == true)
             {

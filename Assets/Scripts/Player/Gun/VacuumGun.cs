@@ -99,7 +99,7 @@ public class VacuumGun : MonoBehaviour
     {
         // proprapgate sound
 
-        Sound.PropagateSound(0.2f);
+        //Sound.PropagateSound(0.00001f);
 
         Debug.Log("starting");
         Pulling = true;
