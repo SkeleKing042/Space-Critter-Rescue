@@ -655,7 +655,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729186431}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1.983, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -696,6 +696,11 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &737916407 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8109913824263524884, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+  m_PrefabInstance: {fileID: 1755258359}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &759686965 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3390830656048057685, guid: fdd02a1fb8416f244a10747d245c8d9d, type: 3}
@@ -867,6 +872,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3390830656048057685, guid: 1522a61010508d94ead8e05958959bcc, type: 3}
   m_PrefabInstance: {fileID: 966908209}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1709697426 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8185330604015002651, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+  m_PrefabInstance: {fileID: 1755258359}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1725935053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -878,6 +888,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4785168938131265541, guid: ada7bf2c034c2814ebc17d541b8d27b3, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 737916407}
     - target: {fileID: 4785168938131265541, guid: ada7bf2c034c2814ebc17d541b8d27b3, type: 3}
       propertyPath: ShipDropOff
       value: 
@@ -943,6 +957,18 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 176903860}
+    - target: {fileID: 8109913824006202792, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 1709697426}
+    - target: {fileID: 8109913824006202792, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_LookAt
+      value: 
+      objectReference: {fileID: 1709697426}
+    - target: {fileID: 8109913824006202798, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.98300004
+      objectReference: {fileID: 0}
     - target: {fileID: 8109913824263524882, guid: d2f2fb66f60885443a317b6d8e3f8d1d, type: 3}
       propertyPath: m_RootOrder
       value: 2

@@ -4,14 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collection : MonoBehaviour
+public class PlayerInventory : MonoBehaviour
 {
     // fixed varibles
     [Header("Fixed Varibles")]
     [SerializeField]
     public float Collected;
   //  public float DropDistance;
-    public float TextNumber;
 
     [Header("Alien Counts")]
     public int SmallAliens;
@@ -21,13 +20,16 @@ public class Collection : MonoBehaviour
     public bool SpaceForSmall;
     public bool SpaceForBig;
 
+    [Header("Invetory")]
+
     [Header("Invetory Refrence")]
-    private Inventory Inventory;
+    private ShipInventory _shipInventory;
 
 
     private void Start()
     {
-        Inventory = FindObjectOfType<Inventory>();
+        //find reference of inventory
+        _shipInventory = FindObjectOfType<ShipInventory>();
     }
 
 
@@ -43,25 +45,24 @@ public class Collection : MonoBehaviour
             if (alien.tag == "alien"  && SpaceForSmall == true)
             {
                 SmallAliens++;
-                Collected++;
 
-                Inventory.AddSmallShroom(alien);
-                Inventory.AddSmallCrystal(alien);
+                _shipInventory.AddSmallShroom(alien);
+                _shipInventory.AddSmallCrystal(alien);
             }
         }
         else
         {
             SpaceForSmall = false;
         }
+
         if(BigAliens <= 1)
         {
             SpaceForBig = true;
             if (alien.tag == "bigAlien" && SpaceForBig == true)
             {
                 BigAliens++;
-                Collected ++;
-                Inventory.AddBigShroom(alien);
-                Inventory.AddBigCrystal(alien);
+                _shipInventory.AddBigShroom(alien);
+                _shipInventory.AddBigCrystal(alien);
 
             }
         }
@@ -69,7 +70,6 @@ public class Collection : MonoBehaviour
         {
            SpaceForBig = false;
         }
-        TextNumber = Collected;
     }
     
 }

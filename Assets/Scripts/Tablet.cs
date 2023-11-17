@@ -44,7 +44,7 @@ public class Tablet : MonoBehaviour
 
     private UI_Manager _Manager;
 
-    private Inventory _invRef;
+    private ShipInventory _shipInventory;
     [SerializeField] private List<Image> _largeBackpackSlots;
     [SerializeField] private List<Image> _smallBackpackSlots;
     [SerializeField] private List<Sprite> _critterIcons;
@@ -55,7 +55,7 @@ public class Tablet : MonoBehaviour
         _playerMovement = GetComponentInParent<PlayerMovement>();
         _pylonManager = FindObjectOfType<PylonManager>();
         _Manager = FindObjectOfType<UI_Manager>();
-        _invRef = FindObjectOfType<Inventory>();
+        _shipInventory = FindObjectOfType<ShipInventory>();
         _trapDeploy = FindObjectOfType<TrapDeploy>();
 
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
@@ -299,12 +299,12 @@ public class Tablet : MonoBehaviour
     private void SetupBackpack()
     {
         EmptySlots();
-        Vector2 totalCounts = new Vector2(_invRef.ShroomAliensBig + _invRef.CrystalAliensBig, _invRef.ShroomAliens + _invRef.CrystalAliens);
+        Vector2 totalCounts = new Vector2(_shipInventory.ShroomAliensBig + _shipInventory.CrystalAliensBig, _shipInventory.ShroomAliens + _shipInventory.CrystalAliens);
         
         for(int i = 0; i < totalCounts.x; i++)
         {
             _largeBackpackSlots[i].gameObject.SetActive(true);
-            if(i < _invRef.ShroomAliensBig)
+            if(i < _shipInventory.ShroomAliensBig)
                 _largeBackpackSlots[i].sprite = _critterIcons[0];
             else
                 _largeBackpackSlots[i].sprite = _critterIcons[1];
@@ -314,7 +314,7 @@ public class Tablet : MonoBehaviour
         for(int i = 0; i < totalCounts.y; i++)
         {
             _smallBackpackSlots[i].gameObject.SetActive(true);
-            if(i < _invRef.ShroomAliens)
+            if(i < _shipInventory.ShroomAliens)
                 _smallBackpackSlots[i].sprite = _critterIcons[2];
             else
                 _smallBackpackSlots[i].sprite = _critterIcons[3];

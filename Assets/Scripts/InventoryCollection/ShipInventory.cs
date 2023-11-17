@@ -6,26 +6,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Inventory : MonoBehaviour
+public class ShipInventory : MonoBehaviour
 {
-
     //
-    CollectAlien AlienCollection;
-    private List<GameObject> _alienCollection = new List<GameObject>();
     private CreatureStats _alienType;
-    private GameObject _alien;
     public GameObject ShipDropOff;
     public GameObject Player;
 
-    private Collection _collection;
+    private PlayerInventory _playerInventory;
 
     private float _distance;
     public float DropOffRange;
     // create enum later for the different alien types
 
-
     [Header("Inventory collection types")]
-    // Change these to arrays later
     public int ShroomAliens;
     public int CrystalAliens;
     public int ShroomAliensBig;
@@ -42,7 +36,7 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        _collection = FindObjectOfType<Collection>();
+        _playerInventory = FindObjectOfType<PlayerInventory>();
         Player = FindObjectOfType<PlayerMovement>().gameObject;
     }
 
@@ -66,7 +60,6 @@ public class Inventory : MonoBehaviour
 
     public void AddBigShroom(GameObject alien)
     {
-
        _alienType = alien.GetComponent<CreatureStats>();
 
        if (CreatureStats.creatureType.Shroom == _alienType.Type)
@@ -76,6 +69,7 @@ public class Inventory : MonoBehaviour
            Destroy(alien.gameObject);
 
             // add function for ui desplay
+
         }
         _alienType = null;
     }
@@ -142,34 +136,8 @@ public class Inventory : MonoBehaviour
                 InvShroomAliensBig +
                 InvCrystalAliensBig;
 
-            _collection.SmallAliens = 0;
-            _collection.BigAliens = 0;
-
-
-
+            _playerInventory.SmallAliens = 0;
+            _playerInventory.BigAliens = 0;
         }
-
-    }
-
-
-
-
-
-    public void PlayerInventory()
-    {
-
-
-
-        
-    }
-
-    public void ShipInventory()
-    {
-        // crreat ship UI teling player how many is in the ship
-
-       //       TotalShipInventory =
-
-
-
     }
 }
