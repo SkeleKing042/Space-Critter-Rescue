@@ -43,7 +43,7 @@ public class TrapDeploy : MonoBehaviour
     private float _distance;
     private bool _canPickUpTrap;
     public bool CanPickUpTrap { get { return _canPickUpTrap; } }
-    public Animator _animator;
+    public Animator _UI_animator;
 
     /// <summary>
     /// players eqipment
@@ -80,7 +80,7 @@ public class TrapDeploy : MonoBehaviour
         // get rigodbody
         _trapRigid = Trap.GetComponent<Rigidbody>();
 
-        _animator = GetComponent<Animator>();
+        _UI_animator = GameObject.FindGameObjectWithTag("UI").GetComponent<Animator>();
 
     }
     void Update()
@@ -117,7 +117,7 @@ public class TrapDeploy : MonoBehaviour
             // change enum state
             currentlyHolding = CurrentlyHolding.trap;
 
-            _animator.SetTrigger("UI_Trap");
+            _UI_animator.SetTrigger("UI_Trap");
             return;      // return to avoid toggle loop
         }
         if (_trapDeployed == true && currentlyHolding == CurrentlyHolding.vacuum && !_tablet.TabletState)
@@ -126,7 +126,7 @@ public class TrapDeploy : MonoBehaviour
             PlayerGun.SetActive(false);
             currentlyHolding = CurrentlyHolding.detinator;
 
-            _animator.SetTrigger("UI_Trap");
+            _UI_animator.SetTrigger("UI_Trap");
 
             return;
         }
@@ -140,7 +140,7 @@ public class TrapDeploy : MonoBehaviour
             Detenator.SetActive(false);
             currentlyHolding = CurrentlyHolding.vacuum;
 
-            _animator.SetTrigger("UI_Vacuum");
+            _UI_animator.SetTrigger("UI_Vacuum");
             return;  // return to avoid toggle loop
         }
         if ((currentlyHolding == CurrentlyHolding.trap || currentlyHolding == CurrentlyHolding.detinator) && _trapDeployed == true && !_tablet.TabletState)
@@ -149,22 +149,12 @@ public class TrapDeploy : MonoBehaviour
             Detenator.SetActive(false);
             currentlyHolding = CurrentlyHolding.vacuum;
 
-            _animator.SetTrigger("UI_Vacuum");
+            _UI_animator.SetTrigger("UI_Vacuum");
             return;
         }
     }
 
-    public void UpdateHUD()
-    {
-        if (currentlyHolding == TrapDeploy.CurrentlyHolding.vacuum)
-        {
-            _animator.SetTrigger("UI_Vacuum");
-        }
-        else
-        {
-            _animator.SetTrigger("UI_Trap");
-        }
-    }
+    
 
     /// <summary>
     /// of player is currently holding the trap allow to deploy

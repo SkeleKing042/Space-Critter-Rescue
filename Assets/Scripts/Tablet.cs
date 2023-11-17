@@ -15,7 +15,8 @@ public class Tablet : MonoBehaviour
     public bool TabletState;
 
     //[Header("Components")]
-    private Animator _animator;
+    [SerializeField]
+    private Animator _UI_animator;
     private PlayerMovement _playerMovement;
     private PylonManager _pylonManager;
 
@@ -50,7 +51,6 @@ public class Tablet : MonoBehaviour
 
     private void Start()
     {
-        _animator = GetComponentInParent<Animator>();
         _playerMovement = GetComponentInParent<PlayerMovement>();
         _pylonManager = FindObjectOfType<PylonManager>();
         _Manager = FindObjectOfType<UI_Manager>();
@@ -74,7 +74,7 @@ public class Tablet : MonoBehaviour
     {
         if (TabletState)
         {
-            _animator.SetTrigger("UI_Tablet_OFF");
+            _UI_animator.SetTrigger("UI_Tablet_OFF");
             SetTabletState(false);
 
             if (!_tutorRead)
@@ -93,7 +93,7 @@ public class Tablet : MonoBehaviour
         }
         else if (!TabletState)
         {
-            _animator.SetTrigger("UI_Tablet_ON");
+            _UI_animator.SetTrigger("UI_Tablet_ON");
             SetTabletState(true);
 
             _playerMovement.DoMovement = false;

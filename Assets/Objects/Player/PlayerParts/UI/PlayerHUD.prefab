@@ -1188,6 +1188,8 @@ GameObject:
   - component: {fileID: 3364685986447403331}
   - component: {fileID: 3364685986447403332}
   - component: {fileID: 3364685986447403333}
+  - component: {fileID: 6945954609545517184}
+  - component: {fileID: 8536449501632230711}
   m_Layer: 5
   m_Name: PlayerHUD
   m_TagString: Untagged
@@ -1279,6 +1281,53 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!95 &6945954609545517184
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3364685986447403334}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8536449501632230711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3364685986447403334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d31b7db5f99a3804f8b29399384739a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerMovement: {fileID: 0}
+  inputIcon_LT: {fileID: 0}
+  inputIcon_RT: {fileID: 0}
+  inputIcon_LB: {fileID: 0}
+  inputIcon_RB: {fileID: 0}
+  inputIcon_Y: {fileID: 0}
+  inputIcon_X: {fileID: 0}
+  _LC_Slider: {fileID: 0}
+  _SC_Slider: {fileID: 0}
+  _fuelBarMain: {fileID: 0}
+  _fuelSliderMax: 0
+  _fuelSliderMin: 0
+  _fuelSliderDelta: 0
+  VC_InputIcon: {fileID: 0}
+  Trap_InputIcon: {fileID: 0}
 --- !u!1 &3396365289663372375
 GameObject:
   m_ObjectHideFlags: 0

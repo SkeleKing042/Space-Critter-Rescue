@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static TrapDeploy;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -9,9 +10,14 @@ public class UI_Manager : MonoBehaviour
     [Header("Components")]
     [SerializeField]
     private PlayerMovement _playerMovement;
+    [SerializeField]
     private TrapDeploy _trapDeploy;
+    [SerializeField]
     private Tablet _tablet;
+    [SerializeField]
     private Inventory _inventory;
+    [SerializeField]
+    private Animator _UI_animator;
     #endregion
 
 
@@ -74,10 +80,11 @@ public class UI_Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _playerMovement = GetComponent<PlayerMovement>();
-        _trapDeploy = GetComponent<TrapDeploy>();
-        _tablet = GetComponentInChildren<Tablet>();
+        _playerMovement = FindObjectOfType<PlayerMovement>();
+        _trapDeploy = FindObjectOfType<TrapDeploy>();
+        _tablet = FindObjectOfType<Tablet>();
         _inventory = FindObjectOfType<Inventory>();
+        _UI_animator = GetComponent<Animator>();
 
         _fuelSliderDelta = _fuelSliderMax - _fuelSliderMin;
     }
@@ -174,5 +181,16 @@ public class UI_Manager : MonoBehaviour
         _SC_Slider.fillAmount = (float)_inventory.SmallCount / (float)_inventory.SmallCap;
     }
 
-    
+    public void UpdateHUD()
+    {
+        if (_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.vacuum)
+        {
+            _UI_animator.SetTrigger("UI_Vacuum");
+        }
+        else
+        {
+            _UI_animator.SetTrigger("UI_Trap");
+        }
+    }
+
 }
