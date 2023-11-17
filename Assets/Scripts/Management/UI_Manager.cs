@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 public class UI_Manager : MonoBehaviour
 {
-    [Header("Scripts")]
+    #region Components
+    [Header("Components")]
     [SerializeField]
     private PlayerMovement _playerMovement;
     private TrapDeploy _trapDeploy;
     private Tablet _tablet;
-    private GameManager _gameManager;
+    private Inventory _inventory;
+    #endregion
 
 
     [Header("Universal Variables")]
-    [SerializeField]
-    private float UI_speed;
     [SerializeField]
     private Sprite inputIcon_LT;
     [SerializeField]
@@ -35,17 +35,9 @@ public class UI_Manager : MonoBehaviour
     [Header("Backpack HUD")]
     [SerializeField, Tooltip("Slider that displays the amount of LC the player has collected")]
     private Image _LC_Slider;
-    [SerializeField, Tooltip("Maximum LC's the player can store in their inventory")]
-    private int _LC_MAX;
 
     [SerializeField, Tooltip("Slider that displays the amount of SC the player has collected")]
     private Image _SC_Slider;
-    [SerializeField, Tooltip("Maximum SC's the player can store in their inventory")]
-    private int _SC_MAX;
-
-
-
-
     #endregion
 
     #region Jetpack Variables
@@ -85,7 +77,7 @@ public class UI_Manager : MonoBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
         _trapDeploy = GetComponent<TrapDeploy>();
         _tablet = GetComponentInChildren<Tablet>();
-        _gameManager = FindObjectOfType<GameManager>();
+        _inventory = FindObjectOfType<Inventory>();
 
         _fuelSliderDelta = _fuelSliderMax - _fuelSliderMin;
     }
@@ -178,6 +170,9 @@ public class UI_Manager : MonoBehaviour
 
     private void BackpackHUDManager()
     {
-        //_LC_Slider.fillAmount = _gameManager.Small
+        _LC_Slider.fillAmount = (float)_inventory.LargeCount / (float)_inventory.LargeCap;
+        _SC_Slider.fillAmount = (float)_inventory.SmallCount / (float)_inventory.SmallCap;
     }
+
+    
 }
