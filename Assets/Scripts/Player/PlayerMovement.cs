@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public Rigidbody PlayerRigidbody;
     Camera _camera;
-    public Vector2 MovementInput;
+    private Vector2 MovementInput;
     [HideInInspector]
     public bool DoMovement;
     private SoundPropagation _soundPropagation;
@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     private float _sprintScale;
     [SerializeField, Tooltip("The speed that the player stops sprinting at.")]
     private float _sprintCancelLevel;
+    [SerializeField]
+    private Transform _orientedForceObject;
 
     [Header("Jump movement")]
     [SerializeField, Tooltip("The force that the player jumps with.")]
@@ -133,12 +135,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(DoMovement)
         {
+            _orientedForceObject.up = GetGroundNormal();
+            _orientedForceObject.rotation = Quaternion.Euler(_orientedForceObject.rotation.eulerAngles.x, _camera.transform.rotation.eulerAngles.y, _orientedForceObject.rotation.eulerAngles.z);
             //Move the player forwards based on the camera rotation
-            Vector3 camForward = new Vector3(Mathf.Sin(_camera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad), 0, Mathf.Cos(_camera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad));
-            Vector3 forwardForce = camForward * MovementInput.x * _moveAccel * PlayerRigidbody.mass;
-            Vector3 sideForce = _camera.transform.right * MovementInput.y * _strafeAccel * PlayerRigidbody.mass;
-            Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
-            PlayerRigidbody.AddForce(orientedForce * Time.deltaTime);
+            //Debug.DrawRay(transform.position, camForward, Color.blue);
+            Vector3 forwardForce = _orientedForceObject.forward * MovementInput.y * _moveAccel * PlayerRigidbody.mass;
+            Vector3 sideForce = _orientedForceObject.right * MovementInput.x * _strafeAccel * PlayerRigidbody.mass;
+            Debug.Log("Ground norm is " + GetGroundNormal());
+            PlayerRigidbody.AddForce((forwardForce + sideForce) * Time.deltaTime);
 
             if(!_crouched && horizontalVel.magnitude > _maxSpeed * 0.1f)
             {
@@ -164,9 +168,24 @@ public class PlayerMovement : MonoBehaviour
     public void UpdateMovementAxis(Vector2 v)
     {
         //Movement got flipped when I added slope calcs and i don't really wanna implement a proper fix rn (2/11 - Jackson)
-        MovementInput = new Vector2(v.y, v.x);
+        MovementInput = v;
     }
-    public void CrouchPlayer()
+    public void DoCrouch()
+    {
+        if(DoMovement && GroundedCheck())
+        {
+            if (!_crouched)
+                CrouchPlayer();
+            else
+                UncrouchPlayer();
+        }
+    }
+    public void DoCrouch(bool c)
+    {
+        _crouched = c;
+        DoCrouch();
+    }
+    private void CrouchPlayer()
     {
         if (DoMovement)
         {
@@ -181,7 +200,7 @@ public class PlayerMovement : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y - (PlayerHeight / 2), transform.position.z);
         }
     }
-    public void UncrouchPlayer()
+    private void UncrouchPlayer()
     {
         if (DoMovement)
         {
@@ -197,17 +216,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void DoSprint()
     {
-        if (DoMovement)
+        if (DoMovement && !_crouched && GroundedCheck())
         {
-            if (!_crouched)
-            {
-                if (!_flooringIt)
-                    _movementModifier = _sprintScale;
-                else
-                    _movementModifier = 1;
-                _flooringIt = !_flooringIt;
-            }
+            if (!_flooringIt)
+                _movementModifier = _sprintScale;
+            else
+                _movementModifier = 1;
+            _flooringIt = !_flooringIt;
         }
+
 
     }
     public void DoSprint(bool run)
@@ -308,12 +325,11 @@ public class PlayerMovement : MonoBehaviour
                 if (_jetFuel >= _burstBurn)
                 {
                         _soundPropagation.PropagateSound(1);
-                        Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
+                    Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
                     Vector3 forwardForce = camForward * MovementInput.y * _jumpForce * _burstScale.x * PlayerRigidbody.mass * _movementModifier;
                     Vector3 sideForce = _camera.transform.right * MovementInput.x * _jumpForce * _burstScale.x * PlayerRigidbody.mass * _movementModifier;
                     Vector3 upForce = Vector3.up * _jumpForce * _burstScale.y * PlayerRigidbody.mass;
-                    Vector3 orientedForce = Vector3.Cross(forwardForce + sideForce, GetGroundNormal());
-                    PlayerRigidbody.AddForce(orientedForce + upForce, ForceMode.Impulse);
+                    PlayerRigidbody.AddForce(forwardForce + sideForce + upForce, ForceMode.Impulse);
                     _jetFuel -= _burstBurn;
                 }
             }

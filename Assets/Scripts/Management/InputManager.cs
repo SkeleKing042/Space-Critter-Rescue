@@ -158,7 +158,7 @@ public class InputManager : MonoBehaviour
     [Header("Movement")]
     public UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
     public UnityEvent SprintAction = new UnityEvent();
-    public WhileDownEvent CrouchAction = new WhileDownEvent();
+    public UnityEvent CrouchAction = new UnityEvent();
     public UnityEvent JumpAction = new UnityEvent();
     public HoldEvent JetPackAction = new HoldEvent();
 
@@ -192,7 +192,6 @@ public class InputManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
 
         JetPackAction.InitializeAction();
-        CrouchAction.InitializeAction();
         PullAction.InitializeAction();
     }
     void OnJump()
@@ -228,7 +227,7 @@ public class InputManager : MonoBehaviour
     void OnCrouch()
     {
         Debug.Log("OnCrouch called.");
-        CrouchAction.DoEvent();
+        CrouchAction.Invoke();
     }
     void OnToggleTablet()
     {
