@@ -12,13 +12,10 @@ public class Trap : MonoBehaviour
     public VacuumGun Vacuum;
     private CreatureAI AlienAI;
 
-    
-
     [Header("Tool GameObjects")]
     public GameObject Bubble;
     public GameObject playerGun;
     public GameObject Detinator;
-
 
     [Header("Movement Vectors")]
     Vector3 offSet;
@@ -27,23 +24,24 @@ public class Trap : MonoBehaviour
     [Header("Catchable")]
     [SerializeField]
     public static bool Catchable = false;
-
-    
+    [SerializeField]
     private List<GameObject> _alienList = new List<GameObject>();
+
+    [Header("Animator")]
+    [SerializeField, Tooltip("Animator That controls the trap")]
+    private Animator _trap_Animator;
 
     private void Start()
     {
         Vacuum = FindObjectOfType<VacuumGun>();
         Check = FindObjectOfType<TrapDeploy>();
 
-        //playerGun.GetComponent<Gun>().Shoot();
-
-        //AI.GetComponent<VacuumGun>().AlienAI();
-       // Suck.GetComponent<VacuumGun>().CheckMouseDown();
-
         offSet = new Vector3(1, 0, 1);
         lerpPathDestination = transform.position - offSet;
     }
+
+    #region Trap Methods
+
     /// <summary>
     /// initial inputs to start trap
     /// </summary>
@@ -178,4 +176,16 @@ public class Trap : MonoBehaviour
         }
 
     }
+
+    #endregion
+
+    #region Animation
+    public void SetTrigger_ActivateTrap()
+    {
+        _trap_Animator.SetTrigger("Activate Trap");
+    }
+
+
+    #endregion
+
 }

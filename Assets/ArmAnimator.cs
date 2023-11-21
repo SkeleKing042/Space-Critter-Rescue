@@ -20,45 +20,7 @@ public class ArmAnimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            Trigger_ArmDown();
-        }
 
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            Trigger_ArmUp();
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Trigger_Idle();
-        }
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            Trigger_Run();
-        }
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Trigger_TabletDown();
-        }
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Trigger_TabletUp();
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Trigger_TriggerActivated();
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Trigger_TriggerOut();
-        }
     }
 
     private void Trigger_ArmDown()

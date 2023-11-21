@@ -17,7 +17,6 @@ public class TrapDeploy : MonoBehaviour
     public PlayerInput Input;
     private InputAction _PickUp;
 
-
     // Trap Components 
     [Header("Trap Components")]
     public GameObject Trap;
