@@ -27,8 +27,8 @@ public class VacuumGun : MonoBehaviour
     public SoundPropagation Sound;
     private SafteyCheck _obsticleCheck;
 
-    [Header("Gun Components")]
-    public GameObject Vacuum;
+    //[Header("Gun Components")]
+    //public GameObject Vacuum;
 
     // movement and position vectors
     [Header ("Movement and Position Vectors")]
@@ -112,7 +112,7 @@ public class VacuumGun : MonoBehaviour
         // proprapgate sound
 
         //Sound.PropagateSound(0.00001f);
-        if(Vacuum.activeSelf == true)
+        if(gameObject.activeSelf == true)
         {
             Pulling = true;
             foreach (AlienData aData in aData)

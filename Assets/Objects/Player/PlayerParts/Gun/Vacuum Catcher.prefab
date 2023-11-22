@@ -58,7 +58,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4996aa634ed2ce8438b965e99373785f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseDown: 0
 --- !u!1 &2025321122122528732
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,9 +110,11 @@ MonoBehaviour:
   aData: []
   trap: {fileID: 2348558290444998381}
   Bubble: {fileID: 2348558289187759052}
+  Sound: {fileID: 0}
   SuckSpeed: 5
   OffsetFixSpeed: 1
   StunTime: 1
+  layermask: 0
   Pulling: 0
 --- !u!114 &2025321121461694841
 MonoBehaviour:
@@ -329,10 +330,6 @@ PrefabInstance:
     - target: {fileID: 7938936738068382421, guid: 501496f8345900f49a46ae9f9fbc7eda, type: 3}
       propertyPath: m_Name
       value: particle_universal__vacuumGun_vacuumWhirl
-      objectReference: {fileID: 0}
-    - target: {fileID: 7938936738068382426, guid: 501496f8345900f49a46ae9f9fbc7eda, type: 3}
-      propertyPath: looping
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 501496f8345900f49a46ae9f9fbc7eda, type: 3}
