@@ -24,6 +24,8 @@ public class InputManager : MonoBehaviour
         private InputAction _inputAction;
         private bool _doAction;
 
+        [SerializeField] bool _sendDebugLogs = true;
+
         //DOES NOT WORK AS A CONSTRUCTOR
         /// <summary>
         /// Sets up the input action and called the action
@@ -43,13 +45,13 @@ public class InputManager : MonoBehaviour
             _inputAction.started +=
                 _s =>
                 {
-                    Debug.Log("Starting action");
+                    if (_sendDebugLogs) Debug.Log("Starting action");
                     _doAction = true;
                 };
             _inputAction.canceled +=
                 _e =>
                 {
-                    Debug.Log("Ending action.");
+                    if (_sendDebugLogs) Debug.Log("Ending action.");
                     _doAction = false;
                 };
 
@@ -61,7 +63,7 @@ public class InputManager : MonoBehaviour
             while (_doAction)
             {
                 yield return new WaitForSeconds(delay);
-                Debug.Log("Doing action");
+                if (_sendDebugLogs) Debug.Log("Doing action");
                 Action.Invoke();
             }
         }
@@ -74,6 +76,8 @@ public class InputManager : MonoBehaviour
         public InputActionReference InputReference;
         private InputAction _inputAction;
         private bool _doAction;
+
+        [SerializeField] bool _sendDebugLogs = true;
         //DOES NOT WORK AS A CONSTRUCTOR
         /// <summary>
         /// Sets up the input action and called the action
@@ -93,13 +97,13 @@ public class InputManager : MonoBehaviour
             _inputAction.started +=
                 _s =>
                 {
-                    Debug.Log("Starting action");
+                    if (_sendDebugLogs) Debug.Log("Starting action");
                     FirstAction.Invoke();
                 };
             _inputAction.canceled +=
                 _e =>
                 {
-                    Debug.Log("Ending action.");
+                    if (_sendDebugLogs) Debug.Log("Ending action.");
                     SecondAction.Invoke();
                 };
         }
@@ -113,6 +117,8 @@ public class InputManager : MonoBehaviour
         public float ActionDelay = 0.01f;
         private InputAction _inputAction;
         private bool _doAction;
+
+        [SerializeField] bool _sendDebugLogs = true;
         //DOES NOT WORK AS A CONSTRUCTOR
         /// <summary>
         /// Sets up the input action and called the action
@@ -127,13 +133,13 @@ public class InputManager : MonoBehaviour
             _inputAction.started +=
                 _s =>
                 {
-                    Debug.Log("Starting action");
+                    if(_sendDebugLogs) Debug.Log("Starting action");
                     _doAction = true;
                 };
             _inputAction.canceled +=
                 _e =>
                 {
-                    Debug.Log("Ending action.");
+                    if (_sendDebugLogs) Debug.Log("Ending action.");
                     SecondAction.Invoke();
                     _doAction = false;
                 };
@@ -144,8 +150,8 @@ public class InputManager : MonoBehaviour
         {
             while (_doAction)
             {
-               
-                Debug.Log("Doing action");
+
+                if (_sendDebugLogs) Debug.Log("Doing action");
                 FirstAction.Invoke();
                 yield return new WaitForSeconds(delay);
             }
@@ -154,6 +160,7 @@ public class InputManager : MonoBehaviour
 
     [Header("Game Settings")]
     [SerializeField] private bool _lockCursor;
+    [SerializeField] private bool _sendDebugLogs = true;
 
     [Header("Movement")]
     public UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
@@ -161,6 +168,7 @@ public class InputManager : MonoBehaviour
     public UnityEvent CrouchAction = new UnityEvent();
     public UnityEvent JumpAction = new UnityEvent();
     public HoldEvent JetPackAction = new HoldEvent();
+    public UnityEvent<Vector2> LookAction = new UnityEvent<Vector2>();
 
     [Header("Tool actions")]
     public UnityEvent TrapInteractionAction = new UnityEvent();
@@ -196,101 +204,113 @@ public class InputManager : MonoBehaviour
     }
     void OnJump()
     {
-        Debug.Log("OnJump called.");
+        if(_sendDebugLogs) Debug.Log("OnJump called.");
         JumpAction.Invoke();
     }
     void OnJetPack()
     {
-        Debug.Log("OnJetPack called.");
+        if (_sendDebugLogs) Debug.Log("OnJetPack called.");
         if (JetPackAction.DoEvent()) StartCoroutine(JetPackAction.RepeatAction(JetPackAction.ActionDelay));
     }
     void OnSprint()
     {
-        Debug.Log("OnSprint called.");
+        if (_sendDebugLogs) Debug.Log("OnSprint called.");
         SprintAction.Invoke();
     }
     void OnEnableTrap()
     {
-        Debug.Log("Enabling trap.");
+        if (_sendDebugLogs)
+            Debug.Log("Enabling trap.");
         EnableTrapAction.Invoke();
     }
     void OnPickupTrap()
     {
-        Debug.Log("OnPickupTrap called.");
+        if (_sendDebugLogs)
+            Debug.Log("OnPickupTrap called.");
         TrapInteractionAction.Invoke();
     }
     void OnMove(InputValue value)
     {
-        Debug.Log("OnMove called.");
+        if (_sendDebugLogs)
+            Debug.Log("OnMove called.");
         MovementAction.Invoke(value.Get<Vector2>());
     }
     void OnCrouch()
     {
-        Debug.Log("OnCrouch called.");
+        if (_sendDebugLogs)
+            Debug.Log("OnCrouch called.");
         CrouchAction.Invoke();
     }
     void OnToggleTablet()
     {
-        Debug.Log("OnTablet called.");
+        if (_sendDebugLogs)
+            Debug.Log("OnTablet called.");
         TabletAction.Invoke();
     }
     void OnFire()
     {
-        Debug.Log("OnFire called.");
+        if (_sendDebugLogs)
+            Debug.Log("OnFire called.");
         if (PullAction.DoEvent()) StartCoroutine(PullAction.RepeatAction(PullAction.ActionDelay));
         ThrowTrapAction.Invoke();
         DetonateAction.Invoke();
     }
     void OnAltFire()
     {
-        Debug.Log("OnAltFire called.");
+        if (_sendDebugLogs)
+            Debug.Log("OnAltFire called.");
         AltFireAction.Invoke();
     }
     void OnReturnToShip()
     {
-        Debug.Log("Attempting ship return.");
+        if (_sendDebugLogs)
+            Debug.Log("Attempting ship return.");
         ReturnToShipAction.Invoke();
     }
     void OnSwitchTool()
     {
-        Debug.Log("Switching Tools");
+        if (_sendDebugLogs)
+            Debug.Log("Switching Tools");
         SwitchToolAction.Invoke();
     }
 
     void OnMoveTabLeft()
     {
-        Debug.Log("Move tab left called");
+        if (_sendDebugLogs)
+            Debug.Log("Move tab left called");
         MoveTabLeft.Invoke();
     }
     void OnMoveTabRight()
     {
-        Debug.Log("Move tab right called");
+        if (_sendDebugLogs)
+            Debug.Log("Move tab right called");
         MoveTabRight.Invoke();
     }
     void OnMoveTeleportLeft()
     {
-        Debug.Log("Move Teleport Left Called");
+        if (_sendDebugLogs)
+            Debug.Log("Move Teleport Left Called");
         MoveTeleportLeft.Invoke();
     }
     void OnMoveTeleportRight()
     {
-        Debug.Log("Move Teleport Right Called");
+        if (_sendDebugLogs) Debug.Log("Move Teleport Right Called");
         MoveTeleportRight.Invoke();
     }
     void OnSelectTeleport()
     {
-        Debug.Log("On select teleport called");
+        if (_sendDebugLogs) Debug.Log("On select teleport called");
         SelectTeleport.Invoke();
     }
 
     void OnAlienDrop()
     {
-        Debug.Log("Droping aliens");
+        if (_sendDebugLogs) Debug.Log("Droping aliens");
         DropAliensToShip.Invoke();
     }
     void OnDisplayPopup()
     {
-        Debug.Log("Poping up");
+        if (_sendDebugLogs) Debug.Log("Poping up");
         PopupAction.Invoke();
     }
 }
