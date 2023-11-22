@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1736366506863319464}
   - component: {fileID: 3740831790973661481}
   - component: {fileID: 2167122595890920806}
-  - component: {fileID: 4827770801288776778}
+  - component: {fileID: 4493140379684616169}
   m_Layer: 0
   m_Name: Model_red_crystal_B
   m_TagString: Untagged
@@ -84,17 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4827770801288776778
-MeshCollider:
+--- !u!65 &4493140379684616169
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5593628079020496812}
-  m_Material: {fileID: 13400000, guid: be1d6dec3da32aa49aedd3d904d443b7, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 262270905537208364, guid: 9e37b9288584f5e4eb8738dac1980a8e, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 378.14374, y: 436.0157, z: 279.27487}
+  m_Center: {x: -38.774956, y: 167.34915, z: 0.8474884}
