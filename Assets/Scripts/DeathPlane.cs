@@ -14,7 +14,7 @@ public class DeathPlane : MonoBehaviour
         }
         if (other.tag.ToLower() == "trap")
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<TrapDeploy>().pickUp(false);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Equipment>().pickUp(false);
         }
         if (AlienTags.Contains(other.tag))
         {

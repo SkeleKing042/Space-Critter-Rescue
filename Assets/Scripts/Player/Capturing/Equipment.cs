@@ -4,13 +4,16 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-public class TrapDeploy : MonoBehaviour
+public class Equipment : MonoBehaviour
 {
     /*
      * To keep in mind
         - LB to toggle holding trap
         - LT to throw trap if holding
      */
+    [Header("Currently Holding")]
+    [SerializeField]
+    public CurrentlyHolding currentlyHolding;
 
     // inputs
     [Header("Inputs")]
@@ -22,73 +25,63 @@ public class TrapDeploy : MonoBehaviour
     public GameObject Trap;
     private Rigidbody _trapRigid;
     public GameObject Bubble;
-    public GameObject Detenator;
-
-    // player Components
-    [Header("Player Components")]
-    public GameObject PlayerGun;
-    public GameObject Player;
-    private Tablet _tablet;
 
     // trap forces 
-    [Header("Trap Forces")]
+    [Header("Trap Variables")]
     public float PickUpRange;
     public float TrapThrowForce;
-
-    // misc
-    [Header("Misc")]
     private bool _trapDeployed;
     public bool TrapDeployed { get { return _trapDeployed; } }
     private float _distance;
     private bool _canPickUpTrap;
     public bool CanPickUpTrap { get { return _canPickUpTrap; } }
+
+    // player Components
+    [Header("Player Components")]
+    private Tablet _tablet;
+
+    [Header("UI")]
     public Animator _UI_animator;
+
+    [Header("Equipment Animator")]
+    public Animator _Equipment_Animator;
 
     /// <summary>
     /// players eqipment
     /// </summary>
     public enum CurrentlyHolding
     {
-        vacuum,
+        VC,
         trap,
-        detinator
+        detonator
     }
 
-    [SerializeField]
-    public CurrentlyHolding currentlyHolding;
-
+    
     /// <summary>
     /// set starting values in scene
     /// </summary>
     void Start()
     {
-
+        //get the tablet script
         _tablet = FindObjectOfType<Tablet>();
 
-        Detenator.SetActive(false);
-        // input declaration
-        Input = new PlayerInput();
-        _PickUp = Input.Player.AltFire;
-        _PickUp.Enable();
-
         // currently holding set to vacuum & set trap parent
-        currentlyHolding = CurrentlyHolding.vacuum;
-        Trap.transform.SetParent(transform);
-        Trap.SetActive(false);
+        currentlyHolding = CurrentlyHolding.VC;
 
-        // get rigodbody
+        // get rigidbody
         _trapRigid = Trap.GetComponent<Rigidbody>();
 
+        //get the UI animator
         _UI_animator = GameObject.FindGameObjectWithTag("UI").GetComponent<Animator>();
 
     }
     void Update()
     {
-        if ((_trapDeployed == false) && currentlyHolding == CurrentlyHolding.vacuum || Trap.transform.parent != null)
+        if ((_trapDeployed == false) && currentlyHolding == CurrentlyHolding.VC || Trap.transform.parent != null)
         {
             // match the vacuums position and rotation
-            Trap.transform.position = PlayerGun.transform.position;
-            Trap.transform.rotation = PlayerGun.transform.rotation;
+/*            Trap.transform.position = PlayerGun.transform.position;
+            Trap.transform.rotation = PlayerGun.transform.rotation;*/
         }
 
         if (_trapDeployed && Bubble.activeSelf == false)
@@ -106,47 +99,43 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     public void Toggle()
     {
+        //swap to trap
         // make sure the player isnt holding the trap & that the trap is still with the player
-        if (currentlyHolding == CurrentlyHolding.vacuum && _trapDeployed == false && !_tablet.TabletState)
+        if (currentlyHolding == CurrentlyHolding.VC && _trapDeployed == false && !_tablet.TabletState)
         {
-            // set game objects appropriatly
-            PlayerGun.SetActive(false);
-            Trap.SetActive(true);
-
             // change enum state
             currentlyHolding = CurrentlyHolding.trap;
 
             _UI_animator.SetTrigger("UI_Trap");
             return;      // return to avoid toggle loop
         }
-        if (_trapDeployed == true && currentlyHolding == CurrentlyHolding.vacuum && !_tablet.TabletState)
+
+        //swap to detonator
+        if (_trapDeployed == true && currentlyHolding == CurrentlyHolding.VC && !_tablet.TabletState)
         {
-            Detenator.SetActive(true);
-            PlayerGun.SetActive(false);
-            currentlyHolding = CurrentlyHolding.detinator;
+            /*PlayerGun.SetActive(false);*/
+            currentlyHolding = CurrentlyHolding.detonator;
 
             _UI_animator.SetTrigger("UI_Trap");
 
             return;
         }
 
-        // else if chap deployed == true then show detinator
-
+        //equip vaccuum
         if ((currentlyHolding == CurrentlyHolding.trap) && _trapDeployed == false && !_tablet.TabletState)
         {
-            PlayerGun.SetActive(true);
             Trap.SetActive(false);
-            Detenator.SetActive(false);
-            currentlyHolding = CurrentlyHolding.vacuum;
+
+            currentlyHolding = CurrentlyHolding.VC;
 
             _UI_animator.SetTrigger("UI_Vacuum");
             return;  // return to avoid toggle loop
         }
-        if ((currentlyHolding == CurrentlyHolding.trap || currentlyHolding == CurrentlyHolding.detinator) && _trapDeployed == true && !_tablet.TabletState)
+
+        if ((currentlyHolding == CurrentlyHolding.trap || currentlyHolding == CurrentlyHolding.detonator) && _trapDeployed == true && !_tablet.TabletState)
         {
-            PlayerGun.SetActive(true);
-            Detenator.SetActive(false);
-            currentlyHolding = CurrentlyHolding.vacuum;
+            /*PlayerGun.SetActive(true);*/
+            currentlyHolding = CurrentlyHolding.VC;
 
             _UI_animator.SetTrigger("UI_Vacuum");
             return;
@@ -175,8 +164,7 @@ public class TrapDeploy : MonoBehaviour
             _trapRigid.AddForce(Camera.main.transform.forward * TrapThrowForce, ForceMode.Impulse);
 
             // set currently holding to the vacuum
-            currentlyHolding = CurrentlyHolding.detinator;
-            Detenator.SetActive(true);
+            currentlyHolding = CurrentlyHolding.detonator;
 
             // set to true
             _trapDeployed = true;
@@ -217,9 +205,8 @@ public class TrapDeploy : MonoBehaviour
             currentlyHolding = CurrentlyHolding.trap;
 
             // set game objects apprpriatly
-            PlayerGun.SetActive(false);
+            /*PlayerGun.SetActive(false);*/
             Trap.SetActive(true);
-            Detenator.SetActive(false);
 
             // set to false
             _trapDeployed = false;
