@@ -664,7 +664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -937,7 +937,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0fc404fb66dbbfb459a64bf59ad2f122, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1083,7 +1083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1314,20 +1314,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerMovement: {fileID: 0}
-  inputIcon_LT: {fileID: 0}
-  inputIcon_RT: {fileID: 0}
-  inputIcon_LB: {fileID: 0}
-  inputIcon_RB: {fileID: 0}
-  inputIcon_Y: {fileID: 0}
-  inputIcon_X: {fileID: 0}
+  _trapDeploy: {fileID: 0}
+  _tablet: {fileID: 0}
+  _inventory: {fileID: 0}
+  _UI_animator: {fileID: 0}
+  inputMode: 0
+  _spritesGamepad:
+  - {fileID: 21300000, guid: e0b84a207e3468f409ec93f0d0616967, type: 3}
+  - {fileID: 0}
+  - {fileID: 21300000, guid: bfff06f2a99a0f74a8a25aff2afb5bdb, type: 3}
+  - {fileID: 21300000, guid: 161deba755f319c4184bfbcb7e5279ef, type: 3}
+  - {fileID: 21300000, guid: f8ab09a559808eb4a9ed057e4549f07d, type: 3}
+  - {fileID: 21300000, guid: e0b84a207e3468f409ec93f0d0616967, type: 3}
+  _spritesKeyboard:
+  - {fileID: 21300000, guid: f8ef9df803760c74b99467e691fc2aca, type: 3}
+  - {fileID: 0}
+  - {fileID: 21300000, guid: 744c45bbd30d8934db58f3982def83be, type: 3}
+  - {fileID: 21300000, guid: a37f67108eed7554ba8a8b1db1ec609b, type: 3}
+  - {fileID: 21300000, guid: d04c0bcd22d01d64795d7ec73c1126a8, type: 3}
+  - {fileID: 21300000, guid: f8ef9df803760c74b99467e691fc2aca, type: 3}
   _LC_Slider: {fileID: 0}
   _SC_Slider: {fileID: 0}
   _fuelBarMain: {fileID: 0}
   _fuelSliderMax: 0
   _fuelSliderMin: 0
   _fuelSliderDelta: 0
-  VC_InputIcon: {fileID: 0}
-  Trap_InputIcon: {fileID: 0}
+  _VCSprite: {fileID: 21300000, guid: 3f69fe5a98acc324a8a0dac73c7c18d0, type: 3}
+  _ShipSprite: {fileID: 21300000, guid: 39e3204e5d4d58945b9cd6a6ce466443, type: 3}
+  VC_IconImage: {fileID: 5716082115587237453}
+  VC_InputImage: {fileID: 1393091509887755344}
+  _trapSprite: {fileID: 21300000, guid: 18411b3a8ac0f4b40a5cb8d4567cc01b, type: 3}
+  _pickupTrapSprite: {fileID: 21300000, guid: 18411b3a8ac0f4b40a5cb8d4567cc01b, type: 3}
+  _detonatorSprite: {fileID: 21300000, guid: 086cf0af82b598044b50a3e8ecfe1121, type: 3}
+  Trap_IconImage: {fileID: 9029940793731802816}
+  Trap_InputImage: {fileID: 1167445298751661333}
 --- !u!1 &3396365289663372375
 GameObject:
   m_ObjectHideFlags: 0
@@ -2399,7 +2419,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: af6af7cc293e3c444a456696726c40d9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8c83c3e3d35ca8949bcd4fee80c5b9a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

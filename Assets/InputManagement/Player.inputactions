@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PickupTrap",
-                    "type": "Button",
-                    "id": "2c07340e-8973-4b4f-bd01-81d4e4767d2f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Move",
                     "type": "Value",
                     "id": "b185f994-a651-4cba-9c81-8f87c0f157b6",
@@ -87,6 +78,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "PickupTrap",
+                    "type": "Button",
+                    "id": "2c07340e-8973-4b4f-bd01-81d4e4767d2f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "EnableTrap",
                     "type": "Button",
                     "id": "e51eea2d-f941-40f2-a0ed-310b878a9aea",
@@ -99,6 +99,15 @@
                     "name": "SwitchTool",
                     "type": "Button",
                     "id": "f66e18a3-ceeb-4439-a854-dc91452d67e7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AlienDrop",
+                    "type": "Button",
+                    "id": "a614358b-78c4-42f6-86b2-6e5fc122df38",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -153,15 +162,6 @@
                     "name": "MoveTabLeft",
                     "type": "Button",
                     "id": "3d173307-1043-4522-aa74-ba6c7040f1db",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "AlienDrop",
-                    "type": "Button",
-                    "id": "a614358b-78c4-42f6-86b2-6e5fc122df38",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -316,7 +316,7 @@
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
+                    "groups": "Gamepad",
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -395,28 +395,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Sprint",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "76ea8442-616b-416f-80de-8594c25dc6b2",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PickupTrap",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "57a90032-6f28-4d7d-8207-f3b43dfac22c",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PickupTrap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -664,6 +642,17 @@
                 },
                 {
                     "name": "",
+                    "id": "790ad9c0-8e7b-4f71-9ab8-a30ff1abc752",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DisplayPopup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8a51103e-1849-4a13-b292-65d01598f5f4",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -686,12 +675,23 @@
                 },
                 {
                     "name": "",
-                    "id": "790ad9c0-8e7b-4f71-9ab8-a30ff1abc752",
-                    "path": "<Keyboard>/o",
+                    "id": "76ea8442-616b-416f-80de-8594c25dc6b2",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "DisplayPopup",
+                    "action": "PickupTrap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "57a90032-6f28-4d7d-8207-f3b43dfac22c",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PickupTrap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
