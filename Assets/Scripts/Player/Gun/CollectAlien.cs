@@ -1,5 +1,5 @@
 // Created By Adanna Okoye
-//Last Edited by Jackson Lucas
+//Last Edited by Adanna Okoye
 
 using System.Collections;
 using System.Collections.Generic;
@@ -30,7 +30,8 @@ public class CollectAlien : MonoBehaviour
            // Debug.Log("tags passed");
             if(_vac.Pulling == true)
             {
-              //  Debug.Log("Pulling check passed");
+                Debug.Log("get stareeddd");
+                //  Debug.Log("Pulling check passed");
                 _inv.AddCritterToInv(creature.gameObject);
                 _vac.UnassignAlien(creature.gameObject);
             }           

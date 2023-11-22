@@ -144,7 +144,7 @@ public class VacuumGun : MonoBehaviour
                 catch (Exception e)
                 {
                     Debug.Log(e);
-                
+                    
                 }
 
             }

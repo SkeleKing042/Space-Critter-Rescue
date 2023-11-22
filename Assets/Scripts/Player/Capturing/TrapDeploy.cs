@@ -29,6 +29,7 @@ public class TrapDeploy : MonoBehaviour
     public GameObject PlayerGun;
     public GameObject Player;
     private Tablet _tablet;
+    private VacuumGun _pulling;
 
     // trap forces 
     [Header("Trap Forces")]
@@ -62,8 +63,9 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     void Start()
     {
-
+        
         _tablet = FindObjectOfType<Tablet>();
+        _pulling = FindObjectOfType<VacuumGun>();
 
         Detenator.SetActive(false);
         // input declaration
@@ -115,6 +117,7 @@ public class TrapDeploy : MonoBehaviour
 
             // change enum state
             currentlyHolding = CurrentlyHolding.trap;
+            _pulling.EndPull();
 
             _UI_animator.SetTrigger("UI_Trap");
             return;      // return to avoid toggle loop
@@ -124,6 +127,7 @@ public class TrapDeploy : MonoBehaviour
             Detenator.SetActive(true);
             PlayerGun.SetActive(false);
             currentlyHolding = CurrentlyHolding.detinator;
+            _pulling.EndPull();
 
             _UI_animator.SetTrigger("UI_Trap");
 
