@@ -15,7 +15,8 @@ public class Tablet : MonoBehaviour
     public bool TabletState;
 
     //[Header("Components")]
-    private Animator _animator;
+    [SerializeField]
+    private Animator _UI_animator;
     private PlayerMovement _playerMovement;
     private PylonManager _pylonManager;
 
@@ -50,7 +51,6 @@ public class Tablet : MonoBehaviour
 
     private void Start()
     {
-        _animator = GetComponentInParent<Animator>();
         _playerMovement = GetComponentInParent<PlayerMovement>();
         _pylonManager = FindObjectOfType<PylonManager>();
         _Manager = FindObjectOfType<UI_Manager>();
@@ -62,7 +62,7 @@ public class Tablet : MonoBehaviour
 
         ToggleTablet();
         SetupBackpack();
-        FindObjectOfType<GameManager>().UpdateAllBars();
+        //FindObjectOfType<GameManager>().UpdateAllBars();
         SetTeleportLocationColors();
     }
 
@@ -74,7 +74,7 @@ public class Tablet : MonoBehaviour
     {
         if (TabletState)
         {
-            _animator.SetTrigger("Lower Tablet");
+            _UI_animator.SetTrigger("UI_Tablet_OFF");
             SetTabletState(false);
 
             if (!_tutorRead)
@@ -93,7 +93,7 @@ public class Tablet : MonoBehaviour
         }
         else if (!TabletState)
         {
-            _animator.SetTrigger("Raise Tablet");
+            _UI_animator.SetTrigger("UI_Tablet_ON");
             SetTabletState(true);
 
             _playerMovement.DoMovement = false;
@@ -138,7 +138,7 @@ public class Tablet : MonoBehaviour
                 SetupBackpack();
                 break;
             case 1:
-                FindObjectOfType<GameManager>().UpdateAllBars();
+                //FindObjectOfType<GameManager>().UpdateAllBars();
                 break;
             case 2:
                 SetTeleportLocationColors();
@@ -295,10 +295,10 @@ public class Tablet : MonoBehaviour
     {
         EmptySlots();
         
-        for(int i = 0; i < _invRef.BigCount; i++)
+        for(int i = 0; i < _invRef.LargeCount; i++)
         {
             _largeBackpackSlots[i].gameObject.SetActive(true);
-            if(i < _invRef.PlayerShroomAliensBig)
+            if(i < _invRef.Player_Fungi_Large)
                 _largeBackpackSlots[i].sprite = _critterIcons[0];
             else
                 _largeBackpackSlots[i].sprite = _critterIcons[1];
@@ -308,7 +308,7 @@ public class Tablet : MonoBehaviour
         for(int i = 0; i < _invRef.SmallCount; i++)
         {
             _smallBackpackSlots[i].gameObject.SetActive(true);
-            if(i < _invRef.PlayerShroomAliens)
+            if(i < _invRef.Player_Fungi_Small)
                 _smallBackpackSlots[i].sprite = _critterIcons[2];
             else
                 _smallBackpackSlots[i].sprite = _critterIcons[3];

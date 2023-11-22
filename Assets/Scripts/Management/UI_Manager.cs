@@ -2,32 +2,83 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static TrapDeploy;
 
 public class UI_Manager : MonoBehaviour
 {
-    [Header("Scripts")]
+    //VARIABLES
+    #region Component Variables
+    [Header("Components")]
     [SerializeField]
     private PlayerMovement _playerMovement;
+    [SerializeField]
     private TrapDeploy _trapDeploy;
+    [SerializeField]
     private Tablet _tablet;
-    private PlayerInventory _playerInventory;
+    [SerializeField]
+    private Inventory _inventory;
+    [SerializeField]
+    private Animator _UI_animator;
+    #endregion
+
+    #region Input Mode Variables and Enum
+    [SerializeField]
+    private InputMode inputMode;
+
+    public enum InputMode
+    {
+        gamepad,
+        keyboard,
+    }
+
+    #endregion
+
+    #region UI State Variable and Enum
+    [SerializeField, Tooltip("The current state the UI is in, used to define the current icon and inpute sprites")]
+    private UIState _UIState;
+
+    public enum UIState
+    {
+        VC_Suck_Trap,
+        VC_Suck_Detonator,
+        VC_DepositCritters_Trap,
+        VC_DepositCritters_Detonator,
+        Trap_ThrowTrap_VC,
+        Detonator_ActivateTrap_VC,
+        Detonator_PickUpTrap_VC,
+    }
 
 
-    [Header("Universal Variables")]
+
+    #endregion
+
+    #region Input Icons
+    [Header("Input Icons")]
+
+    //ARRAY INDEX LIST
+    //0 FIRE
+    //1 ALT FIRE
+    //2 PICKUP TRAP
+    //3 ENABLE TRAP
+    //4 SWITCH TOOL
+    //5 ALIEN DROP
+    //6 TOGGLE TABLET
+
     [SerializeField]
-    private float UI_speed;
+    private Sprite[] _spritesGamepad;
     [SerializeField]
-    private Sprite inputIcon_LT;
-    [SerializeField]
-    private Sprite inputIcon_RT;
-    [SerializeField]
-    private Sprite inputIcon_LB;
-    [SerializeField]
-    private Sprite inputIcon_RB;
-    [SerializeField]
-    private Sprite inputIcon_Y;
-    [SerializeField]
-    private Sprite inputIcon_X;
+    private Sprite[] _spritesKeyboard;
+
+    #endregion
+
+    #region Backpack HUD Variables
+    [Header("Backpack HUD")]
+    [SerializeField, Tooltip("Slider that displays the amount of LC the player has collected")]
+    private Image _LC_Slider;
+
+    [SerializeField, Tooltip("Slider that displays the amount of SC the player has collected")]
+    private Image _SC_Slider;
+    #endregion
 
     #region Jetpack Variables
     [Header("Jetpack Variables")]
@@ -42,48 +93,103 @@ public class UI_Manager : MonoBehaviour
     [SerializeField]
     private float _fuelSliderDelta;
 
+    [Space]
+    [SerializeField, Tooltip("The sprite for using the jetpack, gamepad")]
+    private Sprite _jetpack_SpriteGamepad;
+    [SerializeField, Tooltip("The sprite for using the jetpack, keyboard")]
+    private Sprite _jetpack_SpriteKeyboard;
+
+    [Space]
+
+    [SerializeField, Tooltip("The image which displays the jetpack input")]
+    private Image _jetpack_InputImage;
+
+    [Space]
+    [SerializeField, Tooltip("Image that covers the jetpack UI and shows if the jetpack is enabled / disabled")]
+    private Image _jetpack_CoverImage;
+    [SerializeField, Tooltip("The max opacity of the cover image")]
+    private float _jetpack_CoverImage_OpacityMax;
+    [SerializeField, Tooltip("The min opacity of the cover image")]
+    private float _jetpack_CoverImage_OpacityMin;
 
 
 
     #endregion
-
-    #region Backpack HUD
-    [SerializeField, Tooltip("Slider that displays the amount of LC the player has collected")]
-    private Image _LC_Slider;
-    //[SerializeField, Tooltip("Max")]
-    [SerializeField, Tooltip("Slider that displays the amount of SC the player has collected")]
-    private Image _SC_Slider;
-
-
-
-
-
-    #endregion
-
-
 
     #region Vacuum Catcher Variables
     [Header("Vacuum Catcher Variables")]
-    [SerializeField]
-    Image VC_InputIcon;
+    [SerializeField, Tooltip("The sprite of the VC")]
+    private Sprite _VCSprite;
+    [SerializeField, Tooltip("The sprite that shows the critters are going to be deposited in the ship")]
+    private Sprite _ShipSprite;
+
+    [Space]
+
+    [SerializeField, Tooltip("The image that displays the Icon for the VC")]
+    private Image VC_IconImage;
+
+    [SerializeField, Tooltip("The image that displays the Input for the VC")]
+    private Image VC_InputImage;
 
     #endregion
 
+    #region Trap and Detonator Variables
+    [Header("Trap and Detonator Variables")]
+    [SerializeField, Tooltip("The sprite of the trap")]
+    private Sprite _trapSprite;
 
-    #region Trap Variables
-    [Header("Trap Variables")]
-    [SerializeField]
-    Image Trap_InputIcon;
+    [SerializeField, Tooltip("The sprite of picking up the trap")]
+    private Sprite _pickupTrapSprite;
+
+    [SerializeField, Tooltip("The sprite of the detonator")]
+    private Sprite _detonatorSprite;
+
+    [Space]
+
+    [SerializeField, Tooltip("The image that displays the icon of the trap or the detonator")]
+    private Image Trap_IconImage;
+
+    [SerializeField, Tooltip("The image that displays input for the trap / detonator")]
+    private Image Trap_InputImage;
     #endregion
+
+    #region Tablet Variables
+    [Header("Tablet Variables")]
+    [SerializeField, Tooltip("Tablet toggle sprite, gamepad")]
+    private Sprite _toggleTabletIcon_Gamepad;
+
+    [SerializeField, Tooltip("Tablet toggle sprite, keyboard")]
+    private Sprite _toggleTabletIcon_Keyboard;
+
+    [Space]
+
+    [SerializeField, Tooltip("tablet input icon Image")]
+    private Image _TabletToggleImage;
+
+    #endregion region
+
+    //METHODS
+    #region Start and Update
 
     // Start is called before the first frame update
     void Start()
     {
-        _playerMovement = GetComponent<PlayerMovement>();
-        _trapDeploy = GetComponent<TrapDeploy>();
-        _tablet = GetComponentInChildren<Tablet>();
+        _playerMovement = FindObjectOfType<PlayerMovement>();
+        _trapDeploy = FindObjectOfType<TrapDeploy>();
+        _tablet = FindObjectOfType<Tablet>();
+        _inventory = FindObjectOfType<Inventory>();
+        _UI_animator = GetComponent<Animator>();
 
         _fuelSliderDelta = _fuelSliderMax - _fuelSliderMin;
+
+        ResetUI();
+    }
+
+    private void ResetUI()
+    {
+        SetUIState(_UIState);
+        SetJetpackUI();
+        SetTabletToggleUI();
     }
 
     // Update is called once per frame
@@ -92,66 +198,294 @@ public class UI_Manager : MonoBehaviour
         if (!_tablet.TabletState)
         {
             JetPackUI_Manager();
-            VacuumCatcherUI_Manager();
-            TrapUI_Manager();
             BackpackHUDManager();
         }
-        else
-        {
-
-        }
     }
 
+    #endregion
 
-
-
-    private void TrapUI_Manager()
+    #region HUD Methods
+    public void UpdateHUDAnimator()
     {
-        /*//ON
-        if (_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.trap || _trapDeploy.TrapDeployed == true)
+        if (_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.vacuum)
         {
-            _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[0], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
-            Trap_InputIcon.sprite = inputIcon_RT;
+            SetTrigger_UI_Vaccuum();
         }
-        //OFF
         else
         {
-            _Trap_RectTransform.anchoredPosition = Vector2.Lerp(_Trap_RectTransform.anchoredPosition, new Vector2(Trap_Positions[1], _Trap_RectTransform.anchoredPosition.y), UI_speed * Time.deltaTime);
-            Trap_InputIcon.sprite = inputIcon_LB;
-        }*/
-
-        //pickup trap / activate trap
-        if(_trapDeploy.TrapDeployed == true)
-        {
-            if(_trapDeploy.CanPickUpTrap == false)
-            {
-                Trap_InputIcon.sprite = inputIcon_Y;
-            }
-            else
-            {
-                Trap_InputIcon.sprite = inputIcon_X;
-            }
+            SetTrigger_UI_Trap();
         }
     }
 
-
-    private void VacuumCatcherUI_Manager()
+    public void SetUIState(UIState _inputUIState)
     {
-        //ON
-        if(_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.vacuum)
+        _UIState = _inputUIState;
+
+        switch (_UIState)
         {
-            
-            VC_InputIcon.sprite = inputIcon_RT;
-        }
-        //OFF
-        else
-        {
-            
-            VC_InputIcon.sprite = inputIcon_LB;
+            case UIState.VC_Suck_Trap:
+                SetUI_VC_Suck_Trap();
+                break;
+            case UIState.VC_Suck_Detonator:
+                SetUI_VC_Suck_Detonator();
+                break;
+            case UIState.VC_DepositCritters_Trap:
+                SetUI_VC_DepositCritters_Trap();
+                break;
+            case UIState.VC_DepositCritters_Detonator:
+                SetUI_VC_DepositCritters_Detonator();
+                break;
+            case UIState.Trap_ThrowTrap_VC:
+                SetUI_Trap_ThrowTrap_VC();
+                break;
+            case UIState.Detonator_PickUpTrap_VC:
+                SetUI_Detonator_PickUpTrap_VC();
+                break;
+            case UIState.Detonator_ActivateTrap_VC:
+                SetUI_Detonator_ActivateTrap_VC();
+                break;
         }
     }
 
 
+    //Enlarges the UI for the Vaccuum Catcher
+    public void SetTrigger_UI_Vaccuum()
+    {
+        _UI_animator.SetTrigger("UI_Vacuum");
+    }
+
+    //Enlarges the UI for the trap
+    public void SetTrigger_UI_Trap()
+    {
+        _UI_animator.SetTrigger("UI_Trap");
+    }
+
+    //Sets UI
+    //Holding VC, Succ, Swap to trap
+    public void SetUI_VC_Suck_Trap()
+    {
+        //Icons
+        VC_IconImage.sprite = _VCSprite;
+        Trap_IconImage.sprite = _trapSprite;
+
+        //Inputs
+        //gamepad
+        if(inputMode == InputMode.gamepad)
+        {
+            //fire
+            VC_InputImage.sprite = _spritesGamepad[0];
+
+            //switch
+            Trap_InputImage.sprite = _spritesGamepad[4];
+        }
+        //keyboard
+        else if(inputMode == InputMode.keyboard)
+        {
+            //fire
+            VC_InputImage.sprite = _spritesKeyboard[0];
+
+            //switch
+            Trap_InputImage.sprite = _spritesKeyboard[4];
+        }
+
+        //trigger ui animator
+        SetTrigger_UI_Vaccuum();
+    }
+
+    //Sets UI
+    //Holding VC, Succ, Swap to Detonator 
+    public void SetUI_VC_Suck_Detonator()
+    {
+        //Icons
+        VC_IconImage.sprite = _VCSprite;
+        Trap_IconImage.sprite = _detonatorSprite;
+
+        //Inputs
+        //gamepad
+        if (inputMode == InputMode.gamepad)
+        {
+            //fire
+            VC_InputImage.sprite = _spritesGamepad[0];
+
+            //switch
+            Trap_InputImage.sprite = _spritesGamepad[4];
+        }
+        //keyboard
+        else if (inputMode == InputMode.keyboard)
+        {
+            //fire
+            VC_InputImage.sprite = _spritesKeyboard[0];
+
+            //switch
+            Trap_InputImage.sprite = _spritesKeyboard[4];
+        }
+
+        //trigger ui animator
+        SetTrigger_UI_Vaccuum();
+    }
+
+    //Sets UI
+    //Holding VC, Deposit Critters, Swap to Trap
+    public void SetUI_VC_DepositCritters_Trap()
+    {
+        //Icons
+        VC_IconImage.sprite = _ShipSprite;
+        Trap_IconImage.sprite = _trapSprite;
+
+        //Inputs
+        //gamepad
+        if (inputMode == InputMode.gamepad)
+        {
+            //fire
+            VC_InputImage.sprite = _spritesGamepad[5];
+
+            //switch
+            Trap_InputImage.sprite = _spritesGamepad[4];
+        }
+        //keyboard
+        else if (inputMode == InputMode.keyboard)
+        {
+            //fire
+            VC_InputImage.sprite = _spritesKeyboard[5];
+
+            //switch
+            Trap_InputImage.sprite = _spritesKeyboard[4];
+        }
+
+        //trigger ui animator
+        SetTrigger_UI_Vaccuum();
+    }
+
+    //Sets UI
+    //Holding VC, Deposit Critters, Swap to Trap
+    public void SetUI_VC_DepositCritters_Detonator()
+    {
+        //Icons
+        VC_IconImage.sprite = _ShipSprite;
+        Trap_IconImage.sprite = _detonatorSprite;
+
+        //Inputs
+        //gamepad
+        if (inputMode == InputMode.gamepad)
+        {
+            //fire
+            VC_InputImage.sprite = _spritesGamepad[5];
+
+            //switch
+            Trap_InputImage.sprite = _spritesGamepad[4];
+        }
+        //keyboard
+        else if (inputMode == InputMode.keyboard)
+        {
+            //fire
+            VC_InputImage.sprite = _spritesKeyboard[5];
+
+            //switch
+            Trap_InputImage.sprite = _spritesKeyboard[4];
+        }
+
+        //trigger ui animator
+        SetTrigger_UI_Vaccuum();
+    }
+
+    //Sets UI
+    //Holding Trap, Swap to VC
+    public void SetUI_Trap_ThrowTrap_VC()
+    {
+        //Icons
+        VC_IconImage.sprite = _VCSprite;
+        Trap_IconImage.sprite = _trapSprite;
+
+        //Inputs
+        //gamepad
+        if (inputMode == InputMode.gamepad)
+        {
+            //fire
+            VC_InputImage.sprite = _spritesGamepad[4];
+
+            //switch
+            Trap_InputImage.sprite = _spritesGamepad[0];
+        }
+        //keyboard
+        else if (inputMode == InputMode.keyboard)
+        {
+            //fire
+            VC_InputImage.sprite = _spritesKeyboard[4];
+
+            //switch
+            Trap_InputImage.sprite = _spritesKeyboard[0];
+        }
+
+        //trigger animator
+        SetTrigger_UI_Trap();
+    }
+
+    //Sets UI
+    //Holding Detonator, display activate input, Swap to VC
+    public void SetUI_Detonator_ActivateTrap_VC()
+    {
+        //Icons
+        VC_IconImage.sprite = _VCSprite;
+        Trap_IconImage.sprite = _detonatorSprite;
+
+        //Inputs
+        //gamepad
+        if (inputMode == InputMode.gamepad)
+        {
+            //swap
+            VC_InputImage.sprite = _spritesGamepad[4];
+
+            //enable
+            Trap_InputImage.sprite = _spritesGamepad[3];
+        }
+        //keyboard
+        else if (inputMode == InputMode.keyboard)
+        {
+            //swap
+            VC_InputImage.sprite = _spritesKeyboard[4];
+
+            //enable
+            Trap_InputImage.sprite = _spritesKeyboard[3];
+        }
+
+        //trigger animator
+        SetTrigger_UI_Trap();
+    }
+
+    //Sets UI, display pickup input, Swap to VC
+    public void SetUI_Detonator_PickUpTrap_VC()
+    {
+        //Icons
+        VC_IconImage.sprite = _VCSprite;
+        Trap_IconImage.sprite = _pickupTrapSprite;
+
+        //Inputs
+        //gamepad
+        if (inputMode == InputMode.gamepad)
+        {
+            //fire
+            VC_InputImage.sprite = _spritesGamepad[4];
+
+            //switch
+            Trap_InputImage.sprite = _spritesGamepad[2];
+        }
+        //keyboard
+        else if (inputMode == InputMode.keyboard)
+        {
+            //fire
+            VC_InputImage.sprite = _spritesKeyboard[4];
+
+            //switch
+            Trap_InputImage.sprite = _spritesKeyboard[2];
+        }
+
+        //trigger animator
+        SetTrigger_UI_Trap();
+    }
+
+    #endregion
+
+    #region Jetpack Methods
     private void JetPackUI_Manager()
     {
 
@@ -187,8 +521,54 @@ public class UI_Manager : MonoBehaviour
             _delayedBar.fillAmount = _fuelBarMain.fillAmount;*/
     }
 
+    public void SetJetpackUI()
+    {
+        switch (inputMode)
+        {
+            case InputMode.gamepad:
+                _jetpack_InputImage.sprite = _jetpack_SpriteGamepad;
+                break;
+            case InputMode.keyboard:
+                _jetpack_InputImage.sprite = _jetpack_SpriteKeyboard;
+                break;
+        }
+    }
+
+    public void JetpackUI_Disable()
+    {
+        _jetpack_CoverImage.color = new Color(0, 0, 0, _jetpack_CoverImage_OpacityMax / 255);
+    }
+
+    public void JetpackUI_Enable()
+    {
+        _jetpack_CoverImage.color = new Color(0, 0, 0, _jetpack_CoverImage_OpacityMin/255);
+    }
+
+    #endregion
+
+    #region Backpack HUD Methods
     private void BackpackHUDManager()
     {
-
+        _LC_Slider.fillAmount = (float)_inventory.LargeCount / (float)_inventory.LargeCap;
+        _SC_Slider.fillAmount = (float)_inventory.SmallCount / (float)_inventory.SmallCap;
     }
+    #endregion
+
+    #region Tablet Methods
+    public void SetTabletToggleUI()
+    {
+        switch (inputMode)
+        {
+            case InputMode.gamepad:
+                _TabletToggleImage.sprite = _toggleTabletIcon_Gamepad;
+                break;
+            case InputMode.keyboard:
+                _TabletToggleImage.sprite = _toggleTabletIcon_Keyboard;
+                break;
+        }
+    }
+
+
+    #endregion
+
 }

@@ -55,15 +55,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""PickupTrap"",
-                    ""type"": ""Button"",
-                    ""id"": ""2c07340e-8973-4b4f-bd01-81d4e4767d2f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""b185f994-a651-4cba-9c81-8f87c0f157b6"",
@@ -109,6 +100,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""PickupTrap"",
+                    ""type"": ""Button"",
+                    ""id"": ""2c07340e-8973-4b4f-bd01-81d4e4767d2f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""EnableTrap"",
                     ""type"": ""Button"",
                     ""id"": ""e51eea2d-f941-40f2-a0ed-310b878a9aea"",
@@ -121,6 +121,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""name"": ""SwitchTool"",
                     ""type"": ""Button"",
                     ""id"": ""f66e18a3-ceeb-4439-a854-dc91452d67e7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AlienDrop"",
+                    ""type"": ""Button"",
+                    ""id"": ""a614358b-78c4-42f6-86b2-6e5fc122df38"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -175,15 +184,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""name"": ""MoveTabLeft"",
                     ""type"": ""Button"",
                     ""id"": ""3d173307-1043-4522-aa74-ba6c7040f1db"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""AlienDrop"",
-                    ""type"": ""Button"",
-                    ""id"": ""a614358b-78c4-42f6-86b2-6e5fc122df38"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -338,7 +338,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Gamepad"",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -417,28 +417,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""76ea8442-616b-416f-80de-8594c25dc6b2"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PickupTrap"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""57a90032-6f28-4d7d-8207-f3b43dfac22c"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PickupTrap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -686,6 +664,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""790ad9c0-8e7b-4f71-9ab8-a30ff1abc752"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DisplayPopup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""8a51103e-1849-4a13-b292-65d01598f5f4"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -708,12 +697,23 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""790ad9c0-8e7b-4f71-9ab8-a30ff1abc752"",
-                    ""path"": ""<Keyboard>/o"",
+                    ""id"": ""76ea8442-616b-416f-80de-8594c25dc6b2"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""DisplayPopup"",
+                    ""action"": ""PickupTrap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""57a90032-6f28-4d7d-8207-f3b43dfac22c"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PickupTrap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -794,21 +794,21 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_JetPack = m_Player.FindAction("JetPack", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
-        m_Player_PickupTrap = m_Player.FindAction("PickupTrap", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_AltFire = m_Player.FindAction("AltFire", throwIfNotFound: true);
+        m_Player_PickupTrap = m_Player.FindAction("PickupTrap", throwIfNotFound: true);
         m_Player_EnableTrap = m_Player.FindAction("EnableTrap", throwIfNotFound: true);
         m_Player_SwitchTool = m_Player.FindAction("SwitchTool", throwIfNotFound: true);
+        m_Player_AlienDrop = m_Player.FindAction("AlienDrop", throwIfNotFound: true);
         m_Player_ToggleTablet = m_Player.FindAction("ToggleTablet", throwIfNotFound: true);
         m_Player_SelectTeleport = m_Player.FindAction("SelectTeleport", throwIfNotFound: true);
         m_Player_MoveTeleportRight = m_Player.FindAction("MoveTeleportRight", throwIfNotFound: true);
         m_Player_MoveTeleportLeft = m_Player.FindAction("MoveTeleportLeft", throwIfNotFound: true);
         m_Player_MoveTabRight = m_Player.FindAction("MoveTabRight", throwIfNotFound: true);
         m_Player_MoveTabLeft = m_Player.FindAction("MoveTabLeft", throwIfNotFound: true);
-        m_Player_AlienDrop = m_Player.FindAction("AlienDrop", throwIfNotFound: true);
         m_Player_DisplayPopup = m_Player.FindAction("DisplayPopup", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -874,21 +874,21 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_JetPack;
     private readonly InputAction m_Player_Sprint;
-    private readonly InputAction m_Player_PickupTrap;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_AltFire;
+    private readonly InputAction m_Player_PickupTrap;
     private readonly InputAction m_Player_EnableTrap;
     private readonly InputAction m_Player_SwitchTool;
+    private readonly InputAction m_Player_AlienDrop;
     private readonly InputAction m_Player_ToggleTablet;
     private readonly InputAction m_Player_SelectTeleport;
     private readonly InputAction m_Player_MoveTeleportRight;
     private readonly InputAction m_Player_MoveTeleportLeft;
     private readonly InputAction m_Player_MoveTabRight;
     private readonly InputAction m_Player_MoveTabLeft;
-    private readonly InputAction m_Player_AlienDrop;
     private readonly InputAction m_Player_DisplayPopup;
     public struct PlayerActions
     {
@@ -897,21 +897,21 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @JetPack => m_Wrapper.m_Player_JetPack;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
-        public InputAction @PickupTrap => m_Wrapper.m_Player_PickupTrap;
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @AltFire => m_Wrapper.m_Player_AltFire;
+        public InputAction @PickupTrap => m_Wrapper.m_Player_PickupTrap;
         public InputAction @EnableTrap => m_Wrapper.m_Player_EnableTrap;
         public InputAction @SwitchTool => m_Wrapper.m_Player_SwitchTool;
+        public InputAction @AlienDrop => m_Wrapper.m_Player_AlienDrop;
         public InputAction @ToggleTablet => m_Wrapper.m_Player_ToggleTablet;
         public InputAction @SelectTeleport => m_Wrapper.m_Player_SelectTeleport;
         public InputAction @MoveTeleportRight => m_Wrapper.m_Player_MoveTeleportRight;
         public InputAction @MoveTeleportLeft => m_Wrapper.m_Player_MoveTeleportLeft;
         public InputAction @MoveTabRight => m_Wrapper.m_Player_MoveTabRight;
         public InputAction @MoveTabLeft => m_Wrapper.m_Player_MoveTabLeft;
-        public InputAction @AlienDrop => m_Wrapper.m_Player_AlienDrop;
         public InputAction @DisplayPopup => m_Wrapper.m_Player_DisplayPopup;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -931,9 +931,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Sprint.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
                 @Sprint.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
                 @Sprint.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
-                @PickupTrap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickupTrap;
-                @PickupTrap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickupTrap;
-                @PickupTrap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickupTrap;
                 @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
@@ -949,12 +946,18 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @AltFire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAltFire;
                 @AltFire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAltFire;
                 @AltFire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAltFire;
+                @PickupTrap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickupTrap;
+                @PickupTrap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickupTrap;
+                @PickupTrap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickupTrap;
                 @EnableTrap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnableTrap;
                 @EnableTrap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnableTrap;
                 @EnableTrap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnableTrap;
                 @SwitchTool.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
                 @SwitchTool.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
                 @SwitchTool.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchTool;
+                @AlienDrop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
+                @AlienDrop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
+                @AlienDrop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
                 @ToggleTablet.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTablet;
                 @ToggleTablet.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTablet;
                 @ToggleTablet.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTablet;
@@ -973,9 +976,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @MoveTabLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabLeft;
                 @MoveTabLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabLeft;
                 @MoveTabLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabLeft;
-                @AlienDrop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
-                @AlienDrop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
-                @AlienDrop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
                 @DisplayPopup.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDisplayPopup;
                 @DisplayPopup.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDisplayPopup;
                 @DisplayPopup.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDisplayPopup;
@@ -992,9 +992,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
-                @PickupTrap.started += instance.OnPickupTrap;
-                @PickupTrap.performed += instance.OnPickupTrap;
-                @PickupTrap.canceled += instance.OnPickupTrap;
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
@@ -1010,12 +1007,18 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @AltFire.started += instance.OnAltFire;
                 @AltFire.performed += instance.OnAltFire;
                 @AltFire.canceled += instance.OnAltFire;
+                @PickupTrap.started += instance.OnPickupTrap;
+                @PickupTrap.performed += instance.OnPickupTrap;
+                @PickupTrap.canceled += instance.OnPickupTrap;
                 @EnableTrap.started += instance.OnEnableTrap;
                 @EnableTrap.performed += instance.OnEnableTrap;
                 @EnableTrap.canceled += instance.OnEnableTrap;
                 @SwitchTool.started += instance.OnSwitchTool;
                 @SwitchTool.performed += instance.OnSwitchTool;
                 @SwitchTool.canceled += instance.OnSwitchTool;
+                @AlienDrop.started += instance.OnAlienDrop;
+                @AlienDrop.performed += instance.OnAlienDrop;
+                @AlienDrop.canceled += instance.OnAlienDrop;
                 @ToggleTablet.started += instance.OnToggleTablet;
                 @ToggleTablet.performed += instance.OnToggleTablet;
                 @ToggleTablet.canceled += instance.OnToggleTablet;
@@ -1034,9 +1037,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @MoveTabLeft.started += instance.OnMoveTabLeft;
                 @MoveTabLeft.performed += instance.OnMoveTabLeft;
                 @MoveTabLeft.canceled += instance.OnMoveTabLeft;
-                @AlienDrop.started += instance.OnAlienDrop;
-                @AlienDrop.performed += instance.OnAlienDrop;
-                @AlienDrop.canceled += instance.OnAlienDrop;
                 @DisplayPopup.started += instance.OnDisplayPopup;
                 @DisplayPopup.performed += instance.OnDisplayPopup;
                 @DisplayPopup.canceled += instance.OnDisplayPopup;
@@ -1119,21 +1119,21 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnJetPack(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
-        void OnPickupTrap(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnAltFire(InputAction.CallbackContext context);
+        void OnPickupTrap(InputAction.CallbackContext context);
         void OnEnableTrap(InputAction.CallbackContext context);
         void OnSwitchTool(InputAction.CallbackContext context);
+        void OnAlienDrop(InputAction.CallbackContext context);
         void OnToggleTablet(InputAction.CallbackContext context);
         void OnSelectTeleport(InputAction.CallbackContext context);
         void OnMoveTeleportRight(InputAction.CallbackContext context);
         void OnMoveTeleportLeft(InputAction.CallbackContext context);
         void OnMoveTabRight(InputAction.CallbackContext context);
         void OnMoveTabLeft(InputAction.CallbackContext context);
-        void OnAlienDrop(InputAction.CallbackContext context);
         void OnDisplayPopup(InputAction.CallbackContext context);
     }
     public interface IUIActions
