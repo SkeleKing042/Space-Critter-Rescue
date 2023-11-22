@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8657437380501679638}
   - component: {fileID: 2198918390951654763}
   - component: {fileID: 4963436681487627730}
+  - component: {fileID: 5424087933119848788}
   m_Layer: 0
   m_Name: Model_fungi_tallMushroomBranch
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5424087933119848788
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939567866004700430}
+  m_Material: {fileID: 13400000, guid: be1d6dec3da32aa49aedd3d904d443b7, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1882648873055669427, guid: 827b34410e0bcb340af971338b555d31, type: 3}
 --- !u!1 &6222614872700151102
 GameObject:
   m_ObjectHideFlags: 0
