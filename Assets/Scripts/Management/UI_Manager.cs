@@ -31,7 +31,28 @@ public class UI_Manager : MonoBehaviour
         keyboard,
     }
 
-    #endregion 
+    #endregion
+
+    #region UI State Variable and Enum
+    [SerializeField, Tooltip("The current state the UI is in, used to define the current icon and inpute sprites")]
+    private UIState _UIState;
+    [SerializeField]
+    private UIState _testing_UIState;
+
+    public enum UIState
+    {
+        VC_Suck_Trap,
+        VC_Suck_Detonator,
+        VC_DepositCritters_Trap,
+        VC_DepositCritters_Detonator,
+        Trap_ThrowTrap_VC,
+        Detonator_ActivateTrap_VC,
+        Detonator_PickUpTrap_VC,
+    }
+
+
+
+    #endregion
 
     #region Input Icons
     [Header("Input Icons")]
@@ -131,8 +152,7 @@ public class UI_Manager : MonoBehaviour
 
         _fuelSliderDelta = _fuelSliderMax - _fuelSliderMin;
 
-
-
+        SetUIState(UIState.VC_Suck_Trap);
     }
 
     // Update is called once per frame
@@ -143,16 +163,17 @@ public class UI_Manager : MonoBehaviour
             JetPackUI_Manager();
             BackpackHUDManager();
         }
-        else
-        {
 
-        }
+/*        if (_testing_UIState != _UIState)
+        {
+            SetUIState(_testing_UIState);
+        }*/
     }
 
     #endregion
 
     #region HUD Methods
-    public void UpdateHUD()
+    public void UpdateHUDAnimator()
     {
         if (_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.vacuum)
         {
@@ -163,6 +184,37 @@ public class UI_Manager : MonoBehaviour
             SetTrigger_UI_Trap();
         }
     }
+
+    public void SetUIState(UIState _inputUIState)
+    {
+        _UIState = _inputUIState;
+
+        switch (_UIState)
+        {
+            case UIState.VC_Suck_Trap:
+                SetUI_VC_Suck_Trap();
+                break;
+            case UIState.VC_Suck_Detonator:
+                SetUI_VC_Suck_Detonator();
+                break;
+            case UIState.VC_DepositCritters_Trap:
+                SetUI_VC_DepositCritters_Trap();
+                break;
+            case UIState.VC_DepositCritters_Detonator:
+                SetUI_VC_DepositCritters_Detonator();
+                break;
+            case UIState.Trap_ThrowTrap_VC:
+                SetUI_Trap_ThrowTrap_VC();
+                break;
+            case UIState.Detonator_PickUpTrap_VC:
+                SetUI_Detonator_PickUpTrap_VC();
+                break;
+            case UIState.Detonator_ActivateTrap_VC:
+                SetUI_Detonator_ActivateTrap_VC();
+                break;
+        }
+    }
+
 
     //Enlarges the UI for the Vaccuum Catcher
     public void SetTrigger_UI_Vaccuum()
@@ -203,6 +255,9 @@ public class UI_Manager : MonoBehaviour
             //switch
             Trap_InputImage.sprite = _spritesKeyboard[4];
         }
+
+        //trigger ui animator
+        SetTrigger_UI_Vaccuum();
     }
 
     //Sets UI
@@ -232,11 +287,14 @@ public class UI_Manager : MonoBehaviour
             //switch
             Trap_InputImage.sprite = _spritesKeyboard[4];
         }
+
+        //trigger ui animator
+        SetTrigger_UI_Vaccuum();
     }
 
     //Sets UI
     //Holding VC, Deposit Critters, Swap to Trap
-    public void SetUI_VC_Deposit_Trap()
+    public void SetUI_VC_DepositCritters_Trap()
     {
         //Icons
         VC_IconImage.sprite = _ShipSprite;
@@ -261,11 +319,14 @@ public class UI_Manager : MonoBehaviour
             //switch
             Trap_InputImage.sprite = _spritesKeyboard[4];
         }
+
+        //trigger ui animator
+        SetTrigger_UI_Vaccuum();
     }
 
     //Sets UI
     //Holding VC, Deposit Critters, Swap to Trap
-    public void SetUI_VC_Deposit_Detonator()
+    public void SetUI_VC_DepositCritters_Detonator()
     {
         //Icons
         VC_IconImage.sprite = _ShipSprite;
@@ -290,11 +351,14 @@ public class UI_Manager : MonoBehaviour
             //switch
             Trap_InputImage.sprite = _spritesKeyboard[4];
         }
+
+        //trigger ui animator
+        SetTrigger_UI_Vaccuum();
     }
 
     //Sets UI
     //Holding Trap, Swap to VC
-    public void SetUI_Trap_Throw()
+    public void SetUI_Trap_ThrowTrap_VC()
     {
         //Icons
         VC_IconImage.sprite = _VCSprite;
@@ -319,11 +383,14 @@ public class UI_Manager : MonoBehaviour
             //switch
             Trap_InputImage.sprite = _spritesKeyboard[0];
         }
+
+        //trigger animator
+        SetTrigger_UI_Trap();
     }
 
     //Sets UI
     //Holding Detonator, display activate input, Swap to VC
-    public void SetUI_Detonator_Activate()
+    public void SetUI_Detonator_ActivateTrap_VC()
     {
         //Icons
         VC_IconImage.sprite = _VCSprite;
@@ -348,10 +415,13 @@ public class UI_Manager : MonoBehaviour
             //enable
             Trap_InputImage.sprite = _spritesKeyboard[3];
         }
+
+        //trigger animator
+        SetTrigger_UI_Trap();
     }
 
     //Sets UI, display pickup input, Swap to VC
-    public void SetUI_Detonator_PickUpTrap()
+    public void SetUI_Detonator_PickUpTrap_VC()
     {
         //Icons
         VC_IconImage.sprite = _VCSprite;
@@ -376,6 +446,9 @@ public class UI_Manager : MonoBehaviour
             //switch
             Trap_InputImage.sprite = _spritesKeyboard[2];
         }
+
+        //trigger animator
+        SetTrigger_UI_Trap();
     }
 
     #endregion
