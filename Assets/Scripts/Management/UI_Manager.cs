@@ -36,8 +36,6 @@ public class UI_Manager : MonoBehaviour
     #region UI State Variable and Enum
     [SerializeField, Tooltip("The current state the UI is in, used to define the current icon and inpute sprites")]
     private UIState _UIState;
-    [SerializeField]
-    private UIState _testing_UIState;
 
     public enum UIState
     {
@@ -95,6 +93,24 @@ public class UI_Manager : MonoBehaviour
     [SerializeField]
     private float _fuelSliderDelta;
 
+    [Space]
+    [SerializeField, Tooltip("The sprite for using the jetpack, gamepad")]
+    private Sprite _jetpack_SpriteGamepad;
+    [SerializeField, Tooltip("The sprite for using the jetpack, keyboard")]
+    private Sprite _jetpack_SpriteKeyboard;
+
+    [Space]
+
+    [SerializeField, Tooltip("The image which displays the jetpack input")]
+    private Image _jetpack_InputImage;
+
+    [Space]
+    [SerializeField, Tooltip("Image that covers the jetpack UI and shows if the jetpack is enabled / disabled")]
+    private Image _jetpack_CoverImage;
+    [SerializeField, Tooltip("The max opacity of the cover image")]
+    private float _jetpack_CoverImage_OpacityMax;
+    [SerializeField, Tooltip("The min opacity of the cover image")]
+    private float _jetpack_CoverImage_OpacityMin;
 
 
 
@@ -137,6 +153,20 @@ public class UI_Manager : MonoBehaviour
     private Image Trap_InputImage;
     #endregion
 
+    #region Tablet Variables
+    [Header("Tablet Variables")]
+    [SerializeField, Tooltip("Tablet toggle sprite, gamepad")]
+    private Sprite _toggleTabletIcon_Gamepad;
+
+    [SerializeField, Tooltip("Tablet toggle sprite, keyboard")]
+    private Sprite _toggleTabletIcon_Keyboard;
+
+    [Space]
+
+    [SerializeField, Tooltip("tablet input icon Image")]
+    private Image _TabletToggleImage;
+
+    #endregion region
 
     //METHODS
     #region Start and Update
@@ -152,7 +182,14 @@ public class UI_Manager : MonoBehaviour
 
         _fuelSliderDelta = _fuelSliderMax - _fuelSliderMin;
 
-        SetUIState(UIState.VC_Suck_Trap);
+        ResetUI();
+    }
+
+    private void ResetUI()
+    {
+        SetUIState(_UIState);
+        SetJetpackUI();
+        SetTabletToggleUI();
     }
 
     // Update is called once per frame
@@ -163,11 +200,6 @@ public class UI_Manager : MonoBehaviour
             JetPackUI_Manager();
             BackpackHUDManager();
         }
-
-/*        if (_testing_UIState != _UIState)
-        {
-            SetUIState(_testing_UIState);
-        }*/
     }
 
     #endregion
@@ -488,9 +520,33 @@ public class UI_Manager : MonoBehaviour
         else
             _delayedBar.fillAmount = _fuelBarMain.fillAmount;*/
     }
+
+    public void SetJetpackUI()
+    {
+        switch (inputMode)
+        {
+            case InputMode.gamepad:
+                _jetpack_InputImage.sprite = _jetpack_SpriteGamepad;
+                break;
+            case InputMode.keyboard:
+                _jetpack_InputImage.sprite = _jetpack_SpriteKeyboard;
+                break;
+        }
+    }
+
+    public void JetpackUI_Disable()
+    {
+        _jetpack_CoverImage.color = new Color(0, 0, 0, _jetpack_CoverImage_OpacityMax / 255);
+    }
+
+    public void JetpackUI_Enable()
+    {
+        _jetpack_CoverImage.color = new Color(0, 0, 0, _jetpack_CoverImage_OpacityMin/255);
+    }
+
     #endregion
 
-    #region Backpack HUD
+    #region Backpack HUD Methods
     private void BackpackHUDManager()
     {
         _LC_Slider.fillAmount = (float)_inventory.LargeCount / (float)_inventory.LargeCap;
@@ -498,6 +554,21 @@ public class UI_Manager : MonoBehaviour
     }
     #endregion
 
-    
+    #region Tablet Methods
+    public void SetTabletToggleUI()
+    {
+        switch (inputMode)
+        {
+            case InputMode.gamepad:
+                _TabletToggleImage.sprite = _toggleTabletIcon_Gamepad;
+                break;
+            case InputMode.keyboard:
+                _TabletToggleImage.sprite = _toggleTabletIcon_Keyboard;
+                break;
+        }
+    }
+
+
+    #endregion
 
 }
