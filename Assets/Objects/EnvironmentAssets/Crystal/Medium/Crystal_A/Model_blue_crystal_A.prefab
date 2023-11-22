@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 496639369443904550}
   - component: {fileID: 3159086784697224655}
   - component: {fileID: 6912597328236799751}
-  - component: {fileID: 1136650740002599221}
+  - component: {fileID: 3055931542472372825}
   m_Layer: 0
   m_Name: Model_blue_crystal_A
   m_TagString: Untagged
@@ -84,17 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1136650740002599221
-MeshCollider:
+--- !u!65 &3055931542472372825
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795836736436125731}
-  m_Material: {fileID: 13400000, guid: be1d6dec3da32aa49aedd3d904d443b7, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 692941777266229606, guid: 6afc02af2f251bc44807c8db1ecd812d, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 275.28864, y: 358.44788, z: 248.56134}
+  m_Center: {x: -0.34468842, y: 160.55573, z: -15.774048}

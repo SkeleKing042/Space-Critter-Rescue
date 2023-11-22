@@ -67,5 +67,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crystal_E_Blockout_Big
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7859214924646693794, guid: 69c86b0c3c92f594ea19dd213e200886, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 69c86b0c3c92f594ea19dd213e200886, type: 3}
+--- !u!1 &1745312553672157589 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2210821021240931614, guid: 69c86b0c3c92f594ea19dd213e200886, type: 3}
+  m_PrefabInstance: {fileID: 474833461071355019}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &8988647375049518510
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745312553672157589}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 70.42282, y: 86.68706, z: 74.23762}
+  m_Center: {x: 0, y: 32.752426, z: 0}

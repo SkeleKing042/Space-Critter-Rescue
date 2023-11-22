@@ -71,5 +71,24 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 5918058704501520517, guid: 46cfe866fff8dd84993bcd083861e0c8, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4987534609676748692, guid: 24c919f53c74f0542bbdacef90fbe10b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 24c919f53c74f0542bbdacef90fbe10b, type: 3}
+--- !u!1 &1532895935935387444 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7487236883954193578, guid: 24c919f53c74f0542bbdacef90fbe10b, type: 3}
+  m_PrefabInstance: {fileID: 8263528062056612766}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &7420261957130393992
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532895935935387444}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.98244, y: 96.22269, z: 71.99505}
+  m_Center: {x: -1.6078491, y: 36.022957, z: 3.2965355}
