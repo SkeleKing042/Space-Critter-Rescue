@@ -25,21 +25,37 @@ public class SoundPropagation : MonoBehaviour
     /// <param name="scale"></param>
     public void PropagateSound(float scale)
     {
+        bool nulls = false;
         //Go through the list of creatures within earshot
         foreach(GameObject goob in _goobs)
         {
             //If they still exist
-            if(goob != null)
+            if (goob != null)
             {
                 //and are in range
-                if(Vector3.Distance(transform.position, goob.transform.position) >= _proaDistance * scale)
+                if (Vector3.Distance(transform.position, goob.transform.position) >= _proaDistance * scale)
                     //Scare them
                     goob.GetComponent<CreatureAI>().RunFromPlayer(0);
             }
             else
-                //remove them from the list
-                _goobs.Remove(goob);
-            
+            {
+                nulls = true;
+                continue;
+            }
+        }
+        while (nulls)
+        {
+            nulls = false;
+            foreach (GameObject goob in _goobs)
+            {
+                if (goob == null)
+                {
+                    nulls = true;
+                    _goobs.Remove(goob);
+                    break;
+                }
+
+            }
         }
     }
 
