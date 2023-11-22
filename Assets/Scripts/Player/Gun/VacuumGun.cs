@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem.HID;
+using UnityEngine.InputSystem.Android;
 
 public class VacuumGun : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class VacuumGun : MonoBehaviour
     public SoundPropagation Sound;
     private SafteyCheck _obsticleCheck;
 
+    [Header("Gun Components")]
+    public GameObject Vacuum;
+
     // movement and position vectors
     [Header ("Movement and Position Vectors")]
     Vector3 AlienPosition;
@@ -37,7 +41,7 @@ public class VacuumGun : MonoBehaviour
     private float SuckSpeed = 5;
     public float OffsetFixSpeed;
     public float StunTime;
-
+    public int layermask;
 
     // fixed varibles 
     [Header("Fixed Varibles")]
@@ -46,11 +50,12 @@ public class VacuumGun : MonoBehaviour
     public bool Pulling = false;
     private float  _alienOffset;
     private bool _wasJustPulling;
+    
      
 
     #endregion
 
-    private void Start()
+    private void Awake()
     {
         _obsticleCheck = FindObjectOfType<SafteyCheck>();
     }
@@ -68,6 +73,7 @@ public class VacuumGun : MonoBehaviour
         
               _alienOffset = Vector3.Dot(forward, AlienPosition);
          }
+
     }
 
     /// <summary>
@@ -102,19 +108,18 @@ public class VacuumGun : MonoBehaviour
     #region Pulling
     public void Pull()
     {
+       
         // proprapgate sound
 
         //Sound.PropagateSound(0.00001f);
-
+        if(Vacuum.activeSelf == true)
+        {
             Pulling = true;
             foreach (AlienData aData in aData)
             {
                 try
                 {
-
-
-                
-                    if (Physics.Linecast(transform.position, aData.AI.transform.position))
+                    if (!Physics.Linecast(transform.position, aData.AI.transform.position,layermask ))
                     {
                     Debug.DrawRay(transform.position, aData.AI.transform.position, Color.black);
                     Debug.Log("Nothing inbewtween the alien and the player");
@@ -127,8 +132,9 @@ public class VacuumGun : MonoBehaviour
                          dir = Vector3.Normalize(dir);
                          //move the alien towards the player
                          aData.Rigidbody.AddForce(dir * SuckSpeed);
-                    }
-                    else if ((!Physics.Linecast(transform.position, aData.AI.transform.position)))
+                        OffsetCorrection(aData.Rigidbody, _alienOffset);
+                     }
+                    else if ((Physics.Linecast(transform.position, aData.AI.transform.position)))
                     {
                         Debug.Log("cannot suck something is in the way");
                     }
@@ -138,9 +144,17 @@ public class VacuumGun : MonoBehaviour
                 catch (Exception e)
                 {
                     Debug.Log(e);
+                
                 }
-                OffsetCorrection(aData.Rigidbody, _alienOffset);
+
             }
+        }
+        else
+        {
+            EndPull();
+            foreach (AlienData alien in aData)
+                UnassignAlien(alien.gObject);
+        }
 
       
     }
@@ -182,11 +196,11 @@ public class VacuumGun : MonoBehaviour
     }
     private void OnTriggerExit(Collider alien)
     {
-        Debug.Log("on trigger exit called");
+       // Debug.Log("on trigger exit called");
         if (alien.gameObject.tag == "alien" || (Trap.Catchable == true && alien.gameObject.tag == "bigAlien") && aData.Count > 0)
         {
  
-                Debug.Log("tag check passed");
+               // Debug.Log("tag check passed");
                 UnassignAlien(alien.gameObject);
 
             // add state change

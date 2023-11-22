@@ -27,10 +27,10 @@ public class CollectAlien : MonoBehaviour
     {
         if ((creature.gameObject.tag == "alien" || (creature.gameObject.tag == "bigAlien" && Trap.Catchable == true)))
         {
-            Debug.Log("tags passed");
+           // Debug.Log("tags passed");
             if(_vac.Pulling == true)
             {
-                Debug.Log("Pulling check passed");
+              //  Debug.Log("Pulling check passed");
                 _inv.AddCritterToInv(creature.gameObject);
                 _vac.UnassignAlien(creature.gameObject);
             }           

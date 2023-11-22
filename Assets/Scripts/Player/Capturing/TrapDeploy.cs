@@ -1,3 +1,6 @@
+// Created by Adanna Okoye
+// Last edited by Adanna Okoye
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +33,7 @@ public class TrapDeploy : MonoBehaviour
     public GameObject PlayerGun;
     public GameObject Player;
     private Tablet _tablet;
+    private VacuumGun _vacPulling;
 
     // trap forces 
     [Header("Trap Forces")]
@@ -63,6 +67,7 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     void Start()
     {
+        _vacPulling = FindObjectOfType<VacuumGun>();
 
         _tablet = FindObjectOfType<Tablet>();
 
@@ -118,6 +123,10 @@ public class TrapDeploy : MonoBehaviour
             currentlyHolding = CurrentlyHolding.trap;
 
             _animator.SetTrigger("UI_Trap");
+
+            _vacPulling.EndPull();
+            _vacPulling.Pulling = false;
+
             return;      // return to avoid toggle loop
         }
         if (_trapDeployed == true && currentlyHolding == CurrentlyHolding.vacuum)
@@ -128,11 +137,10 @@ public class TrapDeploy : MonoBehaviour
 
             _animator.SetTrigger("UI_Trap");
 
+            _vacPulling.EndPull();
+            _vacPulling.Pulling = false;
             return;
         }
-
-        // else if chap deployed == true then show detinator
-
         if ((currentlyHolding == CurrentlyHolding.trap) && _trapDeployed == false)
         {
             PlayerGun.SetActive(true);
