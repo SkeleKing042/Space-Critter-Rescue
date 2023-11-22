@@ -96,7 +96,7 @@ AnimatorStateMachine:
     m_Position: {x: 400, y: -140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3816181951765383274}
-    m_Position: {x: 860, y: -210, z: 0}
+    m_Position: {x: 850, y: -210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7589660464950959795}
     m_Position: {x: 870, y: -140, z: 0}
@@ -224,7 +224,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tablet ON
+  m_Name: UI_Tablet Equipped
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -275,7 +275,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tablet OFF
+  m_Name: UI_Tablet Unequipped
   m_Speed: -1
   m_CycleOffset: 0
   m_Transitions: []

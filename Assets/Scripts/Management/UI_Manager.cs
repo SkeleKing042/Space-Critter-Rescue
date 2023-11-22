@@ -12,7 +12,7 @@ public class UI_Manager : MonoBehaviour
     [SerializeField]
     private PlayerMovement _playerMovement;
     [SerializeField]
-    private Equipment _trapDeploy;
+    private Equipment _equipment;
     [SerializeField]
     private Tablet _tablet;
     [SerializeField]
@@ -175,7 +175,7 @@ public class UI_Manager : MonoBehaviour
     void Start()
     {
         _playerMovement = FindObjectOfType<PlayerMovement>();
-        _trapDeploy = FindObjectOfType<Equipment>();
+        _equipment = FindObjectOfType<Equipment>();
         _tablet = FindObjectOfType<Tablet>();
         _inventory = FindObjectOfType<Inventory>();
         _UI_animator = GetComponent<Animator>();
@@ -207,7 +207,7 @@ public class UI_Manager : MonoBehaviour
     #region HUD Methods
     public void UpdateHUDAnimator()
     {
-        if (_trapDeploy.currentlyHolding == Equipment.CurrentlyHolding.VC)
+        if (_equipment._currentlyHolding == Equipment.CurrentlyHolding.VC)
         {
             SetTrigger_UI_Vaccuum();
         }
