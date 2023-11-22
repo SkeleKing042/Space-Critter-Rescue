@@ -1,3 +1,6 @@
+// Created by Adanna Okoye
+// Last edited by Adanna Okoye
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +33,7 @@ public class TrapDeploy : MonoBehaviour
     public GameObject PlayerGun;
     public GameObject Player;
     private Tablet _tablet;
+    private VacuumGun _vacPulling;
 
     // trap forces 
     [Header("Trap Forces")]
@@ -43,6 +47,7 @@ public class TrapDeploy : MonoBehaviour
     private float _distance;
     private bool _canPickUpTrap;
     public bool CanPickUpTrap { get { return _canPickUpTrap; } }
+    public Animator _animator;
 
     /// <summary>
     /// players eqipment
@@ -62,6 +67,7 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     void Start()
     {
+        _vacPulling = FindObjectOfType<VacuumGun>();
 
         _tablet = FindObjectOfType<Tablet>();
 
@@ -78,6 +84,8 @@ public class TrapDeploy : MonoBehaviour
 
         // get rigodbody
         _trapRigid = Trap.GetComponent<Rigidbody>();
+
+        _animator = GetComponent<Animator>();
 
     }
     void Update()
@@ -105,7 +113,7 @@ public class TrapDeploy : MonoBehaviour
     public void Toggle()
     {
         // make sure the player isnt holding the trap & that the trap is still with the player
-        if (currentlyHolding == CurrentlyHolding.vacuum && _trapDeployed == false && !_tablet.TabletState)
+        if (currentlyHolding == CurrentlyHolding.vacuum && _trapDeployed == false )
         {
             // set game objects appropriatly
             PlayerGun.SetActive(false);
@@ -113,32 +121,56 @@ public class TrapDeploy : MonoBehaviour
 
             // change enum state
             currentlyHolding = CurrentlyHolding.trap;
+
+            _animator.SetTrigger("UI_Trap");
+
+            _vacPulling.EndPull();
+            _vacPulling.Pulling = false;
+
             return;      // return to avoid toggle loop
         }
-        if (_trapDeployed == true && currentlyHolding == CurrentlyHolding.vacuum && !_tablet.TabletState)
+        if (_trapDeployed == true && currentlyHolding == CurrentlyHolding.vacuum)
         {
             Detenator.SetActive(true);
             PlayerGun.SetActive(false);
             currentlyHolding = CurrentlyHolding.detinator;
+
+            _animator.SetTrigger("UI_Trap");
+
+            _vacPulling.EndPull();
+            _vacPulling.Pulling = false;
             return;
         }
-
-        // else if chap deployed == true then show detinator
-
-        if ((currentlyHolding == CurrentlyHolding.trap) && _trapDeployed == false && !_tablet.TabletState)
+        if ((currentlyHolding == CurrentlyHolding.trap) && _trapDeployed == false)
         {
             PlayerGun.SetActive(true);
             Trap.SetActive(false);
             Detenator.SetActive(false);
             currentlyHolding = CurrentlyHolding.vacuum;
+
+            _animator.SetTrigger("UI_Vacuum");
             return;  // return to avoid toggle loop
         }
-        if ((currentlyHolding == CurrentlyHolding.trap || currentlyHolding == CurrentlyHolding.detinator) && _trapDeployed == true && !_tablet.TabletState)
+        if ((currentlyHolding == CurrentlyHolding.trap || currentlyHolding == CurrentlyHolding.detinator) && _trapDeployed == true)
         {
             PlayerGun.SetActive(true);
             Detenator.SetActive(false);
             currentlyHolding = CurrentlyHolding.vacuum;
+
+            _animator.SetTrigger("UI_Vacuum");
             return;
+        }
+    }
+
+    public void UpdateHUD()
+    {
+        if (currentlyHolding == TrapDeploy.CurrentlyHolding.vacuum)
+        {
+            _animator.SetTrigger("UI_Vacuum");
+        }
+        else
+        {
+            _animator.SetTrigger("UI_Trap");
         }
     }
 
@@ -148,7 +180,7 @@ public class TrapDeploy : MonoBehaviour
     /// </summary>
     public void DeployTrap()
     {
-        if (currentlyHolding == CurrentlyHolding.trap && !_tablet.TabletState)
+        if (currentlyHolding == CurrentlyHolding.trap)
         {
 
             // unassign the trap parent
@@ -186,12 +218,12 @@ public class TrapDeploy : MonoBehaviour
         // {
         _distance = Vector3.Distance(Trap.transform.position, transform.position);
         //find the distance between the player and the trap
-        Debug.Log(_distance);
+        Debug.Log( "distance frfom trap: " + _distance);
         _distance = Mathf.Abs(_distance);
         // }
 
         // check if the player is within the range, not holding the trap and the trap is not active
-        if ((PickUpRange >= _distance || !DoDistace) && currentlyHolding != CurrentlyHolding.trap && Bubble.activeSelf == false)
+        if ((PickUpRange >= _distance || DoDistace) && currentlyHolding != CurrentlyHolding.trap && Bubble.activeSelf == false)
         {
             // set parent to the player
             Trap.transform.SetParent(transform);
@@ -201,11 +233,11 @@ public class TrapDeploy : MonoBehaviour
             Trap.GetComponent<Rigidbody>().isKinematic = true;
 
             // set enum state
-            currentlyHolding = CurrentlyHolding.vacuum;
+            currentlyHolding = CurrentlyHolding.trap;
 
             // set game objects apprpriatly
-            PlayerGun.SetActive(true);
-            Trap.SetActive(false);
+            PlayerGun.SetActive(false);
+            Trap.SetActive(true);
             Detenator.SetActive(false);
 
             // set to false

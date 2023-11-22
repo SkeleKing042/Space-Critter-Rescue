@@ -10,44 +10,95 @@ public class Inventory : MonoBehaviour
 {
 
     //
-    CollectAlien AlienCollection;
-    private List<GameObject> _alienCollection = new List<GameObject>();
-    private CreatureStats _alienType;
-    private GameObject _alien;
-    public GameObject ShipDropOff;
-    public GameObject Player;
+    //CollectAlien AlienCollection;
+    //private List<GameObject> _alienCollection = new List<GameObject>();
+    //private CreatureStats _alienType;
+    //private GameObject _alien;
+    [SerializeField]
+    private Transform _shipDropOff;
+    private Transform _playerTransform;
 
-    private Collection _collection;
+    //private Collection _collection;
 
-    private float _distance;
-    public float DropOffRange;
+    private float _dropOffRange;
     // create enum later for the different alien types
 
 
     [Header("Inventory collection types")]
     // Change these to arrays later
-    public int ShroomAliens;
-    public int CrystalAliens;
-    public int ShroomAliensBig;
-    public int CrystalAliensBig;
+    private int _shroomAliens;
+    public int PlayerShroomAliens { get { return _shroomAliens; } }
+    private int _crystalAliens;
+    public int PlayerCrystalAliens { get { return _crystalAliens; } }
+    private int _shroomAliensBig;
+    public int PlayerShroomAliensBig { get { return _shroomAliensBig; } }
+    private int _crystalAliensBig;
+    public int PlayerCrystalAliensBig { get { return _crystalAliensBig; } }
+
+    private int _smallCount;
+    public int SmallCount { get { return _smallCount; } }
+    private int _bigCount;
+    public int BigCount { get { return _bigCount; } }
+
+    [SerializeField] private int _smallCap;
+    public int SmallCap { get { return _smallCap; } }
+    [SerializeField] private int _bigCap;
+    public int BigCap { get { return _bigCap; } }
 
     [Header ("Ship Inventory")]
-    public int InvShroomAliens;
-    public int InvCrystalAliens;
-    public int InvShroomAliensBig;
-    public int InvCrystalAliensBig;
+    private int _shipShroomAliens;
+    public int ShipShroomAliens { get { return _shipShroomAliens; } }
+    private int _shipCrystalAliens;
+    public int ShipCrystalAliens { get { return _shipCrystalAliens; } }
+    private int _shipShroomAliensBig;
+    public int ShipShroomAliensBig { get { return _shipShroomAliensBig; } }
+    private int _shipCrystalAliensBig;
+    public int ShipCrystalAliensBig { get { return _shipCrystalAliensBig; } }
 
-    public int TotalShipInventory;
+    //public int TotalShipInventory;
 
 
     private void Start()
     {
-        _collection = FindObjectOfType<Collection>();
+        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        //_collection = FindObjectOfType<Collection>();
     }
 
+    public void AddCritterToInv(GameObject alien)
+    {
+        CreatureStats alienType = alien.GetComponent<CreatureStats>();
+        bool added = true;
+        switch (alienType.Type)
+        {
+            case CreatureStats.creatureType.Crystal:
+                if (alienType.IsBig && _bigCount < _bigCap)
+                    _crystalAliensBig++;
+                else if (!alienType.IsBig && _smallCount < _smallCap)
+                    _crystalAliens++;
+                else
+                    added = false;
+                break;
+            case CreatureStats.creatureType.Shroom:
+                if (alienType.IsBig && _bigCount < _bigCap)
+                    _shroomAliensBig++;
+                else if (!alienType.IsBig && _smallCount < _smallCap)
+                    _shroomAliens++;
+                else
+                    added = false;
+                break;
+            default:
+                added = false;
+                Debug.Log("Typeless creature found, idk what caused it or how it happened but if you are getting this error you might wanna restart.");
+                break;
+        }
+        if (added)
+            Destroy(alien);
 
+        _smallCount = _shroomAliens + _crystalAliens;
+        _bigCount = _crystalAliensBig + _shroomAliensBig;
+    }
 
-    public void AddSmallShroom(GameObject alien)
+    /*public void AddSmallShroom(GameObject alien)
     {
        _alienType = alien.GetComponent<CreatureStats>();
 
@@ -110,39 +161,33 @@ public class Inventory : MonoBehaviour
             // add function for ui desplay
         }
         _alienType = null;
-    }
+    }*/
 
 
     public void MoveToShip()
     {
-        _distance = Vector3.Distance(ShipDropOff.transform.position, Player.transform.position);
+        float distance = Mathf.Abs(Vector3.Distance(_shipDropOff.position, _playerTransform.position));
         //find the distance between the player and the trap
-        Debug.Log(_distance);
-        _distance = Mathf.Abs(_distance);
+        //Debug.Log(distance);
 
-        if(_distance < DropOffRange)
+        if(distance < _dropOffRange)
         {
 
-            InvShroomAliens += ShroomAliens;
-            InvCrystalAliens += CrystalAliens;
-            InvShroomAliensBig += ShroomAliensBig;
-            InvCrystalAliensBig += CrystalAliensBig;
+            _shipShroomAliens += _shroomAliens;
+            _shipCrystalAliens += _crystalAliens;
+            _shipShroomAliensBig += _shroomAliensBig;
+            _shipCrystalAliensBig += _crystalAliensBig;
 
-            
+            _shroomAliens = _shroomAliensBig = _crystalAliens = _crystalAliensBig = 0;
 
-            ShroomAliens = 0;
-            ShroomAliensBig = 0;
-            CrystalAliens = 0;
-            CrystalAliensBig = 0;
-
-            TotalShipInventory =
-                InvShroomAliens +
-                InvCrystalAliens +
-                InvShroomAliensBig +
-                InvCrystalAliensBig;
-
-            _collection.SmallAliens = 0;
-            _collection.BigAliens = 0;
+            /*TotalShipInventory =
+                _shipShroomAliens +
+                _shipCrystalAliens +
+                _shipShroomAliensBig +
+                _shipCrystalAliensBig;
+*/
+            //_collection.SmallAliens = 0;
+            //_collection.BigAliens = 0;
 
 
 
