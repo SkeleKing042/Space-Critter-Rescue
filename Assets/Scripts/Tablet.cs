@@ -10,25 +10,33 @@ using UnityEngine.UI;
 
 public class Tablet : MonoBehaviour
 {
-    [Header("Enums")]
-    [Tooltip("if the tablet is on or off")]
+    //Variables
+    #region Variables
+    [Header("Tablet State"), Tooltip("if the tablet is on or off")]
     public bool TabletState;
 
-    //[Header("Components")]
+    [Header("Components")]
     [SerializeField]
     private Animator _UI_animator;
+    [SerializeField]
+    private UI_Manager _UI_Manager;
+    [SerializeField]
+    private Equipment _equipment;
+    [SerializeField]
     private PlayerMovement _playerMovement;
+    [SerializeField]
     private PylonManager _pylonManager;
 
+
     [Header("Tabs")]
-    [Tooltip("Array that stores the tabs of the tablet in order")]
-    [SerializeField] private GameObject[] _tabs;
-    [SerializeField] private GameObject _tutorialTab;
-    private bool _tutorRead = false;
-    [Tooltip("index that stores which tab is the map tab")]
-    [SerializeField] public int MapTabIndex;
-    //[Tooltip("index that stores the current tab in the tablet")]
-    [HideInInspector] public int TabIndex;
+    [SerializeField, Tooltip("An array that stores the tabs of the tablet")] 
+    private GameObject[] _tabs;
+
+    [SerializeField, Tooltip("index that stores which tab is the map tab")] 
+    public int MapTabIndex;
+    
+    [SerializeField, Tooltip("index that stores the current tab in the tablet")]
+    [HideInInspector] public int TabIndex = 0;
 
     [Header("Teleport Locations")]
     [Tooltip("array that stores the location image components")]
@@ -42,29 +50,36 @@ public class Tablet : MonoBehaviour
     [SerializeField] private Color _color_unavailableTeleport = Color.red;
     [SerializeField] private Color _color_availableTeleport = Color.green;
 
-    private UI_Manager _Manager;
-
+    [Header("Inventory")]
     private Inventory _invRef;
     [SerializeField] private List<Image> _largeBackpackSlots;
     [SerializeField] private List<Image> _smallBackpackSlots;
     [SerializeField] private List<Sprite> _critterIcons;
+    #endregion
 
+    //Methdods
+    #region Start
     private void Start()
     {
+        //find components
         _playerMovement = GetComponentInParent<PlayerMovement>();
         _pylonManager = FindObjectOfType<PylonManager>();
-        _Manager = FindObjectOfType<UI_Manager>();
+        _UI_Manager = FindObjectOfType<UI_Manager>();
         _invRef = FindObjectOfType<Inventory>();
+        _equipment = FindObjectOfType<Equipment>();
 
+        //declare array
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
 
-        _tutorRead = false;
-
-        ToggleTablet();
+        //setup backpack
         SetupBackpack();
         //FindObjectOfType<GameManager>().UpdateAllBars();
+
+        //setup map tab
         SetTeleportLocationColors();
     }
+
+    #endregion
 
     #region ToggleTablet
     /// <summary>
@@ -72,33 +87,69 @@ public class Tablet : MonoBehaviour
     /// </summary>
     public void ToggleTablet()
     {
+        //turn tablet off
         if (TabletState)
         {
-            _UI_animator.SetTrigger("UI_Tablet_OFF");
-            SetTabletState(false);
-
-            if (!_tutorRead)
+            //animate tablet down
+            _equipment._animation_Tablet_Down();
+            
+            //up the correct equipment
+            switch (_equipment._currentlyHolding)
             {
-                _tutorialTab.SetActive(false);
-                foreach (GameObject tab in _tabs)
-                {
-                    tab.SetActive(false);
-                }
-                _tabs[0].SetActive(true);
-                _tutorRead = true;
+                case Equipment.CurrentlyHolding.VC:
+                    {
+                        _equipment._animation_VC_Up();
+                        break;
+                    }
+                case Equipment.CurrentlyHolding.trap:
+                    {
+                        _equipment._animation_Trap_Up();
+                        break;
+                    }
+                case Equipment.CurrentlyHolding.detonator:
+                    {
+                        _equipment._animation_Detonator_Up();
+                        break;
+                    }
             }
 
+            _UI_animator.SetTrigger("UI_Tablet_OFF");
+            SetTabletState(false);
             _playerMovement.DoMovement = true;
 
         }
-        else if (!TabletState)
+        //turn tablet on
+        else
         {
+            //animate tablet up
+            _equipment._animation_TabletUp();
+
+            //up the correct equipment
+            switch (_equipment._currentlyHolding)
+            {
+                case Equipment.CurrentlyHolding.VC:
+                    {
+                        _equipment._animation_VC_Down();
+                        break;
+                    }
+                case Equipment.CurrentlyHolding.trap:
+                    {
+                        _equipment._animation_Trap_Down();
+                        break;
+                    }
+                case Equipment.CurrentlyHolding.detonator:
+                    {
+                        _equipment._animation_Detonator_Down();
+                        break;
+                    }
+            }
+
             _UI_animator.SetTrigger("UI_Tablet_ON");
             SetTabletState(true);
 
             _playerMovement.DoMovement = false;
 
-            UpdateCurrentTab();
+            ActivateCorrectTab();
         }
     }
 
@@ -117,19 +168,23 @@ public class Tablet : MonoBehaviour
     /// </summary>
     public void ActivateCorrectTab()
     {
-        if (_tutorRead && _tutorialTab.activeSelf)
-        {
-            _tutorialTab.SetActive(false);
-        }
+        //disactivate all tabs
         foreach (GameObject tab in _tabs)
         {
             tab.SetActive(false);
         }
 
+        //activate correct tab
         _tabs[TabIndex].SetActive(true);
 
+
+        //Update current tab
         UpdateCurrentTab();
     }
+
+    /// <summary>
+    /// Runs a method dependant on the tab index
+    /// </summary>
     private void UpdateCurrentTab() 
     { 
         switch (TabIndex)
@@ -270,13 +325,6 @@ public class Tablet : MonoBehaviour
     {
         _hasTeleportLocationBeenActivated[pylonIndex] = true;
     }
-
-
-
-
-
-
-
     #endregion
 
     #region BackpackTab

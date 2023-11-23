@@ -141,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
             //Debug.DrawRay(transform.position, camForward, Color.blue);
             Vector3 forwardForce = _orientedForceObject.forward * MovementInput.y * _moveAccel * PlayerRigidbody.mass;
             Vector3 sideForce = _orientedForceObject.right * MovementInput.x * _strafeAccel * PlayerRigidbody.mass;
-           
+            //Debug.Log("Ground norm is " + GetGroundNormal());
             PlayerRigidbody.AddForce((forwardForce + sideForce) * Time.deltaTime);
 
             if(!_crouched && horizontalVel.magnitude > _maxSpeed * 0.1f)

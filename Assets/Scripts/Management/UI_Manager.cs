@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static TrapDeploy;
+using static Equipment;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -12,7 +12,7 @@ public class UI_Manager : MonoBehaviour
     [SerializeField]
     private PlayerMovement _playerMovement;
     [SerializeField]
-    private TrapDeploy _trapDeploy;
+    private Equipment _equipment;
     [SerializeField]
     private Tablet _tablet;
     [SerializeField]
@@ -36,6 +36,7 @@ public class UI_Manager : MonoBehaviour
     #region UI State Variable and Enum
     [SerializeField, Tooltip("The current state the UI is in, used to define the current icon and inpute sprites")]
     private UIState _UIState;
+    public UIState Get_UIState { get { return _UIState; } }
 
     public enum UIState
     {
@@ -175,7 +176,7 @@ public class UI_Manager : MonoBehaviour
     void Start()
     {
         _playerMovement = FindObjectOfType<PlayerMovement>();
-        _trapDeploy = FindObjectOfType<TrapDeploy>();
+        _equipment = FindObjectOfType<Equipment>();
         _tablet = FindObjectOfType<Tablet>();
         _inventory = FindObjectOfType<Inventory>();
         _UI_animator = GetComponent<Animator>();
@@ -185,7 +186,7 @@ public class UI_Manager : MonoBehaviour
         ResetUI();
     }
 
-    private void ResetUI()
+    public void ResetUI()
     {
         SetUIState(_UIState);
         SetJetpackUI();
@@ -207,7 +208,7 @@ public class UI_Manager : MonoBehaviour
     #region HUD Methods
     public void UpdateHUDAnimator()
     {
-        if (_trapDeploy.currentlyHolding == TrapDeploy.CurrentlyHolding.vacuum)
+        if (_equipment._currentlyHolding == Equipment.CurrentlyHolding.VC)
         {
             SetTrigger_UI_Vaccuum();
         }

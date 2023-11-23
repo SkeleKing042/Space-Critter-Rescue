@@ -8,7 +8,7 @@ public class Trap : MonoBehaviour
 {
     // refrenced gun shoot function later after shoot function is made properly
     [Header("Script Refrences")]
-    public TrapDeploy Check;
+    public Equipment Check;
     public VacuumGun Vacuum;
     private CreatureAI AlienAI;
 
@@ -34,7 +34,7 @@ public class Trap : MonoBehaviour
     private void Start()
     {
         Vacuum = FindObjectOfType<VacuumGun>();
-        Check = FindObjectOfType<TrapDeploy>();
+        Check = FindObjectOfType<Equipment>();
 
         offSet = new Vector3(1, 0, 1);
         lerpPathDestination = transform.position - offSet;
