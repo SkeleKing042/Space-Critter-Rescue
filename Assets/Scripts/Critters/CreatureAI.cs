@@ -79,8 +79,10 @@ public class CreatureAI : MonoBehaviour
         _homePoint = transform.position;
         //Component grabs
         _agent = GetComponent<NavMeshAgent>();
+        _critterHeight = _agent.height;
+        _baseSpeed = _agent.speed;
         _player = GameObject.FindGameObjectWithTag(_playerTag);
-        _animator = GetComponent<Animator>();
+        _animator = GetComponentInChildren<Animator>();
         _drinkingSources = GetComponentInChildren<DrinkenFinden>();
         _rb = GetComponent<Rigidbody>();
 
@@ -98,17 +100,15 @@ public class CreatureAI : MonoBehaviour
 
         StartCoroutine(GrabGroundBelow());
     }
-    public void InitStats(float height, float thirst, float lazy, float dis, float vel, float spd, float pMul)
+    public void InitStats(float thirst, float lazy, float dis, float vel, float pMul)
     {
         if (_agent == null)
             _agent = GetComponent<NavMeshAgent>();
 
-        _agent.height = _critterHeight = height;
         _thirstiness = thirst;
         _lazyness = lazy;
         _travelableDistanceFromHome = dis;
         _velocityToPanic = vel;
-        _agent.speed = _baseSpeed = spd;
         _panicSpeedIncrease = pMul;
     }
     #endregion
