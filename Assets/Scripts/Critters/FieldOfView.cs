@@ -15,7 +15,7 @@ public class FieldOfView : MonoBehaviour
     [Header("Masks"),SerializeField]
     private LayerMask _targetMask;
     [SerializeField]
-    private LayerMask _obstructionMask;
+    private LayerMask[] _obstructionMasks;
 
     public bool CanSeeTarget;
 
@@ -49,7 +49,13 @@ public class FieldOfView : MonoBehaviour
             {
                 float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, _obstructionMask) && Vector3.Distance(transform.position, target.position) < Radius)
+                bool obstructed = false;
+                foreach(LayerMask mask in _obstructionMasks)
+                {
+                    obstructed = Physics.Raycast(transform.position, directionToTarget, distanceToTarget, mask);
+                }
+
+                if (!obstructed && Vector3.Distance(transform.position, target.position) < Radius)
                     CanSeeTarget = true;
                 else
                     CanSeeTarget = false;
