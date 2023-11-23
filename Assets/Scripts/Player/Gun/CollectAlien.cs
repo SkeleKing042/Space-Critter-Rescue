@@ -17,7 +17,7 @@ public class CollectAlien : MonoBehaviour
 
     GameObject Alien;
 
-    private void Start()
+    private void Awake()
     {
         _vac = FindObjectOfType<VacuumGun>();
         _inv = FindObjectOfType<Inventory>();

@@ -71,7 +71,7 @@ public class Inventory : MonoBehaviour
 
     #endregion
 
-    private void Start()
+    private void Awake()
     {
         //find the player transform
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
