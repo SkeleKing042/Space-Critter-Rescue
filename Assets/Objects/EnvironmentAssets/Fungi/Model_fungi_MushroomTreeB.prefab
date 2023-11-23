@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 4735181413297893609}
   - component: {fileID: 8509945108205420364}
   - component: {fileID: 5908039591909706630}
+  - component: {fileID: 6245457229814146195}
   m_Layer: 0
   m_Name: Model_fungi_MushroomTreeB
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6245457229814146195
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5403596919699630675}
+  m_Material: {fileID: 13400000, guid: be1d6dec3da32aa49aedd3d904d443b7, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7490596793416967084, guid: c4448e79fe662944a9cefdbc24725d0d, type: 3}
