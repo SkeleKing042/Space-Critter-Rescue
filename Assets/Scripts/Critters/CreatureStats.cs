@@ -16,8 +16,6 @@ public class CreatureStats : MonoBehaviour
     };
     [Tooltip("What type of creature this one is.")]
     public creatureType Type;
-    [SerializeField, Tooltip("The height of the creature - used for ground checks and agent height.")]
-    private float _critterHeight;
 
     [Header("Threasholds")]
     [SerializeField, Range(0f, 100f), Tooltip("Point at which this creature will look for water.")]
@@ -30,8 +28,6 @@ public class CreatureStats : MonoBehaviour
     [Header("Navigation")]
     [Tooltip("The maximum distance that a creature will travel from their initial starting position.")]
     public float ExplorationRange;
-    [SerializeField, Tooltip("The speed of the creature.")]
-    private float _moveSpeed;
     [SerializeField, Tooltip("The increase in speed the creature has while panicing")]
     private float _panicMulti;
 
@@ -42,6 +38,6 @@ public class CreatureStats : MonoBehaviour
     {
         _ai = GetComponent<CreatureAI>();
 
-        _ai.InitStats(_critterHeight, _thirstiness, _lazyness, ExplorationRange, _panicVelocity, _moveSpeed, _panicMulti);
+        _ai.InitStats(_thirstiness, _lazyness, ExplorationRange, _panicVelocity, _panicMulti);
     }
 }

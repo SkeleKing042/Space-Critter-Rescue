@@ -11,7 +11,7 @@ public class CreatureStatsEditor : Editor
     private void OnSceneGUI()
     {
         CreatureStats stats = (CreatureStats)target;
-        Handles.color = new Color(0, 0.5f, 0, 0.25f);
+        Handles.color = new Color(0, 0f, 0.2f, 0.25f);
         Handles.DrawSolidDisc(target.GameObject().transform.position, Vector3.up, stats.ExplorationRange);
     }
 }
