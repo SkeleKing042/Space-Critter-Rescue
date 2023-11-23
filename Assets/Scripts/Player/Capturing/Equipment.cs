@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 
 public class Equipment : MonoBehaviour
 {
+    //Variables
+    #region Variables
     /*
      * To keep in mind
         - LB to toggle holding trap
@@ -68,7 +70,9 @@ public class Equipment : MonoBehaviour
         trap,
         detonator
     }
+    #endregion
 
+    //Methods
     #region Start & Update
     /// <summary>
     /// set starting values in scene
@@ -86,8 +90,8 @@ public class Equipment : MonoBehaviour
 
         //bring up the VC
         _animation_VC_Up();
-
     }
+
     void Update()
     {
         //checks if the player can pick up the trap
@@ -96,9 +100,37 @@ public class Equipment : MonoBehaviour
             _distance = Mathf.Abs(Vector3.Distance(Trap.transform.position, transform.position));
 
             if (PickUpRange >= _distance)
+            {
                 _canPickUpTrap = true;
+            }
+
             else
+            {
                 _canPickUpTrap = false;
+            }
+        }
+
+
+        //if the player can pick up the trap
+        if(_canPickUpTrap)
+        {
+            //if the player currently holding the detonator and the ui state is not accurate
+            if(_currentlyHolding == CurrentlyHolding.detonator && _UI_Manager.Get_UIState != UI_Manager.UIState.Detonator_PickUpTrap_VC)
+            {
+                //set the state
+                _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_PickUpTrap_VC);
+            }
+        }
+
+        //if the ui state is pickup trap and the player CANNOT pick up the trap
+        if(_UI_Manager.Get_UIState == UI_Manager.UIState.Detonator_PickUpTrap_VC && !_canPickUpTrap)
+        {
+            //if the state is not accurate
+            if(_UI_Manager.Get_UIState != UI_Manager.UIState.Detonator_ActivateTrap_VC && _currentlyHolding == CurrentlyHolding.detonator)
+            {
+                //update state
+                _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_ActivateTrap_VC);
+            }
         }
     }
     #endregion
@@ -173,7 +205,7 @@ public class Equipment : MonoBehaviour
 
     #endregion
 
-
+    #region Trap methods
 
     /// <summary>
     /// of player is currently holding the trap allow to deploy
@@ -218,7 +250,6 @@ public class Equipment : MonoBehaviour
         //find the distance between the player and the trap
         _distance = Vector3.Distance(Trap.transform.position, transform.position);
         _distance = Mathf.Abs(_distance);
-        Debug.Log("distance from trap: " + _distance);
 
         // check if the player is within the range, not holding the trap and the trap is not active
         if (_distance < PickUpRange)
@@ -246,8 +277,9 @@ public class Equipment : MonoBehaviour
             // set to false
             _trapDeployed = false;
         }
-
     }
+
+    #endregion
 
     #region Animation Methods
     //bring up the VC
@@ -384,8 +416,21 @@ public class Equipment : MonoBehaviour
         SetCurrentlyHolding(CurrentlyHolding.trap);
     }
 
+    //put the tablet up
+    public void _animation_TabletUp()
+    {
+        Debug.Log("Tablet up");
 
+        _Equipment_Animator.SetTrigger("Tablet Up");
+    }
 
+    //put the tablet down
+    public void _animation_TabletDown()
+    {
+        Debug.Log("Tablet down");
+
+        _Equipment_Animator.SetTrigger("Tablet down");
+    }
 
     #endregion
 }

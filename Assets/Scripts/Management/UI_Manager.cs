@@ -36,6 +36,7 @@ public class UI_Manager : MonoBehaviour
     #region UI State Variable and Enum
     [SerializeField, Tooltip("The current state the UI is in, used to define the current icon and inpute sprites")]
     private UIState _UIState;
+    public UIState Get_UIState { get { return _UIState; } }
 
     public enum UIState
     {
@@ -185,7 +186,7 @@ public class UI_Manager : MonoBehaviour
         ResetUI();
     }
 
-    private void ResetUI()
+    public void ResetUI()
     {
         SetUIState(_UIState);
         SetJetpackUI();

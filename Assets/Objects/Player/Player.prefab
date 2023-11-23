@@ -356,7 +356,6 @@ GameObject:
   - component: {fileID: 8109913824263524886}
   - component: {fileID: 8109913824263524885}
   - component: {fileID: 7207852762652227241}
-  - component: {fileID: 6293749767254639766}
   - component: {fileID: 865905763548579415}
   m_Layer: 6
   m_Name: Player
@@ -483,9 +482,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentlyHolding: 0
   Trap: {fileID: 2578831408471448794}
-  _trapRigid: {fileID: 0}
+  _trapRigid: {fileID: 2578831408471448611}
   Bubble: {fileID: 8928395400460361952}
-  PickUpRange: 10
+  PickUpRange: 5
   TrapThrowForce: 5
   _trapDeployed: 0
   _distance: 0
@@ -496,20 +495,6 @@ MonoBehaviour:
   _UI_Manager: {fileID: 3720404078932118332}
   _UI_animator: {fileID: 2716502566933505675}
   _Equipment_Animator: {fileID: 865905763548579415}
---- !u!114 &6293749767254639766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8109913824263524884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9125159d76509704fbb84b27e3350b17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _arm_animator: {fileID: 865905763548579415}
-  _triggerStrings: []
 --- !u!95 &865905763548579415
 Animator:
   serializedVersion: 4
@@ -1859,6 +1844,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
+--- !u!54 &2578831408471448611 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 1996612668581499383, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
+  m_PrefabInstance: {fileID: 4070336127521246676}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2578831408471448614 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1996612668581499378, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
