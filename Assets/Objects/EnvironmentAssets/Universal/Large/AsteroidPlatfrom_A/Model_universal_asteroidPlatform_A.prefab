@@ -43,9 +43,10 @@ GameObject:
   - component: {fileID: 980734980590219448}
   - component: {fileID: 1801065642620779542}
   - component: {fileID: 4236679461525661332}
+  - component: {fileID: 7098207017531777458}
   m_Layer: 0
   m_Name: Model_universal_asteroidPlatform_A
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
@@ -115,3 +116,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7098207017531777458
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8855560390773298644}
+  m_Material: {fileID: 13400000, guid: be1d6dec3da32aa49aedd3d904d443b7, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7382101804259761606, guid: 7e78ed53c421f7e4b9b2764767ae87a2, type: 3}
