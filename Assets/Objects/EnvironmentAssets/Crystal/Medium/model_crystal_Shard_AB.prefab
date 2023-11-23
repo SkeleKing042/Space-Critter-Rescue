@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7356073518793560961}
   - component: {fileID: 5888982566342892580}
   - component: {fileID: 8529018592107620590}
+  - component: {fileID: 8777322583411160623}
   m_Layer: 0
   m_Name: model_crystal_Shard_AB
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8777322583411160623
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7880689431402334523}
+  m_Material: {fileID: 13400000, guid: be1d6dec3da32aa49aedd3d904d443b7, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 118.07295, y: 355.11252, z: 123.74109}
+  m_Center: {x: 23.938297, y: 177.37236, z: -23.53905}
