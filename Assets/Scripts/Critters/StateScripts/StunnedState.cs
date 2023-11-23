@@ -9,10 +9,13 @@ public class StunnedState : State
     }
     public override void StartState()
     {
-        AI.Animator.SetBool("StunnedState", true);
-        AI.RigidMode(true);
-        AI.Rb.useGravity = true;
-            AI.PrepareUpdateState(new IdleState(AI),5);
+        if (AIBrainReady())
+        {
+            AI.Animator.SetBool("StunnedState", true);
+            AI.RigidMode(true);
+            AI.Rb.useGravity = true;
+            AI.PrepareUpdateState(new IdleState(AI), 5);
+        }
     }
     public override void Update()
     {
@@ -20,8 +23,12 @@ public class StunnedState : State
     }
     public override void EndState()
     {
-        AI.Animator.SetBool("StunnedState", false);
-        AI.RigidMode(false);
+        if (AIBrainReady())
+        {
+            AI.Animator.SetBool("StunnedState", false);
+            AI.RigidMode(false);
+            AI.Rb.useGravity = false;
+        }
     }
 
 }

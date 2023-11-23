@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine.AI;
 
 public abstract class State
@@ -19,5 +20,11 @@ public abstract class State
     public abstract void StartState();
     public abstract void Update();
     public abstract void EndState();
+    protected bool AIBrainReady()
+    {
+        if (_ai != null && _agent != null && _ai.isActiveAndEnabled && _agent.isActiveAndEnabled)
+            return true;
+        else return false;
+    }
 }
 
