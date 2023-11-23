@@ -13,7 +13,7 @@ public class SoundPropagation : MonoBehaviour
     private SphereCollider _soundField;
     private float _proaDistance;
     private List<GameObject> _goobs = new List<GameObject>();
-    private void Start()
+    private void Awake()
     {
         _soundField = GetComponent<SphereCollider>();
         _proaDistance = _soundField.radius;

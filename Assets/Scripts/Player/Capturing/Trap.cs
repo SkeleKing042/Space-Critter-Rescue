@@ -33,7 +33,7 @@ public class Trap : MonoBehaviour
     [SerializeField, Tooltip("Animator That controls the trap")]
     private Animator _trap_Animator;
 
-    private void Start()
+    private void Awake()
     {
         Vacuum = FindObjectOfType<VacuumGun>();
         Check = FindObjectOfType<Equipment>();
@@ -54,7 +54,7 @@ public class Trap : MonoBehaviour
         // check the player is holding the detinator
         if(Detinator.gameObject.activeSelf ==true)
         {
-            StartCoroutine(BubbleTimer());
+            //StartCoroutine(BubbleTimer());
         }
     }
 
@@ -155,7 +155,7 @@ public class Trap : MonoBehaviour
     /// when the bubble disables put any aliens in the list to a panic state
     /// </summary>
     /// <returns></returns>
-    IEnumerator BubbleTimer()
+    /*IEnumerator BubbleTimer()
     {
 
         // sey gameobjects correctly
@@ -178,9 +178,7 @@ public class Trap : MonoBehaviour
             }
             // completly clear the list
             _alienList.Clear();
-
-
-    }
+    }*/
 
     #endregion
 

@@ -10,9 +10,9 @@ public class Inventory : MonoBehaviour
 {
     #region Variables
     [Header("Drop off")]
-    [SerializeField, Tooltip("The transform of the drop off GameObject")]
+ //   [SerializeField, Tooltip("The transform of the drop off GameObject")]
     private Transform _shipDropOff;
-    [SerializeField, Tooltip("Players transform"), HideInInspector]
+ //   [SerializeField, Tooltip("Players transform"), HideInInspector]
     private Transform _playerTransform;
     [SerializeField, Tooltip("Range in which the player can put critters into the ship")]
     private float _dropOffRange;

@@ -77,7 +77,7 @@ public class Equipment : MonoBehaviour
     /// <summary>
     /// set starting values in scene
     /// </summary>
-    void Start()
+    void Awake()
     {
         //get the tablet script
         _tablet = FindObjectOfType<Tablet>();

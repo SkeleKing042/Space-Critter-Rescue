@@ -59,7 +59,7 @@ public class Tablet : MonoBehaviour
 
     //Methdods
     #region Start
-    private void Start()
+    private void Awake()
     {
         //find components
         _playerMovement = GetComponentInParent<PlayerMovement>();

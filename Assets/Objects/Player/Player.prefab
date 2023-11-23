@@ -806,10 +806,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
-      propertyPath: EnableTrapAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: JumpAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Jump
       objectReference: {fileID: 0}
@@ -892,7 +888,7 @@ PrefabInstance:
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: EnableTrapAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2578831408471448615}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: MoveTabRight.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: MoveTabRight
@@ -970,10 +966,6 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
-      propertyPath: EnableTrapAction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: FireAction._endAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -992,10 +984,6 @@ PrefabInstance:
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: DropAliensToShip.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: MoveToShip
-      objectReference: {fileID: 0}
-    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
-      propertyPath: EnableTrapAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TrapCatching
       objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: FireAction.Action.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -1278,10 +1266,6 @@ PrefabInstance:
       value: Inventory, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
-      propertyPath: EnableTrapAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Trap, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: MoveTeleportLeft.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Tablet, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -1407,10 +1391,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: DropAliensToShip.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
-      propertyPath: EnableTrapAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
@@ -1674,6 +1654,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1661824769620683522, guid: 1444a0e199c741b4aa218e08561f13f3, type: 3}
   m_PrefabInstance: {fileID: 1498225410154042701}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &616685753026340085 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2036801852676239800, guid: 1444a0e199c741b4aa218e08561f13f3, type: 3}
+  m_PrefabInstance: {fileID: 1498225410154042701}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3700669598919803901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1835,9 +1820,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1996612668581499379, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
+      propertyPath: Check
+      value: 
+      objectReference: {fileID: 7207852762652227241}
+    - target: {fileID: 1996612668581499379, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
+      propertyPath: Vacuum
+      value: 
+      objectReference: {fileID: 5918693712695712689}
+    - target: {fileID: 1996612668581499379, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
       propertyPath: Detinator
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 616685753026340085}
     - target: {fileID: 1996612668581499379, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
       propertyPath: playerGun
       value: 
@@ -1862,6 +1855,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1996612668581499378, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
   m_PrefabInstance: {fileID: 4070336127521246676}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2578831408471448615 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1996612668581499379, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
+  m_PrefabInstance: {fileID: 4070336127521246676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2578831408471448794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 892a198cde1cb1b46ab651eb460e163f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2578831408471448794 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1996612668581499150, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}

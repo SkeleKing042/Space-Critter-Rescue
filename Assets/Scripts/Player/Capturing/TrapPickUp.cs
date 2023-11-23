@@ -23,7 +23,7 @@ public class TrapPickUp : MonoBehaviour
 
     // Update is called once per frame
    
-    void Start()
+    void Awake()
     {
         Trap.transform.position = PlayerGun.transform.position;
         currentlyHolding = CurrentlyHolding.vacuum;
@@ -85,7 +85,7 @@ public class TrapPickUp : MonoBehaviour
     {
         if (trap.gameObject.tag == "trap" && Input.GetKeyDown(KeyCode.Q))
         {
-            Start();
+            Awake();
         }
     }
 }
