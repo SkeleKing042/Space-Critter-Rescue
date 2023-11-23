@@ -81,7 +81,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3390830656048057695}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: 1479372276
   m_Radius: 0.6
   m_Speed: 3.5
   m_Acceleration: 8
@@ -109,12 +109,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsBig: 1
   Type: 0
-  _critterHeight: 1
   _thirstiness: 50
   _lazyness: 50
   _panicVelocity: 5
   ExplorationRange: 15
-  _moveSpeed: 3
+  _panicMulti: 0
 --- !u!114 &3390830656048057688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,13 +148,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Radius: 10
-  Angle: 115
-  PlayerRef: {fileID: 0}
+  Angle: 190
   _targetMask:
     serializedVersion: 2
     m_Bits: 64
-  _obstructionMask:
-    serializedVersion: 2
+  _obstructionMasks:
+  - serializedVersion: 2
     m_Bits: 128
   CanSeeTarget: 0
 --- !u!95 &2050349986674664729
