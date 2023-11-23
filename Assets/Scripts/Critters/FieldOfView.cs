@@ -10,7 +10,8 @@ public class FieldOfView : MonoBehaviour
     [Range(0f, 360f)]
     public float Angle;
 
-    public GameObject PlayerRef;
+    private GameObject _playerRef;
+    public GameObject PlayerRef { get { return _playerRef; } }
 
     [Header("Masks"),SerializeField]
     private LayerMask _targetMask;
@@ -23,7 +24,7 @@ public class FieldOfView : MonoBehaviour
 
     private void Start()
     {
-        PlayerRef = GameObject.FindGameObjectWithTag("Player");
+        _playerRef = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(FOVRoutine());
         AI = GetComponent<CreatureAI>();
     }
