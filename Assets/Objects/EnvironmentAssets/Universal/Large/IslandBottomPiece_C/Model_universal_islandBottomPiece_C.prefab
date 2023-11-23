@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 3726998938501856680}
   - component: {fileID: 4525051025770377816}
   - component: {fileID: 6421437318270744425}
+  - component: {fileID: 1111903902279027352}
   m_Layer: 0
   m_Name: Model_universal_islandBottomPiece_C
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 1
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1111903902279027352
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831807949873558351}
+  m_Material: {fileID: 13400000, guid: be1d6dec3da32aa49aedd3d904d443b7, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3183500998198759318, guid: c3f3743c8a96e6f43915fcd7cc47e971, type: 3}
 --- !u!1 &5613073221576522346
 GameObject:
   m_ObjectHideFlags: 0
