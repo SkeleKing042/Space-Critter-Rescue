@@ -1608,10 +1608,6 @@ PrefabInstance:
       value: Detonator
       objectReference: {fileID: 0}
     - target: {fileID: 2036801852676239800, guid: 1444a0e199c741b4aa218e08561f13f3, type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2036801852676239800, guid: 1444a0e199c741b4aa218e08561f13f3, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1672,6 +1668,11 @@ PrefabInstance:
 --- !u!4 &271685751247060559 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1661824769620683522, guid: 1444a0e199c741b4aa218e08561f13f3, type: 3}
+  m_PrefabInstance: {fileID: 1498225410154042701}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &616685753026340085 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2036801852676239800, guid: 1444a0e199c741b4aa218e08561f13f3, type: 3}
   m_PrefabInstance: {fileID: 1498225410154042701}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3700669598919803901
@@ -1835,9 +1836,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1996612668581499379, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
+      propertyPath: Check
+      value: 
+      objectReference: {fileID: 7207852762652227241}
+    - target: {fileID: 1996612668581499379, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
+      propertyPath: Vacuum
+      value: 
+      objectReference: {fileID: 5918693712695712689}
+    - target: {fileID: 1996612668581499379, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
       propertyPath: Detinator
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 616685753026340085}
     - target: {fileID: 1996612668581499379, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
       propertyPath: playerGun
       value: 
