@@ -14,6 +14,8 @@ public class Trap : MonoBehaviour
 
     [Header("Tool GameObjects")]
     public GameObject Bubble;
+
+
     public GameObject playerGun;
     public GameObject Detinator;
 
@@ -36,6 +38,8 @@ public class Trap : MonoBehaviour
         Vacuum = FindObjectOfType<VacuumGun>();
         Check = FindObjectOfType<Equipment>();
 
+        Bubble.SetActive(false);
+        
         offSet = new Vector3(1, 0, 1);
         lerpPathDestination = transform.position - offSet;
     }
@@ -153,16 +157,17 @@ public class Trap : MonoBehaviour
     /// <returns></returns>
     IEnumerator BubbleTimer()
     {
+
         // sey gameobjects correctly
-        Bubble.SetActive(true);
+        _trap_Animator.SetTrigger("Activate Trap");
+
+        Debug.Log("bubble is active");
         yield return new WaitForSeconds(5);
-        Bubble.SetActive(false);
+        _trap_Animator.SetTrigger("Deactivate Trap");
+        Debug.Log("bubble is NOT active");
         Catchable = false;
 
 
-        //check the list isnt empty
-        if (Bubble.gameObject.activeSelf == false && _alienList.Count > 0)
-        {
             foreach (GameObject item in _alienList)
             {
                 if (AlienAI != null)
@@ -173,7 +178,7 @@ public class Trap : MonoBehaviour
             }
             // completly clear the list
             _alienList.Clear();
-        }
+
 
     }
 
