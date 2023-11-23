@@ -162,6 +162,7 @@ public class CreatureAI : MonoBehaviour
                     {
                         //Go to the water source
                         _POITarget = currentSource.transform;
+                        if(_agent.isActiveAndEnabled)
                         _agent.SetDestination(_POITarget.position);
                         GoingForDrink = true;
                         PrepareUpdateState(new RoamingState(this));
@@ -201,7 +202,8 @@ public class CreatureAI : MonoBehaviour
             {
                 PrepareUpdateState(new StunnedState(this));
                 //Run from the object
-                _agent.SetDestination(transform.position + otherBody.velocity.normalized * (otherBody.velocity.magnitude / 3.0f));
+                if(_agent.isActiveAndEnabled)
+                    _agent.SetDestination(transform.position + otherBody.velocity.normalized * (otherBody.velocity.magnitude / 3.0f));
                 PrepareUpdateState(new PanicState(this), collision.gameObject.GetComponent<Rigidbody>().velocity.magnitude / 10);
             }
         }
@@ -232,6 +234,7 @@ public class CreatureAI : MonoBehaviour
     {
         if (_naving)
         {
+            if(_agent.isActiveAndEnabled)
             _agent.Warp(_lastGroundPoint + _respawnOffset);
             PrepareUpdateState(new StunnedState(this));
             PrepareUpdateState(new IdleState(this), 2f);
@@ -282,14 +285,14 @@ public class CreatureAI : MonoBehaviour
     {
         if (_naving)
         {
-            _agent.isStopped = _rb.useGravity = true;
+            _agent.isStopped = true;
             _agent.enabled =_rb.isKinematic = false;
         }
         else if (!_naving)
         {
             _rb.isKinematic = _agent.enabled = true;
             transform.rotation = Quaternion.identity;
-            _rb.useGravity = _agent.isStopped = false;
+            _agent.isStopped = false;
         }
     }
     /// <summary>
