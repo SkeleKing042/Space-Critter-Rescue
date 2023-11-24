@@ -33,6 +33,9 @@ public class Trap : MonoBehaviour
     [SerializeField, Tooltip("Animator That controls the trap")]
     private Animator _trap_Animator;
 
+    [SerializeField]
+    public bool _trapActivated;
+
     private void Awake()
     {
         Vacuum = FindObjectOfType<VacuumGun>();
@@ -185,10 +188,23 @@ public class Trap : MonoBehaviour
     #region Animation
     public void SetTrigger_ActivateTrap()
     {
+        Catchable = true;
         _trap_Animator.SetTrigger("Activate Trap");
+        Catchable = false;
     }
+
+
 
 
     #endregion
 
+    public void SetTrapActivated_True()
+    {
+        _trapActivated = true;
+    }
+
+    public void SetTrapActivated_False()
+    {
+        _trapActivated = false;
+    }
 }

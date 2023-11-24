@@ -50,6 +50,8 @@ public class Equipment : MonoBehaviour
     [SerializeField]
     private Tablet _tablet;
     [SerializeField]
+    private Trap _trap;
+    [SerializeField]
     private Transform VC_1_Transform;
 
     [Header("UI")]
@@ -60,6 +62,8 @@ public class Equipment : MonoBehaviour
 
     [Header("Equipment Animator")]
     public Animator _Equipment_Animator;
+
+    
 
     /// <summary>
     /// players eqipment
@@ -90,6 +94,8 @@ public class Equipment : MonoBehaviour
 
         //bring up the VC
         _animation_VC_Up();
+
+        _trap = FindObjectOfType<Trap>();
     }
 
     void Update()
@@ -250,14 +256,13 @@ public class Equipment : MonoBehaviour
         //find the distance between the player and the trap
         _distance = Vector3.Distance(Trap.transform.position, transform.position);
         _distance = Mathf.Abs(_distance);
-
+        Debug.Log("bubble active" + global::Trap.Catchable);
         // check if the player is within the range, not holding the trap and the trap is not active
-        if (_distance < PickUpRange)
+        if (_distance < PickUpRange && !Bubble.activeInHierarchy)
         {
             if (_currentlyHolding == CurrentlyHolding.VC)
             {
                 _animation_VCDown_TrapUp();
-
                 //update ui
                 _UI_Manager.SetUIState(UI_Manager.UIState.Trap_ThrowTrap_VC);
             }
