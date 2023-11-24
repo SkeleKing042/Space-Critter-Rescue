@@ -13,22 +13,49 @@ public class SoundPropagation : MonoBehaviour
     private SphereCollider _soundField;
     private float _proaDistance;
     private List<GameObject> _goobs = new List<GameObject>();
-    private void Awake()
+    private void Start()
     {
         _soundField = GetComponent<SphereCollider>();
         _proaDistance = _soundField.radius;
     }
     /// <summary>
-    /// Propagates a soudn out from the player.
+    /// Propagates a sound out from the player.
     /// Scale ranges from 1 to 0, 1 being full size and 0 being nothing (or off)
     /// </summary>
     /// <param name="scale"></param>
     public void PropagateSound(float scale)
     {
+        bool nulls = false;
+        //Go through the list of creatures within earshot
         foreach(GameObject goob in _goobs)
         {
-            if(Vector3.Distance(transform.position, goob.transform.position) <= _proaDistance * scale)
-                goob.GetComponent<CreatureAI>().RunFromPlayer(0);
+            //If they still exist
+            if (goob != null)
+            {
+                //and are in range
+                if (Vector3.Distance(transform.position, goob.transform.position) >= _proaDistance * scale)
+                    //Scare them
+                    goob.GetComponent<CreatureAI>().RunFromPlayer(0);
+            }
+            else
+            {
+                nulls = true;
+                continue;
+            }
+        }
+        while (nulls)
+        {
+            nulls = false;
+            foreach (GameObject goob in _goobs)
+            {
+                if (goob == null)
+                {
+                    nulls = true;
+                    _goobs.Remove(goob);
+                    break;
+                }
+
+            }
         }
     }
 
