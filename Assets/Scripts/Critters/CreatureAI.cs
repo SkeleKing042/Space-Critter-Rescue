@@ -81,9 +81,6 @@ public class CreatureAI : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _critterHeight = _agent.height;
         _baseSpeed = _agent.speed;
-        _player = GameObject.FindGameObjectWithTag(_playerTag);
-        _animator = GetComponentInChildren<Animator>();
-        _drinkingSources = GetComponentInChildren<DrinkenFinden>();
         _rb = GetComponent<Rigidbody>();
 
         GetComponent<CreatureStats>().GetStats();
@@ -99,6 +96,12 @@ public class CreatureAI : MonoBehaviour
         _currentState.StartState();
 
         StartCoroutine(GrabGroundBelow());
+    }
+    private void Awake()
+    {
+        _player = GameObject.FindGameObjectWithTag(_playerTag);
+        _animator = GetComponentInChildren<Animator>();
+        _drinkingSources = GetComponentInChildren<DrinkenFinden>();
     }
     public void InitStats(float thirst, float lazy, float dis, float vel, float pMul)
     {
@@ -274,6 +277,7 @@ public class CreatureAI : MonoBehaviour
         if (newState.GetType() != _currentState.GetType())
         {
             _currentState.EndState();
+            _animator.ResetTrigger(_currentState.Name);
             _currentState = newState;
             _currentState.StartState();
         }

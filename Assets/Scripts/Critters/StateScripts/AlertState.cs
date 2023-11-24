@@ -13,7 +13,7 @@ public class AlertState : State
     {
         if (AIBrainReady())
         {
-            AI.Animator.SetBool("AlertState", true);
+            //AI.Animator.SetBool("AlertState", true);
             AI.RigidMode(false);
             AI.GetAgent.isStopped = true;
         }
@@ -28,8 +28,8 @@ public class AlertState : State
     }
     public override void EndState()
     {
-        if(AIBrainReady())
-        AI.Animator.SetBool("AlertState", false);
+        //if(AIBrainReady())
+        //AI.Animator.SetBool("AlertState", false);
     }
 
 }

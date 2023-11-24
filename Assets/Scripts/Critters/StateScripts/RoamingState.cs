@@ -14,7 +14,7 @@ public class RoamingState : State
         if (AIBrainReady())
         {
             Agent.isStopped = false;
-            AI.Animator.SetBool("RoamingState", true);
+            //AI.Animator.SetBool("RoamingState", true);
         }
     }
     public override void Update()
@@ -52,7 +52,7 @@ public class RoamingState : State
     }
     public override void EndState()
     {
-        if(AIBrainReady())
-        AI.Animator.SetBool("RoamingState", false);
+        //if(AIBrainReady())
+        //AI.Animator.SetBool("RoamingState", false);
     }
 }

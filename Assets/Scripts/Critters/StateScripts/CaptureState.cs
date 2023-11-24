@@ -14,7 +14,7 @@ public class CaptureState : State
     {
         if (AIBrainReady())
         {
-            AI.Animator.SetBool("CaptureState", true);
+            //AI.Animator.SetBool("CaptureState", true);
             AI.RigidMode(true);
         }
     }
@@ -31,7 +31,7 @@ public class CaptureState : State
     {
         if (AIBrainReady())
         {
-            AI.Animator.SetBool("CaptureState", false);
+            //AI.Animator.SetBool("CaptureState", false);
             AI.RigidMode(false);
         }
     }
