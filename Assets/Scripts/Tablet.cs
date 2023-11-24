@@ -55,6 +55,14 @@ public class Tablet : MonoBehaviour
     [SerializeField] private List<Image> _largeBackpackSlots;
     [SerializeField] private List<Image> _smallBackpackSlots;
     [SerializeField] private List<Sprite> _critterIcons;
+
+    [Header("SFX")]
+    [SerializeField] private AudioSource _SFXSource_Tablet;
+    [SerializeField] private AudioClip _SFXClip_TabletOn;
+    [SerializeField] private AudioClip _SFXClip_TabletOff;
+    [SerializeField] private AudioClip _SFXClip_ChangeTeleportLocation;
+    [SerializeField] private AudioClip _SFXClip_ChangeTab;
+
     #endregion
 
     //Methdods
@@ -365,4 +373,44 @@ public class Tablet : MonoBehaviour
         }
     }
     #endregion
+
+    #region SFX
+    //play the SFX tablet on
+    public void PlaySFX_TabletOn()
+    {
+        //assign the clip
+        _SFXSource_Tablet.clip = _SFXClip_TabletOn;
+        //play the clip
+        _SFXSource_Tablet.Play();
+    }
+
+    //play the SFX Tablet Off
+    public void PlaySFX_TabletOff()
+    {
+        //assign the clip
+        _SFXSource_Tablet.clip = _SFXClip_TabletOff;
+        //play the clip
+        _SFXSource_Tablet.Play();
+    }
+
+    //play the SFX change tab
+    public void PlaySFX_ChangeTab()
+    {
+        //assign the clip
+        _SFXSource_Tablet.clip = _SFXClip_ChangeTab;
+        //play the clip
+        _SFXSource_Tablet.Play();
+    }
+
+    //play SFX change teleport location
+    public void PlaySFX_ChangeTeleportLocation()
+    {
+        //assign the clip
+        _SFXSource_Tablet.clip = _SFXClip_ChangeTeleportLocation;
+        //play the clip
+        _SFXSource_Tablet.Play();
+    }
+
+    #endregion
+
 }
