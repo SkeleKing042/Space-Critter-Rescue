@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 MovementInput;
     [HideInInspector]
     public bool DoMovement;
-    public bool Actionable;
     private SoundPropagation _soundPropagation;
     [Header("Ground movement")]
     [SerializeField, Tooltip("The speed at which the player moves forwards and backwards.")]
@@ -86,21 +85,13 @@ public class PlayerMovement : MonoBehaviour
     public bool _holdAfterJump;
     private bool _jetInputReady;
 
-    [Header("Fuel Display")]
-    [SerializeField, Tooltip("The display for the jet fuel.")]
-    private Image _fuelBarMain;
-    [SerializeField]
-    private Image _delayedBar;
-    [SerializeField]
-    private Image _fuelBarBackground;
-    [SerializeField]
-    private Color[] _jetBackgroundColor;
-
     [Header("Crouch Settings")]
     [SerializeField, Tooltip("The amount to scale the player by.")]
     private float _crouchScale;
     private float _headHeight;
     private bool _crouched;
+    [SerializeField]
+    private Transform _collisionObject;
 
     [HideInInspector]
     public Vector3[] GroundPoints = new Vector3[4];
@@ -133,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
             //Apply the force
             PlayerRigidbody.AddForce(-triBreakVelocity);
         }
-        else if(DoMovement && Actionable)
+        else if(DoMovement)
         {
             _orientedForceObject.up = GetGroundNormal();
             _orientedForceObject.rotation = Quaternion.Euler(_orientedForceObject.rotation.eulerAngles.x, _camera.transform.rotation.eulerAngles.y, _orientedForceObject.rotation.eulerAngles.z);
@@ -168,11 +159,11 @@ public class PlayerMovement : MonoBehaviour
     #region Movement
     public void UpdateMovementAxis(Vector2 v)
     {
-        if(Actionable) MovementInput = v;
+        if(DoMovement) MovementInput = v;
     }
     public void DoCrouch()
     {
-        if(DoMovement && GroundedCheck() && Actionable)
+        if(DoMovement && GroundedCheck())
         {
             if (!_crouched)
                 CrouchPlayer();
@@ -187,14 +178,14 @@ public class PlayerMovement : MonoBehaviour
     }
     private void CrouchPlayer()
     {
-        if (DoMovement && Actionable)
+        if (DoMovement)
         {
             DoSprint(false);
             _flooringIt = false;
             _crouched = true;
             _headHeight *= _crouchScale;
-            _movementModifier *= _crouchScale;
-            gameObject.GetComponent<CapsuleCollider>().height *= _crouchScale;
+            //_movementModifier *= _crouchScale;
+            _collisionObject.localScale = new Vector3(_collisionObject.localScale.x, 0, _collisionObject.localScale.z);
             PlayerHeight *= _crouchScale;
 
             transform.position = new Vector3(transform.position.x, transform.position.y - (PlayerHeight / 2), transform.position.z);
@@ -202,21 +193,21 @@ public class PlayerMovement : MonoBehaviour
     }
     private void UncrouchPlayer()
     {
-        if (DoMovement && Actionable)
+        if (DoMovement)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + (PlayerHeight / 2), transform.position.z);
 
             _crouched = false;
             _headHeight /= _crouchScale;
-            _movementModifier /= _crouchScale;
-            gameObject.GetComponent<CapsuleCollider>().height /= _crouchScale;
+            //_movementModifier /= _crouchScale;
+            _collisionObject.localScale = new Vector3(_collisionObject.localScale.x, 1 , _collisionObject.localScale.z);
             PlayerHeight /= _crouchScale;
         }
     }
 
     public void DoSprint()
     {
-        if (DoMovement && !_crouched && GroundedCheck() && Actionable)
+        if (DoMovement && !_crouched && GroundedCheck())
         {
             if (!_flooringIt)
                 _movementModifier = _sprintScale;
@@ -278,7 +269,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 dir = Vector3.up;
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, -Vector3.up * PlayerHeight, out hit, PlayerHeight))
+        if (Physics.Raycast(transform.position, -Vector3.up * PlayerHeight, out hit, PlayerHeight, _groundLayer))
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             if (hit.collider.tag == "Ground")
@@ -303,7 +294,7 @@ public class PlayerMovement : MonoBehaviour
     #region Jumping
     public void Jump()
     {
-        if(DoMovement && Actionable)
+        if(DoMovement)
         //Debug.Log("Jump initiated");       
         if (GroundedCheck())
         {
@@ -335,7 +326,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void JetPack()
     {
-        if (DoMovement && Actionable)
+        if (DoMovement)
             //If we have fuel...
             if (_jetFuel > 0)
             {
