@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
 {
     #region Variables
     [Header("Drop off")]
- //   [SerializeField, Tooltip("The transform of the drop off GameObject")]
+   //[SerializeField, Tooltip("The transform of the drop off GameObject")]
     private Transform _shipDropOff;
  //   [SerializeField, Tooltip("Players transform"), HideInInspector]
     private Transform _playerTransform;
@@ -76,6 +76,7 @@ public class Inventory : MonoBehaviour
         //find the player transform
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         //find drop off transform
+        
         _shipDropOff = GameObject.FindGameObjectWithTag("DropOff").transform;
     }
 
