@@ -54,7 +54,7 @@ public class Trap : MonoBehaviour
         // check the player is holding the detinator
         if(Detinator.gameObject.activeSelf ==true)
         {
-            //StartCoroutine(BubbleTimer());
+          //  StartCoroutine(BubbleTimer());
         }
     }
 
@@ -185,7 +185,9 @@ public class Trap : MonoBehaviour
     #region Animation
     public void SetTrigger_ActivateTrap()
     {
+        Catchable = true;
         _trap_Animator.SetTrigger("Activate Trap");
+        Catchable = false;
     }
 
 

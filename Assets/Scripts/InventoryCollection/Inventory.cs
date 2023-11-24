@@ -96,9 +96,14 @@ public class Inventory : MonoBehaviour
                 //large critter + is room
                 if (alienType.IsBig && _player_largeCount < _player_largeCap)
                     _player_crystalCritter_Large++;
+
+                   
                 //small critter + is room
                 else if (!alienType.IsBig && _player_smallCount < _player_smallCap)
-                    _player_crystalCritter_Small++;
+                        _player_crystalCritter_Small++;
+ 
+
+                   
                 //is NOT room
                 else
                     added = false;
@@ -107,10 +112,14 @@ public class Inventory : MonoBehaviour
             case CreatureStats.creatureType.Shroom:
                 //large critter + is room
                 if (alienType.IsBig && _player_largeCount < _player_largeCap)
-                    _player_fungiCritter_Large++;
+                       _player_fungiCritter_Large++;
+
+
                 //small critter + is room
                 else if (!alienType.IsBig && _player_smallCount < _player_smallCap)
                     _player_fungiCritter_Small++;
+
+
                 //none of the above (no room)
                 else
                     added = false;

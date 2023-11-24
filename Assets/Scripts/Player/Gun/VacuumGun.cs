@@ -108,17 +108,19 @@ public class VacuumGun : MonoBehaviour
     #region Pulling
     public void Pull()
     {
-       
+
         // proprapgate sound
 
         //Sound.PropagateSound(0.00001f);
-        if(gameObject.activeSelf == true)
+        if (gameObject.activeSelf == true)
         {
+            Debug.Log("object is active");
             Pulling = true;
             foreach (AlienData aData in aData)
             {
                 try
                 {
+                    Debug.Log("tryinggg");
                     if (!Physics.Linecast(transform.position, aData.AI.transform.position,layermask ))
                     {
                     Debug.DrawRay(transform.position, aData.AI.transform.position, Color.black);
@@ -143,6 +145,7 @@ public class VacuumGun : MonoBehaviour
                 }
                 catch (Exception e)
                 {
+                    Debug.Log("catching");
                     Debug.Log(e);
                     
                 }
@@ -151,6 +154,7 @@ public class VacuumGun : MonoBehaviour
         }
         else
         {
+            Debug.Log("end pull");
             EndPull();
             foreach (AlienData alien in aData)
                 UnassignAlien(alien.gObject);
