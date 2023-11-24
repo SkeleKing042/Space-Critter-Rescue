@@ -14,7 +14,7 @@ public class DrinkingState : State
         {
             //Stop moving
             Agent.isStopped = true;
-            AI.Animator.SetBool("DrinkingState", true);
+            //AI.Animator.SetBool("DrinkingState", true);
         }
     }
     public override void Update()
@@ -41,7 +41,7 @@ public class DrinkingState : State
         {
             AI.GoingForDrink = false;
             Agent.isStopped = false;
-            AI.Animator.SetBool("DrinkingState", false);
+            //AI.Animator.SetBool("DrinkingState", false);
         }
     }
 }

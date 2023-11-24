@@ -5,18 +5,17 @@ public abstract class State
 {
     private CreatureAI _ai;
     private NavMeshAgent _agent;
+    private string _animName;
     public State(CreatureAI ai)
     {
         _ai = ai;
         _agent = _ai.GetAgent;
-    }
-    public State(CreatureAI ai, NavMeshAgent agent)
-    {
-        _ai = ai;
-        _agent = agent;
+        _animName = this.GetType().ToString();
+        FireTrigger();
     }
     public CreatureAI AI { get { return _ai; } }
     public NavMeshAgent Agent { get { return _agent; } }
+    public string Name { get { return _animName; } }
     public abstract void StartState();
     public abstract void Update();
     public abstract void EndState();
@@ -25,6 +24,10 @@ public abstract class State
         if (_ai != null && _agent != null && _ai.isActiveAndEnabled && _agent.isActiveAndEnabled)
             return true;
         else return false;
+    }
+    public void FireTrigger()
+    {
+        _ai.Animator.SetTrigger(_animName);
     }
 }
 

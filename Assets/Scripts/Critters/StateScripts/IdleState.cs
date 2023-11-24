@@ -12,7 +12,7 @@ public class IdleState : State
     {
         if (AIBrainReady())
         {
-            AI.Animator.SetBool("IdleState", true);
+            //AI.Animator.SetBool("IdleState", true);
             AI.RigidMode(false);
         }
     }
@@ -43,7 +43,7 @@ public class IdleState : State
     }
     public override void EndState()
     {
-        if(AIBrainReady())
-        AI.Animator.SetBool("IdleState", false);
+        //if(AIBrainReady())
+        //AI.Animator.SetBool("IdleState", false);
     }
 }

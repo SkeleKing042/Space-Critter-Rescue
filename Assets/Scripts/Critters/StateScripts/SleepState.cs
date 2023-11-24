@@ -1,6 +1,7 @@
 //Created by Jackson Lucas
 //Last edited by Jackson Lucas
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SleepState : State
@@ -14,7 +15,7 @@ public class SleepState : State
         if (AIBrainReady())
         {
             Agent.isStopped = true;
-            AI.Animator.SetBool("SleepState", true);
+            //AI.Animator.SetBool("SleepState", true);
         }
     }
     public override void Update()
@@ -31,7 +32,7 @@ public class SleepState : State
         if (AIBrainReady())
         {
             Agent.isStopped = false;
-            AI.Animator.SetBool("SleepState", false);
+            //AI.Animator.SetBool("SleepState", false);
         }
     }
 }

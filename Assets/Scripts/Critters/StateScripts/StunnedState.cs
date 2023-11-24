@@ -11,7 +11,7 @@ public class StunnedState : State
     {
         if (AIBrainReady())
         {
-            AI.Animator.SetBool("StunnedState", true);
+            //AI.Animator.SetBool("StunnedState", true);
             AI.RigidMode(true);
             AI.Rb.useGravity = true;
             AI.PrepareUpdateState(new IdleState(AI), 5);
@@ -25,7 +25,7 @@ public class StunnedState : State
     {
         if (AIBrainReady())
         {
-            AI.Animator.SetBool("StunnedState", false);
+            //AI.Animator.SetBool("StunnedState", false);
             AI.RigidMode(false);
             AI.Rb.useGravity = false;
         }

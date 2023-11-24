@@ -13,7 +13,7 @@ public class StruggleState : State
     {
         if (AIBrainReady())
         {
-            AI.Animator.SetBool("StuggleState", true);
+            //AI.Animator.SetBool("StuggleState", true);
             //Double movement speed
             Agent.speed = AI.BaseSpeed * 4f;
         }
@@ -44,7 +44,7 @@ public class StruggleState : State
         if (AIBrainReady())
         {
             Agent.speed = AI.BaseSpeed;
-            AI.Animator.SetBool("StuggleState", false);
+            //AI.Animator.SetBool("StuggleState", false);
         }
     }
 }

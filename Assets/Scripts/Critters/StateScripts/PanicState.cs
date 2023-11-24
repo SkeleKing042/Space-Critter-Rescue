@@ -14,7 +14,7 @@ public class PanicState : State
         {
             AI.GetAgent.enabled = true;
             Agent.isStopped = false;
-            AI.Animator.SetBool("PanicState", true);
+            //AI.Animator.SetBool("PanicState", true);
             //Double movement speed
             Agent.speed = AI.BaseSpeed * AI.PanicSpeedIncrease;
 
@@ -45,7 +45,7 @@ public class PanicState : State
         {
             //Return to normal speed
             Agent.speed = AI.BaseSpeed;
-            AI.Animator.SetBool("PanicState", false);
+            //AI.Animator.SetBool("PanicState", false);
         }
     }
 
