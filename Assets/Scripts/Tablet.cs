@@ -98,6 +98,9 @@ public class Tablet : MonoBehaviour
         //turn tablet off
         if (TabletState)
         {
+            //play SFX
+            PlaySFX_TabletOff();
+
             //animate tablet down
             _equipment._animation_Tablet_Down();
             
@@ -129,6 +132,9 @@ public class Tablet : MonoBehaviour
         //turn tablet on
         else
         {
+            //play SFX
+            PlaySFX_TabletOn();
+
             //animate tablet up
             _equipment._animation_TabletUp();
 
