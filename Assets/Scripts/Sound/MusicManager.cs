@@ -1,39 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static VacuumGun;
 
 public class MusicManager : MonoBehaviour
 {
-    [SerializeReference]
-    private AudioSource FungiMusic;
-    [SerializeReference]
-    private AudioSource CrystalMusic;
-    public GameObject player;
-    public GameObject FungiIsland;
+    [System.Serializable]
+    public class IslandInfo
+    {
+        public GameObject Island;
+        public float IslandDistance;
+        public Transform IslandPosition;
+        public AudioSource IslandMusic;
 
-    private Vector3 _distanceFromIsland;
+    }
 
+    public GameObject Player;
+    public List<IslandInfo> iData;
 
     // space music always playing
     // when in close radius only play specific music
 
-    void Volume()
+    private void Update()
     {
-        _distanceFromIsland = FungiIsland.transform.position - player.transform.position;
-
-    // if(_distanceFromIsland => 100)
-    // {
-    //     FungiMusic.volume = 0;
-    // }
-    //
-    // if(_distanceFromIsland < 100)
-    // {
-    //
-    // }
-
-
+        Volume();
     }
 
-    
+    void Volume()
+    {
+        foreach (IslandInfo islands in iData)
+        {
+            islands.IslandDistance = Vector3.Distance(islands.IslandPosition.transform.position, Player.transform.position);
+            islands.IslandDistance= Mathf.Abs(islands.IslandDistance);
 
+            if(islands.IslandDistance > 100)
+            {
+                islands.IslandMusic.volume = 0;
+            }
+            else
+            {
+                islands.IslandMusic.volume = 100 / islands.IslandDistance;
+            }
+
+          
+
+        }
+
+    }
 }
