@@ -33,6 +33,7 @@ public class CreatureAI : MonoBehaviour
     [Header("Resources")]
     [Range(0f, 100f)]
     public float Hydration = 100;
+    private float _startingWaterSearchRadius;
     [Range(0f, 100f)]
     public float Energy = 100;
 
@@ -102,6 +103,7 @@ public class CreatureAI : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag(_playerTag);
         _animator = GetComponentInChildren<Animator>();
         _drinkingSources = GetComponentInChildren<DrinkenFinden>();
+        _startingWaterSearchRadius = _drinkingSources.GetComponent<SphereCollider>().radius;
     }
     public void InitStats(float thirst, float lazy, float dis, float vel, float pMul)
     {
@@ -169,8 +171,13 @@ public class CreatureAI : MonoBehaviour
                         _agent.SetDestination(_POITarget.position);
                         GoingForDrink = true;
                         PrepareUpdateState(new RoamingState(this));
+                        _drinkingSources.GetComponent<SphereCollider>().radius = _startingWaterSearchRadius;
                         return true;
                     }
+                }
+                else
+                {
+                    _drinkingSources.GetComponent<SphereCollider>().radius += 10;
                 }
             }
         }
