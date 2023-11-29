@@ -85,21 +85,13 @@ public class PlayerMovement : MonoBehaviour
     public bool _holdAfterJump;
     private bool _jetInputReady;
 
-    [Header("Fuel Display")]
-    [SerializeField, Tooltip("The display for the jet fuel.")]
-    private Image _fuelBarMain;
-    [SerializeField]
-    private Image _delayedBar;
-    [SerializeField]
-    private Image _fuelBarBackground;
-    [SerializeField]
-    private Color[] _jetBackgroundColor;
-
     [Header("Crouch Settings")]
     [SerializeField, Tooltip("The amount to scale the player by.")]
     private float _crouchScale;
     private float _headHeight;
     private bool _crouched;
+    [SerializeField]
+    private Transform _collisionObject;
 
     [HideInInspector]
     public Vector3[] GroundPoints = new Vector3[4];
@@ -113,7 +105,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        GrabGroundBelow();
         GetGroundNormal();
         //Get the horizontal velocity. We don't want to affect/clamp the vertial movement
         Vector2 horizontalVel = new Vector2(PlayerRigidbody.velocity.x, PlayerRigidbody.velocity.z);
@@ -148,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 _soundPropagation.PropagateSound(Mathf.Clamp(horizontalVel.magnitude / _maxSpeed, 0, 1));
             }
+            GroundedCheck();
         }
 
         //...otherwise, if on the ground & out of fuel...
@@ -167,8 +159,7 @@ public class PlayerMovement : MonoBehaviour
     #region Movement
     public void UpdateMovementAxis(Vector2 v)
     {
-        //Movement got flipped when I added slope calcs and i don't really wanna implement a proper fix rn (2/11 - Jackson)
-        MovementInput = v;
+        if(DoMovement) MovementInput = v;
     }
     public void DoCrouch()
     {
@@ -193,8 +184,8 @@ public class PlayerMovement : MonoBehaviour
             _flooringIt = false;
             _crouched = true;
             _headHeight *= _crouchScale;
-            _movementModifier *= _crouchScale;
-            gameObject.GetComponent<CapsuleCollider>().height *= _crouchScale;
+            //_movementModifier *= _crouchScale;
+            _collisionObject.localScale = new Vector3(_collisionObject.localScale.x, 0, _collisionObject.localScale.z);
             PlayerHeight *= _crouchScale;
 
             transform.position = new Vector3(transform.position.x, transform.position.y - (PlayerHeight / 2), transform.position.z);
@@ -208,8 +199,8 @@ public class PlayerMovement : MonoBehaviour
 
             _crouched = false;
             _headHeight /= _crouchScale;
-            _movementModifier /= _crouchScale;
-            gameObject.GetComponent<CapsuleCollider>().height /= _crouchScale;
+            //_movementModifier /= _crouchScale;
+            _collisionObject.localScale = new Vector3(_collisionObject.localScale.x, 1 , _collisionObject.localScale.z);
             PlayerHeight /= _crouchScale;
         }
     }
@@ -240,6 +231,16 @@ public class PlayerMovement : MonoBehaviour
     /// <returns></returns>
     public bool GroundedCheck()
     {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, -Vector3.up * _lastGroundCheckMaxDistance, out hit, _lastGroundCheckMaxDistance))
+        {
+            //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
+            if (hit.collider.tag == "Ground")
+            {
+                _lastGroundPoint = hit.point + new Vector3(0, PlayerHeight, 0);
+            }
+        }
+
         float camY = _camera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
         Vector3 playerForwards = new Vector3(Mathf.Sin(camY), 0, Mathf.Cos(camY));
         Vector3 playerRights = new Vector3(Mathf.Cos(camY), 0, Mathf.Sin(-camY));
@@ -248,7 +249,6 @@ public class PlayerMovement : MonoBehaviour
         GroundPoints[2] = transform.position + playerForwards * -StrideLength;
         GroundPoints[3] = transform.position + playerRights * -StrideWidth;
 
-        RaycastHit hit;
         if(
             Physics.Raycast(GroundPoints[0], Vector3.down * PlayerHeight, out hit, PlayerHeight, _groundLayer) ||
             Physics.Raycast(GroundPoints[1], Vector3.down * PlayerHeight, out hit, PlayerHeight, _groundLayer) ||
@@ -264,24 +264,12 @@ public class PlayerMovement : MonoBehaviour
         }                                  
         return false;                      
     }
-    private void GrabGroundBelow()
-    {
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, -Vector3.up * _lastGroundCheckMaxDistance, out hit, _lastGroundCheckMaxDistance))
-        {
-            //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
-            if (hit.collider.tag == "Ground")
-            {
-                _lastGroundPoint = hit.point + new Vector3(0, PlayerHeight, 0);
-            }
-        }
-    }
     public Vector3 GetGroundNormal()
     {
         Vector3 dir = Vector3.up;
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, -Vector3.up * PlayerHeight, out hit, PlayerHeight))
+        if (Physics.Raycast(transform.position, -Vector3.up * PlayerHeight, out hit, PlayerHeight, _groundLayer))
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             if (hit.collider.tag == "Ground")
@@ -357,5 +345,5 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
     }
-    #endregion}
+    #endregion
 }
