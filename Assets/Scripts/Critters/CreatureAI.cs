@@ -70,21 +70,45 @@ public class CreatureAI : MonoBehaviour
     [SerializeField, Tooltip("How quickly the creature should turn to face the player during the capture state.")]
     private float _facePlayerRate;
     public float FacePlayerRate { get { return _facePlayerRate; } }
-    private float _panicSpeedIncrease;
-    public float PanicSpeedIncrease { get { return _panicSpeedIncrease; } }
+    private float _panicSpeed;
+    public float PanicSpeed { get { return _panicSpeed; } }
+    private FieldOfView _fovRef;
+    public FieldOfView FieldOfView { get { return _fovRef; } }
 
     #region Setup
     private void Start()
     {
-        //Sets the center of the area that the AI will move around
-        _homePoint = transform.position;
-        //Component grabs
+    }
+    private void Awake()
+    {
+        CreatureStats stats = GetComponent<CreatureStats>();
+        //Agent setup
         _agent = GetComponent<NavMeshAgent>();
+        if (!_agent.isOnNavMesh)
+        {
+            Debug.LogWarning(gameObject.name + " is not on a navMesh. plz fix boss\nCLICK FOR MORE INFO" +
+                "\nPosition: " + transform.position.ToString() +
+                "\nRotation: " + transform.rotation.ToString() + 
+                "\nScale: " + transform.localScale.ToString() + 
+                "\nIsBig: " + stats.IsBig.ToString()+
+                "\nType: " + stats.Type.ToString());
+            Destroy(gameObject);
+            return;
+        }
         _critterHeight = _agent.height;
         _baseSpeed = _agent.speed;
-        _rb = GetComponent<Rigidbody>();
 
-        GetComponent<CreatureStats>().GetStats();
+        //Component grabs
+        stats.GetStats();
+        _player = GameObject.FindGameObjectWithTag(_playerTag);
+        _animator = GetComponentInChildren<Animator>();
+        _drinkingSources = GetComponentInChildren<DrinkenFinden>();
+        _startingWaterSearchRadius = _drinkingSources.GetComponent<SphereCollider>().radius;
+        _rb = GetComponent<Rigidbody>();
+        _fovRef = GetComponentInChildren<FieldOfView>();
+
+        //Sets the center of the area that the AI will move around
+        _homePoint = transform.position;
 
         //Saftey checks
         _thirstCheckDelay = Mathf.Abs(_thirstCheckDelay);
@@ -97,15 +121,9 @@ public class CreatureAI : MonoBehaviour
         _currentState.StartState();
 
         StartCoroutine(GrabGroundBelow());
+
     }
-    private void Awake()
-    {
-        _player = GameObject.FindGameObjectWithTag(_playerTag);
-        _animator = GetComponentInChildren<Animator>();
-        _drinkingSources = GetComponentInChildren<DrinkenFinden>();
-        _startingWaterSearchRadius = _drinkingSources.GetComponent<SphereCollider>().radius;
-    }
-    public void InitStats(float thirst, float lazy, float dis, float vel, float pMul)
+    public void InitStats(float thirst, float lazy, float dis, float vel, float pSpe)
     {
         if (_agent == null)
             _agent = GetComponent<NavMeshAgent>();
@@ -114,7 +132,7 @@ public class CreatureAI : MonoBehaviour
         _lazyness = lazy;
         _travelableDistanceFromHome = dis;
         _velocityToPanic = vel;
-        _panicSpeedIncrease = pMul;
+        _panicSpeed = pSpe;
     }
     #endregion
     #region BrainFunctions
@@ -331,5 +349,10 @@ public class CreatureAI : MonoBehaviour
     {
         Debug.Log("Causing brain rot");
         PrepareUpdateState(new StunnedState(this), 1.0f);
+    }
+    public void DEBUG_InstilFear()
+    {
+        Debug.Log("Instilling Fear");
+        PrepareUpdateState(new PanicState(this));
     }
 }

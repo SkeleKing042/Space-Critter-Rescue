@@ -16,7 +16,7 @@ public class PanicState : State
             Agent.isStopped = false;
             //AI.Animator.SetBool("PanicState", true);
             //Double movement speed
-            Agent.speed = AI.BaseSpeed * AI.PanicSpeedIncrease;
+            Agent.speed = AI.PanicSpeed;
 
             //Find place to move to
             Vector3 dir = (AI.transform.position - AI.Player.transform.position).normalized;
@@ -30,7 +30,7 @@ public class PanicState : State
             //Lose energy twice as fast
             Mathf.Clamp(AI.Energy -= Time.deltaTime * 4, 0, 100);
 
-            if (AI.GetComponent<FieldOfView>().CanSeeTarget)
+            if (AI.FieldOfView.CanSeeTarget)
             {
                 Vector3 dir = (AI.transform.position - AI.Player.transform.position).normalized;
                 Agent.SetDestination(AI.transform.position + dir * AI.GetComponent<FieldOfView>().Radius);

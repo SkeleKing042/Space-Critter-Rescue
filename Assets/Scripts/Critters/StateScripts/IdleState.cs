@@ -21,7 +21,7 @@ public class IdleState : State
         if (AIBrainReady())
         {
             //Call check
-            if (AI.GetComponent<FieldOfView>().CanSeeTarget)
+            if (AI.FieldOfView.CanSeeTarget)
             {
                 AI.RunFromPlayer(1);
                 return;
