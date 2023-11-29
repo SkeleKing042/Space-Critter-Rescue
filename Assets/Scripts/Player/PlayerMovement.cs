@@ -93,6 +93,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Transform _collisionObject;
 
+    private RumbleManger _instance;
+
     [HideInInspector]
     public Vector3[] GroundPoints = new Vector3[4];
     void Start()
@@ -102,6 +104,8 @@ public class PlayerMovement : MonoBehaviour
         _camera = Camera.main;
         DoMovement = true;
         _soundPropagation = GetComponentInChildren<SoundPropagation>();
+
+        _instance = FindObjectOfType<RumbleManger>();   
     }
     void FixedUpdate()
     {
@@ -320,7 +324,8 @@ public class PlayerMovement : MonoBehaviour
                     PlayerRigidbody.AddForce(forwardForce + sideForce + upForce, ForceMode.Impulse);
                     _jetFuel -= _burstBurn;
                 }
-            }
+                    _instance.RumbleStart(1f, 1f, 1);
+                }
             _jetInputReady = true;
         }
     }

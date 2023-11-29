@@ -42,6 +42,7 @@ public class VacuumGun : MonoBehaviour
     public float OffsetFixSpeed;
     public float StunTime;
     public int layermask;
+    private RumbleManger _instance;
 
     // fixed varibles 
     [Header("Fixed Varibles")]
@@ -50,23 +51,26 @@ public class VacuumGun : MonoBehaviour
     public bool Pulling = false;
     private float  _alienOffset;
     private bool _wasJustPulling;
-    
-     
+
+  
+
 
     #endregion
 
     private void Awake()
     {
         _obsticleCheck = FindObjectOfType<SafteyCheck>();
+        _instance = FindObjectOfType<RumbleManger>();
     }
     #region Offset Correction
 
     void Update()
     {
 
+       // instance.RumbleStart(0.1f, 1f, 2);
         //  collect alien cosine value in relation to the player
-       
-         foreach (AlienData aData in aData)
+
+        foreach (AlienData aData in aData)
          {
              forward = transform.right;
              AlienPosition = aData.gObject.transform.position - transform.position;
@@ -75,6 +79,7 @@ public class VacuumGun : MonoBehaviour
          }
 
     }
+    
 
     /// <summary>
     /// use the sine position collected to correct the offset
@@ -108,9 +113,10 @@ public class VacuumGun : MonoBehaviour
     #region Pulling
     public void Pull()
     {
-       
+
         // proprapgate sound
 
+        _instance.RumbleStart(0.25f, 0.7f, 0.1f);
         //Sound.PropagateSound(0.00001f);
         if(gameObject.activeSelf == true)
         {
