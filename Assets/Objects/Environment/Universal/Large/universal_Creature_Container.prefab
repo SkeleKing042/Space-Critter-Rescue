@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6042196666677230369}
   - component: {fileID: 7238949604217549956}
   - component: {fileID: 4868704585118089294}
+  - component: {fileID: 3741032913523797368}
   m_Layer: 0
   m_Name: universal_Creature_Container (1)
   m_TagString: DropOff
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3741032913523797368
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382130045609583003}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7822681340189256555, guid: e706c25692036bd4292515d3528b12ce, type: 3}
 --- !u!1 &7032226430592688486
 GameObject:
   m_ObjectHideFlags: 0

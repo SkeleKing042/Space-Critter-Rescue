@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 8482151880646273844}
   - component: {fileID: 4762965232200590481}
   - component: {fileID: 7349176321937428571}
+  - component: {fileID: 1142174335877331502}
   m_Layer: 0
   m_Name: Model_universal_asteroid_B (1)
   m_TagString: Untagged
@@ -115,3 +116,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1142174335877331502
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9150602635376947598}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7953053142888017706, guid: f8e94e4526f6e854ab7df5416f91bfd3, type: 3}
