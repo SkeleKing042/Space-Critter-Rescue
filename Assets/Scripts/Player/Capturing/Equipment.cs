@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+//Created by Ru McPharlin
+//Last Edited by Jackson Lucas
+
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class Equipment : MonoBehaviour
 {
@@ -18,50 +17,40 @@ public class Equipment : MonoBehaviour
     public CurrentlyHolding _currentlyHolding;
 
     // Trap Components 
-    [Header("Trap Components")]
-    [SerializeField]
-    public GameObject Trap;
-    [SerializeField]
-    private Rigidbody _trapRigid;
-    [SerializeField]
-    public GameObject Bubble;
+    private Trap _trap;
+
+    //[Header("Trap Components")]
+    //public GameObject _trap;
+    //[SerializeField]
+    //public GameObject Bubble;
 
     // trap forces 
+    //[SerializeField]
+    //private float PickUpRange;
     [Header("Trap Variables")]
     [SerializeField]
-    private float PickUpRange;
-    [SerializeField]
     private float TrapThrowForce;
-    [SerializeField]
     private bool _trapDeployed;
     public bool TrapDeployed { get { return _trapDeployed; } }
 
-    [SerializeField]
-    private float _distance;
-
-    [SerializeField]
     private bool _canPickUpTrap;
     public bool CanPickUpTrap { get { return _canPickUpTrap; } }
-    [SerializeField]
-    private Transform _trapPos;
+    //private Transform _trapPos;
 
     // player Components
     [Header("Player Components")]
-    [SerializeField]
-    private Tablet _tablet;
-    [SerializeField]
-    private Trap _trap;
+    //[SerializeField]
+    //private Tablet _tablet;
+    //[SerializeField]
+    //private Trap _trap;
     [SerializeField]
     private Transform VC_1_Transform;
 
-    [Header("UI")]
-    [SerializeField]
+    //[Header("UI")]
     private UI_Manager _UI_Manager;
-    [SerializeField]
-    public Animator _UI_animator;
 
-    [Header("Equipment Animator")]
-    public Animator _Equipment_Animator;
+    //[Header("Equipment Animator")]
+    private Animator _Equipment_Animator;
 
     
 
@@ -83,38 +72,31 @@ public class Equipment : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        //get the tablet script
-        _tablet = FindObjectOfType<Tablet>();
-
-        // currently holding set to vacuum & set trap parent
-        _currentlyHolding = CurrentlyHolding.VC;
-
+        _trap = FindObjectOfType<Trap>();
         // get rigidbody
-        _trapRigid = Trap.GetComponent<Rigidbody>();
+
+        _UI_Manager = FindObjectOfType<UI_Manager>();
+
+        _Equipment_Animator = GetComponent<Animator>();
 
         //bring up the VC
         _animation_VC_Up();
 
-        _trap = FindObjectOfType<Trap>();
+        //get the tablet script
+        //_tablet = FindObjectOfType<Tablet>();
+
+        // currently holding set to vacuum & set trap parent
+        _currentlyHolding = CurrentlyHolding.VC;
+
     }
 
     void Update()
     {
         //checks if the player can pick up the trap
-        if (_trapDeployed && Bubble.activeSelf == false)
-        {
-            _distance = Mathf.Abs(Vector3.Distance(Trap.transform.position, transform.position));
-
-            if (PickUpRange >= _distance)
-            {
-                _canPickUpTrap = true;
-            }
-
-            else
-            {
-                _canPickUpTrap = false;
-            }
-        }
+        if (_trapDeployed && _trap.Bubble.activeSelf == false)
+            _canPickUpTrap = true;
+        else
+            _canPickUpTrap = false;
 
 
         //if the player can pick up the trap
@@ -222,14 +204,14 @@ public class Equipment : MonoBehaviour
         if (_currentlyHolding == CurrentlyHolding.trap)
         {
             // unassign the trap parent
-            Trap.transform.parent = null;
+            _trap.transform.parent = null;
 
             // enable the collider and allow rigidbody physics
-            Trap.GetComponent<BoxCollider>().enabled = true;
-            Trap.GetComponent<Rigidbody>().isKinematic = false;
+            _trap.GetComponent<BoxCollider>().enabled = true;
+            _trap.GetComponent<Rigidbody>().isKinematic = false;
 
             // " throw" the trap out
-            _trapRigid.AddForce(Camera.main.transform.forward * TrapThrowForce, ForceMode.Impulse);
+            _trap.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * TrapThrowForce, ForceMode.Impulse);
 
             // set to true
             _trapDeployed = true;
@@ -253,12 +235,9 @@ public class Equipment : MonoBehaviour
 
     public void pickUpTrap()
     {
-        //find the distance between the player and the trap
-        _distance = Vector3.Distance(Trap.transform.position, transform.position);
-        _distance = Mathf.Abs(_distance);
-        Debug.Log("bubble active" + global::Trap.Catchable);
+        Debug.Log("bubble active" + _trap.Catchable);
         // check if the player is within the range, not holding the trap and the trap is not active
-        if (_distance < PickUpRange && !Bubble.activeInHierarchy)
+        if (!_trap.Bubble.activeInHierarchy)
         {
             if (_currentlyHolding == CurrentlyHolding.VC)
             {
@@ -276,8 +255,8 @@ public class Equipment : MonoBehaviour
 
 
             // deactovate colliders and stop rigidbody physics
-            Trap.GetComponent<BoxCollider>().enabled = false;
-            Trap.GetComponent<Rigidbody>().isKinematic = true;
+            _trap.GetComponent<BoxCollider>().enabled = false;
+            _trap.GetComponent<Rigidbody>().isKinematic = true;
 
             // set to false
             _trapDeployed = false;
@@ -328,11 +307,11 @@ public class Equipment : MonoBehaviour
         Debug.Log("Trap Up");
 
         //_Equipment_Animator.SetTrigger("");
-        Trap.SetActive(true);
+        _trap.gameObject.SetActive(true);
 
         // set parent to the player
-        Trap.transform.SetParent(VC_1_Transform);
-        Trap.transform.position = _trapPos.position;
+        _trap.transform.SetParent(VC_1_Transform);
+        _trap.transform.position = Vector3.zero;
 
         // set currently holding to the trap
         SetCurrentlyHolding(CurrentlyHolding.trap);
@@ -344,7 +323,7 @@ public class Equipment : MonoBehaviour
         Debug.Log("Trap Down");
 
         //_Equipment_Animator.SetTrigger("");
-        Trap.SetActive(false);
+        _trap.gameObject.SetActive(false);
     }
 
     //bring out the detonator

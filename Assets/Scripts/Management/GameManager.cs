@@ -1,16 +1,11 @@
 //Created by Jackson Lucas
-//Last edited by Ru McPharlin
+//Last edited by Jackson Lucas
 
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.Processors;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [System.Serializable]
+    /*[System.Serializable]
     public class CreatureTrackers
     {
         [SerializeField, Range(0f, 1f), Tooltip("The % of Small Critters the player needs to collect to win")]
@@ -89,7 +84,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-    }
+    }*/
 
     /*void VicCheck()
     {

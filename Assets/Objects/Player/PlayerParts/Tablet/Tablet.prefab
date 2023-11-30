@@ -4864,12 +4864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6edafec02c85e2e4bbae1972ed61d85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TabletState: 0
-  _UI_animator: {fileID: 0}
-  _UI_Manager: {fileID: 0}
-  _equipment: {fileID: 0}
-  _playerMovement: {fileID: 0}
-  _pylonManager: {fileID: 0}
   _tabs:
   - {fileID: 2368296546234080090}
   - {fileID: 2368296545386777068}
@@ -4890,22 +4884,8 @@ MonoBehaviour:
   _color_currentlySelectedTeleport: {r: 0, g: 0, b: 1, a: 1}
   _color_unavailableTeleport: {r: 1, g: 0, b: 0, a: 1}
   _color_availableTeleport: {r: 0, g: 1, b: 0, a: 1}
-  _largeBackpackSlots:
-  - {fileID: 205607676486331426}
-  - {fileID: 349144303571749301}
-  _smallBackpackSlots:
-  - {fileID: 7458678487106769484}
-  - {fileID: 3465921584753416794}
-  - {fileID: 8110985797911281637}
-  - {fileID: 8110985797750631222}
-  - {fileID: 8110985796862672058}
-  - {fileID: 8110985796627740314}
-  - {fileID: 8110985796757597678}
-  - {fileID: 8110985797056872249}
-  - {fileID: 8110985796482538887}
-  - {fileID: 8110985796385436103}
-  - {fileID: 8110985797593514931}
-  - {fileID: 8110985797021893331}
+  _largeBackpackSlotParent: {fileID: 7635833887172056622}
+  _smallBackpackSlotParent: {fileID: 1685227031474602727}
   _critterIcons:
   - {fileID: 21300000, guid: 0da276b11d9aae94f81c93ebcb9f7fd8, type: 3}
   - {fileID: 21300000, guid: dcba1565a905ae3469f43509290bc63f, type: 3}

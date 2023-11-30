@@ -1,50 +1,49 @@
 // Created By Adanna Okoye
-// Last edited by Adanna Okoye
-using System.Collections;
+// Last edited by Jackson Lucas
+
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
     // refrenced gun shoot function later after shoot function is made properly
+    //private Equipment Check;
     [Header("Script Refrences")]
-    public Equipment Check;
-    public VacuumGun Vacuum;
-    private CreatureAI AlienAI;
+    private VacuumGun _vacuum;
+    private CreatureAI _alienAI;
 
     [Header("Tool GameObjects")]
-    public GameObject Bubble;
+    [SerializeField] private GameObject _bubble;
+    public GameObject Bubble { get { return _bubble; } }
 
 
-    public GameObject playerGun;
-    public GameObject Detinator;
+    //public GameObject playerGun;
+    //public GameObject Detinator;
 
     [Header("Movement Vectors")]
-    Vector3 offSet;
-    Vector3 lerpPathDestination;
+    Vector3 _offSet;
+    Vector3 _lerpPathDestination;
 
-    [Header("Catchable")]
-    [SerializeField]
-    public static bool Catchable = false;
-    [SerializeField]
+    //[Header("Catchable")]
+    private bool _catchable = false;
+    public bool Catchable { get { return _catchable;  } }
     private List<GameObject> _alienList = new List<GameObject>();
 
-    [Header("Animator")]
-    [SerializeField, Tooltip("Animator That controls the trap")]
+    //[Header("Animator")]
+    //[SerializeField, Tooltip("Animator That controls the trap")]
     private Animator _trap_Animator;
-
-    [SerializeField]
-    public bool _trapActivated;
+    //Used by animator
+    private bool _trapActivated;
 
     private void Awake()
     {
-        Vacuum = FindObjectOfType<VacuumGun>();
-        Check = FindObjectOfType<Equipment>();
+        _vacuum = FindObjectOfType<VacuumGun>();
+        _trap_Animator = transform.GetComponentInChildren<Animator>();
 
         Bubble.SetActive(false);
         
-        offSet = new Vector3(1, 0, 1);
-        lerpPathDestination = transform.position - offSet;
+        _offSet = new Vector3(1, 0, 1);
+        _lerpPathDestination = transform.position - _offSet;
     }
 
     #region Trap Methods
@@ -52,14 +51,14 @@ public class Trap : MonoBehaviour
     /// <summary>
     /// initial inputs to start trap
     /// </summary>
-    public void TrapCatching()
+    /*public void TrapCatching()
     {
         // check the player is holding the detinator
         if(Detinator.gameObject.activeSelf ==true)
         {
             //StartCoroutine(BubbleTimer());
         }
-    }
+    }*/
 
     /// <summary>
     /// if a item (that is an alien) is withing the trap radius then let the alein be catchable
@@ -74,8 +73,8 @@ public class Trap : MonoBehaviour
             if (alien.gameObject.tag == "bigAlien" || alien.gameObject.tag == "alien")
             {
                 // move alien slightly towards the centre of the trap
-                if (!Catchable && alien.transform.position != lerpPathDestination)
-                    alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - offSet, 2f * Time.deltaTime);
+                if (!Catchable && alien.transform.position != _lerpPathDestination)
+                    alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - _offSet, 2f * Time.deltaTime);
             }
         }
     }
@@ -101,24 +100,24 @@ public class Trap : MonoBehaviour
                 // for every alien in the list get the AI script refrence
                 foreach (GameObject item in _alienList)
                 {
-                    AlienAI = item.GetComponent<CreatureAI>();
+                    _alienAI = item.GetComponent<CreatureAI>();
 
-                    if (AlienAI != null)
+                    if (_alienAI != null)
                     {
                         // if the current AI state isnt already stunned then change to stun state
-                        if (AlienAI._currentState.GetType() != typeof(StunnedState))
+                        if (_alienAI._currentState.GetType() != typeof(StunnedState))
                         {
-                            StartCoroutine(AlienAI.UpdateState(new StunnedState(AlienAI), 0f));
-                            Catchable = true;
+                            StartCoroutine(_alienAI.UpdateState(new StunnedState(_alienAI), 0f));
+                            _catchable = true;
                             Debug.Log("chnaging states");
                         }
 
                     }
                     // if the player is trying to pull an alien, set the alien state to capture state
-                    if (Vacuum.Pulling == true)
+                    if (_vacuum.Pulling == true)
                     {
-                        if (AlienAI._currentState.GetType() != typeof(CaptureState))
-                            StartCoroutine(AlienAI.UpdateState(new CaptureState(AlienAI), 0f));
+                        if (_alienAI._currentState.GetType() != typeof(CaptureState))
+                            StartCoroutine(_alienAI.UpdateState(new CaptureState(_alienAI), 0f));
                     }
                 }
             }
@@ -137,12 +136,12 @@ public class Trap : MonoBehaviour
             if (alien.gameObject.tag == "bigAlien" || alien.gameObject.tag == "alien")
             {
                 // get ai REFRENCE
-                AlienAI = alien.GetComponent<CreatureAI>();
+                _alienAI = alien.GetComponent<CreatureAI>();
                 // if the list contains the alien gameobject
                if(_alienList.Contains(alien.gameObject))
                 {
                     // update state
-                    StartCoroutine(AlienAI.UpdateState(new PanicState(AlienAI), 0f));
+                    StartCoroutine(_alienAI.UpdateState(new PanicState(_alienAI), 0f));
                     // remove alien from list
                     _alienList.Remove(alien.gameObject);
                     Debug.Log("deleted alien from list");
@@ -186,11 +185,10 @@ public class Trap : MonoBehaviour
     #endregion
 
     #region Animation
-    public void SetTrigger_ActivateTrap()
+   public void SetTrigger_ActivateTrap()
     {
-        Catchable = true;
+        _catchable = true;
         _trap_Animator.SetTrigger("Activate Trap");
-        Catchable = false;
     }
 
 
