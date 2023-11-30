@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SphereCollider))]
 public class DrinkableSource : MonoBehaviour
 {
     [SerializeField]
     private float Radius;
 
+    private void Awake()
+    {
+        Radius = GetComponent<SphereCollider>().radius;
+    }
     public float GetRadius()
     {
         return Radius;
