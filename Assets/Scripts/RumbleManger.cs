@@ -23,7 +23,7 @@ public class RumbleManger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        RumbleStart(1f, 1f, 10);
     }
     /// <summary>
     /// Ruble frquency low is 1/4 and the high at 3/4

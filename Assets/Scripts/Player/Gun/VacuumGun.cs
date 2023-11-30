@@ -1,5 +1,5 @@
 // Created by Adanna Okoye
-// Last edited by Jackson Lucas
+// Last edited by Adanna Okoye
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,6 +32,7 @@ public class VacuumGun : MonoBehaviour
     [SerializeField] private float _offsetFixSpeed;
     [SerializeField] private float _stunTime;
     [SerializeField] private int _layermask;
+    [SerializeField] private float _vacuumNoise;
 
     // fixed varibles 
     [Header("Fixed Varibles")]
@@ -41,6 +42,7 @@ public class VacuumGun : MonoBehaviour
     public bool Pulling { get { return _pulling;  } }
     private float  _alienOffset;
     //private bool _wasJustPulling;
+    private RumbleManger _rumble;
 
 
 
@@ -50,6 +52,7 @@ public class VacuumGun : MonoBehaviour
     private void Awake()
     {
         _trap = FindObjectOfType<Trap>();
+        _rumble = FindObjectOfType<RumbleManger>();
     }
 
     void Update()
@@ -94,12 +97,12 @@ public class VacuumGun : MonoBehaviour
     #region Pulling
     public void Pull()
     {
-       
-        // proprapgate sound
 
-        //Sound.PropagateSound(0.00001f);
         if(gameObject.activeSelf == true)
         {
+            _rumble.RumbleStart(0.25f, 0.7f, 0.1f);
+            // proprapgate sound
+            _sound.PropagateSound(_vacuumNoise);
             _pulling = true;
             foreach (AlienData aData in aData)
             {

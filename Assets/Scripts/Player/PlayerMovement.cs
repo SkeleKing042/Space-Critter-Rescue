@@ -92,7 +92,6 @@ public class PlayerMovement : MonoBehaviour
     private bool _crouched;
     [SerializeField]
     private Transform _collisionObject;
-
     private RumbleManger _instance;
 
     [HideInInspector]
