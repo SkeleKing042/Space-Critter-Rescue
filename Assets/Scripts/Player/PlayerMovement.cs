@@ -348,6 +348,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     _burnTime -= Time.deltaTime;
                 }
+                _instance.RumbleStart(0.1f, 0.9f, 1f);
             }
     }
     #endregion
