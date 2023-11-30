@@ -159,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
     #region Movement
     public void UpdateMovementAxis(Vector2 v)
     {
-        if(DoMovement) MovementInput = v;
+        MovementInput = v;
     }
     public void DoCrouch()
     {

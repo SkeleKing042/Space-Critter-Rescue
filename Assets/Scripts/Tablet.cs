@@ -14,7 +14,7 @@ public class Tablet : MonoBehaviour
     public bool TabletState { get { return _tabletState; } }
 
     [Header("Components")]
-    private Animator _UI_animator;
+    [SerializeField] private Animator _UI_animator;
     //[SerializeField]
     //private UI_Manager _UI_Manager;
     private Equipment _equipment;
@@ -46,9 +46,9 @@ public class Tablet : MonoBehaviour
 
     [Header("Inventory")]
     [SerializeField] private GameObject _largeBackpackSlotParent;
-    private List<Image> _largeBackpackSlots;
+    private List<Image> _largeBackpackSlots = new List<Image>();
     [SerializeField] private GameObject _smallBackpackSlotParent;
-    private List<Image> _smallBackpackSlots;
+    private List<Image> _smallBackpackSlots = new List<Image>();
     [SerializeField] private List<Sprite> _critterIcons;
     private Inventory _invRef;
 
@@ -75,8 +75,16 @@ public class Tablet : MonoBehaviour
         //declare array
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
 
-        _largeBackpackSlots.AddRange(_largeBackpackSlotParent.GetComponentsInChildren<Image>());
-        _smallBackpackSlots.AddRange(_smallBackpackSlotParent.GetComponentsInChildren<Image>());
+        foreach(var child in _largeBackpackSlotParent.GetComponentsInChildren<Image>())
+        {
+            if (child.name == "Critter Sprite")
+                _largeBackpackSlots.Add(child);
+        }
+        foreach (var child in _smallBackpackSlotParent.GetComponentsInChildren<Image>())
+        {
+            if (child.name == "Critter Sprite")
+                _smallBackpackSlots.Add(child);
+        }
 
         //setup backpack
         SetupBackpack();
