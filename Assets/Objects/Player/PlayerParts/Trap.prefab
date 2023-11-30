@@ -361,13 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892a198cde1cb1b46ab651eb460e163f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Check: {fileID: 0}
-  Vacuum: {fileID: 0}
-  Bubble: {fileID: 4869716570810363188}
-  playerGun: {fileID: 0}
-  Detinator: {fileID: 0}
-  _alienList: []
-  _trap_Animator: {fileID: 4467378520780775362}
+  _bubble: {fileID: 4869716570810363188}
 --- !u!135 &1996612668581499376
 SphereCollider:
   m_ObjectHideFlags: 0

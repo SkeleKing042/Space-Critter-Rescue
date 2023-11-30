@@ -1,11 +1,8 @@
 //Created by Ru McPhalin
 //Last edited by Jackson Lucas
 
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Tablet : MonoBehaviour
@@ -13,18 +10,15 @@ public class Tablet : MonoBehaviour
     //Variables
     #region Variables
     [Header("Tablet State"), Tooltip("if the tablet is on or off")]
-    public bool TabletState;
+    private bool _tabletState;
+    public bool TabletState { get { return _tabletState; } }
 
     [Header("Components")]
-    [SerializeField]
     private Animator _UI_animator;
-    [SerializeField]
-    private UI_Manager _UI_Manager;
-    [SerializeField]
+    //[SerializeField]
+    //private UI_Manager _UI_Manager;
     private Equipment _equipment;
-    [SerializeField]
     private PlayerMovement _playerMovement;
-    [SerializeField]
     private PylonManager _pylonManager;
 
 
@@ -51,10 +45,12 @@ public class Tablet : MonoBehaviour
     [SerializeField] private Color _color_availableTeleport = Color.green;
 
     [Header("Inventory")]
-    private Inventory _invRef;
-    [SerializeField] private List<Image> _largeBackpackSlots;
-    [SerializeField] private List<Image> _smallBackpackSlots;
+    [SerializeField] private GameObject _largeBackpackSlotParent;
+    private List<Image> _largeBackpackSlots;
+    [SerializeField] private GameObject _smallBackpackSlotParent;
+    private List<Image> _smallBackpackSlots;
     [SerializeField] private List<Sprite> _critterIcons;
+    private Inventory _invRef;
 
     [Header("SFX")]
     [SerializeField] private AudioSource _SFXSource_Tablet;
@@ -70,14 +66,17 @@ public class Tablet : MonoBehaviour
     private void Awake()
     {
         //find components
+        //_UI_Manager = FindObjectOfType<UI_Manager>();
+        _equipment = FindObjectOfType<Equipment>();
+        _invRef = FindObjectOfType<Inventory>();
         _playerMovement = GetComponentInParent<PlayerMovement>();
         _pylonManager = FindObjectOfType<PylonManager>();
-        _UI_Manager = FindObjectOfType<UI_Manager>();
-        _invRef = FindObjectOfType<Inventory>();
-        _equipment = FindObjectOfType<Equipment>();
 
         //declare array
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
+
+        _largeBackpackSlots.AddRange(_largeBackpackSlotParent.GetComponentsInChildren<Image>());
+        _smallBackpackSlots.AddRange(_smallBackpackSlotParent.GetComponentsInChildren<Image>());
 
         //setup backpack
         SetupBackpack();
@@ -173,7 +172,7 @@ public class Tablet : MonoBehaviour
     /// <param name="inputBool"></param>
     public void SetTabletState(bool inputBool)
     {
-        TabletState = inputBool;
+        _tabletState = inputBool;
     }
 
     /// <summary>

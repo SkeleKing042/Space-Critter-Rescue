@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections;
-using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -162,9 +161,9 @@ public class InputManager : MonoBehaviour
     [SerializeField] private bool _lockCursor;
     [SerializeField] private bool _sendDebugLogs = true;
 
-    [Header("Other Scripts")]
-    [SerializeField] private Tablet _tablet;
-    [SerializeField] private Equipment _equipment;
+    //[Header("Other Scripts")]
+    private Tablet _tablet;
+    private Equipment _equipment;
 
     [Header("Movement")]
     public UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
@@ -172,7 +171,7 @@ public class InputManager : MonoBehaviour
     public UnityEvent CrouchAction = new UnityEvent();
     public UnityEvent JumpAction = new UnityEvent();
     public HoldEvent JetPackAction = new HoldEvent();
-    public UnityEvent<Vector2> LookAction = new UnityEvent<Vector2>();
+    //public UnityEvent<Vector2> LookAction = new UnityEvent<Vector2>();
 
     [Header("Tool actions")]
     public UnityEvent TrapInteractionAction = new UnityEvent();
@@ -202,6 +201,21 @@ public class InputManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         else
             Cursor.lockState = CursorLockMode.None;
+
+        _tablet = FindObjectOfType<Tablet>();
+        if (!_tablet)
+        {
+            Debug.LogWarning("InputManager couldn't find the tablet.");
+            enabled = false;
+            return;
+        }
+        _equipment = FindObjectOfType<Equipment>();
+        if (!_equipment)
+        {
+            Debug.LogWarning("InputManager couldn't find the tablet.");
+            enabled = false;
+            return;
+        }
 
         JetPackAction.InitializeAction();
         PullAction.InitializeAction();
