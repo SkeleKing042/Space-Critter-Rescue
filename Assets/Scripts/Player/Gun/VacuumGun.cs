@@ -43,6 +43,7 @@ public class VacuumGun : MonoBehaviour
     public float StunTime;
     public int layermask;
     private RumbleManger _instance;
+    public float VacuumNoise;
 
     // fixed varibles 
     [Header("Fixed Varibles")]
@@ -117,7 +118,7 @@ public class VacuumGun : MonoBehaviour
         // proprapgate sound
 
         _instance.RumbleStart(0.25f, 0.7f, 0.1f);
-        //Sound.PropagateSound(0.00001f);
+        Sound.PropagateSound(VacuumNoise);
         if(gameObject.activeSelf == true)
         {
             Pulling = true;
