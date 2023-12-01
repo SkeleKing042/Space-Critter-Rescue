@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,7 +12,8 @@ public class CreatureAI : MonoBehaviour
     [Header("States")]
     [SerializeField, Tooltip("The current state of the creature.")]
     private string _theState;
-    public State _currentState;
+    private State _currentState;
+    public State ReadState { get { return _currentState; } }
     private Rigidbody _rb;
     public Rigidbody Rb { get { return _rb; } }
     private Animator _animator;
@@ -74,6 +76,33 @@ public class CreatureAI : MonoBehaviour
     public float PanicSpeed { get { return _panicSpeed; } }
     private FieldOfView _fovRef;
     public FieldOfView FieldOfView { get { return _fovRef; } }
+
+    //State Management
+    [System.Serializable]
+    private class StateWDelay
+    {
+        protected State state;
+        public State ReadState { get { return state; } }
+        protected float delay;
+        private float timer;
+        
+        public StateWDelay(State s, float d)
+        {
+            state = s;
+            delay = d;
+        }
+
+        public bool increment()
+        {
+            if (timer >= delay)
+                return true;
+            else
+                timer += Time.deltaTime;
+
+            return false;
+        }
+    }
+    private List<StateWDelay> _stateBuffer = new List<StateWDelay>();
 
     #region Setup
     private void Start()
@@ -138,6 +167,7 @@ public class CreatureAI : MonoBehaviour
     #region BrainFunctions
     void Update()
     {
+        UpdateState();
         if (_currentState != null)
         {
             //Update the state
@@ -284,7 +314,7 @@ public class CreatureAI : MonoBehaviour
     /// <returns></returns>
     public void PrepareUpdateState(State newState)
     {
-        StartCoroutine(UpdateState(newState, 0f));
+        PrepareUpdateState(newState, 0f);
     }
     /// <summary>
     /// State chaging function. Will update this creature's state after a given time.
@@ -294,17 +324,29 @@ public class CreatureAI : MonoBehaviour
     /// <returns></returns>
     public void PrepareUpdateState(State newState, float delay)
     {
-        StartCoroutine(UpdateState(newState, delay));
+        _stateBuffer.Add(new StateWDelay(newState, delay));
+        //Debug.Log("Added " + newState.ToString() + " to the state buffer with a " + delay + " second delay.\nBuffer now has " + _stateBuffer.Count + " enties."); 
     }
-    public IEnumerator UpdateState(State newState, float delay)
+    public void UpdateState()
     {
-        yield return new WaitForSeconds(delay);
-        if (newState.GetType() != _currentState.GetType())
+        List<StateWDelay> rDStates = new List<StateWDelay>();
+        foreach (StateWDelay state in _stateBuffer)
         {
-            _currentState.EndState();
-            _currentState = newState;
-            _currentState.StartState();
+            if (state.increment())
+            {
+                if (state.ReadState.GetType() != _currentState.GetType())
+                {
+                    //Debug.Log("Appling " + state.ReadState.ToString() + " to this ai");
+                    _currentState.BASE_EndState();
+                    _currentState = state.ReadState;
+                    _currentState.BASE_StartState();
+                }
+                rDStates.Add(state);
+            }
         }
+        foreach (StateWDelay state in rDStates)
+            if (_stateBuffer.Contains(state))
+                _stateBuffer.Remove(state);
     }
     /// <summary>
     /// Either enables or disables the rigidbody mode of the creature.
