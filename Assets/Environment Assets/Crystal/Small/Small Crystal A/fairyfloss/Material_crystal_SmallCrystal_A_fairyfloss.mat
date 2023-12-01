@@ -7,10 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Material_crystal_Shard_AB
+  m_Name: Material_crystal_SmallCrystal_A_fairyfloss
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords:
   - _EMISSION
+  - _METALLICGLOSSMAP
   - _NORMALMAP
   m_InvalidKeywords: []
   m_LightmapFlags: 2
@@ -23,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: f31a29a1e91fdcd4eaa369e31e41f9d3, type: 3}
+        m_Texture: {fileID: 2800000, guid: e64f85d57effd1b46aa990307aa33f7f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -39,15 +40,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 9258ab67827589d4dae357f85fa51bdf, type: 3}
+        m_Texture: {fileID: 2800000, guid: 875a2f7d383d65a46b6bd35e15a4577d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 6f80b40c798188f4cb8aeee41b83a44a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7b4f8d05bba38eb419538c8fbd856808, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 97f82f394c781a64ba00513a8f117559, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
