@@ -31,13 +31,13 @@ MonoBehaviour:
     name: fungi_FungiGrass
   - gameObject: {fileID: 846660324054471007, guid: f8438d9f9d9c10b449212de0359baa8c, type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 3
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 180, y: 0, z: 180}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
+      m_UniformScale: {x: 0.8, y: 1.15}
+      m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 0
       m_ZRotationBool: 0
@@ -47,13 +47,13 @@ MonoBehaviour:
     name: fungi_Climbing_Mushroom_Plant_A
   - gameObject: {fileID: 6778059976978829142, guid: 1d17b1963ad5b834086f8f03782eacb0, type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 2
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 180, y: 0, z: 180}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
+      m_UniformScale: {x: 0.8, y: 1.15}
+      m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 0
       m_ZRotationBool: 0
@@ -63,13 +63,13 @@ MonoBehaviour:
     name: fungi_Climbing_Mushroom_Plant_B
   - gameObject: {fileID: 6081373330315189416, guid: abd022d389bb3d948a4eba2de2d6daa7, type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 25
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 180, y: 0, z: 180}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
+      m_UniformScale: {x: 0.8, y: 1.15}
+      m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 0
       m_ZRotationBool: 0
@@ -79,13 +79,13 @@ MonoBehaviour:
     name: fungi_LittleMushroom
   - gameObject: {fileID: 3432764374633840788, guid: e468778358adfb140ae5d0dd44175268, type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 10
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 0, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
+      m_ScaleRangeMin: {x: 0.9, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1.1, y: 1, z: 1}
+      m_UniformScale: {x: 0.8, y: 1.1}
+      m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 0
       m_ZRotationBool: 0
@@ -93,3 +93,83 @@ MonoBehaviour:
       m_YScaleBool: 0
       m_ZScaleBool: 0
     name: fungi_LittlemushroomCluster
+  - gameObject: {fileID: 8919497687883390948, guid: e5e3239fab499e3459285ebac9d70353, type: 3}
+    settings:
+      m_Strength: 20
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 180, y: 0, z: 180}
+      m_ScaleRangeMin: {x: 0.8, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1.15, y: 1, z: 1}
+      m_UniformScale: {x: 0.8, y: 1.15}
+      m_UniformBool: 1
+      m_XRotationBool: 1
+      m_YRotationBool: 0
+      m_ZRotationBool: 1
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: fungi_MyceliumVeins
+  - gameObject: {fileID: 6645394553632386841, guid: c9d790e27e70fb34f9d498e8cd2f9c1b, type: 3}
+    settings:
+      m_Strength: 5
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 180, y: 0, z: 180}
+      m_ScaleRangeMin: {x: 0.8, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.8, y: 1.15}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: fungi_MushroomLeaves
+  - gameObject: {fileID: 4990119880343193144, guid: 5cc15ae2af9ba284aae87897fcab8814, type: 3}
+    settings:
+      m_Strength: 5
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 180, y: 0, z: 180}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.9, y: 1.05}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: fungi_MushroomBush_B
+  - gameObject: {fileID: 1368358565914831846, guid: a64bc448fbee3e24ba778f72652474c3, type: 3}
+    settings:
+      m_Strength: 1
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 180, y: 0, z: 180}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.9, y: 1.05}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: fungi_Vine
+  - gameObject: {fileID: 1307191889936984967, guid: dcee83fde2f35ac4881cd3acaa4b9e2b, type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.9, y: 1.2}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: fungi_smallGlowingMushroom
