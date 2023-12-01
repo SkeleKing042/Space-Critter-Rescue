@@ -20,7 +20,7 @@ public class PanicState : State
 
             //Find place to move to
             Vector3 dir = (AI.transform.position - AI.Player.transform.position).normalized;
-            Agent.SetDestination(AI.transform.position + dir * AI.GetComponent<FieldOfView>().Radius);
+            Agent.SetDestination(AI.transform.position + dir * AI.GetComponentInChildren<FieldOfView>().Radius);
         }
     }
     public override void Update()
@@ -33,7 +33,7 @@ public class PanicState : State
             if (AI.FieldOfView.CanSeeTarget)
             {
                 Vector3 dir = (AI.transform.position - AI.Player.transform.position).normalized;
-                Agent.SetDestination(AI.transform.position + dir * AI.GetComponent<FieldOfView>().Radius);
+                Agent.SetDestination(AI.transform.position + dir * AI.GetComponentInChildren<FieldOfView>().Radius);
             }
             else if (Vector2.Distance(AI.transform.position, Agent.destination) < 1f)
                 AI.PrepareUpdateState(new IdleState(AI));

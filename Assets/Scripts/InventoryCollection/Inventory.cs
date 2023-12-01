@@ -159,7 +159,7 @@ public class Inventory : MonoBehaviour
             _ship_CrystalCritter_Large += _player_crystalCritter_Large;
 
             //reset player inventory
-            _player_fungiCritter_Small = _player_fungiCritter_Large = _player_crystalCritter_Small = _player_crystalCritter_Large = 0;
+            _player_fungiCritter_Small = _player_fungiCritter_Large = _player_crystalCritter_Small = _player_crystalCritter_Large = _player_smallCount = _player_largeCount = 0;
         }
     }
     #endregion

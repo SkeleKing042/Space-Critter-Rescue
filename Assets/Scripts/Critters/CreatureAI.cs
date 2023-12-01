@@ -302,7 +302,6 @@ public class CreatureAI : MonoBehaviour
         if (newState.GetType() != _currentState.GetType())
         {
             _currentState.EndState();
-            _animator.ResetTrigger(_currentState.Name);
             _currentState = newState;
             _currentState.StartState();
         }
