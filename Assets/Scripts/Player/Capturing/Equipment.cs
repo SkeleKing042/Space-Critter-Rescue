@@ -44,7 +44,7 @@ public class Equipment : MonoBehaviour
     //[SerializeField]
     //private Trap _trap;
     [SerializeField]
-    private Transform VC_1_Transform;
+    private Transform _trapParent;
 
     //[Header("UI")]
     private UI_Manager _UI_Manager;
@@ -235,10 +235,15 @@ public class Equipment : MonoBehaviour
 
     public void pickUpTrap()
     {
-        Debug.Log("bubble active" + _trap.Catchable);
+        Debug.Log("bubble active");
         // check if the player is within the range, not holding the trap and the trap is not active
         if (!_trap.Bubble.activeInHierarchy)
         {
+            // deactovate colliders and stop rigidbody physics
+            _trap.GetComponent<BoxCollider>().enabled = false;
+            _trap.GetComponent<Rigidbody>().isKinematic = true;
+            _trap.transform.position = _trapParent.position;
+
             if (_currentlyHolding == CurrentlyHolding.VC)
             {
                 _animation_VCDown_TrapUp();
@@ -254,9 +259,6 @@ public class Equipment : MonoBehaviour
             }
 
 
-            // deactovate colliders and stop rigidbody physics
-            _trap.GetComponent<BoxCollider>().enabled = false;
-            _trap.GetComponent<Rigidbody>().isKinematic = true;
 
             // set to false
             _trapDeployed = false;
@@ -310,7 +312,7 @@ public class Equipment : MonoBehaviour
         _trap.gameObject.SetActive(true);
 
         // set parent to the player
-        _trap.transform.SetParent(VC_1_Transform);
+        _trap.transform.SetParent(_trapParent);
         _trap.transform.position = Vector3.zero;
 
         // set currently holding to the trap

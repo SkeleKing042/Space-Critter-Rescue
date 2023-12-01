@@ -25,8 +25,8 @@ public class Trap : MonoBehaviour
     Vector3 _lerpPathDestination;
 
     //[Header("Catchable")]
-    private bool _catchable = false;
-    public bool Catchable { get { return _catchable;  } }
+    //private bool _catchable = false;
+    //public bool Catchable { get { return _catchable;  } }
     private List<GameObject> _alienList = new List<GameObject>();
 
     //[Header("Animator")]
@@ -73,7 +73,7 @@ public class Trap : MonoBehaviour
             if (alien.gameObject.tag == "bigAlien" || alien.gameObject.tag == "alien")
             {
                 // move alien slightly towards the centre of the trap
-                if (!Catchable && alien.transform.position != _lerpPathDestination)
+                if (alien.transform.position != _lerpPathDestination && alien.GetComponent<CreatureAI>().ReadState.GetType() == typeof(TrappedState))
                     alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - _offSet, 2f * Time.deltaTime);
             }
         }
@@ -105,20 +105,21 @@ public class Trap : MonoBehaviour
                     if (_alienAI != null)
                     {
                         // if the current AI state isnt already stunned then change to stun state
-                        if (_alienAI._currentState.GetType() != typeof(StunnedState))
+                        if (_alienAI.ReadState.GetType() != typeof(TrappedState))
                         {
-                            StartCoroutine(_alienAI.UpdateState(new StunnedState(_alienAI), 0f));
-                            _catchable = true;
+                            //StartCoroutine(_alienAI.UpdateState(new StunnedState(_alienAI), 0f));
+                            _alienAI.PrepareUpdateState(new TrappedState(_alienAI), 0f);
                             Debug.Log("chnaging states");
                         }
 
                     }
                     // if the player is trying to pull an alien, set the alien state to capture state
-                    if (_vacuum.Pulling == true)
+                    /*if (_vacuum.Pulling == true)
                     {
-                        if (_alienAI._currentState.GetType() != typeof(CaptureState))
-                            StartCoroutine(_alienAI.UpdateState(new CaptureState(_alienAI), 0f));
-                    }
+                        if (_alienAI.ReadState.GetType() != typeof(CaptureState))
+                            _alienAI.PrepareUpdateState(new CaptureState(_alienAI), 0f);
+                            //StartCoroutine(_alienAI.UpdateState(new CaptureState(_alienAI), 0f));
+                    }*/
                 }
             }
         }
@@ -141,7 +142,8 @@ public class Trap : MonoBehaviour
                if(_alienList.Contains(alien.gameObject))
                 {
                     // update state
-                    StartCoroutine(_alienAI.UpdateState(new PanicState(_alienAI), 0f));
+                    //StartCoroutine(_alienAI.UpdateState(new PanicState(_alienAI), 0f));
+                    _alienAI.PrepareUpdateState(new PanicState(_alienAI), 0f);
                     // remove alien from list
                     _alienList.Remove(alien.gameObject);
                     Debug.Log("deleted alien from list");
@@ -187,7 +189,6 @@ public class Trap : MonoBehaviour
     #region Animation
    public void SetTrigger_ActivateTrap()
     {
-        _catchable = true;
         _trap_Animator.SetTrigger("Activate Trap");
     }
 
