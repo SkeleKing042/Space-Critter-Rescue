@@ -737,7 +737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentlyHolding: 0
   TrapThrowForce: 5
-  VC_1_Transform: {fileID: 3977560321636643704}
+  _trapParent: {fileID: 0}
 --- !u!95 &7571919666021747437
 Animator:
   serializedVersion: 4
@@ -1868,15 +1868,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2025321122122528733, guid: d2167cf6b7411224a825142711ba489d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.421
+      value: 0.119000435
       objectReference: {fileID: 0}
     - target: {fileID: 2025321122122528733, guid: d2167cf6b7411224a825142711ba489d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.373
+      value: 0.032000065
       objectReference: {fileID: 0}
     - target: {fileID: 2025321122122528733, guid: d2167cf6b7411224a825142711ba489d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.944
+      value: 0.24499989
       objectReference: {fileID: 0}
     - target: {fileID: 2025321122122528733, guid: d2167cf6b7411224a825142711ba489d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1884,15 +1884,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2025321122122528733, guid: d2167cf6b7411224a825142711ba489d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2025321122122528733, guid: d2167cf6b7411224a825142711ba489d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2025321122122528733, guid: d2167cf6b7411224a825142711ba489d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2025321122122528733, guid: d2167cf6b7411224a825142711ba489d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
