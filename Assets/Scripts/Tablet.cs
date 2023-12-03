@@ -15,6 +15,9 @@ public class Tablet : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private Animator _UI_animator;
+    [SerializeField] private Animator _Equipment_animator;
+    [SerializeField] private Animator _Tablet_animator;
+
     //[SerializeField]
     //private UI_Manager _UI_Manager;
     private Equipment _equipment;
@@ -108,31 +111,39 @@ public class Tablet : MonoBehaviour
             //play SFX
             PlaySFX_TabletOff();
 
-            //animate tablet down
-            _equipment._animation_Tablet_Down();
-            
+            //set the right arm animation
+            _Equipment_animator.SetBool("isHolding_Tablet", false);
+            //switch case for which arm to bring up
             //up the correct equipment
             switch (_equipment._currentlyHolding)
             {
                 case Equipment.CurrentlyHolding.VC:
                     {
-                        _equipment._animation_VC_Up();
+                        _Equipment_animator.SetBool("isHolding_VC", true);
                         break;
                     }
                 case Equipment.CurrentlyHolding.trap:
                     {
-                        _equipment._animation_Trap_Up();
+                        _Equipment_animator.SetBool("isHolding_Trap", true);
                         break;
                     }
                 case Equipment.CurrentlyHolding.detonator:
                     {
-                        _equipment._animation_Detonator_Up();
+                        _Equipment_animator.SetBool("isHolding_Detonator", true);
                         break;
                     }
             }
 
-            _UI_animator.SetTrigger("UI_Tablet_OFF");
+            //set the tablet animator
+            _Tablet_animator.SetBool("Tablet On", false);            
+
+            //set ui
+            //_UI_animator.SetTrigger("UI_Tablet_OFF");
+
+            //set tablet state to false
             SetTabletState(false);
+
+            //remove player movement
             _playerMovement.DoMovement = true;
 
         }
@@ -142,30 +153,35 @@ public class Tablet : MonoBehaviour
             //play SFX
             PlaySFX_TabletOn();
 
-            //animate tablet up
-            _equipment._animation_TabletUp();
-
+            //set the right arm animation
+            _Equipment_animator.SetBool("isHolding_Tablet", true);
+            //switch case for which arm to bring up
             //up the correct equipment
             switch (_equipment._currentlyHolding)
             {
                 case Equipment.CurrentlyHolding.VC:
                     {
-                        _equipment._animation_VC_Down();
+                        _Equipment_animator.SetBool("isHolding_VC", false);
                         break;
                     }
                 case Equipment.CurrentlyHolding.trap:
                     {
-                        _equipment._animation_Trap_Down();
+                        _Equipment_animator.SetBool("isHolding_Trap", false);
                         break;
                     }
                 case Equipment.CurrentlyHolding.detonator:
                     {
-                        _equipment._animation_Detonator_Down();
+                        _Equipment_animator.SetBool("isHolding_Detonator", false);
                         break;
                     }
             }
 
-            _UI_animator.SetTrigger("UI_Tablet_ON");
+            //set the tablet animator
+            _Tablet_animator.SetBool("Tablet On", true);
+
+            //animator UI
+            //_UI_animator.SetTrigger("UI_Tablet_ON");
+
             SetTabletState(true);
 
             _playerMovement.DoMovement = false;

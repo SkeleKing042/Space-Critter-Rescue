@@ -41,6 +41,10 @@ public class VacuumGun : MonoBehaviour
     public bool Pulling { get { return _pulling;  } }
     private float  _alienOffset;
     //private bool _wasJustPulling;
+
+    [Header("Animators")]
+    [SerializeField] Animator _equipment_Animator;
+    [SerializeField] Animator _VC_animator;
     #endregion
     #region Offset Correction
     private void Awake()
@@ -92,6 +96,8 @@ public class VacuumGun : MonoBehaviour
         if (gameObject.activeSelf == true)
         {
             _pulling = true;
+            _equipment_Animator.SetBool("isVCSucking", true);
+
             foreach (AlienData aData in aData)
             {
                 try
@@ -135,7 +141,9 @@ public class VacuumGun : MonoBehaviour
     public void EndPull()
     {
         _pulling = false;
-        foreach(AlienData aData in aData)
+        _equipment_Animator.SetBool("isVCSucking", false);
+
+        foreach (AlienData aData in aData)
         {
             if (aData.AI.ReadState.GetType() == typeof(CaptureState))
             {

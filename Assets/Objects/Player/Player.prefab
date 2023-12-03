@@ -85,7 +85,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6099675225037698764}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Detonator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,8 +99,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363751956321713069}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.95976067, z: -0, w: 0.2808194}
+  m_LocalPosition: {x: 0.313, y: -0.197, z: 0.553}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -603,6 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd6208e01511d64899e3275fcddfd97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _equipment_Animator: {fileID: 7571919666021747437}
   _head: {fileID: 8109913823639281491}
   PlayerRigidbody: {fileID: 0}
   DoMovement: 0
@@ -655,6 +656,7 @@ MonoBehaviour:
   _currentlyHolding: 0
   _trapPrefab: {fileID: 1996612668581499150, guid: 3aa2c7a3d9fdb3244b002cdf87817768, type: 3}
   TrapThrowForce: 5
+  _trapThrown: 0
   _trapParent: {fileID: 3977560321636643704}
 --- !u!95 &7571919666021747437
 Animator:
@@ -760,6 +762,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1747828215948849617}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: PickUpTrapAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7207852762652227241}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: SwitchToolAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7207852762652227241}
@@ -772,8 +778,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1747828215948849617}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: DetonateTrapAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7207852762652227241}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: MoveTeleportLeft.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: ThrowTrapAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ThrowTrap
       objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: JetPackAction.Action.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -807,6 +821,10 @@ PrefabInstance:
       propertyPath: PullAction.SecondAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5918693712695712689}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: ThrowTrapAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Equipment, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: MoveTeleportLeft.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: Tablet, Assembly-CSharp
@@ -890,34 +908,6 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2311515740077694298, guid: fb2c2992ab3c18248b165814bb1da1e9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311515740077694298, guid: fb2c2992ab3c18248b165814bb1da1e9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311515740077694298, guid: fb2c2992ab3c18248b165814bb1da1e9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311515740077694298, guid: fb2c2992ab3c18248b165814bb1da1e9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7010574
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311515740077694298, guid: fb2c2992ab3c18248b165814bb1da1e9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.09229599
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311515740077694298, guid: fb2c2992ab3c18248b165814bb1da1e9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.09229599
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311515740077694298, guid: fb2c2992ab3c18248b165814bb1da1e9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.7010574
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311515740077694298, guid: fb2c2992ab3c18248b165814bb1da1e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -937,6 +927,10 @@ PrefabInstance:
       propertyPath: _UI_animator
       value: 
       objectReference: {fileID: 2716502566933505675}
+    - target: {fileID: 3106045462201430572, guid: fb2c2992ab3c18248b165814bb1da1e9, type: 3}
+      propertyPath: _Equipment_animator
+      value: 
+      objectReference: {fileID: 7571919666021747437}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb2c2992ab3c18248b165814bb1da1e9, type: 3}
 --- !u!4 &1391414601450380967 stripped
@@ -1131,6 +1125,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8109913824006202798}
     m_Modifications:
+    - target: {fileID: 2025321121461694840, guid: d2167cf6b7411224a825142711ba489d, type: 3}
+      propertyPath: _VC_animator
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025321121461694840, guid: d2167cf6b7411224a825142711ba489d, type: 3}
+      propertyPath: _equipment_Animator
+      value: 
+      objectReference: {fileID: 7571919666021747437}
     - target: {fileID: 2025321121480610849, guid: d2167cf6b7411224a825142711ba489d, type: 3}
       propertyPath: m_Layer
       value: 6

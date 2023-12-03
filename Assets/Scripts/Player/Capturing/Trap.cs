@@ -196,14 +196,4 @@ public class Trap : MonoBehaviour
 
 
     #endregion
-
-    public void SetTrapActivated_True()
-    {
-        _trapActivated = true;
-    }
-
-    public void SetTrapActivated_False()
-    {
-        _trapActivated = false;
-    }
 }

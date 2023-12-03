@@ -14,6 +14,8 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
+    private Animator _equipment_Animator;
+    [SerializeField]
     private Transform _head;
     [HideInInspector]
     public Rigidbody PlayerRigidbody;
@@ -156,6 +158,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
+
     #region Movement
     public void UpdateMovementAxis(Vector2 v)
     {
@@ -210,9 +213,15 @@ public class PlayerMovement : MonoBehaviour
         if (DoMovement && !_crouched && GroundedCheck())
         {
             if (!_flooringIt)
+            {
                 _movementModifier = _sprintScale;
+                _equipment_Animator.SetBool("isRunning", true);
+            }
             else
+            {
                 _movementModifier = 1;
+                _equipment_Animator.SetBool("isRunning", false);
+            }
             _flooringIt = !_flooringIt;
         }
 
@@ -224,6 +233,7 @@ public class PlayerMovement : MonoBehaviour
         DoSprint();
     }
     #endregion
+
     #region Grounded
     /// <summary>
     /// Checks right below the player for objects tagged ground
@@ -291,6 +301,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = _lastGroundPoint + RespawnOffset;
     }     
     #endregion
+
     #region Jumping
     public void Jump()
     {
@@ -346,4 +357,5 @@ public class PlayerMovement : MonoBehaviour
             }
     }
     #endregion
+
 }
