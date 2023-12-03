@@ -1,5 +1,5 @@
 //Created by Ru McPharlin
-//Last Edited by Jackson Lucas
+//Last Edited by Ru
 
 using UnityEngine;
 
@@ -12,12 +12,17 @@ public class Equipment : MonoBehaviour
         - LB to toggle holding trap
         - LT to throw trap if holding
      */
+
+    [Header("Camera")]
+    [SerializeField]
+    private GameObject _playerCamera;
+
     [Header("Currently Holding")]
     [SerializeField]
     public CurrentlyHolding _currentlyHolding;
 
     // Trap Components 
-    private Trap _trap;
+
 
     //[Header("Trap Components")]
     //public GameObject _trap;
@@ -28,6 +33,10 @@ public class Equipment : MonoBehaviour
     //[SerializeField]
     //private float PickUpRange;
     [Header("Trap Variables")]
+    private GameObject _trapGameObject;
+    private Trap _trap;
+    [SerializeField]
+    private GameObject _trapPrefab;
     [SerializeField]
     private float TrapThrowForce;
     private bool _trapDeployed;
@@ -141,6 +150,8 @@ public class Equipment : MonoBehaviour
                         //bring up trap
                         _animation_VCDown_TrapUp();
 
+                        MakeTrap();
+
                         //update ui
                         _UI_Manager.SetUIState(UI_Manager.UIState.Trap_ThrowTrap_VC);
                     }
@@ -163,6 +174,8 @@ public class Equipment : MonoBehaviour
                 {
                     //trap down -> VC Up
                     _animation_TrapDown_VCUp();
+
+                    DestroyTrap();
 
                     //update ui
                     _UI_Manager.SetUIState(UI_Manager.UIState.VC_Suck_Trap);
@@ -194,6 +207,19 @@ public class Equipment : MonoBehaviour
     #endregion
 
     #region Trap methods
+    public void MakeTrap()
+    {
+        _trapGameObject = Instantiate(_trapPrefab, _trapParent.position, _trapParent.rotation, _playerCamera.transform);
+        _trap = _trapGameObject.GetComponent<Trap>();
+    }
+
+    public void DestroyTrap()
+    {
+        Destroy(_trapGameObject);
+        _trap = null;
+    }
+
+
 
     /// <summary>
     /// of player is currently holding the trap allow to deploy
@@ -235,14 +261,19 @@ public class Equipment : MonoBehaviour
 
     public void pickUpTrap()
     {
+
+
         Debug.Log("bubble active");
         // check if the player is within the range, not holding the trap and the trap is not active
         if (!_trap.Bubble.activeInHierarchy)
         {
-            // deactovate colliders and stop rigidbody physics
+            MakeTrap();
+
+
+            /*// deactovate colliders and stop rigidbody physics
             _trap.GetComponent<BoxCollider>().enabled = false;
             _trap.GetComponent<Rigidbody>().isKinematic = true;
-            _trap.transform.position = _trapParent.position;
+            _trap.transform.position = _trapParent.position;*/
 
             if (_currentlyHolding == CurrentlyHolding.VC)
             {
