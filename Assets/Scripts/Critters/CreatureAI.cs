@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,7 +12,8 @@ public class CreatureAI : MonoBehaviour
     [Header("States")]
     [SerializeField, Tooltip("The current state of the creature.")]
     private string _theState;
-    public State _currentState;
+    private State _currentState;
+    public State ReadState { get { return _currentState; } }
     private Rigidbody _rb;
     public Rigidbody Rb { get { return _rb; } }
     private Animator _animator;
@@ -33,6 +35,7 @@ public class CreatureAI : MonoBehaviour
     [Header("Resources")]
     [Range(0f, 100f)]
     public float Hydration = 100;
+    private float _startingWaterSearchRadius;
     [Range(0f, 100f)]
     public float Energy = 100;
 
@@ -69,21 +72,72 @@ public class CreatureAI : MonoBehaviour
     [SerializeField, Tooltip("How quickly the creature should turn to face the player during the capture state.")]
     private float _facePlayerRate;
     public float FacePlayerRate { get { return _facePlayerRate; } }
-    private float _panicSpeedIncrease;
-    public float PanicSpeedIncrease { get { return _panicSpeedIncrease; } }
+    private float _panicSpeed;
+    public float PanicSpeed { get { return _panicSpeed; } }
+    private FieldOfView _fovRef;
+    public FieldOfView FieldOfView { get { return _fovRef; } }
+
+    //State Management
+    [System.Serializable]
+    private class StateWDelay
+    {
+        protected State state;
+        public State ReadState { get { return state; } }
+        protected float delay;
+        private float timer;
+        
+        public StateWDelay(State s, float d)
+        {
+            state = s;
+            delay = d;
+        }
+
+        public bool increment()
+        {
+            if (timer >= delay)
+                return true;
+            else
+                timer += Time.deltaTime;
+
+            return false;
+        }
+    }
+    private List<StateWDelay> _stateBuffer = new List<StateWDelay>();
 
     #region Setup
     private void Start()
     {
-        //Sets the center of the area that the AI will move around
-        _homePoint = transform.position;
-        //Component grabs
+    }
+    private void Awake()
+    {
+        CreatureStats stats = GetComponent<CreatureStats>();
+        //Agent setup
         _agent = GetComponent<NavMeshAgent>();
+        if (!_agent.isOnNavMesh)
+        {
+            Debug.LogWarning(gameObject.name + " is not on a navMesh. plz fix boss\nCLICK FOR MORE INFO" +
+                "\nPosition: " + transform.position.ToString() +
+                "\nRotation: " + transform.rotation.ToString() + 
+                "\nScale: " + transform.localScale.ToString() + 
+                "\nIsBig: " + stats.IsBig.ToString()+
+                "\nType: " + stats.Type.ToString());
+            Destroy(gameObject);
+            return;
+        }
         _critterHeight = _agent.height;
         _baseSpeed = _agent.speed;
-        _rb = GetComponent<Rigidbody>();
 
-        GetComponent<CreatureStats>().GetStats();
+        //Component grabs
+        stats.GetStats();
+        _player = GameObject.FindGameObjectWithTag(_playerTag);
+        _animator = GetComponentInChildren<Animator>();
+        _drinkingSources = GetComponentInChildren<DrinkenFinden>();
+        _startingWaterSearchRadius = _drinkingSources.GetComponent<SphereCollider>().radius;
+        _rb = GetComponent<Rigidbody>();
+        _fovRef = GetComponentInChildren<FieldOfView>();
+
+        //Sets the center of the area that the AI will move around
+        _homePoint = transform.position;
 
         //Saftey checks
         _thirstCheckDelay = Mathf.Abs(_thirstCheckDelay);
@@ -96,14 +150,9 @@ public class CreatureAI : MonoBehaviour
         _currentState.StartState();
 
         StartCoroutine(GrabGroundBelow());
+
     }
-    private void Awake()
-    {
-        _player = GameObject.FindGameObjectWithTag(_playerTag);
-        _animator = GetComponentInChildren<Animator>();
-        _drinkingSources = GetComponentInChildren<DrinkenFinden>();
-    }
-    public void InitStats(float thirst, float lazy, float dis, float vel, float pMul)
+    public void InitStats(float thirst, float lazy, float dis, float vel, float pSpe)
     {
         if (_agent == null)
             _agent = GetComponent<NavMeshAgent>();
@@ -112,12 +161,13 @@ public class CreatureAI : MonoBehaviour
         _lazyness = lazy;
         _travelableDistanceFromHome = dis;
         _velocityToPanic = vel;
-        _panicSpeedIncrease = pMul;
+        _panicSpeed = pSpe;
     }
     #endregion
     #region BrainFunctions
     void Update()
     {
+        UpdateState();
         if (_currentState != null)
         {
             //Update the state
@@ -169,8 +219,13 @@ public class CreatureAI : MonoBehaviour
                         _agent.SetDestination(_POITarget.position);
                         GoingForDrink = true;
                         PrepareUpdateState(new RoamingState(this));
+                        _drinkingSources.GetComponent<SphereCollider>().radius = _startingWaterSearchRadius;
                         return true;
                     }
+                }
+                else
+                {
+                    _drinkingSources.GetComponent<SphereCollider>().radius += 10;
                 }
             }
         }
@@ -259,7 +314,7 @@ public class CreatureAI : MonoBehaviour
     /// <returns></returns>
     public void PrepareUpdateState(State newState)
     {
-        StartCoroutine(UpdateState(newState, 0f));
+        PrepareUpdateState(newState, 0f);
     }
     /// <summary>
     /// State chaging function. Will update this creature's state after a given time.
@@ -269,18 +324,29 @@ public class CreatureAI : MonoBehaviour
     /// <returns></returns>
     public void PrepareUpdateState(State newState, float delay)
     {
-        StartCoroutine(UpdateState(newState, delay));
+        _stateBuffer.Add(new StateWDelay(newState, delay));
+        //Debug.Log("Added " + newState.ToString() + " to the state buffer with a " + delay + " second delay.\nBuffer now has " + _stateBuffer.Count + " enties."); 
     }
-    public IEnumerator UpdateState(State newState, float delay)
+    public void UpdateState()
     {
-        yield return new WaitForSeconds(delay);
-        if (newState.GetType() != _currentState.GetType())
+        List<StateWDelay> rDStates = new List<StateWDelay>();
+        foreach (StateWDelay state in _stateBuffer)
         {
-            _currentState.EndState();
-            _animator.ResetTrigger(_currentState.Name);
-            _currentState = newState;
-            _currentState.StartState();
+            if (state.increment())
+            {
+                if (state.ReadState.GetType() != _currentState.GetType())
+                {
+                    //Debug.Log("Appling " + state.ReadState.ToString() + " to this ai");
+                    _currentState.BASE_EndState();
+                    _currentState = state.ReadState;
+                    _currentState.BASE_StartState();
+                }
+                rDStates.Add(state);
+            }
         }
+        foreach (StateWDelay state in rDStates)
+            if (_stateBuffer.Contains(state))
+                _stateBuffer.Remove(state);
     }
     /// <summary>
     /// Either enables or disables the rigidbody mode of the creature.
@@ -324,5 +390,10 @@ public class CreatureAI : MonoBehaviour
     {
         Debug.Log("Causing brain rot");
         PrepareUpdateState(new StunnedState(this), 1.0f);
+    }
+    public void DEBUG_InstilFear()
+    {
+        Debug.Log("Instilling Fear");
+        PrepareUpdateState(new PanicState(this));
     }
 }

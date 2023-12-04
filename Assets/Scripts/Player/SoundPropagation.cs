@@ -25,10 +25,21 @@ public class SoundPropagation : MonoBehaviour
     /// <param name="scale"></param>
     public void PropagateSound(float scale)
     {
-        foreach(GameObject goob in _goobs)
+        List<GameObject> removedgoobs = new List<GameObject>();
+        foreach (GameObject goob in _goobs)
         {
-            if(Vector3.Distance(transform.position, goob.transform.position) <= _proaDistance * scale)
-                goob.GetComponent<CreatureAI>().RunFromPlayer(0);
+            if (goob != null)
+            {
+                if (Vector3.Distance(transform.position, goob.transform.position) <= _proaDistance * scale)
+                    goob.GetComponent<CreatureAI>().RunFromPlayer(0);
+            }
+            else
+                removedgoobs.Add(goob);
+        }
+
+        foreach(GameObject rGo in removedgoobs)
+        {
+            _goobs.Remove(rGo);
         }
     }
 

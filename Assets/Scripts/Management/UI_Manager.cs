@@ -1,23 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+//Created by Ru McPharlin
+//Last Edited by Jackson Lucas
+
 using UnityEngine;
 using UnityEngine.UI;
-using static Equipment;
 
 public class UI_Manager : MonoBehaviour
 {
     //VARIABLES
     #region Component Variables
     [Header("Components")]
-    [SerializeField]
     private PlayerMovement _playerMovement;
-    [SerializeField]
     private Equipment _equipment;
-    [SerializeField]
     private Tablet _tablet;
-    [SerializeField]
     private Inventory _inventory;
-    [SerializeField]
     private Animator _UI_animator;
     #endregion
 

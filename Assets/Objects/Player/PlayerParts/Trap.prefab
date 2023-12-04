@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3566749733965868898}
   - component: {fileID: 2164889323552929802}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2945688025116628476}
   - component: {fileID: 8538591268357379910}
   - component: {fileID: 5459977473978158742}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Plate_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1089938459006845619}
   - component: {fileID: 4467378520780775362}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Model_Equipment_Trap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 2874412241992746859}
   - component: {fileID: 1370322807838445992}
   - component: {fileID: 7938126172908767832}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Plate_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,8 +340,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996612668581499150}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.42099953, y: -0.37300014, z: 0.94400024}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -361,13 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892a198cde1cb1b46ab651eb460e163f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Check: {fileID: 0}
-  Vacuum: {fileID: 0}
-  Bubble: {fileID: 4869716570810363188}
-  playerGun: {fileID: 0}
-  Detinator: {fileID: 0}
-  _alienList: []
-  _trap_Animator: {fileID: 4467378520780775362}
+  _bubble: {fileID: 4869716570810363188}
 --- !u!135 &1996612668581499376
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -422,7 +416,7 @@ GameObject:
   - component: {fileID: 447427844276791206}
   - component: {fileID: 6639240002659842681}
   - component: {fileID: 6769943011650021970}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Inside
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9022,7 +9016,7 @@ GameObject:
   - component: {fileID: 487486112502810690}
   - component: {fileID: 7965458280653943878}
   - component: {fileID: 2168049075254592203}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Tooth_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9105,7 +9099,7 @@ GameObject:
   - component: {fileID: 1266150310508487168}
   - component: {fileID: 8986128116276798804}
   - component: {fileID: 4887519003968091123}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Tooth_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9188,7 +9182,7 @@ GameObject:
   - component: {fileID: 7727430490528807195}
   - component: {fileID: 853212082418423505}
   - component: {fileID: 8831964308629609661}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Tooth_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9269,7 +9263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1110599113579560636}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9304,7 +9298,7 @@ GameObject:
   - component: {fileID: 3871233168330730880}
   - component: {fileID: 2170282003060247380}
   - component: {fileID: 7600564359118248353}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Tooth_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9388,7 +9382,7 @@ GameObject:
   - component: {fileID: 1214389955283636712}
   - component: {fileID: 5514086709846896879}
   - component: {fileID: 6083471958556518118}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Outside
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17988,7 +17982,7 @@ GameObject:
   - component: {fileID: 874524451770518985}
   - component: {fileID: 4053627070625455588}
   - component: {fileID: 7742752719134023739}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Plate_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18071,7 +18065,7 @@ GameObject:
   - component: {fileID: 6536263380040411046}
   - component: {fileID: 6922003225302004098}
   - component: {fileID: 1850421153730210056}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Plate_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -24,7 +24,7 @@ public class RoamingState : State
             //Lose energy over time
             Mathf.Clamp(AI.Energy -= Time.deltaTime * 2, 0, 100);
             //Call checks
-            if (AI.GetComponent<FieldOfView>().CanSeeTarget)
+            if (AI.FieldOfView.CanSeeTarget)
             {
                 AI.RunFromPlayer(1);
                 return;

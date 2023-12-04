@@ -1,9 +1,8 @@
-// Created By Adanna
-// Last Edited by Adanna
-using System.Collections;
-using System.Collections.Generic;
+// Created By Adanna Okoye
+// Last Edited by Jackson Lucas
+
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class Inventory : MonoBehaviour
@@ -11,9 +10,10 @@ public class Inventory : MonoBehaviour
     #region Variables
     [Header("Drop off")]
    //[SerializeField, Tooltip("The transform of the drop off GameObject")]
-    private Transform _shipDropOff;
+    [SerializeField] private Transform _shipDropOff;
  //   [SerializeField, Tooltip("Players transform"), HideInInspector]
     private Transform _playerTransform;
+    public Transform PlayerTransform { get { return _playerTransform; } set { _playerTransform = value; } }
     [SerializeField, Tooltip("Range in which the player can put critters into the ship")]
     private float _dropOffRange;
 
@@ -74,10 +74,20 @@ public class Inventory : MonoBehaviour
     private void Awake()
     {
         //find the player transform
-        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        //_playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         //find drop off transform
-        
-        _shipDropOff = GameObject.FindGameObjectWithTag("DropOff").transform;
+
+        try
+        {
+            _shipDropOff = GameObject.FindGameObjectWithTag("DropOff").transform;
+        }
+        catch (NullReferenceException e)
+        {
+            Debug.LogWarning("No transform was given for the drop off point. Using default.\nFULL ERROR\n" + e);
+            _shipDropOff = transform;
+        }
+
+        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     #region Inventory Management Methods
@@ -149,7 +159,7 @@ public class Inventory : MonoBehaviour
             _ship_CrystalCritter_Large += _player_crystalCritter_Large;
 
             //reset player inventory
-            _player_fungiCritter_Small = _player_fungiCritter_Large = _player_crystalCritter_Small = _player_crystalCritter_Large = 0;
+            _player_fungiCritter_Small = _player_fungiCritter_Large = _player_crystalCritter_Small = _player_crystalCritter_Large = _player_smallCount = _player_largeCount = 0;
         }
     }
     #endregion
