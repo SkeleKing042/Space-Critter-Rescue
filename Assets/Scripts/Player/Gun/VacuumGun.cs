@@ -96,7 +96,7 @@ public class VacuumGun : MonoBehaviour
         if (gameObject.activeSelf == true)
         {
             _pulling = true;
-            _equipment_Animator.SetBool("isVCSucking", true);
+            _equipment_Animator.SetBool("isSucking", true);
 
             foreach (AlienData aData in aData)
             {
@@ -141,7 +141,7 @@ public class VacuumGun : MonoBehaviour
     public void EndPull()
     {
         _pulling = false;
-        _equipment_Animator.SetBool("isVCSucking", false);
+        _equipment_Animator.SetBool("isSucking", false);
 
         foreach (AlienData aData in aData)
         {
