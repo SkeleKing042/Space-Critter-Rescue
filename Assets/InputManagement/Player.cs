@@ -100,6 +100,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""DepositCritters"",
+                    ""type"": ""Button"",
+                    ""id"": ""a614358b-78c4-42f6-86b2-6e5fc122df38"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ThrowTrap"",
                     ""type"": ""Button"",
                     ""id"": ""34068624-28e6-41e6-981e-3539b4dd4c1b"",
@@ -125,15 +134,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""AlienDrop"",
-                    ""type"": ""Button"",
-                    ""id"": ""a614358b-78c4-42f6-86b2-6e5fc122df38"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""ToggleTablet"",
@@ -362,28 +362,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""DisplayPopup"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8a51103e-1849-4a13-b292-65d01598f5f4"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""AlienDrop"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2550c8b8-1f67-4f9b-bad3-0f1cfd6cae49"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""AlienDrop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -716,6 +694,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""SwitchTool"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a51103e-1849-4a13-b292-65d01598f5f4"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DepositCritters"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2550c8b8-1f67-4f9b-bad3-0f1cfd6cae49"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DepositCritters"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -799,10 +799,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_JetPack = m_Player.FindAction("JetPack", throwIfNotFound: true);
         m_Player_SwitchTool = m_Player.FindAction("SwitchTool", throwIfNotFound: true);
         m_Player_Pull = m_Player.FindAction("Pull", throwIfNotFound: true);
+        m_Player_DepositCritters = m_Player.FindAction("DepositCritters", throwIfNotFound: true);
         m_Player_ThrowTrap = m_Player.FindAction("ThrowTrap", throwIfNotFound: true);
         m_Player_DetonateTrap = m_Player.FindAction("DetonateTrap", throwIfNotFound: true);
         m_Player_PickupTrap = m_Player.FindAction("PickupTrap", throwIfNotFound: true);
-        m_Player_AlienDrop = m_Player.FindAction("AlienDrop", throwIfNotFound: true);
         m_Player_ToggleTablet = m_Player.FindAction("ToggleTablet", throwIfNotFound: true);
         m_Player_SelectTeleport = m_Player.FindAction("SelectTeleport", throwIfNotFound: true);
         m_Player_MoveTeleportRight = m_Player.FindAction("MoveTeleportRight", throwIfNotFound: true);
@@ -879,10 +879,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_JetPack;
     private readonly InputAction m_Player_SwitchTool;
     private readonly InputAction m_Player_Pull;
+    private readonly InputAction m_Player_DepositCritters;
     private readonly InputAction m_Player_ThrowTrap;
     private readonly InputAction m_Player_DetonateTrap;
     private readonly InputAction m_Player_PickupTrap;
-    private readonly InputAction m_Player_AlienDrop;
     private readonly InputAction m_Player_ToggleTablet;
     private readonly InputAction m_Player_SelectTeleport;
     private readonly InputAction m_Player_MoveTeleportRight;
@@ -902,10 +902,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @JetPack => m_Wrapper.m_Player_JetPack;
         public InputAction @SwitchTool => m_Wrapper.m_Player_SwitchTool;
         public InputAction @Pull => m_Wrapper.m_Player_Pull;
+        public InputAction @DepositCritters => m_Wrapper.m_Player_DepositCritters;
         public InputAction @ThrowTrap => m_Wrapper.m_Player_ThrowTrap;
         public InputAction @DetonateTrap => m_Wrapper.m_Player_DetonateTrap;
         public InputAction @PickupTrap => m_Wrapper.m_Player_PickupTrap;
-        public InputAction @AlienDrop => m_Wrapper.m_Player_AlienDrop;
         public InputAction @ToggleTablet => m_Wrapper.m_Player_ToggleTablet;
         public InputAction @SelectTeleport => m_Wrapper.m_Player_SelectTeleport;
         public InputAction @MoveTeleportRight => m_Wrapper.m_Player_MoveTeleportRight;
@@ -946,6 +946,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Pull.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPull;
                 @Pull.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPull;
                 @Pull.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPull;
+                @DepositCritters.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDepositCritters;
+                @DepositCritters.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDepositCritters;
+                @DepositCritters.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDepositCritters;
                 @ThrowTrap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrowTrap;
                 @ThrowTrap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrowTrap;
                 @ThrowTrap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrowTrap;
@@ -955,9 +958,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @PickupTrap.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickupTrap;
                 @PickupTrap.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickupTrap;
                 @PickupTrap.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickupTrap;
-                @AlienDrop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
-                @AlienDrop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
-                @AlienDrop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAlienDrop;
                 @ToggleTablet.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTablet;
                 @ToggleTablet.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTablet;
                 @ToggleTablet.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleTablet;
@@ -1007,6 +1007,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Pull.started += instance.OnPull;
                 @Pull.performed += instance.OnPull;
                 @Pull.canceled += instance.OnPull;
+                @DepositCritters.started += instance.OnDepositCritters;
+                @DepositCritters.performed += instance.OnDepositCritters;
+                @DepositCritters.canceled += instance.OnDepositCritters;
                 @ThrowTrap.started += instance.OnThrowTrap;
                 @ThrowTrap.performed += instance.OnThrowTrap;
                 @ThrowTrap.canceled += instance.OnThrowTrap;
@@ -1016,9 +1019,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @PickupTrap.started += instance.OnPickupTrap;
                 @PickupTrap.performed += instance.OnPickupTrap;
                 @PickupTrap.canceled += instance.OnPickupTrap;
-                @AlienDrop.started += instance.OnAlienDrop;
-                @AlienDrop.performed += instance.OnAlienDrop;
-                @AlienDrop.canceled += instance.OnAlienDrop;
                 @ToggleTablet.started += instance.OnToggleTablet;
                 @ToggleTablet.performed += instance.OnToggleTablet;
                 @ToggleTablet.canceled += instance.OnToggleTablet;
@@ -1124,10 +1124,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnJetPack(InputAction.CallbackContext context);
         void OnSwitchTool(InputAction.CallbackContext context);
         void OnPull(InputAction.CallbackContext context);
+        void OnDepositCritters(InputAction.CallbackContext context);
         void OnThrowTrap(InputAction.CallbackContext context);
         void OnDetonateTrap(InputAction.CallbackContext context);
         void OnPickupTrap(InputAction.CallbackContext context);
-        void OnAlienDrop(InputAction.CallbackContext context);
         void OnToggleTablet(InputAction.CallbackContext context);
         void OnSelectTeleport(InputAction.CallbackContext context);
         void OnMoveTeleportRight(InputAction.CallbackContext context);

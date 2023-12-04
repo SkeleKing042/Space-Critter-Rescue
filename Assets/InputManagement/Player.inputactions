@@ -78,6 +78,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "DepositCritters",
+                    "type": "Button",
+                    "id": "a614358b-78c4-42f6-86b2-6e5fc122df38",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ThrowTrap",
                     "type": "Button",
                     "id": "34068624-28e6-41e6-981e-3539b4dd4c1b",
@@ -103,15 +112,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "AlienDrop",
-                    "type": "Button",
-                    "id": "a614358b-78c4-42f6-86b2-6e5fc122df38",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "ToggleTablet",
@@ -340,28 +340,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "DisplayPopup",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8a51103e-1849-4a13-b292-65d01598f5f4",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "AlienDrop",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2550c8b8-1f67-4f9b-bad3-0f1cfd6cae49",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "AlienDrop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -692,6 +670,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchTool",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8a51103e-1849-4a13-b292-65d01598f5f4",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DepositCritters",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2550c8b8-1f67-4f9b-bad3-0f1cfd6cae49",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DepositCritters",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
