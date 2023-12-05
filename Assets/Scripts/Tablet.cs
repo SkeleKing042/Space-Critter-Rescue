@@ -23,6 +23,7 @@ public class Tablet : MonoBehaviour
     private Equipment _equipment;
     private PlayerMovement _playerMovement;
     private PylonManager _pylonManager;
+    private UI_Manager _ui_Manager;
 
 
     [Header("Tabs")]
@@ -74,6 +75,7 @@ public class Tablet : MonoBehaviour
         _invRef = FindObjectOfType<Inventory>();
         _playerMovement = GetComponentInParent<PlayerMovement>();
         _pylonManager = FindObjectOfType<PylonManager>();
+        _ui_Manager = FindObjectOfType<UI_Manager>();
 
         //declare array
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
@@ -113,6 +115,7 @@ public class Tablet : MonoBehaviour
 
             //set the right arm animation
             _Equipment_animator.SetBool("isHolding_Tablet", false);
+
             //switch case for which arm to bring up
             //up the correct equipment
             switch (_equipment._currentlyHolding)
@@ -135,10 +138,11 @@ public class Tablet : MonoBehaviour
             }
 
             //set the tablet animator
-            _Tablet_animator.SetBool("Tablet On", false);            
+            _Tablet_animator.SetBool("Tablet On", false);
 
             //set ui
-            //_UI_animator.SetTrigger("UI_Tablet_OFF");
+            _UI_animator.SetBool("UI_TabletState", false);
+            _ui_Manager.SetTabletToggleUI();
 
             //set tablet state to false
             SetTabletState(false);
@@ -179,8 +183,10 @@ public class Tablet : MonoBehaviour
             //set the tablet animator
             _Tablet_animator.SetBool("Tablet On", true);
 
-            //animator UI
-            //_UI_animator.SetTrigger("UI_Tablet_ON");
+            //set ui
+            _UI_animator.SetBool("UI_TabletState", true);
+            _ui_Manager.SetTabletToggleUI();
+
 
             SetTabletState(true);
 

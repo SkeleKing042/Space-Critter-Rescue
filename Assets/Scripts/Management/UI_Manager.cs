@@ -3,6 +3,7 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -16,10 +17,10 @@ public class UI_Manager : MonoBehaviour
     private Animator _UI_animator;
     #endregion
 
+    //VARIABLES THAT CONTROL WHAT ICONS ARE DISPLAYED
     #region Input Mode Variables and Enum
     [SerializeField]
     private InputMode inputMode;
-
     public enum InputMode
     {
         gamepad,
@@ -28,6 +29,7 @@ public class UI_Manager : MonoBehaviour
 
     #endregion
 
+    //VARIABLES THAT CONTROL WHAT THE UI STATE IS
     #region UI State Variable and Enum
     [SerializeField, Tooltip("The current state the UI is in, used to define the current icon and inpute sprites")]
     private UIState _UIState;
@@ -35,25 +37,23 @@ public class UI_Manager : MonoBehaviour
 
     public enum UIState
     {
-        VC_Suck_Trap,
-        VC_Suck_Detonator,
-        VC_DepositCritters_Trap,
-        VC_DepositCritters_Detonator,
-        Trap_ThrowTrap_VC,
-        Detonator_ActivateTrap_VC,
-        Detonator_PickUpTrap_VC,
+        VC_Trap,
+        VC_Detonator,
+        Trap_VC,
+        Detonator_VC,
     }
 
 
 
     #endregion
 
+    //THE INPUT ICONS
     #region Input Icons
-    [Header("Input Icons")]
+    [Header("Input Icons and Text")]
 
     //ARRAY INDEX LIST
     //0 FIRE
-    //1 ALT FIRE
+    //1 THROW TRAP
     //2 PICKUP TRAP
     //3 ENABLE TRAP
     //4 SWITCH TOOL
@@ -65,8 +65,76 @@ public class UI_Manager : MonoBehaviour
     [SerializeField]
     private Sprite[] _spritesKeyboard;
 
+    [SerializeField]
+    private string[] _inputStrings;
+
     #endregion
 
+    //THE REFERENCES TO THE SLOTS ICON, INPUT AND TEXT
+    #region Slots
+    [SerializeField] private Image _Slot1_ToolIcon;
+    [SerializeField] private Image _Slot1_InputIcon;
+    [SerializeField] private TextMeshProUGUI _Slot1_Text;
+    [Space]
+
+    [SerializeField] private Image _Slot2_ToolIcon;
+    [SerializeField] private Image _Slot2_InputIcon;
+    [SerializeField] private TextMeshProUGUI _Slot2_Text;
+    [Space]
+
+    [SerializeField] private Image _Slot3_ToolIcon;
+    [SerializeField] private Image _Slot3_InputIcon;
+    [SerializeField] private TextMeshProUGUI _Slot3_Text;
+    [Space]
+
+    #endregion
+
+    //THE SPRITES FOR THE VC
+    #region Vacuum Catcher Variables
+    [Header("Vacuum Catcher Variables")]
+    [SerializeField, Tooltip("The sprite of the VC")]
+    private Sprite _VCSprite;
+    [SerializeField, Tooltip("The sprite that shows the critters are going to be deposited in the ship")]
+    private Sprite _ShipSprite;
+    #endregion
+
+    //THE SPRITES FOR THE TRAP
+    #region Trap Variables
+    [Header("Trap Variables")]
+    [SerializeField, Tooltip("The sprite of the trap")]
+    private Sprite _trapSprite;
+    [SerializeField, Tooltip("The sprite of the trap being picked up")]
+    private Sprite _trapPickUpSprite;
+    #endregion
+
+    //THE SPRITES FOR THE DEONTATOR
+    #region Detonator Variables
+    [Header("Detonator Variables")]
+    [SerializeField, Tooltip("The sprite of picking up the trap")]
+    private Sprite _pickupTrapSprite;
+    [SerializeField, Tooltip("The sprite of the detonator")]
+    private Sprite _detonatorSprite;
+    #endregion
+
+    //THE SPRITES FOR THE TABLET
+    #region Tablet Variables
+    [Header("Tablet Variables")]
+    [SerializeField, Tooltip("Tablet toggle sprite, gamepad")]
+    private Sprite _toggleTabletIcon_Gamepad;
+
+    [SerializeField, Tooltip("Tablet toggle sprite, keyboard")]
+    private Sprite _toggleTabletIcon_Keyboard;
+
+    [Space]
+
+    [SerializeField, Tooltip("tablet input icon Image")]
+    private Image _TabletToggleIcon;
+    [SerializeField, Tooltip("tablet input text")]
+    private TextMeshProUGUI _TabletToggleText;
+
+    #endregion region
+
+    //BACKPACK VARIABLES
     #region Backpack HUD Variables
     [Header("Backpack HUD")]
     [SerializeField, Tooltip("Slider that displays the amount of LC the player has collected")]
@@ -76,6 +144,7 @@ public class UI_Manager : MonoBehaviour
     private Image _SC_Slider;
     #endregion
 
+    //JETPACK VARIABLES
     #region Jetpack Variables
     [Header("Jetpack Variables")]
     [SerializeField, Tooltip("The display for the jet fuel.")]
@@ -111,58 +180,6 @@ public class UI_Manager : MonoBehaviour
 
 
     #endregion
-
-    #region Vacuum Catcher Variables
-    [Header("Vacuum Catcher Variables")]
-    [SerializeField, Tooltip("The sprite of the VC")]
-    private Sprite _VCSprite;
-    [SerializeField, Tooltip("The sprite that shows the critters are going to be deposited in the ship")]
-    private Sprite _ShipSprite;
-
-    [Space]
-
-    [SerializeField, Tooltip("The image that displays the Icon for the VC")]
-    private Image VC_IconImage;
-
-    [SerializeField, Tooltip("The image that displays the Input for the VC")]
-    private Image VC_InputImage;
-
-    #endregion
-
-    #region Trap and Detonator Variables
-    [Header("Trap and Detonator Variables")]
-    [SerializeField, Tooltip("The sprite of the trap")]
-    private Sprite _trapSprite;
-
-    [SerializeField, Tooltip("The sprite of picking up the trap")]
-    private Sprite _pickupTrapSprite;
-
-    [SerializeField, Tooltip("The sprite of the detonator")]
-    private Sprite _detonatorSprite;
-
-    [Space]
-
-    [SerializeField, Tooltip("The image that displays the icon of the trap or the detonator")]
-    private Image Trap_IconImage;
-
-    [SerializeField, Tooltip("The image that displays input for the trap / detonator")]
-    private Image Trap_InputImage;
-    #endregion
-
-    #region Tablet Variables
-    [Header("Tablet Variables")]
-    [SerializeField, Tooltip("Tablet toggle sprite, gamepad")]
-    private Sprite _toggleTabletIcon_Gamepad;
-
-    [SerializeField, Tooltip("Tablet toggle sprite, keyboard")]
-    private Sprite _toggleTabletIcon_Keyboard;
-
-    [Space]
-
-    [SerializeField, Tooltip("tablet input icon Image")]
-    private Image _TabletToggleImage;
-
-    #endregion region
 
     //METHODS
     #region Start and Update
@@ -203,14 +220,7 @@ public class UI_Manager : MonoBehaviour
     #region HUD Methods
     public void UpdateHUDAnimator()
     {
-        if (_equipment._currentlyHolding == Equipment.CurrentlyHolding.VC)
-        {
-            SetTrigger_UI_Vaccuum();
-        }
-        else
-        {
-            SetTrigger_UI_Trap();
-        }
+
     }
 
     public void SetUIState(UIState _inputUIState)
@@ -219,264 +229,139 @@ public class UI_Manager : MonoBehaviour
 
         switch (_UIState)
         {
-            case UIState.VC_Suck_Trap:
-                SetUI_VC_Suck_Trap();
+            case UIState.VC_Trap:
+                SetUI_VC_Trap();
                 break;
-            case UIState.VC_Suck_Detonator:
-                SetUI_VC_Suck_Detonator();
+            case UIState.VC_Detonator:
+                SetUI_VC_Detonator();
                 break;
-            case UIState.VC_DepositCritters_Trap:
-                SetUI_VC_DepositCritters_Trap();
+            case UIState.Trap_VC:
+                SetUI_Trap_VC();
                 break;
-            case UIState.VC_DepositCritters_Detonator:
-                SetUI_VC_DepositCritters_Detonator();
-                break;
-            case UIState.Trap_ThrowTrap_VC:
-                SetUI_Trap_ThrowTrap_VC();
-                break;
-            case UIState.Detonator_PickUpTrap_VC:
-                SetUI_Detonator_PickUpTrap_VC();
-                break;
-            case UIState.Detonator_ActivateTrap_VC:
-                SetUI_Detonator_ActivateTrap_VC();
+            case UIState.Detonator_VC:
+                SetUI_Detonator_VC();
                 break;
         }
     }
 
-
-    //Enlarges the UI for the Vaccuum Catcher
-    public void SetTrigger_UI_Vaccuum()
+    //tested
+    public void SetUI_VC_Trap()
     {
-        _UI_animator.SetTrigger("UI_Vacuum");
+        //text
+        _Slot1_Text.text = "Swap";
+        _Slot2_Text.text = "Catch";
+        _Slot3_Text.text = "Deposit";
+        _TabletToggleText.text = "On";
+
+        //input icons
+        switch (inputMode)
+        {
+            case InputMode.gamepad:
+                _Slot1_InputIcon.sprite = _spritesGamepad[4];
+                _Slot2_InputIcon.sprite = _spritesGamepad[0];
+                _Slot3_InputIcon.sprite = _spritesGamepad[5];
+                break;
+            case InputMode.keyboard:
+                _Slot1_InputIcon.sprite = _spritesKeyboard[4];
+                _Slot2_InputIcon.sprite = _spritesKeyboard[0];
+                _Slot3_InputIcon.sprite = _spritesKeyboard[5];
+                break;
+        }
+
+        //tool icons
+        _Slot1_ToolIcon.sprite = _trapSprite;
+        _Slot2_ToolIcon.sprite = _VCSprite;
+        _Slot3_ToolIcon.sprite = _ShipSprite;
     }
 
-    //Enlarges the UI for the trap
-    public void SetTrigger_UI_Trap()
+    //tested
+    public void SetUI_VC_Detonator()
     {
-        _UI_animator.SetTrigger("UI_Trap");
+        //text
+        _Slot1_Text.text = "Swap";
+        _Slot2_Text.text = "Catch";
+        _Slot3_Text.text = "Deposit";
+        _TabletToggleText.text = "On";
+
+        //input icons
+        switch (inputMode)
+        {
+            case InputMode.gamepad:
+                _Slot1_InputIcon.sprite = _spritesGamepad[4];
+                _Slot2_InputIcon.sprite = _spritesGamepad[0];
+                _Slot3_InputIcon.sprite = _spritesGamepad[5];
+                break;
+            case InputMode.keyboard:
+                _Slot1_InputIcon.sprite = _spritesKeyboard[4];
+                _Slot2_InputIcon.sprite = _spritesKeyboard[0];
+                _Slot3_InputIcon.sprite = _spritesKeyboard[5];
+                break;
+        }
+
+        //tool icons
+        _Slot1_ToolIcon.sprite = _detonatorSprite;
+        _Slot2_ToolIcon.sprite = _VCSprite;
+        _Slot3_ToolIcon.sprite = _ShipSprite;
     }
 
-    //Sets UI
-    //Holding VC, Succ, Swap to trap
-    public void SetUI_VC_Suck_Trap()
+    //tested
+    public void SetUI_Detonator_VC()
     {
-        //Icons
-        VC_IconImage.sprite = _VCSprite;
-        Trap_IconImage.sprite = _trapSprite;
+        //text
+        _Slot1_Text.text = "Swap";
+        _Slot2_Text.text = "Activate";
+        _Slot3_Text.text = "Pick-Up";
+        _TabletToggleText.text = "On";
 
-        //Inputs
-        //gamepad
-        if(inputMode == InputMode.gamepad)
+        //input icons
+        switch (inputMode)
         {
-            //fire
-            VC_InputImage.sprite = _spritesGamepad[0];
-
-            //switch
-            Trap_InputImage.sprite = _spritesGamepad[4];
-        }
-        //keyboard
-        else if(inputMode == InputMode.keyboard)
-        {
-            //fire
-            VC_InputImage.sprite = _spritesKeyboard[0];
-
-            //switch
-            Trap_InputImage.sprite = _spritesKeyboard[4];
+            case InputMode.gamepad:
+                _Slot1_InputIcon.sprite = _spritesGamepad[4];
+                _Slot2_InputIcon.sprite = _spritesGamepad[2];
+                _Slot3_InputIcon.sprite = _spritesGamepad[3];
+                break;
+            case InputMode.keyboard:
+                _Slot1_InputIcon.sprite = _spritesKeyboard[4];
+                _Slot2_InputIcon.sprite = _spritesKeyboard[2];
+                _Slot3_InputIcon.sprite = _spritesKeyboard[3];
+                break;
         }
 
-        //trigger ui animator
-        SetTrigger_UI_Vaccuum();
+        //tool icons
+        _Slot1_ToolIcon.sprite = _VCSprite;
+        _Slot2_ToolIcon.sprite = _detonatorSprite;
+        _Slot3_ToolIcon.sprite = _trapPickUpSprite;
     }
 
-    //Sets UI
-    //Holding VC, Succ, Swap to Detonator 
-    public void SetUI_VC_Suck_Detonator()
+    //tested
+    public void SetUI_Trap_VC()
     {
-        //Icons
-        VC_IconImage.sprite = _VCSprite;
-        Trap_IconImage.sprite = _detonatorSprite;
+        //text
+        _Slot1_Text.text = "Swap";
+        _Slot2_Text.text = null;
+        _Slot3_Text.text = "Throw";
+        _TabletToggleText.text = "On";
 
-        //Inputs
-        //gamepad
-        if (inputMode == InputMode.gamepad)
+        //input icons
+        switch (inputMode)
         {
-            //fire
-            VC_InputImage.sprite = _spritesGamepad[0];
-
-            //switch
-            Trap_InputImage.sprite = _spritesGamepad[4];
-        }
-        //keyboard
-        else if (inputMode == InputMode.keyboard)
-        {
-            //fire
-            VC_InputImage.sprite = _spritesKeyboard[0];
-
-            //switch
-            Trap_InputImage.sprite = _spritesKeyboard[4];
+            case InputMode.gamepad:
+                _Slot1_InputIcon.sprite = _spritesGamepad[4];
+                _Slot2_InputIcon.sprite = null;
+                _Slot3_InputIcon.sprite = _spritesGamepad[1];
+                break;
+            case InputMode.keyboard:
+                _Slot1_InputIcon.sprite = _spritesKeyboard[4];
+                _Slot2_InputIcon.sprite = null;
+                _Slot3_InputIcon.sprite = _spritesKeyboard[1];
+                break;
         }
 
-        //trigger ui animator
-        SetTrigger_UI_Vaccuum();
-    }
-
-    //Sets UI
-    //Holding VC, Deposit Critters, Swap to Trap
-    public void SetUI_VC_DepositCritters_Trap()
-    {
-        //Icons
-        VC_IconImage.sprite = _ShipSprite;
-        Trap_IconImage.sprite = _trapSprite;
-
-        //Inputs
-        //gamepad
-        if (inputMode == InputMode.gamepad)
-        {
-            //fire
-            VC_InputImage.sprite = _spritesGamepad[5];
-
-            //switch
-            Trap_InputImage.sprite = _spritesGamepad[4];
-        }
-        //keyboard
-        else if (inputMode == InputMode.keyboard)
-        {
-            //fire
-            VC_InputImage.sprite = _spritesKeyboard[5];
-
-            //switch
-            Trap_InputImage.sprite = _spritesKeyboard[4];
-        }
-
-        //trigger ui animator
-        SetTrigger_UI_Vaccuum();
-    }
-
-    //Sets UI
-    //Holding VC, Deposit Critters, Swap to Trap
-    public void SetUI_VC_DepositCritters_Detonator()
-    {
-        //Icons
-        VC_IconImage.sprite = _ShipSprite;
-        Trap_IconImage.sprite = _detonatorSprite;
-
-        //Inputs
-        //gamepad
-        if (inputMode == InputMode.gamepad)
-        {
-            //fire
-            VC_InputImage.sprite = _spritesGamepad[5];
-
-            //switch
-            Trap_InputImage.sprite = _spritesGamepad[4];
-        }
-        //keyboard
-        else if (inputMode == InputMode.keyboard)
-        {
-            //fire
-            VC_InputImage.sprite = _spritesKeyboard[5];
-
-            //switch
-            Trap_InputImage.sprite = _spritesKeyboard[4];
-        }
-
-        //trigger ui animator
-        SetTrigger_UI_Vaccuum();
-    }
-
-    //Sets UI
-    //Holding Trap, Swap to VC
-    public void SetUI_Trap_ThrowTrap_VC()
-    {
-        //Icons
-        VC_IconImage.sprite = _VCSprite;
-        Trap_IconImage.sprite = _trapSprite;
-
-        //Inputs
-        //gamepad
-        if (inputMode == InputMode.gamepad)
-        {
-            //fire
-            VC_InputImage.sprite = _spritesGamepad[4];
-
-            //switch
-            Trap_InputImage.sprite = _spritesGamepad[0];
-        }
-        //keyboard
-        else if (inputMode == InputMode.keyboard)
-        {
-            //fire
-            VC_InputImage.sprite = _spritesKeyboard[4];
-
-            //switch
-            Trap_InputImage.sprite = _spritesKeyboard[0];
-        }
-
-        //trigger animator
-        SetTrigger_UI_Trap();
-    }
-
-    //Sets UI
-    //Holding Detonator, display activate input, Swap to VC
-    public void SetUI_Detonator_ActivateTrap_VC()
-    {
-        //Icons
-        VC_IconImage.sprite = _VCSprite;
-        Trap_IconImage.sprite = _detonatorSprite;
-
-        //Inputs
-        //gamepad
-        if (inputMode == InputMode.gamepad)
-        {
-            //swap
-            VC_InputImage.sprite = _spritesGamepad[4];
-
-            //enable
-            Trap_InputImage.sprite = _spritesGamepad[3];
-        }
-        //keyboard
-        else if (inputMode == InputMode.keyboard)
-        {
-            //swap
-            VC_InputImage.sprite = _spritesKeyboard[4];
-
-            //enable
-            Trap_InputImage.sprite = _spritesKeyboard[3];
-        }
-
-        //trigger animator
-        SetTrigger_UI_Trap();
-    }
-
-    //Sets UI, display pickup input, Swap to VC
-    public void SetUI_Detonator_PickUpTrap_VC()
-    {
-        //Icons
-        VC_IconImage.sprite = _VCSprite;
-        Trap_IconImage.sprite = _pickupTrapSprite;
-
-        //Inputs
-        //gamepad
-        if (inputMode == InputMode.gamepad)
-        {
-            //fire
-            VC_InputImage.sprite = _spritesGamepad[4];
-
-            //switch
-            Trap_InputImage.sprite = _spritesGamepad[2];
-        }
-        //keyboard
-        else if (inputMode == InputMode.keyboard)
-        {
-            //fire
-            VC_InputImage.sprite = _spritesKeyboard[4];
-
-            //switch
-            Trap_InputImage.sprite = _spritesKeyboard[2];
-        }
-
-        //trigger animator
-        SetTrigger_UI_Trap();
+        //tool icons
+        _Slot1_ToolIcon.sprite = _VCSprite;
+        _Slot2_ToolIcon.sprite = null;
+        _Slot3_ToolIcon.sprite = _trapSprite;
     }
 
     #endregion
@@ -553,18 +438,30 @@ public class UI_Manager : MonoBehaviour
     #region Tablet Methods
     public void SetTabletToggleUI()
     {
+
+        switch (_UI_animator.GetBool("UI_TabletState"))
+        {
+            case true:
+                _TabletToggleText.text = "Off";
+                break;
+            case false:
+                _TabletToggleText.text = "On";
+                break;
+        }        
+
         switch (inputMode)
         {
             case InputMode.gamepad:
-                _TabletToggleImage.sprite = _toggleTabletIcon_Gamepad;
+                _TabletToggleIcon.sprite = _toggleTabletIcon_Gamepad;
                 break;
             case InputMode.keyboard:
-                _TabletToggleImage.sprite = _toggleTabletIcon_Keyboard;
+                _TabletToggleIcon.sprite = _toggleTabletIcon_Keyboard;
                 break;
         }
     }
 
 
-    #endregion
 
+
+    #endregion
 }
