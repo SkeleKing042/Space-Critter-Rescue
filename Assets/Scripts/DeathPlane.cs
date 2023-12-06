@@ -7,14 +7,14 @@ public class DeathPlane : MonoBehaviour
     public List<string> AlienTags = new List<string>();
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Something has hit the deathplane...");
+        Debug.Log(other.name + " has hit the deathplane...");
         if (other.tag == "Player")
         {
-            other.GetComponent<PlayerMovement>().ReturnToLastGrounedPoint();
+            other.transform.parent.GetComponent<PlayerMovement>().ReturnToLastGrounedPoint();
         }
         if (other.tag.ToLower() == "trap")
         {
-            //GameObject.FindGameObjectWithTag("Player").GetComponent<Equipment>().pickUpTrap(false);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Equipment>().ForcePickupTrap();
         }
         if (AlienTags.Contains(other.tag))
         {

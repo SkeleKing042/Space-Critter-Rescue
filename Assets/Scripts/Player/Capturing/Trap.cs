@@ -104,7 +104,7 @@ public class Trap : MonoBehaviour
                     if (alienAI != null)
                     {
                         // if the current AI state isnt already stunned then change to stun state
-                        if (alienAI.ReadState.GetType() != typeof(TrappedState) || alienAI.ReadState.GetType() != typeof(CaptureState))
+                        if (alienAI.ReadState.GetType() != typeof(TrappedState) && alienAI.ReadState.GetType() != typeof(CaptureState))
                         {
                             //StartCoroutine(_alienAI.UpdateState(new StunnedState(_alienAI), 0f));
                             alienAI.PrepareUpdateState(new TrappedState(alienAI));
@@ -140,7 +140,7 @@ public class Trap : MonoBehaviour
                 CreatureAI alienAI = alien.GetComponent<CreatureAI>();
                 // update state
                 //StartCoroutine(_alienAI.UpdateState(new PanicState(_alienAI), 0f));
-                if (_trapActivated)
+                if (!_trapActivated)
                     alienAI.PrepareUpdateState(new PanicState(alienAI), 0f);
                 // remove alien from list
                 _alienList.Remove(alien.gameObject);

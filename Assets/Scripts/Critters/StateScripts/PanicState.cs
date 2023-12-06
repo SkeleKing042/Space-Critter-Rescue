@@ -12,8 +12,9 @@ public class PanicState : State
     {
         if (AIBrainReady())
         {
+            Debug.Log("Changing to panic state");
+            AI.RigidMode(false);
             AI.GetAgent.enabled = true;
-            Agent.isStopped = false;
             //AI.Animator.SetBool("PanicState", true);
             //Double movement speed
             Agent.speed = AI.PanicSpeed;

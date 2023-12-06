@@ -181,6 +181,11 @@ public class CreatureAI : MonoBehaviour
         _timeSinceLastThirstCheck += Time.deltaTime;
         _timeSinceLastLazyCheck += Time.deltaTime;
 
+        if(_naving)
+        {
+            //transform.rotation = Quaternion.Lerp(transform.rotation, , 0.1f);
+        }
+
         //Debuging
         _theState = _currentState.GetType().ToString();
     }
@@ -324,6 +329,8 @@ public class CreatureAI : MonoBehaviour
     /// <returns></returns>
     public void PrepareUpdateState(State newState, float delay)
     {
+        if (newState.GetType() == typeof(PanicState))
+            Debug.Log("Reading a panic state");
         _stateBuffer.Add(new StateWDelay(newState, delay));
         //Debug.Log("Added " + newState.ToString() + " to the state buffer with a " + delay + " second delay.\nBuffer now has " + _stateBuffer.Count + " enties."); 
     }
@@ -356,13 +363,16 @@ public class CreatureAI : MonoBehaviour
         if (_naving)
         {
             _agent.isStopped = true;
-            _agent.enabled =_rb.isKinematic = false;
+            _agent.enabled = false;
+            _rb.isKinematic = false;
+            _naving = false;
         }
         else if (!_naving)
         {
-            _rb.isKinematic = _agent.enabled = true;
-            transform.rotation = Quaternion.identity;
+            _rb.isKinematic = true;
+            _agent.enabled = true;
             _agent.isStopped = false;
+            _naving = true;
         }
     }
     /// <summary>
@@ -375,15 +385,18 @@ public class CreatureAI : MonoBehaviour
     }
     public void RunFromPlayer(float panicDelay)
     {
-        if(panicDelay > 0f)
-            PrepareUpdateState(new AlertState(this));
-        PrepareUpdateState(new PanicState(this), panicDelay);
+        if (_currentState.GetType() != typeof(CaptureState) || _currentState.GetType() != typeof(TrappedState))
+        {
+            if (panicDelay > 0f)
+                PrepareUpdateState(new AlertState(this));
+            PrepareUpdateState(new PanicState(this), panicDelay);
+        }
     }
     public void StunThenRun(float stunTime)
     {
-        if(stunTime > 0f)
-            PrepareUpdateState(new StunnedState(this));
-        PrepareUpdateState(new PanicState(this), stunTime);
+            if (stunTime > 0f)
+                PrepareUpdateState(new StunnedState(this));
+            PrepareUpdateState(new PanicState(this), stunTime);
     }
     #endregion
     public void DEBUG_CauseBrainRot()

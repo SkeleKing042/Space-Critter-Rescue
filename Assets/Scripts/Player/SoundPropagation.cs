@@ -31,6 +31,7 @@ public class SoundPropagation : MonoBehaviour
             if (goob != null)
             {
                 if (Vector3.Distance(transform.position, goob.transform.position) <= _proaDistance * scale)
+                    if(goob.GetComponent<CreatureAI>().ReadState.GetType() != typeof(TrappedState) && goob.GetComponent<CreatureAI>().ReadState.GetType() != typeof(CaptureState))
                     goob.GetComponent<CreatureAI>().RunFromPlayer(0);
             }
             else

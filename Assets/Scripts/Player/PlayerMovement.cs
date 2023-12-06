@@ -156,6 +156,10 @@ public class PlayerMovement : MonoBehaviour
         if (horizontalVel.magnitude < _sprintCancelLevel)
             DoSprint(false);
 
+        if (_crouched && !GroundedCheck())
+        {
+            PlayerRigidbody.AddForce(Physics.gravity.y * Vector3.up, ForceMode.Acceleration);
+        }
 
     }
 
@@ -166,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void DoCrouch()
     {
-        if(DoMovement && GroundedCheck())
+        if(DoMovement)
         {
             if (!_crouched)
                 CrouchPlayer();

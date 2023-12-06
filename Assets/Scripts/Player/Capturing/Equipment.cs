@@ -143,7 +143,7 @@ public class Equipment : MonoBehaviour
                     //arm animation
                     _Equipment_Animator.SetBool("isHolding_VC", false);
 
-                    Debug.Log("Trap Deployed: " + _trapThrown);
+                    //Debug.Log("Trap Deployed: " + _trapThrown);
 
                     //if the trap is not deployed
                     if (!_trapThrown)
@@ -268,6 +268,14 @@ public class Equipment : MonoBehaviour
     /// </summary>
     /// <param name="trap"></param>
     /// 
+
+    public void ForcePickupTrap()
+    {
+        _trapThrown = false;
+
+        Destroy(_trapInstance);
+        _trapInstance = null;
+    }
 
     public void pickUpTrap()
     {

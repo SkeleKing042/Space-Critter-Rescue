@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4338340068186800792}
   m_Layer: 0
   m_Name: Colliders
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -685,6 +685,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8109913824263524882}
     m_Modifications:
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: _sendDebugLogs
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: PullAction._sendDebugLogs
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: JetPackAction._sendDebugLogs
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: MoveTeleportLeft.m_PersistentCalls.m_Calls.Array.size
       value: 2
