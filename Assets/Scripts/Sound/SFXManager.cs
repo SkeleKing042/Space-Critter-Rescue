@@ -44,15 +44,15 @@ public class SFXManager : MonoBehaviour
     {
         // remeber to frefabe the sound manager
         int _soundplayed = UnityEngine.Random.Range(0, CollectionSounds.Count);
-        Source.PlayOneShot(CollectionSounds[_soundplayed]);
+        Source.PlayOneShot(CollectionSounds[_soundplayed], 1f);
     }
     public void SuckingSound(float TimePressed) 
     {
-        Source.PlayOneShot(VacuumSounds[0],1f);
+        Source.PlayOneShot(VacuumSounds[0],0.1f);
         float SoundTimer = Time.deltaTime;
         while(TimePressed > SoundTimer)
         {
-           Source.PlayOneShot(VacuumSounds[1],1f);
+           Source.PlayOneShot(VacuumSounds[1],0.6f);
         }
          if(SoundTimer > TimePressed)
         {
@@ -71,7 +71,7 @@ public class SFXManager : MonoBehaviour
         while(TimePressed > SoundTimer)
         {
             if (!JetpackSounds[1])
-            Source.PlayOneShot(JetpackSounds[1], 1f);
+            Source.PlayOneShot(JetpackSounds[1], 0.5f);
                 // needs tweaking
         }
         //Looping = false;
@@ -81,7 +81,7 @@ public class SFXManager : MonoBehaviour
     }
     public void JetpackRecharge()
     {
-        Source.PlayOneShot(JetpackSounds[3], 0.5f);
+        Source.PlayOneShot(JetpackSounds[3], 0.1f);
     }
     #endregion
 
