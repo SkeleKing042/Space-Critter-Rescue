@@ -93,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Transform _collisionObject;
     private RumbleManger _instance;
+    private SFXManager _sfxManager;
 
     [HideInInspector]
     public Vector3[] GroundPoints = new Vector3[4];
@@ -104,7 +105,8 @@ public class PlayerMovement : MonoBehaviour
         DoMovement = true;
         _soundPropagation = GetComponentInChildren<SoundPropagation>();
 
-        _instance = FindObjectOfType<RumbleManger>();   
+        _instance = FindObjectOfType<RumbleManger>();
+        _sfxManager = FindObjectOfType<SFXManager>();
     }
     void FixedUpdate()
     {
@@ -148,6 +150,7 @@ public class PlayerMovement : MonoBehaviour
         //...otherwise, if on the ground & out of fuel...
         if (_jetFuel < 1 && GroundedCheck())
         {
+            _sfxManager.JetpackRecharge();
             //...refuel the jetpack
             if (_refuelTime > 0)
                 _refuelTime -= Time.deltaTime;
@@ -297,15 +300,17 @@ public class PlayerMovement : MonoBehaviour
     #region Jumping
     public void Jump()
     {
-        if(DoMovement)
-        //Debug.Log("Jump initiated");       
+       
+        if (DoMovement)
+
         if (GroundedCheck())
         {
+
             _soundPropagation.PropagateSound(0.5f);
             PlayerRigidbody.AddForce(Vector3.up * _jumpForce * PlayerRigidbody.mass, ForceMode.Impulse);
             _burnTime = _burnDelay;
-
-            _jetInputReady = false;
+                
+                _jetInputReady = false;
         }
         else
         {
@@ -315,6 +320,7 @@ public class PlayerMovement : MonoBehaviour
 
                 if (_jetFuel >= _burstBurn)
                 {
+                       
                         _soundPropagation.PropagateSound(1);
                     Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
                     Vector3 forwardForce = camForward * MovementInput.y * _jumpForce * _burstScale.x * PlayerRigidbody.mass * _movementModifier;
@@ -327,6 +333,8 @@ public class PlayerMovement : MonoBehaviour
                 }
             _jetInputReady = true;
         }
+
+            //Debug.Log("Jump initiated");
     }
     public void JetPack()
     {
@@ -334,10 +342,14 @@ public class PlayerMovement : MonoBehaviour
             //If we have fuel...
             if (_jetFuel > 0)
             {
+                float _timePressed = Time.deltaTime;
+                if (_sfxManager.Looping == false)
+                    _sfxManager.Jetpackflying(_timePressed);
                 _soundPropagation.PropagateSound(0.85f);
                 //... push the player up and reduce the fuel
                 if ((_holdAfterJump && _burnTime <= 0) || (_jetInputReady))
                 {
+               
                     PlayerRigidbody.AddForce(_jetForce * Vector3.up * PlayerRigidbody.mass * Time.deltaTime, ForceMode.Force);
                     _jetFuel = Mathf.Clamp(_jetFuel - _burnRate * Time.deltaTime, 0f, 1f);
                     _refuelTime = _refuelDelay;
@@ -345,10 +357,13 @@ public class PlayerMovement : MonoBehaviour
                 //...otherwise reduce burn delay
                 else if (_burnTime > 0 && _holdAfterJump)
                 {
+                   
                     _burnTime -= Time.deltaTime;
                 }
                 _instance.RumbleStart(0.1f, 0.9f, 1f);
             }
+
+           
     }
     #endregion
 }

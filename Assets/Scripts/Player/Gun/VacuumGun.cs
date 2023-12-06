@@ -43,7 +43,7 @@ public class VacuumGun : MonoBehaviour
     private float  _alienOffset;
     //private bool _wasJustPulling;
     private RumbleManger _rumble;
-
+    private SFXManager _sfxManager;
 
 
     #endregion
@@ -53,6 +53,7 @@ public class VacuumGun : MonoBehaviour
     {
         _trap = FindObjectOfType<Trap>();
         _rumble = FindObjectOfType<RumbleManger>();
+        _sfxManager = FindObjectOfType<SFXManager>();
     }
 
     void Update()
@@ -100,9 +101,12 @@ public class VacuumGun : MonoBehaviour
 
         if(gameObject.activeSelf == true)
         {
+            float _pressedDownTime = Time.deltaTime;
+            _sfxManager.SuckingSound(_pressedDownTime);
+
             _rumble.RumbleStart(0.25f, 0.7f, 0.1f);
             // proprapgate sound
-            _sound.PropagateSound(_vacuumNoise);
+            //_sound.PropagateSound(_vacuumNoise);
             _pulling = true;
             foreach (AlienData aData in aData)
             {
@@ -137,6 +141,7 @@ public class VacuumGun : MonoBehaviour
                 }
 
             }
+            _pressedDownTime = 0f;
         }
         else
         {
@@ -144,7 +149,7 @@ public class VacuumGun : MonoBehaviour
             foreach (AlienData alien in aData)
                 UnassignAlien(alien.gObject);
         }
-
+      
       
     }
 
