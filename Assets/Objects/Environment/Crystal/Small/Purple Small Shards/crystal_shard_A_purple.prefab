@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 5683912782010863922}
   - component: {fileID: 8741076873846480535}
   - component: {fileID: 6821401282303011421}
-  - component: {fileID: 8718659342740572212}
   m_Layer: 0
   m_Name: crystal_shard_AA (1)
   m_TagString: Ground
@@ -116,16 +115,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8718659342740572212
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5019965622885223304}
-  m_Material: {fileID: 13400000, guid: be1d6dec3da32aa49aedd3d904d443b7, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 112.67881, y: 433.0797, z: 118.477684}
-  m_Center: {x: 36.59429, y: 216.53986, z: -30.195833}

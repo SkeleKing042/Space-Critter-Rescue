@@ -43,11 +43,12 @@ GameObject:
   - component: {fileID: 2105542719964783937}
   - component: {fileID: 4997145151088284790}
   - component: {fileID: 8479781222681841018}
+  - component: {fileID: 3331769968961254752}
   m_Layer: 0
   m_Name: Model_crystal_largeCrystalSpike_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2105542719964783937
@@ -115,3 +116,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3331769968961254752
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707885365883471569}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 435452416657429738, guid: 902370ae95b39e4448c85fb8ba92d980, type: 3}
