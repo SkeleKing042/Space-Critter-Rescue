@@ -13,675 +13,163 @@ MonoBehaviour:
   m_Name: PrefabPalette-Default
   m_EditorClassIdentifier: 
   prefabs:
+  - gameObject: {fileID: 6081373330315189416, guid: abd022d389bb3d948a4eba2de2d6daa7, type: 3}
+    settings:
+      m_Strength: 100
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1.8181818, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: fungi_LittleMushroom
+  - gameObject: {fileID: 6645394553632386841, guid: c9d790e27e70fb34f9d498e8cd2f9c1b, type: 3}
+    settings:
+      m_Strength: 21.9
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: fungi_MushroomLeaves
+  - gameObject: {fileID: 3432764374633840788, guid: e468778358adfb140ae5d0dd44175268, type: 3}
+    settings:
+      m_Strength: 60.839417
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: fungi_LittlemushroomCluster
+  - gameObject: {fileID: 1307191889936984967, guid: dcee83fde2f35ac4881cd3acaa4b9e2b, type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: fungi_smallGlowingMushroom
+  - gameObject: {fileID: 8919497687883390948, guid: e5e3239fab499e3459285ebac9d70353, type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: fungi_MyceliumVeins
+  - gameObject: {fileID: 7050070192483454477, guid: 4532c0846a35b1548afd8e58255a847e, type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: Model_universal_smallRock_B
+  - gameObject: {fileID: 1402617176283608319, guid: 72837e010c8dd6e47a2d72f3cd43ba4f, type: 3}
+    settings:
+      m_Strength: 1
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 58.63636, y: 81.81818, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: Model_universal_MediumRock_A
+  - gameObject: {fileID: 7824061032529315053, guid: e2e596a7f9872f649bbdd37ccc81fdbf, type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: Model_universal_MediumRock_B
   - gameObject: {fileID: 8411840527594690869, guid: fa45f364a045e154199e8e35a7d8871e, type: 3}
     settings:
-      m_Strength: 25
+      m_Strength: 50
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 360, y: 360, z: 360}
-      m_ScaleRangeMin: {x: 0.7330097, y: 0.75728154, z: 1}
-      m_ScaleRangeMax: {x: 1.1941748, y: 1.1699029, z: 1}
-      m_UniformScale: {x: 0.2, y: 0.8}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
+      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
       m_XScaleBool: 0
       m_YScaleBool: 0
       m_ZScaleBool: 0
     name: Model_universal_smallRock_A
   - gameObject: {fileID: 7050070192483454477, guid: 4532c0846a35b1548afd8e58255a847e, type: 3}
     settings:
-      m_Strength: 25
+      m_Strength: 50
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 360, y: 360, z: 360}
+      m_RotationRangeMax: {x: 0, y: 0, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.2, y: 0.8}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
+      m_UniformScale: {x: 1, y: 1}
+      m_UniformBool: 0
+      m_XRotationBool: 0
+      m_YRotationBool: 0
+      m_ZRotationBool: 0
       m_XScaleBool: 0
       m_YScaleBool: 0
       m_ZScaleBool: 0
     name: Model_universal_smallRock_B
-  - gameObject: {fileID: 2983661831209723639, guid: 01b35717ca5c0b848bac8e2fa3962555, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 42.815533, y: 360, z: 46.31068}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.1, y: 1.5}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 0
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_SmallCrystal_B_blue
-  - gameObject: {fileID: 8375570416336659248, guid: 7de41836fa7a80f4f8fc72e0b3d207f2, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 35.82524, y: 360, z: 35.82524}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.1, y: 1.5}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 0
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_SmallCrystal_A_blue
-  - gameObject: {fileID: 1978780178010205636, guid: 0df34259c3679eb45941ec75ea694c4c, type: 3}
-    settings:
-      m_Strength: 100
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 360, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.01, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_shard_A_red
-  - gameObject: {fileID: 7880689431402334523, guid: 32ef9b742dfe2e64cb4dd0e543e2aa4f, type: 3}
-    settings:
-      m_Strength: 100
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 360, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.01, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_Shard_B_red
-  - gameObject: {fileID: 7673304281393147633, guid: 86bbb7cf0433fc04482923ae2f20bdc1, type: 3}
-    settings:
-      m_Strength: 100
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 360, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.01, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_Shard_C_red
-  - gameObject: {fileID: 8375570416336659248, guid: af51a0a0375337e439a3b7aa313d783c, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 360, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0, y: 0.4295302}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_SmallCrystal_A_red
-  - gameObject: {fileID: 2983661831209723639, guid: 7caf86f4d6b9e854799a80c18978a813, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 360, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0, y: 0.42953014}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_SmallCrystal_B_red
-  - gameObject: {fileID: 6043899653310737124, guid: 244633a2015ec5a4e86affc1a5073ab2, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.5, y: 2.5}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_MediumCrystal_B_red
-  - gameObject: {fileID: 6043899653310737124, guid: 1ee7e91126932c9409a4dad1ce0d3773, type: 3}
-    settings:
-      m_Strength: 23.385727
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.3, y: 0.3}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_MediumCrystal_B_purple
-  - gameObject: {fileID: 9045279692326537817, guid: 4494560bacef6514ab142830859aa5bf, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.5, y: 2.5}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_MediumCrystal_A_red
-  - gameObject: {fileID: 9045279692326537817, guid: 1b5e8d28e528fdb428d07a17cf7c4acd, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.5, y: 2.5}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_MediumCrystal_A_blue
-  - gameObject: {fileID: 9045279692326537817, guid: 59eebfbc3a232414e85c3d7e260bbb9d, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.5, y: 2.5}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_MediumCrystal_A_green
-  - gameObject: {fileID: 5739038534045516442, guid: aa4b9bc96dad6b142ad1a6dbd3229451, type: 3}
-    settings:
-      m_Strength: 25
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.25, y: 1.1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_MediumCrystal_A_pink
-  - gameObject: {fileID: 9045279692326537817, guid: bd1748cb3b87d35408fd2502ecb79cf8, type: 3}
-    settings:
-      m_Strength: 23.385727
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.3, y: 0.5}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_MediumCrystal_A_purple
-  - gameObject: {fileID: 6043899653310737124, guid: 36c93c9573d757647b3e2f73762544ae, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.5, y: 2.5}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_MediumCrystal_B_green
-  - gameObject: {fileID: 6043899653310737124, guid: 96abd7f5ebc597a44ac129020c9361ff, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_MediumCrystal_B_blue
-  - gameObject: {fileID: 4561611056345768946, guid: e659320aa53e3354aaef6c394d3bfb64, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_stalagmite
-  - gameObject: {fileID: 552253971052089766, guid: 3880479714993cb488b8701ea4ecd7e4, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_stalactite
-  - gameObject: {fileID: 3138725082116917133, guid: ffb9ab9991600244c8012735334b1e8b, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 360, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.5, y: 1.5}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_largeCrystalSpike_B
-  - gameObject: {fileID: 5067042228392252751, guid: 65313b92bc7f5c94b89ce3bd356e5c01, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_largeCrystalSpike_C
-  - gameObject: {fileID: 2658312447659787092, guid: ad68afcc56e7271498252d4732dad24c, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_largeCrystalSpike_A
-  - gameObject: {fileID: 2658312447659787092, guid: 0fff588bc5413e343b3de174748b2785, type: 3}
-    settings:
-      m_Strength: 100
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 12.233009, y: 360, z: 14.854368}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.1, y: 2}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_largeCrystalSpike_A_fairyfloss
-  - gameObject: {fileID: 1978780178010205636, guid: 235241d5410bb0b4786689b7e9cb981b, type: 3}
-    settings:
-      m_Strength: 100
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 360, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0, y: 0.1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_shard_A_pink
-  - gameObject: {fileID: 7880689431402334523, guid: bfb85808112fa83488e0ebce515aadb2, type: 3}
-    settings:
-      m_Strength: 100
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 360, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0, y: 0.1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_Shard_B_pink
-  - gameObject: {fileID: 7673304281393147633, guid: 3b9b377cdc186bd4dbea70e7313a1fcd, type: 3}
-    settings:
-      m_Strength: 100
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 360, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0, y: 0.1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_Shard_C_pink
-  - gameObject: {fileID: 8375570416336659248, guid: 5d985fa86902a9d4d922bb821d61b059, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0, y: 0.5}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_SmallCrystal_A_pink
-  - gameObject: {fileID: 2983661831209723639, guid: ad75c038342c10344858efd97ef70654, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0, y: 0.5}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_SmallCrystal_B_pink
-  - gameObject: {fileID: 604838509655753900, guid: f416d5279f939a2449993db7ba0a78b9, type: 3}
-    settings:
-      m_Strength: 25
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 24.466019, y: 360, z: 25.339806}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.5, y: 1.5}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_MediumCrystal_B_fairyfloss
-  - gameObject: {fileID: 604838509655753900, guid: f416d5279f939a2449993db7ba0a78b9, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 360, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.25, y: 1.1}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_MediumCrystal_B_fairyfloss
-  - gameObject: {fileID: 1402617176283608319, guid: 72837e010c8dd6e47a2d72f3cd43ba4f, type: 3}
-    settings:
-      m_Strength: 100
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 360, y: 360, z: 360}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.5, y: 1.5}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: universal_MediumRock_A
-  - gameObject: {fileID: 7824061032529315053, guid: e2e596a7f9872f649bbdd37ccc81fdbf, type: 3}
-    settings:
-      m_Strength: 15
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 360, y: 360, z: 360}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.5, y: 1.5}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: universal_MediumRock_B
-  - gameObject: {fileID: 5499574709971622078, guid: 6d01d4f85e676c946a8837effdd1ba05, type: 3}
-    settings:
-      m_Strength: 50
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 1
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: universal_Rock_A
-  - gameObject: {fileID: 473197110810855539, guid: 982394425d31db94f9381f203ec24e2e, type: 3}
-    settings:
-      m_Strength: 6.6666665
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 360, y: 360, z: 360}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: universal_LargeRock_C
-  - gameObject: {fileID: 5613073221576522346, guid: cb33917f440359249b4610a741994355, type: 3}
-    settings:
-      m_Strength: 6.6666665
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 360, y: 360, z: 360}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: universal_islandBottomPiece_C
-  - gameObject: {fileID: 177842042424116396, guid: 6cac094a9eaaa77438a543e90cd727a7, type: 3}
-    settings:
-      m_Strength: 6.6666665
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 360, y: 360, z: 360}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: univseral_LargeRock_B
-  - gameObject: {fileID: 8375570416336659248, guid: 358d42967b0863f469405595e28e6ab7, type: 3}
-    settings:
-      m_Strength: 30
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.1, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_SmallCrystal_A_purple
-  - gameObject: {fileID: 2983661831209723639, guid: 574f65849359687468902dff97ed01cf, type: 3}
-    settings:
-      m_Strength: 30
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.1, y: 1}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_SmallCrystal_B_purple
-  - gameObject: {fileID: 1978780178010205636, guid: 3baa3ba74053a4f4298572e08961ed27, type: 3}
-    settings:
-      m_Strength: 16.666666
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.3, y: 0.3}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_shard_A_purple
-  - gameObject: {fileID: 7880689431402334523, guid: 0dde630873b3d994b8c40f92df148eda, type: 3}
-    settings:
-      m_Strength: 16.666666
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.3, y: 0.3}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_Shard_B_purple
-  - gameObject: {fileID: 7673304281393147633, guid: 228f2fef7255f014589c955e734c6c7b, type: 3}
-    settings:
-      m_Strength: 16.666666
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 5, y: 360, z: 5}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.3, y: 0.3}
-      m_UniformBool: 1
-      m_XRotationBool: 1
-      m_YRotationBool: 1
-      m_ZRotationBool: 1
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: crystal_Shard_C_purple
