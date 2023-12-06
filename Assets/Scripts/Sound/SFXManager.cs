@@ -20,6 +20,8 @@ public class SFXManager : MonoBehaviour
     public List <AudioClip> TrapSounds;
     public List<AudioClip> TabletSounds;
 
+    float SoundTimer = 0;
+
 
     // varibkles need to mbe moved ONLY FOR TESTING
 
@@ -31,12 +33,12 @@ public class SFXManager : MonoBehaviour
     }
     private void Update()
     {
+        //testing
         if(Input.GetKeyDown(KeyCode.P))
         {
             CritterCollection();
         }
 
-        //testing
     }
 
     #region Collection
@@ -52,32 +54,32 @@ public class SFXManager : MonoBehaviour
         float SoundTimer = Time.deltaTime;
         while(TimePressed > SoundTimer)
         {
-           Source.PlayOneShot(VacuumSounds[1],0.6f);
+           Source.PlayOneShot(VacuumSounds[1],0.7f);
         }
          if(SoundTimer > TimePressed)
         {
             Debug.Log("closing sound");
             Source.PlayOneShot(VacuumSounds[2], 1f);
         }
-       
     }
     #endregion
 
     #region JetPack
     public void Jetpackflying(float TimePressed)
     {
+        Debug.Log("jetpack function being called");
         Source.PlayOneShot(JetpackSounds[0],1f);
-        float SoundTimer = Time.deltaTime;
-        while(TimePressed > SoundTimer)
+        SoundTimer += Time.deltaTime;
+        Looping = true;
+        if (TimePressed > SoundTimer)
         {
-            if (!JetpackSounds[1])
-            Source.PlayOneShot(JetpackSounds[1], 0.5f);
-                // needs tweaking
+           if(Source.isPlaying != JetpackSounds[0])
+            Source.PlayOneShot(JetpackSounds[0], 0.5f);
+           
         }
         //Looping = false;
-      
+        Looping = false;
         //Source.PlayOneShot(JetpackSounds[2], 1f);
-
     }
     public void JetpackRecharge()
     {

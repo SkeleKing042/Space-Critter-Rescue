@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Trap : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class Trap : MonoBehaviour
     //Used by animator
     private bool _trapActivated;
     public bool IsTrapActivated { get { return _trapActivated; } }
+    private SFXManager _sfxManager;
 
     private void Awake()
     {
@@ -45,6 +47,7 @@ public class Trap : MonoBehaviour
         
         _offSet = new Vector3(1, 0, 1);
         _lerpPathDestination = transform.position - _offSet;
+        _sfxManager = FindObjectOfType<SFXManager>();
     }
 
     #region Trap Methods
@@ -67,17 +70,29 @@ public class Trap : MonoBehaviour
     /// <param name="alien"></param>
     private void OnTriggerEnter(Collider alien)
     {
+
         // check tags
         if (alien.gameObject.tag == "bigAlien" || alien.gameObject.tag == "alien")
+        {
             if (!_alienList.Contains(alien.gameObject))
                 _alienList.Add(alien.gameObject);
-            /*// move alien slightly towards the centre of the trap
-            if (alien.transform.position != _lerpPathDestination && alien.GetComponent<CreatureAI>().ReadState.GetType() == typeof(TrappedState))
-                alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - _offSet, 2f * Time.deltaTime);
-        */
+        }
+        else
+        {
+            // refrence specifically the boc collider on the trap insteqad of the sphere
+            _sfxManager.TrapDrop();
+        }
        
-    }
+        
 
+
+        
+        
+        /*// move alien slightly towards the centre of the trap
+        if (alien.transform.position != _lerpPathDestination && alien.GetComponent<CreatureAI>().ReadState.GetType() == typeof(TrappedState))
+            alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - _offSet, 2f * Time.deltaTime);
+    */
+    }
 
     /// <summary>
     /// When the alien stays in the trap add the alien to the list and set the state to stunned

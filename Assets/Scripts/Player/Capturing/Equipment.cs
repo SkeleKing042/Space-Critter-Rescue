@@ -63,7 +63,8 @@ public class Equipment : MonoBehaviour
     //[Header("Equipment Animator")]
     private Animator _Equipment_Animator;
 
-    
+   
+
 
     /// <summary>
     /// players eqipment
@@ -92,7 +93,7 @@ public class Equipment : MonoBehaviour
 
         // currently holding set to vacuum & set trap parent
         _currentlyHolding = CurrentlyHolding.VC;
-
+  
     }
 
     void Update()
@@ -302,7 +303,6 @@ public class Equipment : MonoBehaviour
         //Set currently holding
         SetCurrentlyHolding(CurrentlyHolding.VC);
     }
-
 
 
     #endregion

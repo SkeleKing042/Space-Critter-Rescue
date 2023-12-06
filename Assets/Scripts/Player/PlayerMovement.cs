@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
     private Transform _collisionObject;
     private RumbleManger _instance;
     private SFXManager _sfxManager;
-
+    float _timePressed =0;
     [HideInInspector]
     public Vector3[] GroundPoints = new Vector3[4];
     void Start()
@@ -353,9 +353,8 @@ public class PlayerMovement : MonoBehaviour
             //If we have fuel...
             if (_jetFuel > 0)
             {
-                float _timePressed = Time.deltaTime;
-                if (_sfxManager.Looping == false)
-                    _sfxManager.Jetpackflying(_timePressed);
+                 _timePressed += Time.deltaTime;
+                 _sfxManager.Jetpackflying(_timePressed);
                 _soundPropagation.PropagateSound(0.85f);
                 //... push the player up and reduce the fuel
                 if ((_holdAfterJump && _burnTime <= 0) || (_jetInputReady))

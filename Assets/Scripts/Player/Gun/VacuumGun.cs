@@ -41,6 +41,7 @@ public class VacuumGun : MonoBehaviour
     public bool Pulling { get { return _pulling;  } }
     private float  _alienOffset;
     //private bool _wasJustPulling;
+    private SFXManager _sfxManager;
 
     [Header("Animators")]
     [SerializeField] Animator _equipment_Animator;
@@ -50,6 +51,7 @@ public class VacuumGun : MonoBehaviour
     private void Awake()
     {
         _trap = FindObjectOfType<Trap>();
+        _sfxManager = FindObjectOfType<SFXManager>();
     }
 
     void Update()
@@ -96,6 +98,8 @@ public class VacuumGun : MonoBehaviour
         //Sound.PropagateSound(0.00001f);
         if (gameObject.activeSelf == true)
         {
+            float _timePressed = Time.deltaTime;
+            _sfxManager.SuckingSound(_timePressed);
             _pulling = true;
             _equipment_Animator.SetBool("isSucking", true);
 
@@ -131,6 +135,7 @@ public class VacuumGun : MonoBehaviour
                     Debug.Log(e);
                 }
             }
+            _timePressed = 0f;
         }
         else
         {
