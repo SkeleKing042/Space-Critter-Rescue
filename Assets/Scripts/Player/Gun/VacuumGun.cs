@@ -56,10 +56,11 @@ public class VacuumGun : MonoBehaviour
     {
         //  collect alien cosine value in relation to the player
         foreach (AlienData aData in aData)
-        {
-            Vector3 pos = aData.gObject.transform.position - transform.position;
-            _alienOffset = Vector3.Dot(transform.right, pos);
-        }
+            if (aData != null && aData.gObject != null)
+            {
+                Vector3 pos = aData.gObject.transform.position - transform.position;
+                _alienOffset = Vector3.Dot(transform.right, pos);
+            }
     }
 
     /// <summary>

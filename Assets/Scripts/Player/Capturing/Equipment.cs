@@ -34,12 +34,12 @@ public class Equipment : MonoBehaviour
     //[SerializeField]
     //private float PickUpRange;
     [Header("Trap Variables")]
-    private GameObject _trapGameObject;
+    private GameObject _trapInstance;
     private Trap _trap;
     [SerializeField]
     private GameObject _trapPrefab;
     [SerializeField]
-    private float TrapThrowForce;
+    private float _trapThrowForce;
     [SerializeField]
     private bool _trapThrown = false;
     public bool TrapDeployed { get { return _trapThrown; } }
@@ -228,6 +228,9 @@ public class Equipment : MonoBehaviour
     {
         _trapThrown = true;
 
+        _trapInstance = Instantiate(_trapPrefab, _trapParent.position, Quaternion.identity);
+        _trapInstance.GetComponent<Rigidbody>().AddForce(_playerCamera.transform.forward * _trapThrowForce, ForceMode.Impulse);
+
         //arm animation
         _Equipment_Animator.SetBool("isHolding_Trap", false);
         _Equipment_Animator.SetBool("isHolding_Detonator", true);
@@ -268,7 +271,13 @@ public class Equipment : MonoBehaviour
 
     public void pickUpTrap()
     {
-        _trapThrown = false;
+        if (!_trapInstance.GetComponent<Trap>().IsTrapActivated)
+        {
+            _trapThrown = false;
+
+            Destroy(_trapInstance);
+            _trapInstance = null;
+        }
 
         /*//Debug.Log("bubble active");
         if (!_trap.Bubble.activeInHierarchy)
@@ -280,6 +289,11 @@ public class Equipment : MonoBehaviour
 
     public void DetonateTrap()
     {
+        if (_trapInstance)
+        {
+            if (!_trapInstance.GetComponent<Trap>().IsTrapActivated)
+                _trapInstance.GetComponentInChildren<Animator>().SetTrigger("ActivateTrap");
+        }
         //arm animator
         _Equipment_Animator.SetTrigger("ActivateTrap");
         _Equipment_Animator.SetBool("isHolding_Detonator", false);
