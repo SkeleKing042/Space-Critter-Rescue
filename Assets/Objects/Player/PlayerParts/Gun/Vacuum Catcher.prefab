@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5730425935923463993}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Arms_RIG_GRP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6631287978878567455}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Thumb_3_R_END
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 5603342042919633151}
   - component: {fileID: 7826527828145458461}
   - component: {fileID: 1340356915826021660}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Strap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8586597961492841952}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shoulder_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 2025321122069800013}
   - component: {fileID: 2025321122069800003}
   - component: {fileID: 2025321122069800002}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Collect Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,15 +284,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea47bb243e35d20429eac3e970a249ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aData: []
-  trap: {fileID: 0}
-  Bubble: {fileID: 0}
-  Sound: {fileID: 0}
-  SuckSpeed: 5
-  OffsetFixSpeed: 1
-  StunTime: 1
-  layermask: 0
-  Pulling: 0
+  _suckSpeed: 5
+  _offsetFixSpeed: 0
+  _stunTime: 0
+  _layermask: 0
+  _equipment_Animator: {fileID: 0}
+  _VC_animator: {fileID: 0}
 --- !u!114 &2025321121461694841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,7 +315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1301964628514804327}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Thumb_2_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +349,7 @@ GameObject:
   - component: {fileID: 687740031249545560}
   - component: {fileID: 1191311784759301697}
   - component: {fileID: 7924898699611925545}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ring_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +430,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4262516880753130131}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pinky_1_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -467,7 +464,7 @@ GameObject:
   - component: {fileID: 2868619370254262960}
   - component: {fileID: 4151328167667800510}
   - component: {fileID: 8515658539990841186}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -548,7 +545,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2209775336804843074}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pinky_2_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -581,7 +578,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6975848542513548814}
   - component: {fileID: 4784092518774046769}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Arms_Mesh_GRP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +629,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6673482320549055388}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Spine_0_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -666,7 +663,7 @@ GameObject:
   - component: {fileID: 4555240022559202121}
   - component: {fileID: 1270107976617083997}
   - component: {fileID: 7970876216146589274}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -749,7 +746,7 @@ GameObject:
   - component: {fileID: 70000207772613441}
   - component: {fileID: 1974198379659823359}
   - component: {fileID: 8786607301041790092}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Grip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -832,7 +829,7 @@ GameObject:
   - component: {fileID: 7814898200366119281}
   - component: {fileID: 4980437899730733825}
   - component: {fileID: 8701457094097648759}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ring_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -913,8 +910,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5039030665769405144}
-  - component: {fileID: 8880402764288704595}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Arm VC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -939,26 +935,6 @@ Transform:
   m_Father: {fileID: 2025321122122528733}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &8880402764288704595
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5667194219522691170}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2c72e47e00f44444bad97a8f33abc061, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5678293052215071374
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,7 +944,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8767628812487650350}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Elbow_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1000,7 +976,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8159628795808710304}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Thumb_1_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1034,7 +1010,7 @@ GameObject:
   - component: {fileID: 5511519261205061881}
   - component: {fileID: 8594377569715863581}
   - component: {fileID: 3262442496195301786}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1115,7 +1091,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1722630857752266948}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wrist_R_JNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1148,7 +1124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1281565927440010327}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pinky_3_R_END
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1179,7 +1155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7714778545620758329}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Vacuum_Tool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1218,7 +1194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3683456597978386509}
   - component: {fileID: 1021705012994507947}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1365,7 +1341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7938936738068382421, guid: 501496f8345900f49a46ae9f9fbc7eda, type: 3}
       propertyPath: m_Name
-      value: particle_universal__vacuumGun_vacuumWhirl
+      value: Suck Particle System
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 501496f8345900f49a46ae9f9fbc7eda, type: 3}

@@ -22,7 +22,7 @@ public class CollectAlien : MonoBehaviour
 
     void OnTriggerEnter(Collider creature)
     {
-        if ((creature.gameObject.tag == "alien" || (creature.gameObject.tag == "bigAlien" && _trap.Catchable == true)))
+        if (creature.gameObject.tag == "alien" || (creature.gameObject.tag == "bigAlien" && creature.GetComponent<CreatureAI>().ReadState.GetType() == typeof(CaptureState)))
         {
            // Debug.Log("tags passed");
             if(_vac.Pulling == true)

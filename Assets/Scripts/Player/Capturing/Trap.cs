@@ -1,5 +1,5 @@
 // Created By Adanna Okoye
-// Last edited by Jackson Lucas
+// Last edited by Ru
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +8,9 @@ public class Trap : MonoBehaviour
 {
     // refrenced gun shoot function later after shoot function is made properly
     //private Equipment Check;
-    [Header("Script Refrences")]
-    private VacuumGun _vacuum;
-    private CreatureAI _alienAI;
+    //[Header("Script Refrences")]
+    //private VacuumGun _vacuum;
+    //private CreatureAI _alienAI;
 
     [Header("Tool GameObjects")]
     [SerializeField] private GameObject _bubble;
@@ -25,8 +25,8 @@ public class Trap : MonoBehaviour
     Vector3 _lerpPathDestination;
 
     //[Header("Catchable")]
-    private bool _catchable = false;
-    public bool Catchable { get { return _catchable;  } }
+    //private bool _catchable = false;
+    //public bool Catchable { get { return _catchable;  } }
     private List<GameObject> _alienList = new List<GameObject>();
 
     //[Header("Animator")]
@@ -34,10 +34,11 @@ public class Trap : MonoBehaviour
     private Animator _trap_Animator;
     //Used by animator
     private bool _trapActivated;
+    public bool IsTrapActivated { get { return _trapActivated; } }
 
     private void Awake()
     {
-        _vacuum = FindObjectOfType<VacuumGun>();
+        //_vacuum = FindObjectOfType<VacuumGun>();
         _trap_Animator = transform.GetComponentInChildren<Animator>();
 
         Bubble.SetActive(false);
@@ -66,17 +67,15 @@ public class Trap : MonoBehaviour
     /// <param name="alien"></param>
     private void OnTriggerEnter(Collider alien)
     {
-        // checkm if bubble is active
-        if (Bubble.gameObject.activeSelf == true)
-        {
-            // check tags
-            if (alien.gameObject.tag == "bigAlien" || alien.gameObject.tag == "alien")
-            {
-                // move alien slightly towards the centre of the trap
-                if (!Catchable && alien.transform.position != _lerpPathDestination)
-                    alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - _offSet, 2f * Time.deltaTime);
-            }
-        }
+        // check tags
+        if (alien.gameObject.tag == "bigAlien" || alien.gameObject.tag == "alien")
+            if (!_alienList.Contains(alien.gameObject))
+                _alienList.Add(alien.gameObject);
+            /*// move alien slightly towards the centre of the trap
+            if (alien.transform.position != _lerpPathDestination && alien.GetComponent<CreatureAI>().ReadState.GetType() == typeof(TrappedState))
+                alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - _offSet, 2f * Time.deltaTime);
+        */
+       
     }
 
 
@@ -86,7 +85,7 @@ public class Trap : MonoBehaviour
     /// <param name="alien"></param>
     private void OnTriggerStay(Collider alien)
     {
-        if (Bubble.gameObject.activeSelf == true)
+        if (_trapActivated)
         {
             if (alien.gameObject.tag == "bigAlien" || alien.gameObject.tag == "alien")
             {
@@ -100,25 +99,26 @@ public class Trap : MonoBehaviour
                 // for every alien in the list get the AI script refrence
                 foreach (GameObject item in _alienList)
                 {
-                    _alienAI = item.GetComponent<CreatureAI>();
+                    CreatureAI alienAI = item.GetComponent<CreatureAI>();
 
-                    if (_alienAI != null)
+                    if (alienAI != null)
                     {
                         // if the current AI state isnt already stunned then change to stun state
-                        if (_alienAI._currentState.GetType() != typeof(StunnedState))
+                        if (alienAI.ReadState.GetType() != typeof(TrappedState) || alienAI.ReadState.GetType() != typeof(CaptureState))
                         {
-                            StartCoroutine(_alienAI.UpdateState(new StunnedState(_alienAI), 0f));
-                            _catchable = true;
+                            //StartCoroutine(_alienAI.UpdateState(new StunnedState(_alienAI), 0f));
+                            alienAI.PrepareUpdateState(new TrappedState(alienAI));
                             Debug.Log("chnaging states");
                         }
 
                     }
                     // if the player is trying to pull an alien, set the alien state to capture state
-                    if (_vacuum.Pulling == true)
+                    /*if (_vacuum.Pulling == true)
                     {
-                        if (_alienAI._currentState.GetType() != typeof(CaptureState))
-                            StartCoroutine(_alienAI.UpdateState(new CaptureState(_alienAI), 0f));
-                    }
+                        if (_alienAI.ReadState.GetType() != typeof(CaptureState))
+                            _alienAI.PrepareUpdateState(new CaptureState(_alienAI), 0f);
+                            //StartCoroutine(_alienAI.UpdateState(new CaptureState(_alienAI), 0f));
+                    }*/
                 }
             }
         }
@@ -131,23 +131,32 @@ public class Trap : MonoBehaviour
 
     private void OnTriggerExit(Collider alien)
     {
-        if (Bubble.gameObject.activeSelf == true)
+        if (alien.gameObject.tag == "bigAlien" || alien.gameObject.tag == "alien")
         {
-            if (alien.gameObject.tag == "bigAlien" || alien.gameObject.tag == "alien")
+            // if the list contains the alien gameobject
+            if (_alienList.Contains(alien.gameObject))
             {
                 // get ai REFRENCE
-                _alienAI = alien.GetComponent<CreatureAI>();
-                // if the list contains the alien gameobject
-               if(_alienList.Contains(alien.gameObject))
-                {
-                    // update state
-                    StartCoroutine(_alienAI.UpdateState(new PanicState(_alienAI), 0f));
-                    // remove alien from list
-                    _alienList.Remove(alien.gameObject);
-                    Debug.Log("deleted alien from list");
-                }
+                CreatureAI alienAI = alien.GetComponent<CreatureAI>();
+                // update state
+                //StartCoroutine(_alienAI.UpdateState(new PanicState(_alienAI), 0f));
+                if (_trapActivated)
+                    alienAI.PrepareUpdateState(new PanicState(alienAI), 0f);
+                // remove alien from list
+                _alienList.Remove(alien.gameObject);
+                Debug.Log("deleted alien from list");
             }
         }
+    }
+
+    public void ActivateTrap()
+    {
+        _trapActivated = true;
+    }
+    
+    public void DeactivateTrap()
+    {
+        _trapActivated = false;
     }
 
 
@@ -187,7 +196,6 @@ public class Trap : MonoBehaviour
     #region Animation
    public void SetTrigger_ActivateTrap()
     {
-        _catchable = true;
         _trap_Animator.SetTrigger("Activate Trap");
     }
 
@@ -195,14 +203,4 @@ public class Trap : MonoBehaviour
 
 
     #endregion
-
-    public void SetTrapActivated_True()
-    {
-        _trapActivated = true;
-    }
-
-    public void SetTrapActivated_False()
-    {
-        _trapActivated = false;
-    }
 }

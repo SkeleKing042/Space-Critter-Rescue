@@ -14,12 +14,16 @@ public class Tablet : MonoBehaviour
     public bool TabletState { get { return _tabletState; } }
 
     [Header("Components")]
-    private Animator _UI_animator;
+    [SerializeField] private Animator _UI_animator;
+    [SerializeField] private Animator _Equipment_animator;
+    [SerializeField] private Animator _Tablet_animator;
+
     //[SerializeField]
     //private UI_Manager _UI_Manager;
     private Equipment _equipment;
     private PlayerMovement _playerMovement;
     private PylonManager _pylonManager;
+    private UI_Manager _ui_Manager;
 
 
     [Header("Tabs")]
@@ -46,9 +50,9 @@ public class Tablet : MonoBehaviour
 
     [Header("Inventory")]
     [SerializeField] private GameObject _largeBackpackSlotParent;
-    private List<Image> _largeBackpackSlots;
+    private List<Image> _largeBackpackSlots = new List<Image>();
     [SerializeField] private GameObject _smallBackpackSlotParent;
-    private List<Image> _smallBackpackSlots;
+    private List<Image> _smallBackpackSlots = new List<Image>();
     [SerializeField] private List<Sprite> _critterIcons;
     private Inventory _invRef;
 
@@ -71,12 +75,21 @@ public class Tablet : MonoBehaviour
         _invRef = FindObjectOfType<Inventory>();
         _playerMovement = GetComponentInParent<PlayerMovement>();
         _pylonManager = FindObjectOfType<PylonManager>();
+        _ui_Manager = FindObjectOfType<UI_Manager>();
 
         //declare array
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
 
-        _largeBackpackSlots.AddRange(_largeBackpackSlotParent.GetComponentsInChildren<Image>());
-        _smallBackpackSlots.AddRange(_smallBackpackSlotParent.GetComponentsInChildren<Image>());
+        foreach(var child in _largeBackpackSlotParent.GetComponentsInChildren<Image>())
+        {
+            if (child.name == "Critter Sprite")
+                _largeBackpackSlots.Add(child);
+        }
+        foreach (var child in _smallBackpackSlotParent.GetComponentsInChildren<Image>())
+        {
+            if (child.name == "Critter Sprite")
+                _smallBackpackSlots.Add(child);
+        }
 
         //setup backpack
         SetupBackpack();
@@ -100,31 +113,41 @@ public class Tablet : MonoBehaviour
             //play SFX
             PlaySFX_TabletOff();
 
-            //animate tablet down
-            _equipment._animation_Tablet_Down();
-            
+            //set the right arm animation
+            _Equipment_animator.SetBool("isHolding_Tablet", false);
+
+            //switch case for which arm to bring up
             //up the correct equipment
             switch (_equipment._currentlyHolding)
             {
                 case Equipment.CurrentlyHolding.VC:
                     {
-                        _equipment._animation_VC_Up();
+                        _Equipment_animator.SetBool("isHolding_VC", true);
                         break;
                     }
                 case Equipment.CurrentlyHolding.trap:
                     {
-                        _equipment._animation_Trap_Up();
+                        _Equipment_animator.SetBool("isHolding_Trap", true);
                         break;
                     }
                 case Equipment.CurrentlyHolding.detonator:
                     {
-                        _equipment._animation_Detonator_Up();
+                        _Equipment_animator.SetBool("isHolding_Detonator", true);
                         break;
                     }
             }
 
-            _UI_animator.SetTrigger("UI_Tablet_OFF");
+            //set the tablet animator
+            _Tablet_animator.SetBool("Tablet On", false);
+
+            //set ui
+            _UI_animator.SetBool("UI_TabletState", false);
+            _ui_Manager.SetTabletToggleUI();
+
+            //set tablet state to false
             SetTabletState(false);
+
+            //remove player movement
             _playerMovement.DoMovement = true;
 
         }
@@ -134,30 +157,37 @@ public class Tablet : MonoBehaviour
             //play SFX
             PlaySFX_TabletOn();
 
-            //animate tablet up
-            _equipment._animation_TabletUp();
-
+            //set the right arm animation
+            _Equipment_animator.SetBool("isHolding_Tablet", true);
+            //switch case for which arm to bring up
             //up the correct equipment
             switch (_equipment._currentlyHolding)
             {
                 case Equipment.CurrentlyHolding.VC:
                     {
-                        _equipment._animation_VC_Down();
+                        _Equipment_animator.SetBool("isHolding_VC", false);
                         break;
                     }
                 case Equipment.CurrentlyHolding.trap:
                     {
-                        _equipment._animation_Trap_Down();
+                        _Equipment_animator.SetBool("isHolding_Trap", false);
                         break;
                     }
                 case Equipment.CurrentlyHolding.detonator:
                     {
-                        _equipment._animation_Detonator_Down();
+                        _Equipment_animator.SetBool("isHolding_Detonator", false);
                         break;
                     }
             }
 
-            _UI_animator.SetTrigger("UI_Tablet_ON");
+            //set the tablet animator
+            _Tablet_animator.SetBool("Tablet On", true);
+
+            //set ui
+            _UI_animator.SetBool("UI_TabletState", true);
+            _ui_Manager.SetTabletToggleUI();
+
+
             SetTabletState(true);
 
             _playerMovement.DoMovement = false;

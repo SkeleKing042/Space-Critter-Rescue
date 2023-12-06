@@ -43,7 +43,6 @@ public class CaptureState : State
         {
             AI.StunThenRun(2);
         }
-
     }
 
 }
