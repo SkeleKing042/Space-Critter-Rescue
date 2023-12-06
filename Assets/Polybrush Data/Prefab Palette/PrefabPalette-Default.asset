@@ -31,7 +31,7 @@ MonoBehaviour:
     name: fungi_FungiGrass
   - gameObject: {fileID: 846660324054471007, guid: f8438d9f9d9c10b449212de0359baa8c, type: 3}
     settings:
-      m_Strength: 3
+      m_Strength: 6
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -47,7 +47,7 @@ MonoBehaviour:
     name: fungi_Climbing_Mushroom_Plant_A
   - gameObject: {fileID: 6778059976978829142, guid: 1d17b1963ad5b834086f8f03782eacb0, type: 3}
     settings:
-      m_Strength: 2
+      m_Strength: 6
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -81,13 +81,13 @@ MonoBehaviour:
     settings:
       m_Strength: 10
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 0.9, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1.1, y: 1, z: 1}
       m_UniformScale: {x: 0.8, y: 1.1}
       m_UniformBool: 1
       m_XRotationBool: 0
-      m_YRotationBool: 0
+      m_YRotationBool: 1
       m_ZRotationBool: 0
       m_XScaleBool: 0
       m_YScaleBool: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
     name: fungi_LittlemushroomCluster
   - gameObject: {fileID: 8919497687883390948, guid: e5e3239fab499e3459285ebac9d70353, type: 3}
     settings:
-      m_Strength: 10
+      m_Strength: 1
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 0.8, y: 1, z: 1}
@@ -127,7 +127,7 @@ MonoBehaviour:
     name: fungi_MushroomLeaves
   - gameObject: {fileID: 4990119880343193144, guid: 5cc15ae2af9ba284aae87897fcab8814, type: 3}
     settings:
-      m_Strength: 5
+      m_Strength: 12
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
@@ -159,7 +159,7 @@ MonoBehaviour:
     name: fungi_Vine
   - gameObject: {fileID: 1307191889936984967, guid: dcee83fde2f35ac4881cd3acaa4b9e2b, type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 20
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
       m_RotationRangeMax: {x: 0, y: 360, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
