@@ -43,9 +43,10 @@ GameObject:
   - component: {fileID: 7490707528502532824}
   - component: {fileID: 8225592993052483570}
   - component: {fileID: 8258481784520176124}
+  - component: {fileID: 3077203180595029078}
   m_Layer: 0
   m_Name: Model_fungi_omegaMushroom
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -115,3 +116,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3077203180595029078
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6994774983678079118}
+  m_Material: {fileID: 13400000, guid: be1d6dec3da32aa49aedd3d904d443b7, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8719557722698156886, guid: 9c52a830a56046c46a0880261db4e069, type: 3}
