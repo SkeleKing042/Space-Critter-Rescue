@@ -2,8 +2,8 @@
 // Last Edited by Jackson Lucas
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
-
 
 public class Inventory : MonoBehaviour
 {
@@ -69,6 +69,8 @@ public class Inventory : MonoBehaviour
     private int _ship_CrystalCritter_Large;
     public int Ship_CrystalCritter_Large { get { return _ship_CrystalCritter_Large; } }
 
+    private SFXManager _sound;
+
     #endregion
 
     private void Awake()
@@ -132,12 +134,14 @@ public class Inventory : MonoBehaviour
                 break;
         }
         //if the critter has been added (there was room)
-        if (added)
+        if (added || Input.GetKeyDown(KeyCode.B))
+        {
+            _sound.CritterCollection();
             //play sucked in animation?
 
             //destroy alien
             Destroy(alien);
-
+        }
         //update counts
         _player_smallCount = _player_fungiCritter_Small + _player_crystalCritter_Small;
         _player_largeCount = _player_crystalCritter_Large + _player_fungiCritter_Large;

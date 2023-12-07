@@ -57,7 +57,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private CreatureTrackers _shroomCreatures;
     public CreatureTrackers ShroomCreatures { get { return _shroomCreatures; } }
-
     private Inventory _inv;
     // Start is called before the first frame update
     void Start()
