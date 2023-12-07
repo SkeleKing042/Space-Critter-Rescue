@@ -59,7 +59,7 @@ public class Inventory : MonoBehaviour
 
     [SerializeField, Tooltip("The number of small crystal critters on the ship")]
     private int _ship_CrystalCritter_Small;
-    public int ShipCrystalAliens { get { return _ship_CrystalCritter_Small; } }
+    public int Ship_Crystal_Small { get { return _ship_CrystalCritter_Small; } }
 
     [SerializeField, Tooltip("The number of large fungi critters on the ship")]
     private int _ship_FungiCritter_Large;

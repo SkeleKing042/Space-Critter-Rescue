@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1978586200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1978586201}
+  m_Layer: 0
+  m_Name: SpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1978586201
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978586200}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.79, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7700218590660099036}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6382130045609583003
 GameObject:
   m_ObjectHideFlags: 0
@@ -49,7 +80,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6382130045609583003}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -107,10 +138,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7700218590660099036}
+  - component: {fileID: 2055226229}
   m_Layer: 0
-  m_Name: universal_Creature_Container
+  m_Name: Critter Containment Unit
   m_TagString: DropOff
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
@@ -127,6 +159,29 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6042196666677230369}
+  - {fileID: 1978586201}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2055226229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7032226430592688486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cff8527e0fb84534ab90d8038e46a9cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventory: {fileID: 0}
+  _spawnTransform: {fileID: 1978586201}
+  _smallCrystals: []
+  _smallFungi: []
+  _largeCrystals: []
+  _largeFungi: []
+  _smallCrystal_prefab: {fileID: 3390830656048057695, guid: 30ce1dc9c37b4c545aa0e68b2f1c623f, type: 3}
+  _smallFungi_prefab: {fileID: 3390830656048057695, guid: b118dc9b7d5eeb646b3514950afe8598, type: 3}
+  _largeCrystal_prefab: {fileID: 3390830656048057695, guid: 796dcff66bfb1194486634f3a7f1d07e, type: 3}
+  _largeFungi_prefab: {fileID: 3390830656048057695, guid: 32452901ae2e1594da83825b5f64eefe, type: 3}
