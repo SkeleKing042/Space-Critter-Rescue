@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6791960096883681801}
   - component: {fileID: -4467302090348341789}
   - component: {fileID: 4785168938131265541}
+  - component: {fileID: 7914477500940730811}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -72,6 +73,18 @@ MonoBehaviour:
   _ship_CrystalCritter_Small: 0
   _ship_FungiCritter_Large: 0
   _ship_CrystalCritter_Large: 0
+--- !u!114 &7914477500940730811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4399491153458506001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77ff87559c6703b49b6b4d762bfca479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5810352215974080545
 PrefabInstance:
   m_ObjectHideFlags: 0

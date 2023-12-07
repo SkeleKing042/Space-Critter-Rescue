@@ -8,10 +8,16 @@ using UnityEngine;
 
 public class SFXManager : MonoBehaviour
 {
-    public bool Looping;
+    public bool delay;
 
-    public AudioSource Source;
+    public AudioSource HoldingSource;
     public AudioSource TrapSource;
+    public AudioSource JetPackSource;
+    public AudioSource LegSource;
+    public AudioSource ArmSource;
+    public AudioSource MiscSource;
+
+
 
     public List<AudioClip> CollectionSounds; // ill chage this to audio clip later.s
     public List<AudioClip> VacuumSounds;
@@ -19,17 +25,25 @@ public class SFXManager : MonoBehaviour
     public List<AudioClip> DetonatorSounds;
     public List <AudioClip> TrapSounds;
     public List<AudioClip> TabletSounds;
+    public List<AudioSource> FootStepSounds;
+
+    public AudioSource JetpackFly;
+
 
     float SoundTimer = 0;
-
-
+    [SerializeField] float delayTime;
+    [SerializeField] float RunSpeed;
+    [SerializeField] float SprintSpeed;
     // varibkles need to mbe moved ONLY FOR TESTING
 
+    [SerializeField] private List<AudioClip> Aliens;
+    [SerializeField] private List<AudioClip> AlienSoundSource;
+    [SerializeField] private List<CreatureAI> AlienAI;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        JetpackFly.Pause();
     }
     private void Update()
     {
@@ -39,6 +53,8 @@ public class SFXManager : MonoBehaviour
             CritterCollection();
         }
 
+        StartCoroutine(Walking());
+
     }
 
     #region Collection
@@ -46,70 +62,92 @@ public class SFXManager : MonoBehaviour
     {
         // remeber to frefabe the sound manager
         int _soundplayed = UnityEngine.Random.Range(0, CollectionSounds.Count);
-        Source.PlayOneShot(CollectionSounds[_soundplayed], 1f);
+        MiscSource.PlayOneShot(CollectionSounds[_soundplayed], 1f);
     }
     public void SuckingSound(float TimePressed) 
     {
-        Source.PlayOneShot(VacuumSounds[0],0.1f);
+        HoldingSource.PlayOneShot(VacuumSounds[0],0.1f);
         float SoundTimer = Time.deltaTime;
         while(TimePressed > SoundTimer)
         {
-           Source.PlayOneShot(VacuumSounds[1],0.7f);
+           HoldingSource.PlayOneShot(VacuumSounds[1],0.7f);
         }
          if(SoundTimer > TimePressed)
         {
             Debug.Log("closing sound");
-            Source.PlayOneShot(VacuumSounds[2], 1f);
+            HoldingSource.PlayOneShot(VacuumSounds[2], 1f);
         }
     }
     #endregion
 
+    // jet pack/ player footsteps overlap. Need to fix using Delays. and new Audio Sources
+    // possibly using a coruotine.
     #region JetPack
-    public void Jetpackflying(float TimePressed)
+    public void Jetpackflying()
     {
+       
         Debug.Log("jetpack function being called");
-        Source.PlayOneShot(JetpackSounds[0],1f);
-        SoundTimer += Time.deltaTime;
-        Looping = true;
-        if (TimePressed > SoundTimer)
-        {
-           if(Source.isPlaying != JetpackSounds[0])
-            Source.PlayOneShot(JetpackSounds[0], 0.5f);
-           
-        }
+        JetPackSource.PlayOneShot(JetpackSounds[0],1f);
+        
+        if(!JetpackFly.isPlaying)
+         JetpackFly.UnPause();
+  
+            
+
         //Looping = false;
-        Looping = false;
         //Source.PlayOneShot(JetpackSounds[2], 1f);
     }
     public void JetpackRecharge()
     {
-        Source.PlayOneShot(JetpackSounds[3], 0.1f);
+        if(!JetPackSource)
+        {
+            JetPackSource.PlayOneShot(JetpackSounds[3], 0.1f);
+        }
+        JetpackFly.Pause();
+
+
+
+
+        delay = false;
     }
     #endregion
+    #region Player Movement
+
+    public IEnumerator Walking()
+    {
+        // remeber to frefabe the sound manager
+        //  yield return new WaitForSeconds(1);
+        int _soundplayed = UnityEngine.Random.Range(0, FootStepSounds.Count);
+        yield return new WaitForSeconds(1);
+        FootStepSounds[_soundplayed].Play();
+        yield return new WaitForSeconds(1);
+        // }
+        //if(Sprinting)
+        //{
+        //    
+        //    LegSource.PlayOneShot(FootStepSounds[_soundplayed], 1f);
+        //}
+
+    }
 
 
-    // Implement these functions when branch is free
+    #endregion
+
     #region Detonator
     public void SwapDetonator()
     {
-        Source.PlayOneShot(DetonatorSounds[0], 1f);
+        ArmSource.PlayOneShot(DetonatorSounds[0], 1f);
     }
-    public void Detonator(bool TrapActive)
+    public void Detonator()
     {
         //playes detornator 
-        Source.PlayOneShot(DetonatorSounds[1], 1f);
-        if (!TrapActive)
-            TrapSource.PlayOneShot(TrapSounds[0], 1f); // TODO make this stop if the trap gets disabled.
-        else
-            TrapSource.Stop();
+        HoldingSource.PlayOneShot(DetonatorSounds[1], 1f);
+        TrapSource.PlayOneShot(TrapSounds[0], 0.8f); 
     }
-    // may need to add a dectivate trap
-
     #endregion
 
     #region Trap
 
-    // put this inthe trap deplot function laterr
     public void TrapDrop()
     {
         TrapSource.PlayOneShot(TrapSounds[1], 1f);
@@ -120,19 +158,38 @@ public class SFXManager : MonoBehaviour
     public void TabletOnOff(bool TabletActive)
     {
         if(!TabletActive)
-            Source.PlayOneShot(TabletSounds[0], 1f);
+            HoldingSource.PlayOneShot(TabletSounds[0], 1f);
         else
-            Source.PlayOneShot(TabletSounds[1], 1f);
+            HoldingSource.PlayOneShot(TabletSounds[1], 1f);
     }
 
     public void TabletChange()
     {
-        Source.PlayOneShot(TabletSounds[2], 1f);
+        HoldingSource.PlayOneShot(TabletSounds[2], 1f);
     }
     public void Teleport()
     {
-        Source.PlayOneShot(TabletSounds[3], 1f);
+        HoldingSource.PlayOneShot(TabletSounds[3], 1f);
     }
 
     #endregion
+
+    //IDLE SOUNDS
+    // creaqt a random number
+    // if the number lands on 20 then platy a random critter sound
+
+    // Check the states of the Aliens in the List
+    // make sure the 
+    #region Alien
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "alien")
+        {
+            //if(AlienAI.)
+        }
+
+    }
 }
+
+    #endregion

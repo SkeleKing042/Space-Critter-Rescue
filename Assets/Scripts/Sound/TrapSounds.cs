@@ -5,11 +5,13 @@ using UnityEngine.VFX;
 
 public class TrapSounds : MonoBehaviour
 {
+    [SerializeField] private Collider _trapCollider;
+    private SFXManager _sfxManager;
 
     // Start is called before the first frame update
     void Start()
     {
-       
+       _sfxManager = FindObjectOfType<SFXManager>();  
     }
 
     // Update is called once per frame
@@ -17,6 +19,12 @@ public class TrapSounds : MonoBehaviour
     {
         
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            _sfxManager.TrapDrop();
+        }
+    }
 
 }

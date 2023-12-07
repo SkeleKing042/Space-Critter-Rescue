@@ -77,17 +77,7 @@ public class Trap : MonoBehaviour
             if (!_alienList.Contains(alien.gameObject))
                 _alienList.Add(alien.gameObject);
         }
-        else
-        {
-            // refrence specifically the boc collider on the trap insteqad of the sphere
-            _sfxManager.TrapDrop();
-        }
-       
-        
 
-
-        
-        
         /*// move alien slightly towards the centre of the trap
         if (alien.transform.position != _lerpPathDestination && alien.GetComponent<CreatureAI>().ReadState.GetType() == typeof(TrappedState))
             alien.transform.position = Vector3.Lerp(alien.transform.position, transform.position - _offSet, 2f * Time.deltaTime);

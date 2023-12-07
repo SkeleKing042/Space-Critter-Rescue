@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
     private float _refuelTime;
     public float RefuelTime { get { return _refuelTime; } }
     private float _jetFuel = 1;
-    public float JetFuel { get { return _jetFuel; } } 
+    public float JetFuel { get { return _jetFuel; } }
     public bool _holdAfterJump;
     private bool _jetInputReady;
 
@@ -96,9 +96,17 @@ public class PlayerMovement : MonoBehaviour
     private Transform _collisionObject;
     private RumbleManger _instance;
     private SFXManager _sfxManager;
-    float _timePressed =0;
+     float _timePressed =0;
     [HideInInspector]
     public Vector3[] GroundPoints = new Vector3[4];
+
+
+    private void Update()
+    {
+
+    }
+
+
     void Start()
     {
         _headHeight = _head.localPosition.y;
@@ -133,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(DoMovement)
         {
+            
             _orientedForceObject.up = GetGroundNormal();
             _orientedForceObject.rotation = Quaternion.Euler(_orientedForceObject.rotation.eulerAngles.x, _camera.transform.rotation.eulerAngles.y, _orientedForceObject.rotation.eulerAngles.z);
             //Move the player forwards based on the camera rotation
@@ -144,7 +153,10 @@ public class PlayerMovement : MonoBehaviour
 
             if(!_crouched && horizontalVel.magnitude > _maxSpeed * 0.1f)
             {
+               // StartCoroutine(delay());
+                //_sfxManager.Walking(_flooringIt);
                 _soundPropagation.PropagateSound(Mathf.Clamp(horizontalVel.magnitude / _maxSpeed, 0, 1));
+               
             }
             GroundedCheck();
         }
@@ -153,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
         if (_jetFuel < 1 && GroundedCheck())
         {
             _sfxManager.JetpackRecharge();
+            
             //...refuel the jetpack
             if (_refuelTime > 0)
                 _refuelTime -= Time.deltaTime;
@@ -164,6 +177,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
+
 
     #region Movement
     public void UpdateMovementAxis(Vector2 v)
@@ -236,6 +250,7 @@ public class PlayerMovement : MonoBehaviour
     public void DoSprint(bool run)
     {
         _flooringIt = !run;
+        
         DoSprint();
     }
     #endregion
@@ -253,6 +268,7 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             if (hit.collider.tag == "Ground")
             {
+               
                 _lastGroundPoint = hit.point + new Vector3(0, PlayerHeight, 0);
             }
         }
@@ -274,7 +290,8 @@ public class PlayerMovement : MonoBehaviour
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             if (hit.collider.tag == "Ground")
-            {                              
+            {
+                _sfxManager.JetpackFly.Pause();
                 return true;               
             }                              
         }                                  
@@ -316,8 +333,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (GroundedCheck())
         {
-
-            _soundPropagation.PropagateSound(0.5f);
+               
+                _soundPropagation.PropagateSound(0.5f);
             PlayerRigidbody.AddForce(Vector3.up * _jumpForce * PlayerRigidbody.mass, ForceMode.Impulse);
             _burnTime = _burnDelay;
                 
@@ -327,11 +344,12 @@ public class PlayerMovement : MonoBehaviour
         {
             if (_jetInputReady || _holdAfterJump)
             {
-                _burnTime = 0;
+                    _sfxManager.Jetpackflying();
+                    _burnTime = 0;
 
                 if (_jetFuel >= _burstBurn)
                 {
-                       
+                        
                         _soundPropagation.PropagateSound(1);
                     Vector3 camForward = Vector3.Cross(_camera.transform.right, Vector3.up);
                     Vector3 forwardForce = camForward * MovementInput.y * _jumpForce * _burstScale.x * PlayerRigidbody.mass * _movementModifier;
@@ -349,12 +367,14 @@ public class PlayerMovement : MonoBehaviour
     }
     public void JetPack()
     {
+        
         if (DoMovement)
+        {
             //If we have fuel...
             if (_jetFuel > 0)
             {
-                 _timePressed += Time.deltaTime;
-                 _sfxManager.Jetpackflying(_timePressed);
+                _sfxManager.Jetpackflying();
+                // _sfxManager.Jetpackflying();
                 _soundPropagation.PropagateSound(0.85f);
                 //... push the player up and reduce the fuel
                 if ((_holdAfterJump && _burnTime <= 0) || (_jetInputReady))
@@ -371,9 +391,15 @@ public class PlayerMovement : MonoBehaviour
                     _burnTime -= Time.deltaTime;
                 }
                 _instance.RumbleStart(0.1f, 0.9f, 1f);
+            } 
+            if(_jetFuel <= 0)
+            {
+                _sfxManager.JetpackFly.Pause();
             }
 
-           
+        }
+
+
     }
     #endregion
 
