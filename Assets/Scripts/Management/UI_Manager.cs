@@ -43,8 +43,15 @@ public class UI_Manager : MonoBehaviour
         Detonator_VC,
     }
 
+    [SerializeField]
+    public BackpackState _backpackState;
 
-
+    public enum BackpackState
+    {
+        notFull,
+        Full,
+        DepositCritters
+    }
     #endregion
 
     //THE INPUT ICONS
@@ -92,8 +99,10 @@ public class UI_Manager : MonoBehaviour
     //THE SPRITES FOR THE VC
     #region Vacuum Catcher Variables
     [Header("Vacuum Catcher Variables")]
-    [SerializeField, Tooltip("The sprite of the VC")]
-    private Sprite _VCSprite;
+    [SerializeField, Tooltip("The sprite of the VC idle")]
+    private Sprite _VCSpriteIdle;
+    [SerializeField, Tooltip("The sprite of the VC idle")]
+    private Sprite _VCSpriteSuck;
     [SerializeField, Tooltip("The sprite that shows the critters are going to be deposited in the ship")]
     private Sprite _ShipSprite;
     #endregion
@@ -102,18 +111,20 @@ public class UI_Manager : MonoBehaviour
     #region Trap Variables
     [Header("Trap Variables")]
     [SerializeField, Tooltip("The sprite of the trap")]
-    private Sprite _trapSprite;
+    private Sprite _trapSpriteIdle;
     [SerializeField, Tooltip("The sprite of the trap being picked up")]
     private Sprite _trapPickUpSprite;
+    [SerializeField, Tooltip("The sprite of the trap being picked up")]
+    private Sprite _trapThrowSprite;
     #endregion
 
     //THE SPRITES FOR THE DEONTATOR
     #region Detonator Variables
     [Header("Detonator Variables")]
-    [SerializeField, Tooltip("The sprite of picking up the trap")]
-    private Sprite _pickupTrapSprite;
     [SerializeField, Tooltip("The sprite of the detonator")]
-    private Sprite _detonatorSprite;
+    private Sprite _detonatorSpriteIdle;
+    [SerializeField, Tooltip("The sprite of the detonator")]
+    private Sprite _detonatorSpriteActivate;
     #endregion
 
     //THE SPRITES FOR THE TABLET
@@ -136,7 +147,19 @@ public class UI_Manager : MonoBehaviour
 
     //BACKPACK VARIABLES
     #region Backpack HUD Variables
+    
+
+    
+
     [Header("Backpack HUD")]
+    [SerializeField] private Image _backpackIconImage;
+    [SerializeField, Tooltip("Backpack sprite, not full")]
+    private Sprite _backpackSprite_NotFull;
+    [SerializeField, Tooltip("Backpack sprite, full")]
+    private Sprite _backpackSprite_Full;
+    [SerializeField, Tooltip("Backpack sprite, deposit")]
+    private Sprite _backpackSprite_Deposit;
+
     [SerializeField, Tooltip("Slider that displays the amount of LC the player has collected")]
     private Image _LC_Slider;
 
@@ -147,36 +170,30 @@ public class UI_Manager : MonoBehaviour
     //JETPACK VARIABLES
     #region Jetpack Variables
     [Header("Jetpack Variables")]
-    [SerializeField, Tooltip("The display for the jet fuel.")]
-    private Image _fuelBarMain;
+    [SerializeField]
+    private Image _jetpackIconImage;
+    [SerializeField, Tooltip("The sprite for the idle jetpack sprite")]
+    private Sprite _jetpackSpriteIdle;
+    [SerializeField, Tooltip("The sprite for the idle jetpack sprite")]
+    private Sprite _jetpackSpriteActive;
 
     [Space]
-    [SerializeField]
-    private float _fuelSliderMax;
-    [SerializeField]
-    private float _fuelSliderMin;
-    [SerializeField]
-    private float _fuelSliderDelta;
-
-    [Space]
+    [SerializeField, Tooltip("The image which displays the jetpack input")]
+    private Image _jetpack_InputImage;
     [SerializeField, Tooltip("The sprite for using the jetpack, gamepad")]
     private Sprite _jetpack_SpriteGamepad;
     [SerializeField, Tooltip("The sprite for using the jetpack, keyboard")]
     private Sprite _jetpack_SpriteKeyboard;
 
     [Space]
-
-    [SerializeField, Tooltip("The image which displays the jetpack input")]
-    private Image _jetpack_InputImage;
-
-    [Space]
-    [SerializeField, Tooltip("Image that covers the jetpack UI and shows if the jetpack is enabled / disabled")]
-    private Image _jetpack_CoverImage;
-    [SerializeField, Tooltip("The max opacity of the cover image")]
-    private float _jetpack_CoverImage_OpacityMax;
-    [SerializeField, Tooltip("The min opacity of the cover image")]
-    private float _jetpack_CoverImage_OpacityMin;
-
+    [SerializeField, Tooltip("The display for the jet fuel.")]
+    private Image _fuelBarMain;
+    [SerializeField]
+    private float _fuelSliderMax;
+    [SerializeField]
+    private float _fuelSliderMin;
+    [SerializeField]
+    private float _fuelSliderDelta;
 
 
     #endregion
@@ -208,20 +225,13 @@ public class UI_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_tablet.TabletState)
-        {
-            JetPackUI_Manager();
-            BackpackHUDManager();
-        }
+        JetPackUI_Manager();
+        BackpackHUDManager();
     }
 
     #endregion
 
     #region HUD Methods
-    public void UpdateHUDAnimator()
-    {
-
-    }
 
     public void SetUIState(UIState _inputUIState)
     {
@@ -269,8 +279,8 @@ public class UI_Manager : MonoBehaviour
         }
 
         //tool icons
-        _Slot1_ToolIcon.sprite = _trapSprite;
-        _Slot2_ToolIcon.sprite = _VCSprite;
+        _Slot1_ToolIcon.sprite = _trapSpriteIdle;
+        _Slot2_ToolIcon.sprite = _VCSpriteSuck;
         _Slot3_ToolIcon.sprite = _ShipSprite;
     }
 
@@ -299,8 +309,8 @@ public class UI_Manager : MonoBehaviour
         }
 
         //tool icons
-        _Slot1_ToolIcon.sprite = _detonatorSprite;
-        _Slot2_ToolIcon.sprite = _VCSprite;
+        _Slot1_ToolIcon.sprite = _detonatorSpriteIdle;
+        _Slot2_ToolIcon.sprite = _VCSpriteSuck;
         _Slot3_ToolIcon.sprite = _ShipSprite;
     }
 
@@ -329,8 +339,8 @@ public class UI_Manager : MonoBehaviour
         }
 
         //tool icons
-        _Slot1_ToolIcon.sprite = _VCSprite;
-        _Slot2_ToolIcon.sprite = _detonatorSprite;
+        _Slot1_ToolIcon.sprite = _VCSpriteIdle;
+        _Slot2_ToolIcon.sprite = _detonatorSpriteActivate;
         _Slot3_ToolIcon.sprite = _trapPickUpSprite;
     }
 
@@ -339,7 +349,7 @@ public class UI_Manager : MonoBehaviour
     {
         //text
         _Slot1_Text.text = "Swap";
-        _Slot2_Text.text = null;
+        _Slot2_Text.text = "Throw";
         _Slot3_Text.text = "Throw";
         _TabletToggleText.text = "On";
 
@@ -348,20 +358,20 @@ public class UI_Manager : MonoBehaviour
         {
             case InputMode.gamepad:
                 _Slot1_InputIcon.sprite = _spritesGamepad[4];
-                _Slot2_InputIcon.sprite = null;
+                _Slot2_InputIcon.sprite = _spritesGamepad[1];
                 _Slot3_InputIcon.sprite = _spritesGamepad[1];
                 break;
             case InputMode.keyboard:
                 _Slot1_InputIcon.sprite = _spritesKeyboard[4];
-                _Slot2_InputIcon.sprite = null;
+                _Slot2_InputIcon.sprite = _spritesKeyboard[1];
                 _Slot3_InputIcon.sprite = _spritesKeyboard[1];
                 break;
         }
 
         //tool icons
-        _Slot1_ToolIcon.sprite = _VCSprite;
-        _Slot2_ToolIcon.sprite = null;
-        _Slot3_ToolIcon.sprite = _trapSprite;
+        _Slot1_ToolIcon.sprite = _VCSpriteIdle;
+        _Slot2_ToolIcon.sprite = _trapThrowSprite;
+        _Slot3_ToolIcon.sprite = _trapThrowSprite;
     }
 
     #endregion
@@ -372,7 +382,14 @@ public class UI_Manager : MonoBehaviour
 
         _fuelBarMain.fillAmount = (_fuelSliderDelta * _playerMovement.JetFuel) + _fuelSliderMin;
 
-
+        if(!_playerMovement.GroundedCheck())
+        {
+            _jetpackIconImage.sprite = _jetpackSpriteActive;
+        }
+        else
+        {
+            _jetpackIconImage.sprite = _jetpackSpriteIdle;
+        }
 
         /*if (!_playerMovement.GroundedCheck() || _playerMovement.JetFuel < 1)
         {
@@ -414,17 +431,6 @@ public class UI_Manager : MonoBehaviour
                 break;
         }
     }
-
-    public void JetpackUI_Disable()
-    {
-        _jetpack_CoverImage.color = new Color(0, 0, 0, _jetpack_CoverImage_OpacityMax / 255);
-    }
-
-    public void JetpackUI_Enable()
-    {
-        _jetpack_CoverImage.color = new Color(0, 0, 0, _jetpack_CoverImage_OpacityMin/255);
-    }
-
     #endregion
 
     #region Backpack HUD Methods
@@ -432,6 +438,19 @@ public class UI_Manager : MonoBehaviour
     {
         _LC_Slider.fillAmount = (float)_inventory.LargeCount / (float)_inventory.LargeCap;
         _SC_Slider.fillAmount = (float)_inventory.SmallCount / (float)_inventory.SmallCap;
+
+        switch (_backpackState)
+        {
+            case BackpackState.notFull:
+                _backpackIconImage.sprite = _backpackSprite_NotFull;
+                break;
+            case BackpackState.Full:
+                _backpackIconImage.sprite = _backpackSprite_Full;
+                break;
+            case BackpackState.DepositCritters:
+                _backpackIconImage.sprite = _backpackSprite_Deposit;
+                break;
+        }
     }
     #endregion
 

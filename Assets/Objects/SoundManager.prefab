@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3902204926339352278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3902204926339352276}
+  - component: {fileID: 3902204926339352279}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3902204926339352276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3902204926339352278}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 297.7784, y: -0.20906255, z: 202.27206}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3902204926339352279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3902204926339352278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88137e60d594654c82949c2b76aa8c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Looping: 0
+  Source: {fileID: 0}
+  TrapSource: {fileID: 0}
+  CollectionSounds:
+  - {fileID: 8300000, guid: b1a0751ed0b2bf8478d429d9f8678a21, type: 3}
+  - {fileID: 8300000, guid: f376f804a677d8240b6f1a7a6fc36dd6, type: 3}
+  - {fileID: 8300000, guid: ca774d0f3d282c04ab113f88c4ace6e7, type: 3}
+  - {fileID: 8300000, guid: 212e259d6dd8a4544a880ab364b7da91, type: 3}
+  - {fileID: 8300000, guid: b669666bbe8409c4ab65aa45c41cbea3, type: 3}
+  - {fileID: 8300000, guid: 4b3b1cbae0a582b4198f4bf32b615928, type: 3}
+  - {fileID: 8300000, guid: 97507ed5d238d6e4a9c968522c660957, type: 3}
+  - {fileID: 8300000, guid: 9ee77b34ecb2de4408da685adb69d08b, type: 3}
+  - {fileID: 8300000, guid: 819e7a779cbe94641ab11efefcc52a80, type: 3}
+  - {fileID: 8300000, guid: f8f06348a72cb214f9d60abf725d526c, type: 3}
+  - {fileID: 8300000, guid: a26d1daa35acdd14db6054b1e6617098, type: 3}
+  - {fileID: 8300000, guid: ba63f02161c2389448c0162d726e4154, type: 3}
+  VacuumSounds:
+  - {fileID: 8300000, guid: a10dc606fb70f9849bf0d2ad348a4d83, type: 3}
+  - {fileID: 8300000, guid: 196f1e18780aaa14bba7329a4e90a284, type: 3}
+  - {fileID: 8300000, guid: 5f7caf0d11164014598e6495a7c521bb, type: 3}
+  JetpackSounds:
+  - {fileID: 8300000, guid: 280d03ce385d0364bab8db45b0068a4c, type: 3}
+  - {fileID: 8300000, guid: 5b2eb951b45582a4882daa19bb476c27, type: 3}
+  - {fileID: 8300000, guid: d5187178082a52f428d308b0a2b70707, type: 3}
+  - {fileID: 8300000, guid: 737f4a6fa6757894fac2a6b50b9a1fe3, type: 3}
+  DetonatorSounds:
+  - {fileID: 8300000, guid: 9f3ce208505cbe54cba8cce98adfd24d, type: 3}
+  - {fileID: 8300000, guid: ae15355b0095e3544a172a65fbc696f9, type: 3}
+  TrapSounds:
+  - {fileID: 8300000, guid: bc7fb75adc6dcbc4dbddc0b4ee1b5f90, type: 3}
+  - {fileID: 8300000, guid: 411a85d079ac8884da550b3f1f523a0f, type: 3}
+  TabletSounds:
+  - {fileID: 8300000, guid: 3d001672c70c3494c943d24f27f0d17b, type: 3}
+  - {fileID: 8300000, guid: 194abf5bad8214a439774553fe8df9d1, type: 3}
+  - {fileID: 8300000, guid: afe7702d89769f74aaa90ea1275163e6, type: 3}
+  - {fileID: 8300000, guid: a589372bb68e9fd42bb357c1dca570c6, type: 3}
