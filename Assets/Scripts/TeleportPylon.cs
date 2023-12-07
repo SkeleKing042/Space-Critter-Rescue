@@ -10,6 +10,7 @@ public class TeleportPylon : MonoBehaviour
     [SerializeField] int pylonIndex;
     [SerializeField] GameObject On;
     [SerializeField] GameObject Off;
+    public bool isOn = false;
 
     public bool[] PassOnRotation = new bool[3];
     public bool OffsetAffectedByRotation;
@@ -29,8 +30,9 @@ public class TeleportPylon : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            FindObjectOfType<Tablet>().SethasTeleportBeenActivated(pylonIndex);
+            //FindObjectOfType<Tablet>().SethasTeleportBeenActivated(pylonIndex);
             On.SetActive(true);
+            isOn = true;
             Off.SetActive(false);
         }
     }

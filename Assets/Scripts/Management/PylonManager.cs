@@ -7,6 +7,11 @@ using UnityEngine;
 
 public class PylonManager : MonoBehaviour
 {
+    public class arrayYAxis
+    {
+        public TeleportPylon[] Pylons;
+    }
+    private arrayYAxis[] 
     public List<TeleportPylon> Pylons = new List<TeleportPylon>();
     /// <summary>
     /// Moves the object to a pylon

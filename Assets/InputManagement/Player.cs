@@ -154,22 +154,13 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MoveTeleportRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""0595c8ad-1489-4455-b438-afd2de7cc9ff"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveTeleportLeft"",
-                    ""type"": ""Button"",
+                    ""name"": ""MoveTeleport"",
+                    ""type"": ""Value"",
                     ""id"": ""21f336e1-a272-4c6d-b964-167de58d633a"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""MoveTabRight"",
@@ -285,50 +276,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MoveTabRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6a7a1d0d-80ae-499e-acdd-84c13364d4fa"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""MoveTeleportLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""49464a2a-63dc-49bc-9e48-e5742ca7466c"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveTeleportLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fb9bbe3e-688f-4c27-a060-6404fc567495"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""MoveTeleportRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4b135c1d-42c6-4304-902e-255d70aa227c"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveTeleportRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -716,6 +663,116 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""DepositCritters"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""100ac0c0-9bbf-4140-b5b9-c90b293dc8be"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveTeleport"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""ecc0a2a2-d647-4296-8965-0d5c780765c3"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveTeleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""af4c76c6-7045-4236-9ebb-35c93d56d1cf"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveTeleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""97d397b0-f999-4d02-82f6-6ef5d0b70302"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveTeleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""678589c7-4738-4342-9b35-bb65842bca01"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveTeleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""ef6754ea-417c-4957-bb04-7d510c01ea89"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveTeleport"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""0d6c68e8-0d96-454b-adc7-687596748774"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveTeleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""8214c350-aec6-4daa-b4a7-82c086d5b64e"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveTeleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""7561f226-9fa7-401f-8134-ade8f6ae4208"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveTeleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""153387fb-89b6-4226-bbc8-749e9b96759a"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveTeleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -805,8 +862,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_PickupTrap = m_Player.FindAction("PickupTrap", throwIfNotFound: true);
         m_Player_ToggleTablet = m_Player.FindAction("ToggleTablet", throwIfNotFound: true);
         m_Player_SelectTeleport = m_Player.FindAction("SelectTeleport", throwIfNotFound: true);
-        m_Player_MoveTeleportRight = m_Player.FindAction("MoveTeleportRight", throwIfNotFound: true);
-        m_Player_MoveTeleportLeft = m_Player.FindAction("MoveTeleportLeft", throwIfNotFound: true);
+        m_Player_MoveTeleport = m_Player.FindAction("MoveTeleport", throwIfNotFound: true);
         m_Player_MoveTabRight = m_Player.FindAction("MoveTabRight", throwIfNotFound: true);
         m_Player_MoveTabLeft = m_Player.FindAction("MoveTabLeft", throwIfNotFound: true);
         m_Player_DisplayPopup = m_Player.FindAction("DisplayPopup", throwIfNotFound: true);
@@ -885,8 +941,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PickupTrap;
     private readonly InputAction m_Player_ToggleTablet;
     private readonly InputAction m_Player_SelectTeleport;
-    private readonly InputAction m_Player_MoveTeleportRight;
-    private readonly InputAction m_Player_MoveTeleportLeft;
+    private readonly InputAction m_Player_MoveTeleport;
     private readonly InputAction m_Player_MoveTabRight;
     private readonly InputAction m_Player_MoveTabLeft;
     private readonly InputAction m_Player_DisplayPopup;
@@ -908,8 +963,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @PickupTrap => m_Wrapper.m_Player_PickupTrap;
         public InputAction @ToggleTablet => m_Wrapper.m_Player_ToggleTablet;
         public InputAction @SelectTeleport => m_Wrapper.m_Player_SelectTeleport;
-        public InputAction @MoveTeleportRight => m_Wrapper.m_Player_MoveTeleportRight;
-        public InputAction @MoveTeleportLeft => m_Wrapper.m_Player_MoveTeleportLeft;
+        public InputAction @MoveTeleport => m_Wrapper.m_Player_MoveTeleport;
         public InputAction @MoveTabRight => m_Wrapper.m_Player_MoveTabRight;
         public InputAction @MoveTabLeft => m_Wrapper.m_Player_MoveTabLeft;
         public InputAction @DisplayPopup => m_Wrapper.m_Player_DisplayPopup;
@@ -964,12 +1018,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SelectTeleport.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectTeleport;
                 @SelectTeleport.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectTeleport;
                 @SelectTeleport.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectTeleport;
-                @MoveTeleportRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleportRight;
-                @MoveTeleportRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleportRight;
-                @MoveTeleportRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleportRight;
-                @MoveTeleportLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleportLeft;
-                @MoveTeleportLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleportLeft;
-                @MoveTeleportLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleportLeft;
+                @MoveTeleport.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleport;
+                @MoveTeleport.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleport;
+                @MoveTeleport.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTeleport;
                 @MoveTabRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabRight;
                 @MoveTabRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabRight;
                 @MoveTabRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabRight;
@@ -1025,12 +1076,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SelectTeleport.started += instance.OnSelectTeleport;
                 @SelectTeleport.performed += instance.OnSelectTeleport;
                 @SelectTeleport.canceled += instance.OnSelectTeleport;
-                @MoveTeleportRight.started += instance.OnMoveTeleportRight;
-                @MoveTeleportRight.performed += instance.OnMoveTeleportRight;
-                @MoveTeleportRight.canceled += instance.OnMoveTeleportRight;
-                @MoveTeleportLeft.started += instance.OnMoveTeleportLeft;
-                @MoveTeleportLeft.performed += instance.OnMoveTeleportLeft;
-                @MoveTeleportLeft.canceled += instance.OnMoveTeleportLeft;
+                @MoveTeleport.started += instance.OnMoveTeleport;
+                @MoveTeleport.performed += instance.OnMoveTeleport;
+                @MoveTeleport.canceled += instance.OnMoveTeleport;
                 @MoveTabRight.started += instance.OnMoveTabRight;
                 @MoveTabRight.performed += instance.OnMoveTabRight;
                 @MoveTabRight.canceled += instance.OnMoveTabRight;
@@ -1130,8 +1178,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnPickupTrap(InputAction.CallbackContext context);
         void OnToggleTablet(InputAction.CallbackContext context);
         void OnSelectTeleport(InputAction.CallbackContext context);
-        void OnMoveTeleportRight(InputAction.CallbackContext context);
-        void OnMoveTeleportLeft(InputAction.CallbackContext context);
+        void OnMoveTeleport(InputAction.CallbackContext context);
         void OnMoveTabRight(InputAction.CallbackContext context);
         void OnMoveTabLeft(InputAction.CallbackContext context);
         void OnDisplayPopup(InputAction.CallbackContext context);

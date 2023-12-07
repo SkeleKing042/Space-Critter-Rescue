@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
     private float _refuelRate;
     [SerializeField, Tooltip("The time it takes for the jetpack to begin refueling.")]
     private float _refuelDelay;
-    private float _refuelTime;
+    private float _refuelTime = 0;
     public float RefuelTime { get { return _refuelTime; } }
     private float _jetFuel = 1;
     public float JetFuel { get { return _jetFuel; } } 
@@ -108,7 +108,6 @@ public class PlayerMovement : MonoBehaviour
         _soundPropagation = GetComponentInChildren<SoundPropagation>();
 
         _instance = FindObjectOfType<RumbleManger>();
-        _sfxManager = FindObjectOfType<SFXManager>();
     }
     void FixedUpdate()
     {
@@ -152,7 +151,6 @@ public class PlayerMovement : MonoBehaviour
         //...otherwise, if on the ground & out of fuel...
         if (_jetFuel < 1 && GroundedCheck())
         {
-            _sfxManager.JetpackRecharge();
             //...refuel the jetpack
             if (_refuelTime > 0)
                 _refuelTime -= Time.deltaTime;
@@ -255,10 +253,7 @@ public class PlayerMovement : MonoBehaviour
         if (Physics.Raycast(transform.position, -Vector3.up * _lastGroundCheckMaxDistance, out hit, _lastGroundCheckMaxDistance))
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
-            if (hit.collider.tag == "Ground")
-            {
                 _lastGroundPoint = hit.point + new Vector3(0, PlayerHeight, 0);
-            }
         }
 
         float camY = _camera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
@@ -277,10 +272,7 @@ public class PlayerMovement : MonoBehaviour
             )
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
-            if (hit.collider.tag == "Ground")
-            {                              
                 return true;               
-            }                              
         }                                  
         return false;                      
     }
@@ -292,15 +284,12 @@ public class PlayerMovement : MonoBehaviour
         if (Physics.Raycast(transform.position, -Vector3.up * PlayerHeight, out hit, PlayerHeight, _groundLayer))
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
-            if (hit.collider.tag == "Ground")
-            {
                 if ((Mathf.Acos(hit.normal.y / Vector3.up.y) * Mathf.Rad2Deg) < _maxAngle)
                 {
                     dir = hit.normal;
                     Debug.DrawRay(hit.point, dir, Color.red);
                 }
 
-            }
         }
 
         return dir;
@@ -358,8 +347,6 @@ public class PlayerMovement : MonoBehaviour
             if (_jetFuel > 0)
             {
                 float _timePressed = Time.deltaTime;
-                if (_sfxManager.Looping == false)
-                    _sfxManager.Jetpackflying(_timePressed);
                 _soundPropagation.PropagateSound(0.85f);
                 //... push the player up and reduce the fuel
                 if ((_holdAfterJump && _burnTime <= 0) || (_jetInputReady))

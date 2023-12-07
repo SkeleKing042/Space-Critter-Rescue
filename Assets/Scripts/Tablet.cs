@@ -27,22 +27,28 @@ public class Tablet : MonoBehaviour
 
 
     [Header("Tabs")]
-    [SerializeField, Tooltip("An array that stores the tabs of the tablet")] 
+    [SerializeField, Tooltip("An array that stores the tabs of the tablet")]
     private GameObject[] _tabs;
 
-    [SerializeField, Tooltip("index that stores which tab is the map tab")] 
+    [SerializeField, Tooltip("index that stores which tab is the map tab")]
     public int MapTabIndex;
-    
+
     [SerializeField, Tooltip("index that stores the current tab in the tablet")]
     [HideInInspector] public int TabIndex = 0;
 
+    [System.Serializable]
+    public class ClassedArray 
+    {
+        public Image[] array;
+    }
+
     [Header("Teleport Locations")]
     [Tooltip("array that stores the location image components")]
-    [SerializeField] private Image[] _teleportLocationImages;
+    [SerializeField] private ClassedArray[] _teleportLocationImages;
+    private Vector2 _teleportIndex = new Vector2();
     //[Tooltip("index that stores what teleport location is currently selected")]
-    private int _teleportIndex;
     //[Tooltip("array that stores if the teleport location has been activated")]
-    private bool[] _hasTeleportLocationBeenActivated;
+    private bool[,] _hasTeleportLocationBeenActivated;
     [Space]
     [SerializeField] private Color _color_currentlySelectedTeleport = Color.blue;
     [SerializeField] private Color _color_unavailableTeleport = Color.red;
@@ -78,7 +84,7 @@ public class Tablet : MonoBehaviour
         _ui_Manager = FindObjectOfType<UI_Manager>();
 
         //declare array
-        _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
+        //_hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
 
         foreach(var child in _largeBackpackSlotParent.GetComponentsInChildren<Image>())
         {
@@ -293,7 +299,17 @@ public class Tablet : MonoBehaviour
     /// </summary>
     private void SetTeleportLocationColors()
     {
-        for (int i = 0; i < _teleportLocationImages.Length; i++)
+        for (int x = 0; x < _teleportLocationImages.Length; x++)
+            for (int y = 0; y < _teleportLocationImages[x].array.Length; y++)
+            {
+                if (_teleportLocationImages[x].array[y].GetComponent<>)
+                    _teleportLocationImages[x].array[y].color = _color_availableTeleport;
+                else
+                    _teleportLocationImages[x].array[y].color = _color_unavailableTeleport;
+            }
+        _teleportLocationImages[(int)_teleportIndex.x].array[(int)_teleportIndex.y].color = _color_currentlySelectedTeleport;
+
+        /*for (int i = 0; i < _teleportLocationImages.Length; i++)
         {
             if (_hasTeleportLocationBeenActivated[i])
             {
@@ -305,25 +321,18 @@ public class Tablet : MonoBehaviour
             }
         }
 
-        _teleportLocationImages[_teleportIndex].color = _color_currentlySelectedTeleport;
+        _teleportLocationImages[_teleportIndex].color = _color_currentlySelectedTeleport;*/
     }
 
     /// <summary>
     /// move teleport index left and update colours
     /// </summary>
-    public void MoveTeleportIndexLeft()
+    public void MoveTeleportIndex(Vector2 dir)
     {
         if (TabletState)
             if (TabIndex == MapTabIndex)
             {
-                if (_teleportIndex > 0)
-                {
-                    _teleportIndex--;
-                }
-                else
-                {
-                    _teleportIndex = _teleportLocationImages.Length - 1;
-                }
+                
 
                 SetTeleportLocationColors();
             }
@@ -332,7 +341,7 @@ public class Tablet : MonoBehaviour
     /// <summary>
     /// move teleport index right and update colours
     /// </summary>
-    public void MoveTeleportIndexRight()
+    /*public void MoveTeleportIndexRight()
     {
         if (TabletState)
             if (TabIndex == MapTabIndex)
@@ -348,12 +357,12 @@ public class Tablet : MonoBehaviour
 
                 SetTeleportLocationColors();
             }
-    }
+    }*/
 
     /// <summary>
     /// select teleport location
     /// </summary>
-    public void SelectTeleport()
+    /*public void SelectTeleport()
     {
         if (TabletState)
 
@@ -367,7 +376,7 @@ public class Tablet : MonoBehaviour
     public void SethasTeleportBeenActivated(int pylonIndex)
     {
         _hasTeleportLocationBeenActivated[pylonIndex] = true;
-    }
+    }*/
     #endregion
 
     #region BackpackTab
