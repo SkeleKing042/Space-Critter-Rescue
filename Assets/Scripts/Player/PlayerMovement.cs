@@ -152,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
         //...otherwise, if on the ground & out of fuel...
         if (_jetFuel < 1 && GroundedCheck())
         {
-            _sfxManager.JetpackRecharge();
+            //_sfxManager.JetpackRecharge();
             //...refuel the jetpack
             if (_refuelTime > 0)
                 _refuelTime -= Time.deltaTime;
@@ -344,7 +344,7 @@ public class PlayerMovement : MonoBehaviour
                     PlayerRigidbody.AddForce(forwardForce + sideForce + upForce, ForceMode.Impulse);
                     _jetFuel -= _burstBurn;
                 }
-                    _instance.RumbleStart(1f, 1f, 1);
+                    //_instance.RumbleStart(1f, 1f, 1);
                 }
             _jetInputReady = true;
         }
@@ -358,8 +358,8 @@ public class PlayerMovement : MonoBehaviour
             if (_jetFuel > 0)
             {
                 float _timePressed = Time.deltaTime;
-                if (_sfxManager.Looping == false)
-                    _sfxManager.Jetpackflying(_timePressed);
+                /*if (_sfxManager.Looping == false)
+                    _sfxManager.Jetpackflying(_timePressed);*/
                 _soundPropagation.PropagateSound(0.85f);
                 //... push the player up and reduce the fuel
                 if ((_holdAfterJump && _burnTime <= 0) || (_jetInputReady))
@@ -375,7 +375,7 @@ public class PlayerMovement : MonoBehaviour
                    
                     _burnTime -= Time.deltaTime;
                 }
-                _instance.RumbleStart(0.1f, 0.9f, 1f);
+                //_instance.RumbleStart(0.1f, 0.9f, 1f);
             }
 
            
