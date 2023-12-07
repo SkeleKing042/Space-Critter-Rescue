@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections;
-using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -162,9 +161,9 @@ public class InputManager : MonoBehaviour
     [SerializeField] private bool _lockCursor;
     [SerializeField] private bool _sendDebugLogs = true;
 
-    [Header("Other Scripts")]
-    [SerializeField] private Tablet _tablet;
-    [SerializeField] private Equipment _equipment;
+    //[Header("Other Scripts")]
+    private Tablet _tablet;
+    private Equipment _equipment;
 
     [Header("Movement")]
     public UnityEvent<Vector2> MovementAction = new UnityEvent<Vector2>();
@@ -172,29 +171,41 @@ public class InputManager : MonoBehaviour
     public UnityEvent CrouchAction = new UnityEvent();
     public UnityEvent JumpAction = new UnityEvent();
     public HoldEvent JetPackAction = new HoldEvent();
-    public UnityEvent<Vector2> LookAction = new UnityEvent<Vector2>();
+    //public UnityEvent<Vector2> LookAction = new UnityEvent<Vector2>();
 
     [Header("Tool actions")]
-    public UnityEvent TrapInteractionAction = new UnityEvent();
-    public UnityEvent EnableTrapAction = new UnityEvent();
-    public UnityEvent TabletAction = new UnityEvent();
-    public DoWhileDownEvent PullAction = new DoWhileDownEvent();
-    public UnityEvent ThrowTrapAction = new UnityEvent();
-    public UnityEvent DetonateAction = new UnityEvent();
-    public UnityEvent AltFireAction = new UnityEvent();
-    public UnityEvent ReturnToShipAction = new UnityEvent();
     public UnityEvent SwitchToolAction = new UnityEvent();
-    public UnityEvent DropAliensToShip = new UnityEvent();
 
-    [Header("UI actions")]
+    [Header("Vacuum")]
+    public DoWhileDownEvent PullAction = new DoWhileDownEvent();
+    [Space]
+    public UnityEvent DepositCritters = new UnityEvent();
+
+    [Header("Trap")]
+    public UnityEvent ThrowTrapAction = new UnityEvent();
+    public UnityEvent DetonateTrapAction = new UnityEvent();
+    public UnityEvent PickUpTrapAction = new UnityEvent();
+
+    [Header("Tablet")]
+    public UnityEvent TabletAction = new UnityEvent();
+    [Space]
     public UnityEvent MoveTabLeft = new UnityEvent();
     public UnityEvent MoveTabRight = new UnityEvent();
+    [Space]
     public UnityEvent MoveTeleportLeft = new UnityEvent();
     public UnityEvent MoveTeleportRight = new UnityEvent();
     public UnityEvent SelectTeleport = new UnityEvent();
 
+    [Header("misc")]
+    public UnityEvent ReturnToShipAction = new UnityEvent();
     public UnityEvent PopupAction = new UnityEvent();
 
+    /* UNSURE IF NEEDED
+     * public UnityEvent EnableTrapAction = new UnityEvent();
+     * public UnityEvent AltFireAction = new UnityEvent();
+     */
+
+    #region Awake
 
     private void Awake()
     {
@@ -203,51 +214,49 @@ public class InputManager : MonoBehaviour
         else
             Cursor.lockState = CursorLockMode.None;
 
+        _tablet = FindObjectOfType<Tablet>();
+        if (!_tablet)
+        {
+            Debug.LogWarning("InputManager couldn't find the tablet.");
+            enabled = false;
+            return;
+        }
+        _equipment = FindObjectOfType<Equipment>();
+        if (!_equipment)
+        {
+            Debug.LogWarning("InputManager couldn't find the tablet.");
+            enabled = false;
+            return;
+        }
+
         JetPackAction.InitializeAction();
         PullAction.InitializeAction();
     }
-    void OnJump()
-    {
-        if (!_tablet.TabletState)
-        {
-            if (_sendDebugLogs) Debug.Log("OnJump called.");
-            JumpAction.Invoke();
-        }
-    }
-    void OnJetPack()
-    {
-        if (_sendDebugLogs) Debug.Log("OnJetPack called.");
 
-        if (JetPackAction.DoEvent()) StartCoroutine(JetPackAction.RepeatAction(JetPackAction.ActionDelay));
-    }
-    void OnSprint()
-    {
-        if (_sendDebugLogs) Debug.Log("OnSprint called.");
-        SprintAction.Invoke();
-    }
-    void OnEnableTrap()
-    {
-        if (!_tablet.TabletState)
-        {
-            if (_sendDebugLogs) Debug.Log("Enabling trap.");
-            EnableTrapAction.Invoke();
-        }
-    }
-    void OnPickupTrap()
-    {
-        if (!_tablet.TabletState && _equipment.TrapDeployed)
-        {
-            if (_sendDebugLogs) Debug.Log("OnPickupTrap called.");
-            TrapInteractionAction.Invoke();
-        }
-    }
+    #endregion
 
+    #region Movement
+    //movement Input
     void OnMove(InputValue value)
     {
-        if (_sendDebugLogs) Debug.Log("OnMove called.");
-        MovementAction.Invoke(value.Get<Vector2>());
+        if (!_tablet.TabletState)
+        {
+            if (_sendDebugLogs) Debug.Log("OnMove called.");
+            MovementAction.Invoke(value.Get<Vector2>());
+        }
     }
 
+    //Sprint Input
+    void OnSprint()
+    {
+        if (!_tablet.TabletState)
+        {
+            if (_sendDebugLogs) Debug.Log("OnSprint called.");
+            SprintAction.Invoke();
+        }
+    }
+
+    //Crouch Movement
     void OnCrouch()
     {
         if (!_tablet.TabletState)
@@ -257,38 +266,100 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    //jump action
+    void OnJump()
+    {
+        if (!_tablet.TabletState)
+        {
+            if (_sendDebugLogs) Debug.Log("OnJump called.");
+            JumpAction.Invoke();
+        }
+    }
+
+    //jetpack action
+    void OnJetPack()
+    {
+        if (_sendDebugLogs) Debug.Log("OnJetPack called.");
+
+        if (JetPackAction.DoEvent()) StartCoroutine(JetPackAction.RepeatAction(JetPackAction.ActionDelay));
+    }
+
+
+
+    #endregion
+
+    #region Tool Actions
+    void OnSwitchTool()
+    {
+        if (!_tablet.TabletState)
+        {
+            if (_sendDebugLogs) Debug.Log("Switching Tools");
+            SwitchToolAction.Invoke();
+        }
+    }
+
+    #endregion
+
+    #region Vaccuum Catcher
+    void OnPull()
+    {
+        if (!_tablet.TabletState && _equipment._currentlyHolding == Equipment.CurrentlyHolding.VC)
+        {
+            if (_sendDebugLogs) Debug.Log("OnFire called.");
+            if (PullAction.DoEvent()) StartCoroutine(PullAction.RepeatAction(PullAction.ActionDelay));
+        }
+    }
+
+    void OnDepositCritters()
+    {
+        if (!_tablet.TabletState && _equipment._currentlyHolding == Equipment.CurrentlyHolding.VC)
+        {
+            if (_sendDebugLogs) Debug.Log("Dropping aliens");
+            DepositCritters.Invoke();
+        }
+    }
+
+    #endregion
+
+    #region Trap
+    //throw trap input
+    void OnThrowTrap()
+    {
+        if (!_tablet.TabletState && !_equipment.TrapDeployed && _equipment._currentlyHolding == Equipment.CurrentlyHolding.trap)
+        {
+            if (_sendDebugLogs) Debug.Log("OnThrowTrapAction called.");
+            ThrowTrapAction.Invoke();
+        }
+    }
+
+    //detonate trap input
+    void OnDetonateTrap()
+    {
+        if (!_tablet.TabletState && _equipment._currentlyHolding == Equipment.CurrentlyHolding.detonator)
+        {
+            if (_sendDebugLogs) Debug.Log("OnDetonateTrap called.");
+            DetonateTrapAction.Invoke();
+        }
+    }
+
+    //pickup trap input
+    void OnPickupTrap()
+    {
+        if (!_tablet.TabletState && _equipment.TrapDeployed)
+        {
+            if (_sendDebugLogs) Debug.Log("OnPickupTrap called.");
+            PickUpTrapAction.Invoke();
+        }
+    }
+
+    #endregion
+
+    #region Tablet
     void OnToggleTablet()
     {
         if (_sendDebugLogs) Debug.Log("OnTablet called.");
         TabletAction.Invoke();
     }
-
-    void OnFire()
-    {
-        if (_sendDebugLogs) Debug.Log("OnFire called.");
-        if (PullAction.DoEvent()) StartCoroutine(PullAction.RepeatAction(PullAction.ActionDelay));
-        ThrowTrapAction.Invoke();
-        DetonateAction.Invoke();
-    }
-
-    void OnAltFire()
-    {
-        if (_sendDebugLogs) Debug.Log("OnAltFire called.");
-        AltFireAction.Invoke();
-    }
-
-    void OnReturnToShip()
-    {
-        if (_sendDebugLogs) Debug.Log("Attempting ship return.");
-        ReturnToShipAction.Invoke();
-    }
-
-    void OnSwitchTool()
-    {
-        if (_sendDebugLogs) Debug.Log("Switching Tools");
-        SwitchToolAction.Invoke();
-    }
-
     void OnMoveTabLeft()
     {
         if (_tablet.TabletState)
@@ -330,14 +401,49 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    void OnAlienDrop()
-    {
-        if (_sendDebugLogs) Debug.Log("Droping aliens");
-        DropAliensToShip.Invoke();
-    }
+    #endregion
+
+    #region misc
     void OnDisplayPopup()
     {
         if (_sendDebugLogs) Debug.Log("Poping up");
         PopupAction.Invoke();
     }
+
+    void OnReturnToShip()
+    {
+        if (_sendDebugLogs) Debug.Log("Attempting ship return.");
+        ReturnToShipAction.Invoke();
+    }
+
+    #endregion
 }
+
+#region Old Code
+
+/*void OnEnableTrap()
+    {
+        if (!_tablet.TabletState)
+        {
+            if (_sendDebugLogs) Debug.Log("Enabling trap.");
+            EnableTrapAction.Invoke();
+        }
+    }*/
+
+
+/*void OnFire()
+    {
+        if (_sendDebugLogs) Debug.Log("OnFire called.");
+        if (PullAction.DoEvent()) StartCoroutine(PullAction.RepeatAction(PullAction.ActionDelay));
+        ThrowTrapAction.Invoke();
+        DetonateTrapAction.Invoke();
+    }
+
+    void OnAltFire()
+    {
+        if (_sendDebugLogs) Debug.Log("OnAltFire called.");
+        AltFireAction.Invoke();
+    }
+    */
+
+#endregion

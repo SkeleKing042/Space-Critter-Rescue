@@ -1,11 +1,8 @@
 //Created by Ru McPhalin
 //Last edited by Jackson Lucas
 
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Tablet : MonoBehaviour
@@ -13,19 +10,20 @@ public class Tablet : MonoBehaviour
     //Variables
     #region Variables
     [Header("Tablet State"), Tooltip("if the tablet is on or off")]
-    public bool TabletState;
+    private bool _tabletState;
+    public bool TabletState { get { return _tabletState; } }
 
     [Header("Components")]
-    [SerializeField]
-    private Animator _UI_animator;
-    [SerializeField]
-    private UI_Manager _UI_Manager;
-    [SerializeField]
+    [SerializeField] private Animator _UI_animator;
+    [SerializeField] private Animator _Equipment_animator;
+    [SerializeField] private Animator _Tablet_animator;
+
+    //[SerializeField]
+    //private UI_Manager _UI_Manager;
     private Equipment _equipment;
-    [SerializeField]
     private PlayerMovement _playerMovement;
-    [SerializeField]
     private PylonManager _pylonManager;
+    private UI_Manager _ui_Manager;
 
 
     [Header("Tabs")]
@@ -51,10 +49,12 @@ public class Tablet : MonoBehaviour
     [SerializeField] private Color _color_availableTeleport = Color.green;
 
     [Header("Inventory")]
-    private Inventory _invRef;
-    [SerializeField] private List<Image> _largeBackpackSlots;
-    [SerializeField] private List<Image> _smallBackpackSlots;
+    [SerializeField] private GameObject _largeBackpackSlotParent;
+    private List<Image> _largeBackpackSlots = new List<Image>();
+    [SerializeField] private GameObject _smallBackpackSlotParent;
+    private List<Image> _smallBackpackSlots = new List<Image>();
     [SerializeField] private List<Sprite> _critterIcons;
+    private Inventory _invRef;
 
     [Header("SFX")]
     [SerializeField] private AudioSource _SFXSource_Tablet;
@@ -70,14 +70,26 @@ public class Tablet : MonoBehaviour
     private void Awake()
     {
         //find components
+        //_UI_Manager = FindObjectOfType<UI_Manager>();
+        _equipment = FindObjectOfType<Equipment>();
+        _invRef = FindObjectOfType<Inventory>();
         _playerMovement = GetComponentInParent<PlayerMovement>();
         _pylonManager = FindObjectOfType<PylonManager>();
-        _UI_Manager = FindObjectOfType<UI_Manager>();
-        _invRef = FindObjectOfType<Inventory>();
-        _equipment = FindObjectOfType<Equipment>();
+        _ui_Manager = FindObjectOfType<UI_Manager>();
 
         //declare array
         _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
+
+        foreach(var child in _largeBackpackSlotParent.GetComponentsInChildren<Image>())
+        {
+            if (child.name == "Critter Sprite")
+                _largeBackpackSlots.Add(child);
+        }
+        foreach (var child in _smallBackpackSlotParent.GetComponentsInChildren<Image>())
+        {
+            if (child.name == "Critter Sprite")
+                _smallBackpackSlots.Add(child);
+        }
 
         //setup backpack
         SetupBackpack();
@@ -101,31 +113,41 @@ public class Tablet : MonoBehaviour
             //play SFX
             PlaySFX_TabletOff();
 
-            //animate tablet down
-            _equipment._animation_Tablet_Down();
-            
+            //set the right arm animation
+            _Equipment_animator.SetBool("isHolding_Tablet", false);
+
+            //switch case for which arm to bring up
             //up the correct equipment
             switch (_equipment._currentlyHolding)
             {
                 case Equipment.CurrentlyHolding.VC:
                     {
-                        _equipment._animation_VC_Up();
+                        _Equipment_animator.SetBool("isHolding_VC", true);
                         break;
                     }
                 case Equipment.CurrentlyHolding.trap:
                     {
-                        _equipment._animation_Trap_Up();
+                        _Equipment_animator.SetBool("isHolding_Trap", true);
                         break;
                     }
                 case Equipment.CurrentlyHolding.detonator:
                     {
-                        _equipment._animation_Detonator_Up();
+                        _Equipment_animator.SetBool("isHolding_Detonator", true);
                         break;
                     }
             }
 
-            _UI_animator.SetTrigger("UI_Tablet_OFF");
+            //set the tablet animator
+            _Tablet_animator.SetBool("Tablet On", false);
+
+            //set ui
+            _UI_animator.SetBool("UI_TabletState", false);
+            _ui_Manager.SetTabletToggleUI();
+
+            //set tablet state to false
             SetTabletState(false);
+
+            //remove player movement
             _playerMovement.DoMovement = true;
 
         }
@@ -135,30 +157,37 @@ public class Tablet : MonoBehaviour
             //play SFX
             PlaySFX_TabletOn();
 
-            //animate tablet up
-            _equipment._animation_TabletUp();
-
+            //set the right arm animation
+            _Equipment_animator.SetBool("isHolding_Tablet", true);
+            //switch case for which arm to bring up
             //up the correct equipment
             switch (_equipment._currentlyHolding)
             {
                 case Equipment.CurrentlyHolding.VC:
                     {
-                        _equipment._animation_VC_Down();
+                        _Equipment_animator.SetBool("isHolding_VC", false);
                         break;
                     }
                 case Equipment.CurrentlyHolding.trap:
                     {
-                        _equipment._animation_Trap_Down();
+                        _Equipment_animator.SetBool("isHolding_Trap", false);
                         break;
                     }
                 case Equipment.CurrentlyHolding.detonator:
                     {
-                        _equipment._animation_Detonator_Down();
+                        _Equipment_animator.SetBool("isHolding_Detonator", false);
                         break;
                     }
             }
 
-            _UI_animator.SetTrigger("UI_Tablet_ON");
+            //set the tablet animator
+            _Tablet_animator.SetBool("Tablet On", true);
+
+            //set ui
+            _UI_animator.SetBool("UI_TabletState", true);
+            _ui_Manager.SetTabletToggleUI();
+
+
             SetTabletState(true);
 
             _playerMovement.DoMovement = false;
@@ -173,7 +202,7 @@ public class Tablet : MonoBehaviour
     /// <param name="inputBool"></param>
     public void SetTabletState(bool inputBool)
     {
-        TabletState = inputBool;
+        _tabletState = inputBool;
     }
 
     /// <summary>

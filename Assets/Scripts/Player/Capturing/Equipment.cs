@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+//Created by Ru McPharlin
+//Last Edited by Ru
+
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class Equipment : MonoBehaviour
 {
@@ -13,55 +12,56 @@ public class Equipment : MonoBehaviour
         - LB to toggle holding trap
         - LT to throw trap if holding
      */
+
+    [Header("Camera")]
+    [SerializeField]
+    private GameObject _playerCamera;
+
     [Header("Currently Holding")]
     [SerializeField]
     public CurrentlyHolding _currentlyHolding;
 
+
     // Trap Components 
-    [Header("Trap Components")]
-    [SerializeField]
-    public GameObject Trap;
-    [SerializeField]
-    private Rigidbody _trapRigid;
-    [SerializeField]
-    public GameObject Bubble;
+
+
+    //[Header("Trap Components")]
+    //public GameObject _trap;
+    //[SerializeField]
+    //public GameObject Bubble;
 
     // trap forces 
+    //[SerializeField]
+    //private float PickUpRange;
     [Header("Trap Variables")]
+    private GameObject _trapInstance;
+    private Trap _trap;
     [SerializeField]
-    private float PickUpRange;
+    private GameObject _trapPrefab;
     [SerializeField]
-    private float TrapThrowForce;
+    private float _trapThrowForce;
     [SerializeField]
-    private bool _trapDeployed;
-    public bool TrapDeployed { get { return _trapDeployed; } }
+    private bool _trapThrown = false;
+    public bool TrapDeployed { get { return _trapThrown; } }
 
-    [SerializeField]
-    private float _distance;
-
-    [SerializeField]
     private bool _canPickUpTrap;
     public bool CanPickUpTrap { get { return _canPickUpTrap; } }
-    [SerializeField]
-    private Transform _trapPos;
+    //private Transform _trapPos;
 
     // player Components
     [Header("Player Components")]
+    //[SerializeField]
+    //private Tablet _tablet;
+    //[SerializeField]
+    //private Trap _trap;
     [SerializeField]
-    private Tablet _tablet;
-    [SerializeField]
-    private Trap _trap;
-    [SerializeField]
-    private Transform VC_1_Transform;
+    private Transform _trapParent;
 
-    [Header("UI")]
-    [SerializeField]
+    //[Header("UI")]
     private UI_Manager _UI_Manager;
-    [SerializeField]
-    public Animator _UI_animator;
 
-    [Header("Equipment Animator")]
-    public Animator _Equipment_Animator;
+    //[Header("Equipment Animator")]
+    private Animator _Equipment_Animator;
 
     
 
@@ -83,38 +83,25 @@ public class Equipment : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        //get the tablet script
-        _tablet = FindObjectOfType<Tablet>();
+        _trap = FindObjectOfType<Trap>();
+        // get rigidbody
+
+        _UI_Manager = FindObjectOfType<UI_Manager>();
+
+        _Equipment_Animator = GetComponent<Animator>();
 
         // currently holding set to vacuum & set trap parent
         _currentlyHolding = CurrentlyHolding.VC;
 
-        // get rigidbody
-        _trapRigid = Trap.GetComponent<Rigidbody>();
-
-        //bring up the VC
-        _animation_VC_Up();
-
-        _trap = FindObjectOfType<Trap>();
     }
 
     void Update()
     {
-        //checks if the player can pick up the trap
-        if (_trapDeployed && Bubble.activeSelf == false)
-        {
-            _distance = Mathf.Abs(Vector3.Distance(Trap.transform.position, transform.position));
-
-            if (PickUpRange >= _distance)
-            {
-                _canPickUpTrap = true;
-            }
-
-            else
-            {
-                _canPickUpTrap = false;
-            }
-        }
+        /*//checks if the player can pick up the trap
+        if (_trapDeployed && _trap.Bubble.activeSelf == false)
+            _canPickUpTrap = true;
+        else
+            _canPickUpTrap = false;
 
 
         //if the player can pick up the trap
@@ -137,7 +124,7 @@ public class Equipment : MonoBehaviour
                 //update state
                 _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_ActivateTrap_VC);
             }
-        }
+        }*/
     }
     #endregion
 
@@ -153,25 +140,38 @@ public class Equipment : MonoBehaviour
             //if the player is holding the VC
             case CurrentlyHolding.VC:
                 {
-                    //if the trap is not deployed
-                    if(!_trapDeployed)
-                    {
-                        //bring up trap
-                        _animation_VCDown_TrapUp();
+                    //arm animation
+                    _Equipment_Animator.SetBool("isHolding_VC", false);
 
-                        //update ui
-                        _UI_Manager.SetUIState(UI_Manager.UIState.Trap_ThrowTrap_VC);
+                    //Debug.Log("Trap Deployed: " + _trapThrown);
+
+                    //if the trap is not deployed
+                    if (!_trapThrown)
+                    {
+                        //arm animation
+                        _Equipment_Animator.SetBool("isHolding_Trap", true);
+
+                        //bring up trap
+                        SetCurrentlyHolding(CurrentlyHolding.trap);
+
+                        //trap stuff
+
+
+                        /*//update ui
+                        _UI_Manager.SetUIState(UI_Manager.UIState.Trap_ThrowTrap_VC);*/
                     }
                     //if the trap is deployed
                     else
                     {
-                        //bring up the detonator
-                        _animation_VCDown_DetonatorUp();
+                        //arm animation
+                        _Equipment_Animator.SetBool("isHolding_Detonator", true);
 
-                        //IMPLEMENT CHECK FOR IF IT IS PICK UP TRAP OR ACTIVATE TRAP
-                        
-                        //update UI
-                        _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_ActivateTrap_VC);
+                        //bring up the detonator
+                        SetCurrentlyHolding(CurrentlyHolding.detonator);
+
+
+                        /*//update UI
+                        _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_ActivateTrap_VC);*/
                     }
                     break;
                 }
@@ -179,28 +179,36 @@ public class Equipment : MonoBehaviour
             //if the player is currently holding the trap
             case CurrentlyHolding.trap:
                 {
-                    //trap down -> VC Up
-                    _animation_TrapDown_VCUp();
+                    //arm animation
+                    _Equipment_Animator.SetBool("isHolding_Trap", false);
+                    _Equipment_Animator.SetBool("isHolding_VC", true);
 
-                    //update ui
-                    _UI_Manager.SetUIState(UI_Manager.UIState.VC_Suck_Trap);
+                    //trap down -> VC Up
+                    SetCurrentlyHolding(CurrentlyHolding.VC);
+
+                    //trap stuff
+
+
+                    /*//update ui
+                    _UI_Manager.SetUIState(UI_Manager.UIState.VC_Suck_Trap);*/
                     break;
                 }
 
             //if the player is currently holding the detonator
             case CurrentlyHolding.detonator:
                 {
-                    //detonator down -> VC Up
-                    _animation_DetonatorDown_VCUp();
+                    //arm animation
+                    _Equipment_Animator.SetBool("isHolding_Detonator", false);
+                    _Equipment_Animator.SetBool("isHolding_VC", true);
 
-                    //update UI
-                    _UI_Manager.SetUIState(UI_Manager.UIState.VC_Suck_Detonator);
+                    //detonator down -> VC Up
+                    SetCurrentlyHolding(CurrentlyHolding.VC);
+
+                    /*//update UI
+                    _UI_Manager.SetUIState(UI_Manager.UIState.VC_Suck_Detonator);*/
                     break;
                 }
-        }
-
-
-        
+        }        
     }
 
     //Set currently holding
@@ -212,34 +220,44 @@ public class Equipment : MonoBehaviour
     #endregion
 
     #region Trap methods
-
     /// <summary>
     /// of player is currently holding the trap allow to deploy
     ///  if conditions met, add rigidbody, make kinematic false
     /// </summary>
-    public void DeployTrap()
+    public void ThrowTrap()
     {
-        if (_currentlyHolding == CurrentlyHolding.trap)
+        _trapThrown = true;
+
+        _trapInstance = Instantiate(_trapPrefab, _trapParent.position, Quaternion.identity);
+        _trapInstance.GetComponent<Rigidbody>().AddForce(_playerCamera.transform.forward * _trapThrowForce, ForceMode.Impulse);
+
+        //arm animation
+        _Equipment_Animator.SetBool("isHolding_Trap", false);
+        _Equipment_Animator.SetBool("isHolding_Detonator", true);
+
+        //set currently holding
+        SetCurrentlyHolding(CurrentlyHolding.detonator);
+
+
+        /*if (_currentlyHolding == CurrentlyHolding.trap)
         {
             // unassign the trap parent
-            Trap.transform.parent = null;
+            _trap.transform.parent = null;
 
             // enable the collider and allow rigidbody physics
-            Trap.GetComponent<BoxCollider>().enabled = true;
-            Trap.GetComponent<Rigidbody>().isKinematic = false;
+            _trap.GetComponent<BoxCollider>().enabled = true;
+            _trap.GetComponent<Rigidbody>().isKinematic = false;
 
             // " throw" the trap out
-            _trapRigid.AddForce(Camera.main.transform.forward * TrapThrowForce, ForceMode.Impulse);
+            _trap.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * TrapThrowForce, ForceMode.Impulse);
 
             // set to true
             _trapDeployed = true;
 
-            //bring out VC
-            _animation_Detonator_Up();
 
-            //update UI
-            _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_ActivateTrap_VC);
-        }
+            *//*//update UI
+            _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_ActivateTrap_VC);*//*
+        }*/
 
     }
 
@@ -251,43 +269,99 @@ public class Equipment : MonoBehaviour
     /// <param name="trap"></param>
     /// 
 
-    public void pickUpTrap()
+    public void ForcePickupTrap()
     {
-        //find the distance between the player and the trap
-        _distance = Vector3.Distance(Trap.transform.position, transform.position);
-        _distance = Mathf.Abs(_distance);
-        Debug.Log("bubble active" + global::Trap.Catchable);
-        // check if the player is within the range, not holding the trap and the trap is not active
-        if (_distance < PickUpRange && !Bubble.activeInHierarchy)
-        {
-            if (_currentlyHolding == CurrentlyHolding.VC)
-            {
-                _animation_VCDown_TrapUp();
-                //update ui
-                _UI_Manager.SetUIState(UI_Manager.UIState.Trap_ThrowTrap_VC);
-            }
-            else if(_currentlyHolding == CurrentlyHolding.detonator)
-            {
-                _animation_DetonatorDown_TrapUp();
+        _trapThrown = false;
 
-                //update ui
-                _UI_Manager.SetUIState(UI_Manager.UIState.Trap_ThrowTrap_VC);
-            }
-
-
-            // deactovate colliders and stop rigidbody physics
-            Trap.GetComponent<BoxCollider>().enabled = false;
-            Trap.GetComponent<Rigidbody>().isKinematic = true;
-
-            // set to false
-            _trapDeployed = false;
-        }
+        Destroy(_trapInstance);
+        _trapInstance = null;
     }
 
-    #endregion
+    public void pickUpTrap()
+    {
+        if (!_trapInstance.GetComponent<Trap>().IsTrapActivated)
+        {
+            _trapThrown = false;
 
-    #region Animation Methods
-    //bring up the VC
+            Destroy(_trapInstance);
+            _trapInstance = null;
+        }
+
+        /*//Debug.Log("bubble active");
+        if (!_trap.Bubble.activeInHierarchy)
+        {
+            // set to false
+            _trapDeployed = false;
+        }*/
+    }
+
+    public void DetonateTrap()
+    {
+        if (_trapInstance)
+        {
+            if (!_trapInstance.GetComponent<Trap>().IsTrapActivated)
+                _trapInstance.GetComponentInChildren<Animator>().SetTrigger("ActivateTrap");
+        }
+        //arm animator
+        _Equipment_Animator.SetTrigger("ActivateTrap");
+        _Equipment_Animator.SetBool("isHolding_Detonator", false);
+        _Equipment_Animator.SetBool("isHolding_VC", true);
+
+        //Set currently holding
+        SetCurrentlyHolding(CurrentlyHolding.VC);
+    }
+
+
+
+    #endregion
+}
+
+#region Old Code
+/*
+         * //swap to trap
+        // make sure the player isnt holding the trap & that the trap is still with the player
+        if (_currentlyHolding == CurrentlyHolding.VC && _trapDeployed == false && !_tablet.TabletState)
+        {
+            // change enum state
+            _currentlyHolding = CurrentlyHolding.trap;
+
+
+            return;      // return to avoid toggle loop
+        }
+
+        //swap to detonator
+        if (_trapDeployed == true && _currentlyHolding == CurrentlyHolding.VC && !_tablet.TabletState)
+        {
+            *//*PlayerGun.SetActive(false);*//*
+            _currentlyHolding = CurrentlyHolding.detonator;
+
+
+
+            return;
+        }
+
+        //equip vaccuum
+        if ((_currentlyHolding == CurrentlyHolding.trap) && _trapDeployed == false && !_tablet.TabletState)
+        {
+            Trap.SetActive(false);
+
+            _currentlyHolding = CurrentlyHolding.VC;
+
+
+            return;  // return to avoid toggle loop
+        }
+
+        if ((_currentlyHolding == CurrentlyHolding.trap || _currentlyHolding == CurrentlyHolding.detonator) && _trapDeployed == true && !_tablet.TabletState)
+        {
+            *//*PlayerGun.SetActive(true);*//*
+            _currentlyHolding = CurrentlyHolding.VC;
+
+
+            return;
+        }
+
+                                             
+                                             //bring up the VC
     public void _animation_VC_Up()
     {
         Debug.Log("VC UP");
@@ -328,11 +402,11 @@ public class Equipment : MonoBehaviour
         Debug.Log("Trap Up");
 
         //_Equipment_Animator.SetTrigger("");
-        Trap.SetActive(true);
+        _trap.gameObject.SetActive(true);
 
         // set parent to the player
-        Trap.transform.SetParent(VC_1_Transform);
-        Trap.transform.position = _trapPos.position;
+        _trap.transform.SetParent(_trapParent);
+        _trap.transform.position = Vector3.zero;
 
         // set currently holding to the trap
         SetCurrentlyHolding(CurrentlyHolding.trap);
@@ -344,7 +418,7 @@ public class Equipment : MonoBehaviour
         Debug.Log("Trap Down");
 
         //_Equipment_Animator.SetTrigger("");
-        Trap.SetActive(false);
+        _trap.gameObject.SetActive(false);
     }
 
     //bring out the detonator
@@ -437,50 +511,54 @@ public class Equipment : MonoBehaviour
         _Equipment_Animator.SetTrigger("Tablet down");
     }
 
-    #endregion
-}
-
-#region Old Code
-/*
-         * //swap to trap
-        // make sure the player isnt holding the trap & that the trap is still with the player
-        if (_currentlyHolding == CurrentlyHolding.VC && _trapDeployed == false && !_tablet.TabletState)
-        {
-            // change enum state
-            _currentlyHolding = CurrentlyHolding.trap;
-
-
-            return;      // return to avoid toggle loop
-        }
-
-        //swap to detonator
-        if (_trapDeployed == true && _currentlyHolding == CurrentlyHolding.VC && !_tablet.TabletState)
-        {
-            *//*PlayerGun.SetActive(false);*//*
-            _currentlyHolding = CurrentlyHolding.detonator;
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                 //deactivate colliders and stop rigidbody physics
+            _trap.GetComponent<BoxCollider>().enabled = false;
+            _trap.GetComponent<Rigidbody>().isKinematic = true;
+            _trap.transform.position = _trapParent.position;
 
 
+            if (_currentlyHolding == CurrentlyHolding.VC)
+            {
+                //_animation_VCDown_TrapUp();
+                //update ui
+                _UI_Manager.SetUIState(UI_Manager.UIState.Trap_ThrowTrap_VC);
+            }
+            else if(_currentlyHolding == CurrentlyHolding.detonator)
+            {
+                //_animation_DetonatorDown_TrapUp();
 
-            return;
-        }
-
-        //equip vaccuum
-        if ((_currentlyHolding == CurrentlyHolding.trap) && _trapDeployed == false && !_tablet.TabletState)
-        {
-            Trap.SetActive(false);
-
-            _currentlyHolding = CurrentlyHolding.VC;
-
-
-            return;  // return to avoid toggle loop
-        }
-
-        if ((_currentlyHolding == CurrentlyHolding.trap || _currentlyHolding == CurrentlyHolding.detonator) && _trapDeployed == true && !_tablet.TabletState)
-        {
-            *//*PlayerGun.SetActive(true);*//*
-            _currentlyHolding = CurrentlyHolding.VC;
-
-
-            return;
-        }*/
+                //update ui
+                _UI_Manager.SetUIState(UI_Manager.UIState.Trap_ThrowTrap_VC);
+            }                            
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             
+                                             */
 #endregion

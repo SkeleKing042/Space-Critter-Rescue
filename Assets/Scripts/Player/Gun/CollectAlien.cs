@@ -1,18 +1,14 @@
 // Created By Adanna Okoye
-//Last Edited by Adanna Okoye
+//Last Edited by Jackson Lucas
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using Unity.VisualScripting;
 
 public class CollectAlien : MonoBehaviour
 {
     //[Header("Script Refrences")]
     private VacuumGun _vac;
     private Inventory _inv;
+    private Trap _trap;
 
 
     GameObject Alien;
@@ -21,11 +17,12 @@ public class CollectAlien : MonoBehaviour
     {
         _vac = FindObjectOfType<VacuumGun>();
         _inv = FindObjectOfType<Inventory>();
+        _trap = FindObjectOfType<Trap>();
     }
 
     void OnTriggerEnter(Collider creature)
     {
-        if ((creature.gameObject.tag == "alien" || (creature.gameObject.tag == "bigAlien" && Trap.Catchable == true)))
+        if (creature.gameObject.tag == "alien" || (creature.gameObject.tag == "bigAlien" && creature.GetComponent<CreatureAI>().ReadState.GetType() == typeof(CaptureState)))
         {
            // Debug.Log("tags passed");
             if(_vac.Pulling == true)

@@ -22,7 +22,7 @@ public class DrinkingState : State
         if (AIBrainReady())
         {
             //Replenish hydration
-            if (AI.GetComponent<FieldOfView>().CanSeeTarget)
+            if (AI.FieldOfView.CanSeeTarget)
             {
                 AI.RunFromPlayer(1);
                 return;

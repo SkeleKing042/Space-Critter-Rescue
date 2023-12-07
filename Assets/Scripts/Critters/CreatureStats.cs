@@ -28,8 +28,8 @@ public class CreatureStats : MonoBehaviour
     [Header("Navigation")]
     [Tooltip("The maximum distance that a creature will travel from their initial starting position.")]
     public float ExplorationRange;
-    [SerializeField, Tooltip("The increase in speed the creature has while panicing")]
-    private float _panicMulti;
+    [SerializeField, Tooltip("The speed the creature has while panicing")]
+    private float _panicSpeed;
 
 
     private CreatureAI _ai;
@@ -38,6 +38,6 @@ public class CreatureStats : MonoBehaviour
     {
         _ai = GetComponent<CreatureAI>();
 
-        _ai.InitStats(_thirstiness, _lazyness, ExplorationRange, _panicVelocity, _panicMulti);
+        _ai.InitStats(_thirstiness, _lazyness, ExplorationRange, _panicVelocity, _panicSpeed);
     }
 }

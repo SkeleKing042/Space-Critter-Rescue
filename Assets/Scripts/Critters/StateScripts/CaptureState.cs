@@ -39,11 +39,10 @@ public class CaptureState : State
     private void Failsafe()
     {
         stateTime += Time.deltaTime;
-        if(stateTime >= 5)
+        if(stateTime >= 2)
         {
             AI.StunThenRun(2);
         }
-
     }
 
 }

@@ -1,79 +1,66 @@
 // Created by Adanna Okoye
-// Last edited by Adanna Okoye
+// Last edited by Jackson Lucas
 
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using System;
-using UnityEngine.InputSystem.HID;
 //using UnityEngine.InputSystem.Android;
 
 public class VacuumGun : MonoBehaviour
 {
     #region Variables
-    [System.Serializable]
-    public class AlienData
+    private class AlienData
     {
         public GameObject gObject;
         public Rigidbody Rigidbody;
         public CreatureAI AI;
     }
     // alien components 
-    [Header("Alien Components")]
-    public List<AlienData> aData;
-    public Trap trap;
-    public GameObject Bubble;
-    public SoundPropagation Sound;
-    private SafteyCheck _obsticleCheck;
+    //[Header("Alien Components")]
+    private List<AlienData> aData = new List<AlienData>();
+    private Trap _trap;
+    //public GameObject Bubble;
+    private SoundPropagation _sound;
+    //private SafteyCheck _obsticleCheck;
 
     //[Header("Gun Components")]
     //public GameObject Vacuum;
 
-    // movement and position vectors
-    [Header ("Movement and Position Vectors")]
-    Vector3 AlienPosition;
-    Vector3 forward;
-
     // ajustable variables
     [Header("Ajustable Varibles")]
-    [SerializeField]
-    private float SuckSpeed = 5;
-    public float OffsetFixSpeed;
-    public float StunTime;
-    public int layermask;
+    [SerializeField] private float _suckSpeed = 5;
+    [SerializeField] private float _offsetFixSpeed;
+    [SerializeField] private float _stunTime;
+    [SerializeField] private int _layermask;
 
     // fixed varibles 
     [Header("Fixed Varibles")]
     //private float _centralOffset;
     //private bool _mouseDown;
-    public bool Pulling = false;
+    private bool _pulling = false;
+    public bool Pulling { get { return _pulling;  } }
     private float  _alienOffset;
-    private bool _wasJustPulling;
-    
-     
+    //private bool _wasJustPulling;
 
+    [Header("Animators")]
+    [SerializeField] Animator _equipment_Animator;
+    [SerializeField] Animator _VC_animator;
     #endregion
-
+    #region Offset Correction
     private void Awake()
     {
-        _obsticleCheck = FindObjectOfType<SafteyCheck>();
+        _trap = FindObjectOfType<Trap>();
     }
-    #region Offset Correction
 
     void Update()
     {
-
         //  collect alien cosine value in relation to the player
-       
-         foreach (AlienData aData in aData)
-         {
-             forward = transform.right;
-             AlienPosition = aData.gObject.transform.position - transform.position;
-        
-              _alienOffset = Vector3.Dot(forward, AlienPosition);
-         }
-
+        foreach (AlienData aData in aData)
+            if (aData != null && aData.gObject != null)
+            {
+                Vector3 pos = aData.gObject.transform.position - transform.position;
+                _alienOffset = Vector3.Dot(transform.right, pos);
+            }
     }
 
     /// <summary>
@@ -81,26 +68,23 @@ public class VacuumGun : MonoBehaviour
     /// </summary>
     void OffsetCorrection(Rigidbody alien, float offset)
     {
-        bool _comingLeft;
         // check if coming from the left
         if (offset < -0.01) // -1
         {
            // add force to the right
-            alien.AddForce(Vector3.right * OffsetFixSpeed);
+            alien.AddForce(Vector3.right * _offsetFixSpeed);
             // set bool
-            _comingLeft = true;
+            //_comingLeft = true;
         }
         // check if coming from right
         if (offset > 0.01) // 1
         {
             // add force to the left
-            alien.AddForce(-Vector3.right * OffsetFixSpeed); // (-right == left)
+            alien.AddForce(-Vector3.right * _offsetFixSpeed); // (-right == left)
             // set bool
-            _comingLeft = false;
+            //_comingLeft = false;
         }
-
         // add jiggly/spinning when close to the vacuum catcher.
-        
     }
 
     #endregion
@@ -108,45 +92,44 @@ public class VacuumGun : MonoBehaviour
     #region Pulling
     public void Pull()
     {
-       
         // proprapgate sound
-
         //Sound.PropagateSound(0.00001f);
-        if(gameObject.activeSelf == true)
+        if (gameObject.activeSelf == true)
         {
-            Pulling = true;
+            _pulling = true;
+            _equipment_Animator.SetBool("isSucking", true);
+
             foreach (AlienData aData in aData)
             {
                 try
                 {
-                    if (!Physics.Linecast(transform.position, aData.AI.transform.position,layermask ))
+                    if (!Physics.Linecast(transform.position, aData.AI.transform.position, _layermask))
                     {
-                    Debug.DrawRay(transform.position, aData.AI.transform.position, Color.black);
-                    Debug.Log("Nothing inbewtween the alien and the player");
-                        // set alien state to captures
-                        if ((aData.AI._currentState.GetType() != typeof(CaptureState)))
-                        StartCoroutine(aData.AI.UpdateState(new CaptureState(aData.AI), 0f));
-
-                         // find what direction the alien is in 
-                         Vector3 dir = transform.position - aData.Rigidbody.transform.position;
-                         dir = Vector3.Normalize(dir);
-                         //move the alien towards the player
-                         aData.Rigidbody.AddForce(dir * SuckSpeed);
-                        OffsetCorrection(aData.Rigidbody, _alienOffset);
-                     }
+                        Debug.DrawRay(transform.position, aData.AI.transform.position, Color.black);
+                        Debug.Log("Nothing inbewtween the alien and the player");
+                        if ((aData.gObject.tag == "bigAlien" && aData.AI.ReadState.GetType() == typeof(TrappedState)) || aData.gObject.tag == "alien")
+                        {
+                            // set alien state to captures
+                            if ((aData.AI.ReadState.GetType() != typeof(CaptureState)))
+                                //StartCoroutine(aData.AI.UpdateState(new CaptureState(aData.AI), 0f));
+                                aData.AI.PrepareUpdateState(new CaptureState(aData.AI), 0f);
+                            // find what direction the alien is in 
+                            Vector3 dir = transform.position - aData.Rigidbody.transform.position;
+                            dir = Vector3.Normalize(dir);
+                            //move the alien towards the player
+                            aData.Rigidbody.AddForce(dir * _suckSpeed);
+                            OffsetCorrection(aData.Rigidbody, _alienOffset);
+                        }
+                    }
                     else if ((Physics.Linecast(transform.position, aData.AI.transform.position)))
                     {
                         Debug.Log("cannot suck something is in the way");
                     }
-
-
                 }
                 catch (Exception e)
                 {
                     Debug.Log(e);
-                    
                 }
-
             }
         }
         else
@@ -155,29 +138,26 @@ public class VacuumGun : MonoBehaviour
             foreach (AlienData alien in aData)
                 UnassignAlien(alien.gObject);
         }
-
-      
     }
-
     public void EndPull()
     {
-       Pulling = false;
-        foreach(AlienData aData in aData)
+        _pulling = false;
+        _equipment_Animator.SetBool("isSucking", false);
+
+        foreach (AlienData aData in aData)
         {
-            if ((aData.AI._currentState.GetType() == typeof(CaptureState)))
+            if (aData.AI.ReadState.GetType() == typeof(CaptureState))
             {
                 Debug.Log("Ending pull");
                 // set the alien states
-                StartCoroutine(aData.AI.UpdateState(new StunnedState(aData.AI), 0f));
+                aData.AI.StunThenRun(_stunTime);
+                //StartCoroutine(aData.AI.UpdateState(new StunnedState(aData.AI), 0f));
                 // stun time: wait beforethe new state being set changes
-                StartCoroutine(aData.AI.UpdateState(new PanicState(aData.AI), StunTime));
+                //StartCoroutine(aData.AI.UpdateState(new PanicState(aData.AI), _stunTime));
             }
         }
-  
     }
-
     #endregion
-
     #region Collect and Destroy Objects
     /// <summary>
     /// find the alien and setting the values when in range 
@@ -185,7 +165,7 @@ public class VacuumGun : MonoBehaviour
     /// <param name="alien"></param>
     private void OnTriggerEnter(Collider alien)
     {
-        if (alien.gameObject.tag == "alien" || (Trap.Catchable == true && alien.gameObject.tag == "bigAlien"))
+        if (alien.gameObject.tag == "alien" || alien.gameObject.tag == "bigAlien")
         {
             AlienData ad = new AlienData();
             ad.gObject = alien.gameObject;
@@ -197,14 +177,11 @@ public class VacuumGun : MonoBehaviour
     private void OnTriggerExit(Collider alien)
     {
        // Debug.Log("on trigger exit called");
-        if (alien.gameObject.tag == "alien" || (Trap.Catchable == true && alien.gameObject.tag == "bigAlien") && aData.Count > 0)
+        if ((alien.gameObject.tag == "alien" || alien.gameObject.tag == "bigAlien") && aData.Count > 0)
         {
- 
                // Debug.Log("tag check passed");
                 UnassignAlien(alien.gameObject);
-
-            // add state change
-                  
+            // add state change 
         }
 
     }
@@ -218,7 +195,6 @@ public class VacuumGun : MonoBehaviour
             _alienRigid = alien.GetComponent<Rigidbody>();
         }
     }*/
-
     public void UnassignAlien(GameObject alien)
     {
         Debug.Log("Unassign Creature");
@@ -230,9 +206,7 @@ public class VacuumGun : MonoBehaviour
                 aData.Remove(dData);
                 break;
             }
-        }
-          
+        }         
     }
 }
-
 #endregion
