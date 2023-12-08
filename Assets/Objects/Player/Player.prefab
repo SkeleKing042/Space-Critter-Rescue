@@ -658,6 +658,7 @@ MonoBehaviour:
   _trapThrowForce: 5
   _trapThrown: 0
   _trapParent: {fileID: 3977560321636643704}
+  _UI_Animator: {fileID: 2716502566933505675}
 --- !u!95 &7571919666021747437
 Animator:
   serializedVersion: 4
@@ -781,6 +782,10 @@ PrefabInstance:
       propertyPath: SwitchToolAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 7207852762652227241}
+    - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
+      propertyPath: SwitchToolAction.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 3720404078932118332}
     - target: {fileID: 3982310410420848904, guid: 186ee42bb50b3bc4285e9413cd048f16, type: 3}
       propertyPath: MoveTeleportRight.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1125,6 +1130,17 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 6945954609545517184, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
   m_PrefabInstance: {fileID: 5032218823293451787}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3720404078932118332 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8536449501632230711, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}
+  m_PrefabInstance: {fileID: 5032218823293451787}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d31b7db5f99a3804f8b29399384739a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7739379095487518537 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3364685986447403330, guid: d88afeb54391a0f4b9e76939df0f3130, type: 3}

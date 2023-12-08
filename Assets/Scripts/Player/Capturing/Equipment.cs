@@ -62,6 +62,8 @@ public class Equipment : MonoBehaviour
 
     //[Header("Equipment Animator")]
     private Animator _Equipment_Animator;
+    [SerializeField]
+    private Animator _UI_Animator;
 
     
 
@@ -156,9 +158,9 @@ public class Equipment : MonoBehaviour
 
                         //trap stuff
 
-
-                        /*//update ui
-                        _UI_Manager.SetUIState(UI_Manager.UIState.Trap_ThrowTrap_VC);*/
+                        //ui
+                        _UI_Manager.SetUIState(UI_Manager.UIState.Trap_VC);
+                        _UI_Animator.SetBool("UI_TrapState", true);
                     }
                     //if the trap is deployed
                     else
@@ -169,9 +171,8 @@ public class Equipment : MonoBehaviour
                         //bring up the detonator
                         SetCurrentlyHolding(CurrentlyHolding.detonator);
 
-
-                        /*//update UI
-                        _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_ActivateTrap_VC);*/
+                        //ui
+                        _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_VC);
                     }
                     break;
                 }
@@ -186,11 +187,11 @@ public class Equipment : MonoBehaviour
                     //trap down -> VC Up
                     SetCurrentlyHolding(CurrentlyHolding.VC);
 
-                    //trap stuff
+                    //trap off stuff
 
-
-                    /*//update ui
-                    _UI_Manager.SetUIState(UI_Manager.UIState.VC_Suck_Trap);*/
+                    //ui
+                    _UI_Manager.SetUIState(UI_Manager.UIState.VC_Trap);
+                    _UI_Animator.SetBool("UI_TrapState", false);
                     break;
                 }
 
@@ -204,8 +205,8 @@ public class Equipment : MonoBehaviour
                     //detonator down -> VC Up
                     SetCurrentlyHolding(CurrentlyHolding.VC);
 
-                    /*//update UI
-                    _UI_Manager.SetUIState(UI_Manager.UIState.VC_Suck_Detonator);*/
+                    //ui
+                    _UI_Manager.SetUIState(UI_Manager.UIState.VC_Detonator);
                     break;
                 }
         }        
@@ -238,6 +239,9 @@ public class Equipment : MonoBehaviour
         //set currently holding
         SetCurrentlyHolding(CurrentlyHolding.detonator);
 
+        //ui
+        _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_VC);
+        _UI_Animator.SetBool("UI_TrapState", false);
 
         /*if (_currentlyHolding == CurrentlyHolding.trap)
         {
@@ -282,9 +286,23 @@ public class Equipment : MonoBehaviour
         if (!_trapInstance.GetComponent<Trap>().IsTrapActivated)
         {
             _trapThrown = false;
-
             Destroy(_trapInstance);
             _trapInstance = null;
+
+            //SWAP TO TRAP
+            //set currently holding
+            SetCurrentlyHolding(CurrentlyHolding.trap);
+            
+            //equipment animator
+            _Equipment_Animator.SetBool("isHolding_Detonator", false);
+            _Equipment_Animator.SetBool("isHolding_VC", false);
+            _Equipment_Animator.SetBool("isHolding_Trap", true);
+
+            //ui
+            _UI_Manager.SetUIState(UI_Manager.UIState.Trap_VC);
+            _UI_Animator.SetBool("UI_TrapState", true);
+
+            
         }
 
         /*//Debug.Log("bubble active");
@@ -309,6 +327,9 @@ public class Equipment : MonoBehaviour
 
         //Set currently holding
         SetCurrentlyHolding(CurrentlyHolding.VC);
+
+        //ui
+        _UI_Manager.SetUIState(UI_Manager.UIState.VC_Detonator);
     }
 
 

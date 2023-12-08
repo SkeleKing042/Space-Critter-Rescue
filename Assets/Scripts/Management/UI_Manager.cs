@@ -148,9 +148,6 @@ public class UI_Manager : MonoBehaviour
     //BACKPACK VARIABLES
     #region Backpack HUD Variables
     
-
-    
-
     [Header("Backpack HUD")]
     [SerializeField] private Image _backpackIconImage;
     [SerializeField, Tooltip("Backpack sprite, not full")]
@@ -451,6 +448,11 @@ public class UI_Manager : MonoBehaviour
                 _backpackIconImage.sprite = _backpackSprite_Deposit;
                 break;
         }
+    }
+
+    public void SwapToolAnimation()
+    {
+        _UI_animator.SetTrigger("SwapTool");
     }
     #endregion
 
