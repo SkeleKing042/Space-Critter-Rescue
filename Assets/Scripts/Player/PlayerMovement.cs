@@ -255,10 +255,8 @@ public class PlayerMovement : MonoBehaviour
         if (Physics.Raycast(transform.position, -Vector3.up * _lastGroundCheckMaxDistance, out hit, _lastGroundCheckMaxDistance))
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
-            if (hit.collider.tag == "Ground")
-            {
-                _lastGroundPoint = hit.point + new Vector3(0, PlayerHeight, 0);
-            }
+            _lastGroundPoint = hit.point + new Vector3(0, PlayerHeight, 0);
+
         }
 
         float camY = _camera.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
@@ -276,11 +274,9 @@ public class PlayerMovement : MonoBehaviour
             Physics.Raycast(GroundPoints[3], Vector3.down * PlayerHeight, out hit, PlayerHeight, _groundLayer)
             )
         {
-            //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
-            if (hit.collider.tag == "Ground")
-            {                              
-                return true;               
-            }                              
+            //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);                            
+            return true;               
+                     
         }                                  
         return false;                      
     }
@@ -292,14 +288,10 @@ public class PlayerMovement : MonoBehaviour
         if (Physics.Raycast(transform.position, -Vector3.up * PlayerHeight, out hit, PlayerHeight, _groundLayer))
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
-            if (hit.collider.tag == "Ground")
+            if ((Mathf.Acos(hit.normal.y / Vector3.up.y) * Mathf.Rad2Deg) < _maxAngle)
             {
-                if ((Mathf.Acos(hit.normal.y / Vector3.up.y) * Mathf.Rad2Deg) < _maxAngle)
-                {
-                    dir = hit.normal;
-                    Debug.DrawRay(hit.point, dir, Color.red);
-                }
-
+                dir = hit.normal;
+                Debug.DrawRay(hit.point, dir, Color.red);
             }
         }
 

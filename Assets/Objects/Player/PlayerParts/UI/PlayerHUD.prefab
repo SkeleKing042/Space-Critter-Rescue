@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -343,9 +343,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 6b739aa9c355fbb42804679d33d66d94, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1306,9 +1306,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: cc40bc4d0a4d67749ad66c36673cd0e2, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1606,20 +1606,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputMode: 1
   _UIState: 0
+  _backpackState: 0
   _spritesGamepad:
-  - {fileID: 21300000, guid: e0b84a207e3468f409ec93f0d0616967, type: 3}
-  - {fileID: 21300000, guid: e0b84a207e3468f409ec93f0d0616967, type: 3}
-  - {fileID: 21300000, guid: bfff06f2a99a0f74a8a25aff2afb5bdb, type: 3}
-  - {fileID: 21300000, guid: 161deba755f319c4184bfbcb7e5279ef, type: 3}
-  - {fileID: 21300000, guid: f8ab09a559808eb4a9ed057e4549f07d, type: 3}
-  - {fileID: 21300000, guid: e0b84a207e3468f409ec93f0d0616967, type: 3}
+  - {fileID: 21300000, guid: cc40bc4d0a4d67749ad66c36673cd0e2, type: 3}
+  - {fileID: 21300000, guid: cc40bc4d0a4d67749ad66c36673cd0e2, type: 3}
+  - {fileID: 21300000, guid: dac034abf4620c64b868946c5fa6037e, type: 3}
+  - {fileID: 21300000, guid: bb8fae92832968843923dd05764fe72b, type: 3}
+  - {fileID: 21300000, guid: caa16eb96a83c7842a1169839447d57e, type: 3}
+  - {fileID: 21300000, guid: cc40bc4d0a4d67749ad66c36673cd0e2, type: 3}
   _spritesKeyboard:
-  - {fileID: 21300000, guid: f8ef9df803760c74b99467e691fc2aca, type: 3}
-  - {fileID: 21300000, guid: f8ef9df803760c74b99467e691fc2aca, type: 3}
-  - {fileID: 21300000, guid: 744c45bbd30d8934db58f3982def83be, type: 3}
-  - {fileID: 21300000, guid: a37f67108eed7554ba8a8b1db1ec609b, type: 3}
-  - {fileID: 21300000, guid: d04c0bcd22d01d64795d7ec73c1126a8, type: 3}
-  - {fileID: 21300000, guid: f8ef9df803760c74b99467e691fc2aca, type: 3}
+  - {fileID: 21300000, guid: 4e5e622508946c549aa76815346edfbb, type: 3}
+  - {fileID: 21300000, guid: 4e5e622508946c549aa76815346edfbb, type: 3}
+  - {fileID: 21300000, guid: b952e6ea616c7d34182d655bced5ca8f, type: 3}
+  - {fileID: 21300000, guid: 7ba68ef23a86ca643bb93dd3d94d591c, type: 3}
+  - {fileID: 21300000, guid: d2b3c2f403bb8b44ba29bf667b8487b0, type: 3}
+  - {fileID: 21300000, guid: 4e5e622508946c549aa76815346edfbb, type: 3}
   _inputStrings: []
   _Slot1_ToolIcon: {fileID: 9029940793731802816}
   _Slot1_InputIcon: {fileID: 1167445298751661333}
@@ -1638,11 +1639,10 @@ MonoBehaviour:
   _trapThrowSprite: {fileID: 21300000, guid: 9e1c07ae9440b4a44ad968b86a7fb655, type: 3}
   _detonatorSpriteIdle: {fileID: 21300000, guid: eba59d81b94564b4daa09b5f3df59100, type: 3}
   _detonatorSpriteActivate: {fileID: 21300000, guid: 1af6a36c74e4a23439c63fcfdff5ecb0, type: 3}
-  _toggleTabletIcon_Gamepad: {fileID: 21300000, guid: 302a8465fa17b1d48935ce62324f3af8, type: 3}
-  _toggleTabletIcon_Keyboard: {fileID: 21300000, guid: aecaee682074a7442af935989c23dd38, type: 3}
+  _toggleTabletIcon_Gamepad: {fileID: 21300000, guid: 244424177794c8d42a18b381ca850dee, type: 3}
+  _toggleTabletIcon_Keyboard: {fileID: 21300000, guid: 269ea271c91cd1c419254cb28fa93fed, type: 3}
   _TabletToggleIcon: {fileID: 3652836394664479821}
   _TabletToggleText: {fileID: 5656561652071842702}
-  _backpackState: 0
   _backpackIconImage: {fileID: 1606482299373206414}
   _backpackSprite_NotFull: {fileID: 21300000, guid: 90bfb4dbe3871594595fad0c15b41392, type: 3}
   _backpackSprite_Full: {fileID: 21300000, guid: cf05d5f30827c1c4e8d2bd3aef81474f, type: 3}
@@ -1653,8 +1653,8 @@ MonoBehaviour:
   _jetpackSpriteIdle: {fileID: 21300000, guid: b3bb3afd64244284d8996b43478beeed, type: 3}
   _jetpackSpriteActive: {fileID: 21300000, guid: 86c2e5b4c5e4aef43a70bdf104a5175f, type: 3}
   _jetpack_InputImage: {fileID: 5940320304644986708}
-  _jetpack_SpriteGamepad: {fileID: 21300000, guid: c3795c878acadfc458d3f5e76b0a6c6a, type: 3}
-  _jetpack_SpriteKeyboard: {fileID: 21300000, guid: 617583ff4044cce45aec50575262df79, type: 3}
+  _jetpack_SpriteGamepad: {fileID: 21300000, guid: 6b739aa9c355fbb42804679d33d66d94, type: 3}
+  _jetpack_SpriteKeyboard: {fileID: 21300000, guid: a1cebe86058e28f43b1b8696cce1146d, type: 3}
   _fuelBarMain: {fileID: 7598000549119949874}
   _fuelSliderMax: 0.61
   _fuelSliderMin: 0.14
@@ -1953,7 +1953,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 6b739aa9c355fbb42804679d33d66d94, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2860,9 +2860,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: cc40bc4d0a4d67749ad66c36673cd0e2, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -3283,9 +3283,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 244424177794c8d42a18b381ca850dee, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
