@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,7 +40,7 @@ public class Tablet : MonoBehaviour
     [HideInInspector] public int TabIndex = 0;
 
     [System.Serializable]
-    public class ClassedArray 
+    public class ClassedArray
     {
         public Image[] images;
     }
@@ -63,6 +64,21 @@ public class Tablet : MonoBehaviour
     private List<Image> _smallBackpackSlots = new List<Image>();
     [SerializeField] private List<Sprite> _critterIcons;
     private Inventory _invRef;
+
+    [System.Serializable]
+    private class CritterSlider
+    {
+        private Slider _slider;
+        private int _totalInScene;
+    }
+    [SerializeField] private Slider[] _critterSliders;
+
+    [Header("Bars")]
+    private Vector4 _critterCounts;
+    [SerializeField, Range(0f, 1f), Tooltip("The % of Small Critters the player needs to collect to win")]
+    private float _smallPercent;
+    [SerializeField, Range(0f, 1f), Tooltip("The % of Small Critters the player needs to collect to win")]
+    private float _largePercent;
 
     [Header("SFX")]
     [SerializeField] private AudioSource _SFXSource_Tablet;
@@ -88,7 +104,7 @@ public class Tablet : MonoBehaviour
         //declare array
         //_hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
 
-        foreach(var child in _largeBackpackSlotParent.GetComponentsInChildren<Image>())
+        foreach (var child in _largeBackpackSlotParent.GetComponentsInChildren<Image>())
         {
             if (child.name == "Critter Sprite")
                 _largeBackpackSlots.Add(child);
@@ -120,6 +136,26 @@ public class Tablet : MonoBehaviour
 
         //setup map tab
         SetTeleportLocationColors();
+
+        CreatureStats[] stats = FindObjectsOfType<CreatureStats>();
+        foreach (CreatureStats creature in stats)
+        {
+            switch (creature.Type)
+            {
+                case CreatureStats.creatureType.Shroom:
+                    if (creature.IsBig)
+                        _critterCounts.y++;
+                    else if (!creature.IsBig)
+                        _critterCounts.x++;
+                    break;
+                case CreatureStats.creatureType.Crystal:
+                    if (creature.IsBig)
+                        _critterCounts.w++;
+                    else if (!creature.IsBig)
+                        _critterCounts.z++;
+                    break;
+            }
+        }
     }
 
     #endregion
@@ -251,15 +287,15 @@ public class Tablet : MonoBehaviour
     /// <summary>
     /// Runs a method dependant on the tab index
     /// </summary>
-    private void UpdateCurrentTab() 
-    { 
+    private void UpdateCurrentTab()
+    {
         switch (TabIndex)
         {
             case 0:
                 SetupBackpack();
                 break;
             case 1:
-                //FindObjectOfType<GameManager>().UpdateAllBars();
+                SetBars();
                 break;
             case 2:
                 SetTeleportLocationColors();
@@ -318,8 +354,8 @@ public class Tablet : MonoBehaviour
     {
         if (_pylonManager.PylonArray[(int)_teleportIndex.x].Pylons[(int)_teleportIndex.y] == null)
         {
-            for(int x = 0; x < _pylonManager.PylonArray.Length; x++)
-                for(int y = 0; y < _pylonManager.PylonArray[x].Pylons.Length; y++)
+            for (int x = 0; x < _pylonManager.PylonArray.Length; x++)
+                for (int y = 0; y < _pylonManager.PylonArray[x].Pylons.Length; y++)
                 {
                     if (_pylonManager.PylonArray[x].Pylons[y] != null)
                         if (_pylonManager.PylonArray[x].Pylons[y].isOn)
@@ -446,11 +482,11 @@ public class Tablet : MonoBehaviour
     #region BackpackTab
     private void EmptySlots()
     {
-        foreach(Image slot in _largeBackpackSlots)
+        foreach (Image slot in _largeBackpackSlots)
         {
             slot.gameObject.SetActive(false);
         }
-        foreach(Image slot in _smallBackpackSlots)
+        foreach (Image slot in _smallBackpackSlots)
         {
             slot.gameObject.SetActive(false);
         }
@@ -458,21 +494,21 @@ public class Tablet : MonoBehaviour
     private void SetupBackpack()
     {
         EmptySlots();
-        
-        for(int i = 0; i < _invRef.LargeCount; i++)
+
+        for (int i = 0; i < _invRef.LargeCount; i++)
         {
             _largeBackpackSlots[i].gameObject.SetActive(true);
-            if(i < _invRef.Player_Fungi_Large)
+            if (i < _invRef.Player_Fungi_Large)
                 _largeBackpackSlots[i].sprite = _critterIcons[0];
             else
                 _largeBackpackSlots[i].sprite = _critterIcons[1];
             if (i >= _largeBackpackSlots.Count - 1)
                 break;
         }
-        for(int i = 0; i < _invRef.SmallCount; i++)
+        for (int i = 0; i < _invRef.SmallCount; i++)
         {
             _smallBackpackSlots[i].gameObject.SetActive(true);
-            if(i < _invRef.Player_Fungi_Small)
+            if (i < _invRef.Player_Fungi_Small)
                 _smallBackpackSlots[i].sprite = _critterIcons[2];
             else
                 _smallBackpackSlots[i].sprite = _critterIcons[3];
@@ -480,6 +516,26 @@ public class Tablet : MonoBehaviour
                 break;
         }
     }
+    #endregion
+
+    #region BarsTab
+    private void SetBars()
+    {
+        _critterSliders[0].value = _invRef.Ship_Fungi_Small / _critterCounts.x;
+        _critterSliders[1].value = _invRef.Ship_FungiCritter_Large / _critterCounts.y;
+        _critterSliders[2].value = _invRef.ShipCrystalAliens / _critterCounts.z;
+        _critterSliders[3].value = _invRef.Ship_CrystalCritter_Large / _critterCounts.w;
+        VicCheck();
+    }
+
+    bool VicCheck()
+    {
+        if ((_invRef.Ship_Fungi_Small + _invRef.ShipCrystalAliens) / (_critterCounts.x + _critterCounts.z) > _smallPercent &&
+            (_invRef.Ship_FungiCritter_Large + _invRef.Ship_CrystalCritter_Large) / (_critterCounts.y + _critterCounts.w) > _largePercent)
+            return true;
+        else return false;
+    }
+
     #endregion
 
     #region SFX
@@ -520,5 +576,4 @@ public class Tablet : MonoBehaviour
     }
 
     #endregion
-
 }
