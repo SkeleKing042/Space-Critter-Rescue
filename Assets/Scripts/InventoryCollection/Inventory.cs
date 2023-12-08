@@ -136,7 +136,7 @@ public class Inventory : MonoBehaviour
         //if the critter has been added (there was room)
         if (added || Input.GetKeyDown(KeyCode.B))
         {
-            _sound.CritterCollection();
+            //_sound.CritterCollection();
             //play sucked in animation?
 
             //destroy alien

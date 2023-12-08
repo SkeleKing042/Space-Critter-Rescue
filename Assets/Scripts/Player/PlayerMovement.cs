@@ -252,7 +252,7 @@ public class PlayerMovement : MonoBehaviour
     public bool GroundedCheck()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, -Vector3.up * _lastGroundCheckMaxDistance, out hit, _lastGroundCheckMaxDistance))
+        if (Physics.Raycast(transform.position, -Vector3.up * _lastGroundCheckMaxDistance, out hit, _lastGroundCheckMaxDistance, _groundLayer))
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             _lastGroundPoint = hit.point + new Vector3(0, PlayerHeight, 0);
