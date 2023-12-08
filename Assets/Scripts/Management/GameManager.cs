@@ -2,9 +2,62 @@
 //Last edited by Jackson Lucas
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject PauseScreen;
+    enum GameState
+    {
+        Playing,
+        Paused
+    };
+    GameState state;
+    private void Awake()
+    {
+        PauseScreen.SetActive(false);
+        state = GameState.Playing;
+    }
+    public void PauseGame()
+    {
+        if (state == GameState.Playing)
+        {
+            Time.timeScale = 0;
+            FindObjectOfType<PlayerMovement>().DoMovement = false;
+            PauseScreen.SetActive(true);
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+            state = GameState.Paused;
+        }
+    }
+    public void ResumeGame()
+    {
+        if (state == GameState.Paused)
+        {
+            Time.timeScale = 1;
+            FindObjectOfType<PlayerMovement>().DoMovement = true;
+            PauseScreen.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            state = GameState.Playing;
+        }
+    }
+    public void SwitchGameState()
+    {
+        if (state == GameState.Playing)
+            PauseGame();
+        else
+            ResumeGame();
+    }
+    public void ReloadScene()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
+    }
+    public void Quit()
+    {
+        Application.Quit();
+    }
     /*[System.Serializable]
     public class CreatureTrackers
     {

@@ -159,7 +159,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DisplayPopup",
+                    "name": "TogglePauseGame",
                     "type": "Button",
                     "id": "f6b5285e-f9c8-4739-ab9c-304d2e1e99b2",
                     "expectedControlType": "Button",
@@ -205,7 +205,7 @@
                 {
                     "name": "",
                     "id": "eb241264-7d34-4cfa-972d-802af09d1713",
-                    "path": "<Gamepad>/start",
+                    "path": "<Gamepad>/select",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -282,11 +282,22 @@
                 {
                     "name": "",
                     "id": "790ad9c0-8e7b-4f71-9ab8-a30ff1abc752",
-                    "path": "<Keyboard>/o",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "DisplayPopup",
+                    "action": "TogglePauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e46c6498-8613-4c16-ba7d-bbd90d34e3b2",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TogglePauseGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

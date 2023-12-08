@@ -197,7 +197,8 @@ public class InputManager : MonoBehaviour
 
     [Header("misc")]
     public UnityEvent ReturnToShipAction = new UnityEvent();
-    public UnityEvent PopupAction = new UnityEvent();
+    public UnityEvent PauseAction = new UnityEvent();
+    
 
     /* UNSURE IF NEEDED
      * public UnityEvent EnableTrapAction = new UnityEvent();
@@ -395,10 +396,10 @@ public class InputManager : MonoBehaviour
     #endregion
 
     #region misc
-    void OnDisplayPopup()
+    void OnTogglePauseGame()
     {
-        if (_sendDebugLogs) Debug.Log("Poping up");
-        PopupAction.Invoke();
+        if (_sendDebugLogs) Debug.Log("Pausing");
+        PauseAction.Invoke();
     }
 
     void OnReturnToShip()
