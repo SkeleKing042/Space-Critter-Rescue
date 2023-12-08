@@ -7,22 +7,29 @@ using UnityEngine;
 
 public class PylonManager : MonoBehaviour
 {
-    public List<TeleportPylon> Pylons = new List<TeleportPylon>();
+    [System.Serializable]
+    public class arrayYAxis
+    {
+        public TeleportPylon[] Pylons;
+    }
+    [SerializeField]private arrayYAxis[] _pylonArray;
+    public arrayYAxis[] PylonArray { get { return _pylonArray; } }
+    //public List<TeleportPylon> Pylons = new List<TeleportPylon>();
     /// <summary>
     /// Moves the object to a pylon
     /// </summary>
     /// <param name="index"></param>
     /// <param name="sender"></param>
-    public void GoToPylon(int index, GameObject sender)
+    public void GoToPylon(Vector2 index, GameObject sender)
     {
-        Pylons[index].PullObjectHere(sender);
+        _pylonArray[(int)index.x].Pylons[(int)index.y].PullObjectHere(sender);
     }
     /// <summary>
     /// Moves the player to a pylon
     /// </summary>
     /// <param name="index"></param>
-    public void GoToPylon(int index)
+    public void GoToPylon(Vector2 index)
     {
-        Pylons[index].PullObjectHere(GameObject.FindGameObjectWithTag("Player"));
+        _pylonArray[(int)index.x].Pylons[(int)index.y].PullObjectHere(GameObject.FindGameObjectWithTag("Player"));
     }
 }

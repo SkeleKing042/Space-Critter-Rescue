@@ -192,8 +192,7 @@ public class InputManager : MonoBehaviour
     public UnityEvent MoveTabLeft = new UnityEvent();
     public UnityEvent MoveTabRight = new UnityEvent();
     [Space]
-    public UnityEvent MoveTeleportLeft = new UnityEvent();
-    public UnityEvent MoveTeleportRight = new UnityEvent();
+    public UnityEvent<Vector2> MoveTeleport = new UnityEvent<Vector2>();
     public UnityEvent SelectTeleport = new UnityEvent();
 
     [Header("misc")]
@@ -376,20 +375,12 @@ public class InputManager : MonoBehaviour
             MoveTabRight.Invoke();
         }
     }
-    void OnMoveTeleportLeft()
+    void OnMoveTeleport(InputValue value)
     {
         if (_tablet.TabletState)
         {
             if (_sendDebugLogs) Debug.Log("Move Teleport Left Called");
-            MoveTeleportLeft.Invoke();
-        }
-    }
-    void OnMoveTeleportRight()
-    {
-        if (_tablet.TabletState)
-        {
-            if (_sendDebugLogs) Debug.Log("Move Teleport Right Called");
-            MoveTeleportRight.Invoke();
+            MoveTeleport.Invoke(value.Get<Vector2>());
         }
     }
     void OnSelectTeleport()

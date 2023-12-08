@@ -3,6 +3,7 @@
 
 using UnityEditor;
 using UnityEngine;
+using static PylonManager;
 
 [CustomEditor(typeof(PylonManager))]
 public class PylonManagerEditor : Editor
@@ -10,12 +11,16 @@ public class PylonManagerEditor : Editor
     private void OnSceneGUI()
     {
         PylonManager manager = (PylonManager)target;
-        foreach(TeleportPylon pylon in manager.Pylons)
-        {
-            DrawPylonVisuals(pylon);
-            Handles.color = Color.blue;
-            Handles.DrawLine(manager.transform.position, pylon.transform.position);
-        }
+        foreach (arrayYAxis segment in manager.PylonArray)
+            foreach (TeleportPylon pylon in segment.Pylons)
+            {
+                if (pylon != null)
+                {
+                    DrawPylonVisuals(pylon);
+                    Handles.color = Color.blue;
+                    Handles.DrawLine(manager.transform.position, pylon.transform.position);
+                }
+            }
     }
     private void DrawPylonVisuals(TeleportPylon pylon)
     {

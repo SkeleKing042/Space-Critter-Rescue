@@ -1,7 +1,9 @@
 //Created by Ru McPhalin
 //Last edited by Jackson Lucas
 
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,22 +29,28 @@ public class Tablet : MonoBehaviour
 
 
     [Header("Tabs")]
-    [SerializeField, Tooltip("An array that stores the tabs of the tablet")] 
+    [SerializeField, Tooltip("An array that stores the tabs of the tablet")]
     private GameObject[] _tabs;
 
-    [SerializeField, Tooltip("index that stores which tab is the map tab")] 
+    [SerializeField, Tooltip("index that stores which tab is the map tab")]
     public int MapTabIndex;
-    
+
     [SerializeField, Tooltip("index that stores the current tab in the tablet")]
     [HideInInspector] public int TabIndex = 0;
 
+    [System.Serializable]
+    public class ClassedArray 
+    {
+        public Image[] images;
+    }
+
     [Header("Teleport Locations")]
     [Tooltip("array that stores the location image components")]
-    [SerializeField] private Image[] _teleportLocationImages;
+    [SerializeField] private ClassedArray[] _teleportLocationImages;
+    private Vector2 _teleportIndex = new Vector2();
     //[Tooltip("index that stores what teleport location is currently selected")]
-    private int _teleportIndex;
     //[Tooltip("array that stores if the teleport location has been activated")]
-    private bool[] _hasTeleportLocationBeenActivated;
+    private bool[,] _hasTeleportLocationBeenActivated;
     [Space]
     [SerializeField] private Color _color_currentlySelectedTeleport = Color.blue;
     [SerializeField] private Color _color_unavailableTeleport = Color.red;
@@ -78,7 +86,7 @@ public class Tablet : MonoBehaviour
         _ui_Manager = FindObjectOfType<UI_Manager>();
 
         //declare array
-        _hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
+        //_hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
 
         foreach(var child in _largeBackpackSlotParent.GetComponentsInChildren<Image>())
         {
@@ -90,6 +98,21 @@ public class Tablet : MonoBehaviour
             if (child.name == "Critter Sprite")
                 _smallBackpackSlots.Add(child);
         }
+
+        for (int i = 0; i < _teleportLocationImages.Length; i++)// (var segment in imageArray)
+        {
+            if (_teleportLocationImages[i].images.Length != _teleportLocationImages[0].images.Length)
+            {
+                Debug.Log("SIZE MISSMATCH.\nArray cannot be concave.\nFound at index " + i);
+                this.enabled = false;
+            }
+        }
+        foreach (var segment in _teleportLocationImages)
+            foreach (var image in segment.images)
+            {
+                if (image != null)
+                    image.color = _color_unavailableTeleport;
+            }
 
         //setup backpack
         SetupBackpack();
@@ -293,7 +316,34 @@ public class Tablet : MonoBehaviour
     /// </summary>
     private void SetTeleportLocationColors()
     {
-        for (int i = 0; i < _teleportLocationImages.Length; i++)
+        if (_pylonManager.PylonArray[(int)_teleportIndex.x].Pylons[(int)_teleportIndex.y] == null)
+        {
+            for(int x = 0; x < _pylonManager.PylonArray.Length; x++)
+                for(int y = 0; y < _pylonManager.PylonArray[x].Pylons.Length; y++)
+                {
+                    if (_pylonManager.PylonArray[x].Pylons[y] != null)
+                        if (_pylonManager.PylonArray[x].Pylons[y].isOn)
+                            _teleportIndex = new Vector2(x, y);
+                }
+        }
+        for (int x = 0; x < _teleportLocationImages.Length; x++)
+            for (int y = 0; y < _teleportLocationImages[x].images.Length; y++)
+            {
+                if (_teleportLocationImages[x].images[y] == null)
+                    continue;
+
+                if (_pylonManager.PylonArray[x].Pylons[y].isOn)
+                {
+                    if (_teleportIndex == new Vector2(x, y))
+                        _teleportLocationImages[x].images[y].color = _color_currentlySelectedTeleport;
+                    else
+                        _teleportLocationImages[x].images[y].color = _color_availableTeleport;
+                }
+                else
+                    _teleportLocationImages[x].images[y].color = _color_unavailableTeleport;
+            }
+
+        /*for (int i = 0; i < _teleportLocationImages.Length; i++)
         {
             if (_hasTeleportLocationBeenActivated[i])
             {
@@ -305,34 +355,58 @@ public class Tablet : MonoBehaviour
             }
         }
 
-        _teleportLocationImages[_teleportIndex].color = _color_currentlySelectedTeleport;
+        _teleportLocationImages[_teleportIndex].color = _color_currentlySelectedTeleport;*/
     }
 
     /// <summary>
     /// move teleport index left and update colours
     /// </summary>
-    public void MoveTeleportIndexLeft()
+    public void MoveTeleportIndex(Vector2 dir)
     {
+        dir = new Vector2((int)dir.x, (int)dir.y);
         if (TabletState)
             if (TabIndex == MapTabIndex)
             {
-                if (_teleportIndex > 0)
-                {
-                    _teleportIndex--;
-                }
+                //reset inital index
+                if (_pylonManager.PylonArray[(int)_teleportIndex.x].Pylons[(int)_teleportIndex.y].isOn)
+                    _teleportLocationImages[(int)_teleportIndex.x].images[(int)_teleportIndex.y].color = _color_availableTeleport;
                 else
+                    _teleportLocationImages[(int)_teleportIndex.x].images[(int)_teleportIndex.y].color = _color_unavailableTeleport;
+
+                //update index
+                _teleportIndex += new Vector2(dir.x, -dir.y);
+                ValidateIndexBounds();
+
+                while (_teleportLocationImages[(int)_teleportIndex.x].images[(int)_teleportIndex.y] == null || !_pylonManager.PylonArray[(int)_teleportIndex.x].Pylons[(int)_teleportIndex.y].isOn)
                 {
-                    _teleportIndex = _teleportLocationImages.Length - 1;
+                    _teleportIndex += new Vector2(dir.x, -dir.y);
+                    ValidateIndexBounds();
                 }
+
+
+                //update new index
+                _teleportLocationImages[(int)_teleportIndex.x].images[(int)_teleportIndex.y].color = _color_currentlySelectedTeleport;
 
                 SetTeleportLocationColors();
             }
+    }
+    private void ValidateIndexBounds()
+    {
+        //validation check
+        if (_teleportIndex.x >= _teleportLocationImages.Length)
+            _teleportIndex.x = 0;
+        if (_teleportIndex.x < 0)
+            _teleportIndex.x = _teleportLocationImages.Length - 1;
+        if (_teleportIndex.y >= _teleportLocationImages[(int)_teleportIndex.x].images.Length)
+            _teleportIndex.y = 0;
+        if (_teleportIndex.y < 0)
+            _teleportIndex.y = _teleportLocationImages[(int)_teleportIndex.x].images.Length - 1;
     }
 
     /// <summary>
     /// move teleport index right and update colours
     /// </summary>
-    public void MoveTeleportIndexRight()
+    /*public void MoveTeleportIndexRight()
     {
         if (TabletState)
             if (TabIndex == MapTabIndex)
@@ -348,7 +422,7 @@ public class Tablet : MonoBehaviour
 
                 SetTeleportLocationColors();
             }
-    }
+    }*/
 
     /// <summary>
     /// select teleport location
@@ -356,18 +430,17 @@ public class Tablet : MonoBehaviour
     public void SelectTeleport()
     {
         if (TabletState)
-
-            if (_hasTeleportLocationBeenActivated[_teleportIndex])
+            if (_pylonManager.PylonArray[(int)_teleportIndex.x].Pylons[(int)_teleportIndex.y].isOn)
             {
                 ToggleTablet();
                 _pylonManager.GoToPylon(_teleportIndex);
             }
     }
-
+    /*
     public void SethasTeleportBeenActivated(int pylonIndex)
     {
         _hasTeleportLocationBeenActivated[pylonIndex] = true;
-    }
+    }*/
     #endregion
 
     #region BackpackTab
