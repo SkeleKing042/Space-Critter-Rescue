@@ -34,6 +34,7 @@ public class Equipment : MonoBehaviour
     //[SerializeField]
     //private float PickUpRange;
     [Header("Trap Variables")]
+    [SerializeField] private GameObject displayTrap;
     private GameObject _trapInstance;
     private Trap _trap;
     [SerializeField]
@@ -157,6 +158,7 @@ public class Equipment : MonoBehaviour
                         SetCurrentlyHolding(CurrentlyHolding.trap);
 
                         //trap stuff
+                        displayTrap.SetActive(true);
 
                         //ui
                         _UI_Manager.SetUIState(UI_Manager.UIState.Trap_VC);
@@ -188,6 +190,7 @@ public class Equipment : MonoBehaviour
                     SetCurrentlyHolding(CurrentlyHolding.VC);
 
                     //trap off stuff
+                    displayTrap.SetActive(false);
 
                     //ui
                     _UI_Manager.SetUIState(UI_Manager.UIState.VC_Trap);
@@ -228,6 +231,7 @@ public class Equipment : MonoBehaviour
     public void ThrowTrap()
     {
         _trapThrown = true;
+        displayTrap.SetActive(false);
 
         _trapInstance = Instantiate(_trapPrefab, _trapParent.position, Quaternion.identity);
         _trapInstance.GetComponent<Rigidbody>().AddForce(_playerCamera.transform.forward * _trapThrowForce, ForceMode.Impulse);
@@ -292,7 +296,8 @@ public class Equipment : MonoBehaviour
             //SWAP TO TRAP
             //set currently holding
             SetCurrentlyHolding(CurrentlyHolding.trap);
-            
+            displayTrap.SetActive(true);
+
             //equipment animator
             _Equipment_Animator.SetBool("isHolding_Detonator", false);
             _Equipment_Animator.SetBool("isHolding_VC", false);
