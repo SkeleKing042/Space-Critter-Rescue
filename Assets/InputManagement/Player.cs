@@ -181,7 +181,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DisplayPopup"",
+                    ""name"": ""TogglePauseGame"",
                     ""type"": ""Button"",
                     ""id"": ""f6b5285e-f9c8-4739-ab9c-304d2e1e99b2"",
                     ""expectedControlType"": ""Button"",
@@ -227,7 +227,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""eb241264-7d34-4cfa-972d-802af09d1713"",
-                    ""path"": ""<Gamepad>/start"",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -304,11 +304,22 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""790ad9c0-8e7b-4f71-9ab8-a30ff1abc752"",
-                    ""path"": ""<Keyboard>/o"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""DisplayPopup"",
+                    ""action"": ""TogglePauseGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e46c6498-8613-4c16-ba7d-bbd90d34e3b2"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TogglePauseGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -865,7 +876,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_MoveTeleport = m_Player.FindAction("MoveTeleport", throwIfNotFound: true);
         m_Player_MoveTabRight = m_Player.FindAction("MoveTabRight", throwIfNotFound: true);
         m_Player_MoveTabLeft = m_Player.FindAction("MoveTabLeft", throwIfNotFound: true);
-        m_Player_DisplayPopup = m_Player.FindAction("DisplayPopup", throwIfNotFound: true);
+        m_Player_TogglePauseGame = m_Player.FindAction("TogglePauseGame", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -944,7 +955,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MoveTeleport;
     private readonly InputAction m_Player_MoveTabRight;
     private readonly InputAction m_Player_MoveTabLeft;
-    private readonly InputAction m_Player_DisplayPopup;
+    private readonly InputAction m_Player_TogglePauseGame;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -966,7 +977,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @MoveTeleport => m_Wrapper.m_Player_MoveTeleport;
         public InputAction @MoveTabRight => m_Wrapper.m_Player_MoveTabRight;
         public InputAction @MoveTabLeft => m_Wrapper.m_Player_MoveTabLeft;
-        public InputAction @DisplayPopup => m_Wrapper.m_Player_DisplayPopup;
+        public InputAction @TogglePauseGame => m_Wrapper.m_Player_TogglePauseGame;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1027,9 +1038,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @MoveTabLeft.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabLeft;
                 @MoveTabLeft.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabLeft;
                 @MoveTabLeft.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveTabLeft;
-                @DisplayPopup.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDisplayPopup;
-                @DisplayPopup.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDisplayPopup;
-                @DisplayPopup.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDisplayPopup;
+                @TogglePauseGame.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTogglePauseGame;
+                @TogglePauseGame.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTogglePauseGame;
+                @TogglePauseGame.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTogglePauseGame;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1085,9 +1096,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @MoveTabLeft.started += instance.OnMoveTabLeft;
                 @MoveTabLeft.performed += instance.OnMoveTabLeft;
                 @MoveTabLeft.canceled += instance.OnMoveTabLeft;
-                @DisplayPopup.started += instance.OnDisplayPopup;
-                @DisplayPopup.performed += instance.OnDisplayPopup;
-                @DisplayPopup.canceled += instance.OnDisplayPopup;
+                @TogglePauseGame.started += instance.OnTogglePauseGame;
+                @TogglePauseGame.performed += instance.OnTogglePauseGame;
+                @TogglePauseGame.canceled += instance.OnTogglePauseGame;
             }
         }
     }
@@ -1181,7 +1192,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnMoveTeleport(InputAction.CallbackContext context);
         void OnMoveTabRight(InputAction.CallbackContext context);
         void OnMoveTabLeft(InputAction.CallbackContext context);
-        void OnDisplayPopup(InputAction.CallbackContext context);
+        void OnTogglePauseGame(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
