@@ -94,8 +94,8 @@ public class PlayerMovement : MonoBehaviour
     private bool _crouched;
     [SerializeField]
     private Transform _collisionObject;
-    private RumbleManger _instance;
-    private SFXManager _sfxManager;
+    //private RumbleManger _instance;
+    /*private SFXManager _sfxManager;*/
 
     [HideInInspector]
     public Vector3[] GroundPoints = new Vector3[4];
@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
         DoMovement = true;
         _soundPropagation = GetComponentInChildren<SoundPropagation>();
 
-        _instance = FindObjectOfType<RumbleManger>();
+        //_instance = FindObjectOfType<RumbleManger>();
     }
     void FixedUpdate()
     {
@@ -250,7 +250,7 @@ public class PlayerMovement : MonoBehaviour
     public bool GroundedCheck()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, -Vector3.up * _lastGroundCheckMaxDistance, out hit, _lastGroundCheckMaxDistance))
+        if (Physics.Raycast(transform.position, -Vector3.up * _lastGroundCheckMaxDistance, out hit, _lastGroundCheckMaxDistance, _groundLayer))
         {
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
                 _lastGroundPoint = hit.point + new Vector3(0, PlayerHeight, 0);
@@ -333,7 +333,7 @@ public class PlayerMovement : MonoBehaviour
                     PlayerRigidbody.AddForce(forwardForce + sideForce + upForce, ForceMode.Impulse);
                     _jetFuel -= _burstBurn;
                 }
-                    _instance.RumbleStart(1f, 1f, 1);
+                    //_instance.RumbleStart(1f, 1f, 1);
                 }
             _jetInputReady = true;
         }
@@ -362,7 +362,7 @@ public class PlayerMovement : MonoBehaviour
                    
                     _burnTime -= Time.deltaTime;
                 }
-                _instance.RumbleStart(0.1f, 0.9f, 1f);
+                //_instance.RumbleStart(0.1f, 0.9f, 1f);
             }
 
            

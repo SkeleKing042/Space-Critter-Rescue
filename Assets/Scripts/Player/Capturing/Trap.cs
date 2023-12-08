@@ -99,19 +99,26 @@ public class Trap : MonoBehaviour
                 // for every alien in the list get the AI script refrence
                 foreach (GameObject item in _alienList)
                 {
-                    CreatureAI alienAI = item.GetComponent<CreatureAI>();
+                    CreatureAI alienAI;
 
-                    if (alienAI != null)
+                    if (item != null)
                     {
-                        // if the current AI state isnt already stunned then change to stun state
-                        if (alienAI.ReadState.GetType() != typeof(TrappedState) && alienAI.ReadState.GetType() != typeof(CaptureState))
-                        {
-                            //StartCoroutine(_alienAI.UpdateState(new StunnedState(_alienAI), 0f));
-                            alienAI.PrepareUpdateState(new TrappedState(alienAI));
-                            Debug.Log("chnaging states");
-                        }
+                        alienAI = item.GetComponent<CreatureAI>();
 
+                        if (alienAI != null)
+                        {
+                            // if the current AI state isnt already stunned then change to stun state
+                            if (alienAI.ReadState.GetType() != typeof(TrappedState) && alienAI.ReadState.GetType() != typeof(CaptureState))
+                            {
+                                //StartCoroutine(_alienAI.UpdateState(new StunnedState(_alienAI), 0f));
+                                alienAI.PrepareUpdateState(new TrappedState(alienAI));
+                                Debug.Log("chnaging states");
+                            }
+
+                        }
                     }
+
+                    
                     // if the player is trying to pull an alien, set the alien state to capture state
                     /*if (_vacuum.Pulling == true)
                     {
