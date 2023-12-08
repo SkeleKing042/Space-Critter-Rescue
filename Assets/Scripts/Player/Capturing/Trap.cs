@@ -37,6 +37,7 @@ public class Trap : MonoBehaviour
     private bool _trapActivated;
     public bool IsTrapActivated { get { return _trapActivated; } }
     private SFXManager _sfxManager;
+    private SoundPropagation _soundPropagation;
 
     private void Awake()
     {
@@ -48,6 +49,15 @@ public class Trap : MonoBehaviour
         _offSet = new Vector3(1, 0, 1);
         _lerpPathDestination = transform.position - _offSet;
         _sfxManager = FindObjectOfType<SFXManager>();
+        _soundPropagation = Bubble.GetComponent<SoundPropagation>();
+    }
+
+    private void Update()
+    {
+        if(_trapActivated)
+        {
+            _soundPropagation.PropagateSound(0.5f);
+        }
     }
 
     #region Trap Methods

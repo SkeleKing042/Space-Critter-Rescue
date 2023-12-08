@@ -5,19 +5,26 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class SFXManager : MonoBehaviour
 {
     public bool delay;
 
+    public InputAction action;
+    public PlayerInput input;
+
+
     public AudioSource HoldingSource;
     public AudioSource TrapSource;
-    public AudioSource JetPackSource;
+    public AudioSource JetPackSource; 
+
     public AudioSource LegSource;
     public AudioSource ArmSource;
     public AudioSource MiscSource;
 
-
+    public GameObject JetPack;
 
     public List<AudioClip> CollectionSounds; // ill chage this to audio clip later.s
     public List<AudioClip> VacuumSounds;
@@ -25,25 +32,28 @@ public class SFXManager : MonoBehaviour
     public List<AudioClip> DetonatorSounds;
     public List <AudioClip> TrapSounds;
     public List<AudioClip> TabletSounds;
-    public List<AudioSource> FootStepSounds;
+    public List<AudioClip> FootStepSounds;
 
     public AudioSource JetpackFly;
-
-
-    float SoundTimer = 0;
-    [SerializeField] float delayTime;
-    [SerializeField] float RunSpeed;
-    [SerializeField] float SprintSpeed;
-    // varibkles need to mbe moved ONLY FOR TESTING
+    public Transform Player;
 
     [SerializeField] private List<AudioClip> Aliens;
     [SerializeField] private List<AudioClip> AlienSoundSource;
     [SerializeField] private List<CreatureAI> AlienAI;
 
+    float _footstepTimer;
+    float _timer;
+    bool Recharged;
     // Start is called before the first frame update
     void Start()
     {
+        input = GetComponent<PlayerInput>();
+        action = input.Player.Jump;
+        action.Enable();
+
         JetpackFly.Pause();
+        JetPack.SetActive(false);
+        Debug.Log("input is: "+ input);
     }
     private void Update()
     {
@@ -53,8 +63,10 @@ public class SFXManager : MonoBehaviour
             CritterCollection();
         }
 
-        StartCoroutine(Walking());
-
+        if(action.WasReleasedThisFrame())
+        {
+            JetPack.SetActive(false);
+        }
     }
 
     #region Collection
@@ -85,51 +97,58 @@ public class SFXManager : MonoBehaviour
     #region JetPack
     public void Jetpackflying()
     {
-       
-        Debug.Log("jetpack function being called");
-        JetPackSource.PlayOneShot(JetpackSounds[0],1f);
-        
-        if(!JetpackFly.isPlaying)
-         JetpackFly.UnPause();
-  
-            
+            Recharged = false;
+            JetPack.SetActive(true);
 
+    
+        //JetPack.SetActive(false);
         //Looping = false;
         //Source.PlayOneShot(JetpackSounds[2], 1f);
     }
     public void JetpackRecharge()
     {
-        if(!JetPackSource)
+      
+        if (!Recharged)
         {
             JetPackSource.PlayOneShot(JetpackSounds[3], 0.1f);
+            Recharged = true;
+            _footstepTimer = 1;
         }
-        JetpackFly.Pause();
-
-
-
-
-        delay = false;
     }
     #endregion
     #region Player Movement
 
-    public IEnumerator Walking()
+    public void Walking(float magnitude)
     {
         // remeber to frefabe the sound manager
         //  yield return new WaitForSeconds(1);
-        int _soundplayed = UnityEngine.Random.Range(0, FootStepSounds.Count);
-        yield return new WaitForSeconds(1);
-        FootStepSounds[_soundplayed].Play();
-        yield return new WaitForSeconds(1);
+
+        _footstepTimer -= Time.deltaTime;
+
+        if (_footstepTimer < 0 && !LegSource.isPlaying)
+        {
+            LegSource.volume = 15f / magnitude;
+            int _soundplayed = UnityEngine.Random.Range(0, FootStepSounds.Count);
+            LegSource.clip = FootStepSounds[_soundplayed];
+            LegSource.Play();
+            
+            _footstepTimer = 1;
+        }
+       
+  
+     //   LegSource.Stop();
+
+        
+           // LegSource.time();
+     }
+       // FootStepSounds[_soundplayed].Play();
+
         // }
         //if(Sprinting)
         //{
         //    
         //    LegSource.PlayOneShot(FootStepSounds[_soundplayed], 1f);
         //}
-
-    }
-
 
     #endregion
 
@@ -190,6 +209,8 @@ public class SFXManager : MonoBehaviour
         }
 
     }
+  #endregion
 }
 
-    #endregion
+
+  

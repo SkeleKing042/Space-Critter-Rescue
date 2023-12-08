@@ -100,9 +100,13 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public Vector3[] GroundPoints = new Vector3[4];
 
+    public GameObject JetPackSound;
+    bool _jumping;
 
     private void Update()
     {
+        if(!_jumping)
+            JetPackSound.SetActive(false);
 
     }
 
@@ -154,7 +158,7 @@ public class PlayerMovement : MonoBehaviour
             if(!_crouched && horizontalVel.magnitude > _maxSpeed * 0.1f)
             {
                // StartCoroutine(delay());
-                //_sfxManager.Walking(_flooringIt);
+                _sfxManager.Walking(horizontalVel.magnitude);
                 _soundPropagation.PropagateSound(Mathf.Clamp(horizontalVel.magnitude / _maxSpeed, 0, 1));
                
             }
@@ -165,7 +169,8 @@ public class PlayerMovement : MonoBehaviour
         if (_jetFuel < 1 && GroundedCheck())
         {
             _sfxManager.JetpackRecharge();
-            
+            _sfxManager.JetPack.SetActive(false);
+          
             //...refuel the jetpack
             if (_refuelTime > 0)
                 _refuelTime -= Time.deltaTime;
@@ -268,7 +273,7 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             if (hit.collider.tag == "Ground")
             {
-               
+                JetPackSound.SetActive(false);
                 _lastGroundPoint = hit.point + new Vector3(0, PlayerHeight, 0);
             }
         }
@@ -291,7 +296,7 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
             if (hit.collider.tag == "Ground")
             {
-                _sfxManager.JetpackFly.Pause();
+                JetPackSound.SetActive(false);
                 return true;               
             }                              
         }                                  
@@ -373,6 +378,7 @@ public class PlayerMovement : MonoBehaviour
             //If we have fuel...
             if (_jetFuel > 0)
             {
+                _jumping = true;
                 _sfxManager.Jetpackflying();
                 // _sfxManager.Jetpackflying();
                 _soundPropagation.PropagateSound(0.85f);
@@ -394,9 +400,9 @@ public class PlayerMovement : MonoBehaviour
             } 
             if(_jetFuel <= 0)
             {
-                _sfxManager.JetpackFly.Pause();
+                _sfxManager.JetPack.SetActive(false);
             }
-
+            
         }
 
 

@@ -98,7 +98,7 @@ public class VacuumGun : MonoBehaviour
         //Sound.PropagateSound(0.00001f);
         if (gameObject.activeSelf == true)
         {
-            float _timePressed = Time.deltaTime;
+            float _timePressed =+ Time.deltaTime;
             _sfxManager.SuckingSound(_timePressed);
             _pulling = true;
             _equipment_Animator.SetBool("isSucking", true);
