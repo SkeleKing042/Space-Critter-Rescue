@@ -35,7 +35,6 @@ public class SFXManager : MonoBehaviour
     public List<AudioClip> FootStepSounds;
 
     public AudioSource JetpackFly;
-    public Transform Player;
 
     [SerializeField] private List<AudioClip> Aliens;
     [SerializeField] private List<AudioClip> AlienSoundSource;
