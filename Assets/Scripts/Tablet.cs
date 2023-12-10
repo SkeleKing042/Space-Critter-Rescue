@@ -57,11 +57,11 @@ public class Tablet : MonoBehaviour
     [SerializeField] private Color _color_availableTeleport = Color.green;
 
     [Header("Inventory")]
-    [SerializeField] private GameObject _largeBackpackSlotParent;
+    /*[SerializeField] private GameObject _largeBackpackSlotParent;
     private List<Image> _largeBackpackSlots = new List<Image>();
     [SerializeField] private GameObject _smallBackpackSlotParent;
     private List<Image> _smallBackpackSlots = new List<Image>();
-    [SerializeField] private List<Sprite> _critterIcons;
+    [SerializeField] private List<Sprite> _critterIcons;*/
     private Inventory _invRef;
 
     [Header("SFX")]
@@ -88,7 +88,7 @@ public class Tablet : MonoBehaviour
         //declare array
         //_hasTeleportLocationBeenActivated = new bool[_teleportLocationImages.Length];
 
-        foreach(var child in _largeBackpackSlotParent.GetComponentsInChildren<Image>())
+        /*foreach(var child in _largeBackpackSlotParent.GetComponentsInChildren<Image>())
         {
             if (child.name == "Critter Sprite")
                 _largeBackpackSlots.Add(child);
@@ -97,7 +97,7 @@ public class Tablet : MonoBehaviour
         {
             if (child.name == "Critter Sprite")
                 _smallBackpackSlots.Add(child);
-        }
+        }*/
 
         for (int i = 0; i < _teleportLocationImages.Length; i++)// (var segment in imageArray)
         {
@@ -115,7 +115,7 @@ public class Tablet : MonoBehaviour
             }
 
         //setup backpack
-        SetupBackpack();
+        //SetupBackpack();
         //FindObjectOfType<GameManager>().UpdateAllBars();
 
         //setup map tab
@@ -256,13 +256,13 @@ public class Tablet : MonoBehaviour
         switch (TabIndex)
         {
             case 0:
-                SetupBackpack();
+                //SetupBackpack();
                 break;
             case 1:
                 //FindObjectOfType<GameManager>().UpdateAllBars();
                 break;
             case 2:
-                SetTeleportLocationColors();
+                //SetTeleportLocationColors();
                 break;
         }
     }
@@ -444,7 +444,7 @@ public class Tablet : MonoBehaviour
     #endregion
 
     #region BackpackTab
-    private void EmptySlots()
+    /*private void EmptySlots()
     {
         foreach(Image slot in _largeBackpackSlots)
         {
@@ -479,7 +479,7 @@ public class Tablet : MonoBehaviour
             if (i >= _smallBackpackSlots.Count - 1)
                 break;
         }
-    }
+    }*/
     #endregion
 
     #region SFX

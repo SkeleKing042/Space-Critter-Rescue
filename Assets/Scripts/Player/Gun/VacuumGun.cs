@@ -174,6 +174,7 @@ public class VacuumGun : MonoBehaviour
             aData.Add(ad);
         }
     }
+
     private void OnTriggerExit(Collider alien)
     {
        // Debug.Log("on trigger exit called");

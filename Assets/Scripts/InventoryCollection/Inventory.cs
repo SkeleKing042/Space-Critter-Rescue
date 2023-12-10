@@ -8,7 +8,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     #region Variables
-    [Header("Drop off")]
+    /*[Header("Drop off")]
    //[SerializeField, Tooltip("The transform of the drop off GameObject")]
     [SerializeField] private Transform _shipDropOff;
  //   [SerializeField, Tooltip("Players transform"), HideInInspector]
@@ -50,7 +50,7 @@ public class Inventory : MonoBehaviour
 
     [SerializeField, Tooltip("The maximum number of large critters the player can have in their inventory")] 
     private int _player_largeCap;
-    public int LargeCap { get { return _player_largeCap; } }
+    public int LargeCap { get { return _player_largeCap; } }*/
 
     [Header ("Ship Inventory")]
     [SerializeField, Tooltip("The number of small fungi critters on the ship")]
@@ -79,7 +79,7 @@ public class Inventory : MonoBehaviour
         //_playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         //find drop off transform
 
-        try
+        /*try
         {
             _shipDropOff = GameObject.FindGameObjectWithTag("DropOff").transform;
         }
@@ -89,7 +89,7 @@ public class Inventory : MonoBehaviour
             _shipDropOff = transform;
         }
 
-        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;*/
     }
 
     #region Inventory Management Methods
@@ -107,11 +107,11 @@ public class Inventory : MonoBehaviour
             //crystal critter
             case CreatureStats.creatureType.Crystal:
                 //large critter + is room
-                if (alienType.IsBig && _player_largeCount < _player_largeCap)
-                    _player_crystalCritter_Large++;
+                if (alienType.IsBig)
+                    _ship_CrystalCritter_Large++;
                 //small critter + is room
-                else if (!alienType.IsBig && _player_smallCount < _player_smallCap)
-                    _player_crystalCritter_Small++;
+                else if (!alienType.IsBig)
+                    _ship_CrystalCritter_Small++;
                 //is NOT room
                 else
                     added = false;
@@ -119,11 +119,11 @@ public class Inventory : MonoBehaviour
             //fungi critter
             case CreatureStats.creatureType.Shroom:
                 //large critter + is room
-                if (alienType.IsBig && _player_largeCount < _player_largeCap)
-                    _player_fungiCritter_Large++;
+                if (alienType.IsBig)
+                    _ship_FungiCritter_Large++;
                 //small critter + is room
-                else if (!alienType.IsBig && _player_smallCount < _player_smallCap)
-                    _player_fungiCritter_Small++;
+                else if (!alienType.IsBig)
+                    _ship_FungiCritter_Small++;
                 //none of the above (no room)
                 else
                     added = false;
@@ -133,22 +133,13 @@ public class Inventory : MonoBehaviour
                 Debug.Log("Typeless creature found, idk what caused it or how it happened but if you are getting this error you might wanna restart.");
                 break;
         }
-        //if the critter has been added (there was room)
-        if (added || Input.GetKeyDown(KeyCode.B))
-        {
-            //_sound.CritterCollection();
-            //play sucked in animation?
 
-            //destroy alien
-            Destroy(alien);
-        }
-        //update counts
-        _player_smallCount = _player_fungiCritter_Small + _player_crystalCritter_Small;
-        _player_largeCount = _player_crystalCritter_Large + _player_fungiCritter_Large;
+        //play an animation that scales the critter down to nothing as it moves towards the vaccuum gun centre
+        Destroy(alien);
     }
 
     //moves all critter stored in player inventory to ship inventory
-    public void MoveToShip()
+    /*public void MoveToShip()
     {
         //find the distance between the player and the trap
         float distance = Mathf.Abs(Vector3.Distance(_shipDropOff.position, _playerTransform.position));
@@ -165,7 +156,7 @@ public class Inventory : MonoBehaviour
             //reset player inventory
             _player_fungiCritter_Small = _player_fungiCritter_Large = _player_crystalCritter_Small = _player_crystalCritter_Large = _player_smallCount = _player_largeCount = 0;
         }
-    }
+    }*/
     #endregion
 }
 

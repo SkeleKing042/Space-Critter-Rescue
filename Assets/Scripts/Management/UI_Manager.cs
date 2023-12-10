@@ -223,7 +223,7 @@ public class UI_Manager : MonoBehaviour
     void Update()
     {
         JetPackUI_Manager();
-        BackpackHUDManager();
+        //BackpackHUDManager();
     }
 
     #endregion
@@ -430,7 +430,7 @@ public class UI_Manager : MonoBehaviour
     }
     #endregion
 
-    #region Backpack HUD Methods
+    /*#region Backpack HUD Methods
     private void BackpackHUDManager()
     {
         _LC_Slider.fillAmount = (float)_inventory.LargeCount / (float)_inventory.LargeCap;
@@ -448,13 +448,12 @@ public class UI_Manager : MonoBehaviour
                 _backpackIconImage.sprite = _backpackSprite_Deposit;
                 break;
         }
-    }
+    }*/
 
-    public void SwapToolAnimation()
+    /*public void SwapToolAnimation()
     {
         _UI_animator.SetTrigger("SwapTool");
-    }
-    #endregion
+    }*/
 
     #region Tablet Methods
     public void SetTabletToggleUI()
