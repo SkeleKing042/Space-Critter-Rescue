@@ -97,6 +97,17 @@ public class PlayerMovement : MonoBehaviour
     //private RumbleManger _instance;
     /*private SFXManager _sfxManager;*/
 
+    [Header("Current Location")]
+    [SerializeField] public CurrentLocation _currentLocation;
+
+    public enum CurrentLocation
+    {
+        space,
+        crystal,
+        fungus
+    }
+
+
     [HideInInspector]
     public Vector3[] GroundPoints = new Vector3[4];
     void Start()

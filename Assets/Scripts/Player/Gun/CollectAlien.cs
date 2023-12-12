@@ -10,8 +10,9 @@ public class CollectAlien : MonoBehaviour
     private Inventory _inv;
     private Trap _trap;
 
-
-    GameObject Alien;
+    [SerializeField] private Animator _VC_Animator;
+    [SerializeField] int crittersCaught;
+    [SerializeField] bool inAnimation;
 
     private void Awake()
     {
@@ -20,17 +21,29 @@ public class CollectAlien : MonoBehaviour
         _trap = FindObjectOfType<Trap>();
     }
 
-    void OnTriggerEnter(Collider creature)
+    private void Update()
     {
-        if (creature.gameObject.tag == "alien")
+        
+    }
+
+
+    void OnTriggerEnter(Collider critter)
+    {
+        if (critter.gameObject.tag == "alien")
         {
            // Debug.Log("tags passed");
             if(_vac.Pulling == true)
             {
                 //  Debug.Log("Pulling check passed");
-                _inv.AddCritterToInv(creature.gameObject);
-                _vac.UnassignAlien(creature.gameObject);
+                _inv.AddCritterToInv(critter.gameObject);
+                _vac.UnassignAlien(critter.gameObject);
+                _VC_Animator.SetTrigger("SuckTrigger");
             }           
         }
+    }
+
+    public void EndSuckAnimation()
+    {
+        crittersCaught--;
     }
 }

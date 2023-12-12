@@ -323,27 +323,27 @@ public class InputManager : MonoBehaviour
 
     #region Trap
     //throw trap input
-    void OnThrowTrap()
+    /*void OnThrowTrap()
     {
         if (!_tablet.TabletState && !_equipment.TrapDeployed && _equipment._currentlyHolding == Equipment.CurrentlyHolding.trap)
         {
             if (_sendDebugLogs) Debug.Log("OnThrowTrapAction called.");
             ThrowTrapAction.Invoke();
         }
-    }
+    }*/
 
     //detonate trap input
-    void OnDetonateTrap()
+    /*void OnDetonateTrap()
     {
         if (!_tablet.TabletState && _equipment._currentlyHolding == Equipment.CurrentlyHolding.detonator)
         {
             if (_sendDebugLogs) Debug.Log("OnDetonateTrap called.");
             DetonateTrapAction.Invoke();
         }
-    }
+    }*/
 
     //pickup trap input
-    void OnPickupTrap()
+    /*void OnPickupTrap()
     {
         if (!_tablet.TabletState && _equipment.TrapDeployed)
         {
@@ -351,7 +351,7 @@ public class InputManager : MonoBehaviour
             PickUpTrapAction.Invoke();
         }
     }
-
+*/
     #endregion
 
     #region Tablet

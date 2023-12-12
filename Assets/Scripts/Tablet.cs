@@ -18,7 +18,6 @@ public class Tablet : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Animator _UI_animator;
     [SerializeField] private Animator _Equipment_animator;
-    [SerializeField] private Animator _Tablet_animator;
 
     //[SerializeField]
     //private UI_Manager _UI_Manager;
@@ -119,7 +118,7 @@ public class Tablet : MonoBehaviour
         //FindObjectOfType<GameManager>().UpdateAllBars();
 
         //setup map tab
-        SetTeleportLocationColors();
+        //SetTeleportLocationColors();
     }
 
     #endregion
@@ -148,7 +147,7 @@ public class Tablet : MonoBehaviour
                         _Equipment_animator.SetBool("isHolding_VC", true);
                         break;
                     }
-                case Equipment.CurrentlyHolding.trap:
+                /*case Equipment.CurrentlyHolding.trap:
                     {
                         _Equipment_animator.SetBool("isHolding_Trap", true);
                         break;
@@ -157,11 +156,8 @@ public class Tablet : MonoBehaviour
                     {
                         _Equipment_animator.SetBool("isHolding_Detonator", true);
                         break;
-                    }
+                    }*/
             }
-
-            //set the tablet animator
-            _Tablet_animator.SetBool("Tablet On", false);
 
             //set ui
             _UI_animator.SetBool("UI_TabletState", false);
@@ -191,7 +187,7 @@ public class Tablet : MonoBehaviour
                         _Equipment_animator.SetBool("isHolding_VC", false);
                         break;
                     }
-                case Equipment.CurrentlyHolding.trap:
+                /*case Equipment.CurrentlyHolding.trap:
                     {
                         _Equipment_animator.SetBool("isHolding_Trap", false);
                         break;
@@ -200,11 +196,8 @@ public class Tablet : MonoBehaviour
                     {
                         _Equipment_animator.SetBool("isHolding_Detonator", false);
                         break;
-                    }
+                    }*/
             }
-
-            //set the tablet animator
-            _Tablet_animator.SetBool("Tablet On", true);
 
             //set ui
             _UI_animator.SetBool("UI_TabletState", true);
@@ -387,7 +380,7 @@ public class Tablet : MonoBehaviour
                 //update new index
                 _teleportLocationImages[(int)_teleportIndex.x].images[(int)_teleportIndex.y].color = _color_currentlySelectedTeleport;
 
-                SetTeleportLocationColors();
+                //SetTeleportLocationColors();
             }
     }
     private void ValidateIndexBounds()

@@ -33,7 +33,7 @@ public class Equipment : MonoBehaviour
     // trap forces 
     //[SerializeField]
     //private float PickUpRange;
-    [Header("Trap Variables")]
+/*    [Header("Trap Variables")]
     [SerializeField] private GameObject displayTrap;
     private GameObject _trapInstance;
     private Trap _trap;
@@ -46,7 +46,7 @@ public class Equipment : MonoBehaviour
     public bool TrapDeployed { get { return _trapThrown; } }
 
     private bool _canPickUpTrap;
-    public bool CanPickUpTrap { get { return _canPickUpTrap; } }
+    public bool CanPickUpTrap { get { return _canPickUpTrap; } }*/
     //private Transform _trapPos;
 
     // player Components
@@ -55,13 +55,14 @@ public class Equipment : MonoBehaviour
     //private Tablet _tablet;
     //[SerializeField]
     //private Trap _trap;
-    [SerializeField]
-    private Transform _trapParent;
+/*    [SerializeField]
+    private Transform _trapParent;*/
 
-    //[Header("UI")]
+    [Header("UI")]
     private UI_Manager _UI_Manager;
 
-    //[Header("Equipment Animator")]
+    [Header("Equipment Animator")]
+    [SerializeField]
     private Animator _Equipment_Animator;
     [SerializeField]
     private Animator _UI_Animator;
@@ -74,8 +75,8 @@ public class Equipment : MonoBehaviour
     public enum CurrentlyHolding
     {
         VC,
-        trap,
-        detonator
+/*        trap,
+        detonator*/
     }
     #endregion
 
@@ -86,7 +87,7 @@ public class Equipment : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        _trap = FindObjectOfType<Trap>();
+        /*_trap = FindObjectOfType<Trap>();*/
         // get rigidbody
 
         _UI_Manager = FindObjectOfType<UI_Manager>();
@@ -128,6 +129,18 @@ public class Equipment : MonoBehaviour
                 _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_ActivateTrap_VC);
             }
         }*/
+
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            if(_Equipment_Animator.GetBool("isGangsta"))
+            {
+                _Equipment_Animator.SetBool("isGangsta", false);
+            }
+            else
+            {
+                _Equipment_Animator.SetBool("isGangsta", true);
+            }
+        }
     }
     #endregion
 
@@ -135,7 +148,7 @@ public class Equipment : MonoBehaviour
     /// <summary>
     /// toggle between Vacuum and Trap/Detonator
     /// </summary>
-    public void Toggle()
+    /*public void Toggle()
     {
         //dependant on what the player is currently holding
         switch (_currentlyHolding)
@@ -161,7 +174,6 @@ public class Equipment : MonoBehaviour
                         displayTrap.SetActive(true);
 
                         //ui
-                        _UI_Manager.SetUIState(UI_Manager.UIState.Trap_VC);
                         _UI_Animator.SetBool("UI_TrapState", true);
                     }
                     //if the trap is deployed
@@ -174,7 +186,6 @@ public class Equipment : MonoBehaviour
                         SetCurrentlyHolding(CurrentlyHolding.detonator);
 
                         //ui
-                        _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_VC);
                     }
                     break;
                 }
@@ -219,11 +230,12 @@ public class Equipment : MonoBehaviour
     public void SetCurrentlyHolding(CurrentlyHolding inputState)
     {
         _currentlyHolding = inputState;
-    }
+    }*/
 
     #endregion
 
     #region Trap methods
+/*
     /// <summary>
     /// of player is currently holding the trap allow to deploy
     ///  if conditions met, add rigidbody, make kinematic false
@@ -247,7 +259,7 @@ public class Equipment : MonoBehaviour
         _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_VC);
         _UI_Animator.SetBool("UI_TrapState", false);
 
-        /*if (_currentlyHolding == CurrentlyHolding.trap)
+        *//*if (_currentlyHolding == CurrentlyHolding.trap)
         {
             // unassign the trap parent
             _trap.transform.parent = null;
@@ -265,7 +277,7 @@ public class Equipment : MonoBehaviour
 
             *//*//update UI
             _UI_Manager.SetUIState(UI_Manager.UIState.Detonator_ActivateTrap_VC);*//*
-        }*/
+        }*//*
 
     }
 
@@ -310,12 +322,12 @@ public class Equipment : MonoBehaviour
             
         }
 
-        /*//Debug.Log("bubble active");
+        *//*//Debug.Log("bubble active");
         if (!_trap.Bubble.activeInHierarchy)
         {
             // set to false
             _trapDeployed = false;
-        }*/
+        }*//*
     }
 
     public void DetonateTrap()
@@ -338,7 +350,7 @@ public class Equipment : MonoBehaviour
     }
 
 
-
+*/
     #endregion
 }
 
