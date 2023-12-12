@@ -44,9 +44,7 @@ public class VacuumGun : MonoBehaviour
 
     [Header("Animators")]
     [SerializeField] Animator _equipment_Animator;
-    [SerializeField] Animator _VC_animator;
 
-    [SerializeField] int timesToPlaySuckAnimation;
     #endregion
     #region Offset Correction
     private void Awake()
