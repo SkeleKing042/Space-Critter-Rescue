@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 243367162172429071}
   - component: {fileID: 3805337933041851562}
   - component: {fileID: 1381393396665919584}
-  - component: {fileID: 6307715886185736967}
+  - component: {fileID: 572201002280246828}
   m_Layer: 0
   m_Name: fungi_LargeInterInterestingMushroom (1)
   m_TagString: Untagged
@@ -85,19 +85,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6307715886185736967
-BoxCollider:
+--- !u!136 &572201002280246828
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 588649429691009461}
-  m_Material: {fileID: 13400000, guid: be1d6dec3da32aa49aedd3d904d443b7, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 208.69373, y: 248.67056, z: 208.69373}
-  m_Center: {x: 0, y: 163.26015, z: 0}
+  m_Radius: 36.5
+  m_Height: 415.6
+  m_Direction: 1
+  m_Center: {x: -0.00097641046, y: 163.2604, z: -0.00073181366}
 --- !u!1 &8097114570762052939
 GameObject:
   m_ObjectHideFlags: 0
