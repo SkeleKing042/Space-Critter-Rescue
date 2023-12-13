@@ -77,6 +77,7 @@ public class CreatureAI : MonoBehaviour
     private FieldOfView _fovRef;
     public FieldOfView FieldOfView { get { return _fovRef; } }
 
+
     //State Management
     [System.Serializable]
     private class StateWDelay
@@ -329,8 +330,6 @@ public class CreatureAI : MonoBehaviour
     /// <returns></returns>
     public void PrepareUpdateState(State newState, float delay)
     {
-        if (newState.GetType() == typeof(PanicState))
-            Debug.Log("Reading a panic state");
         _stateBuffer.Add(new StateWDelay(newState, delay));
         //Debug.Log("Added " + newState.ToString() + " to the state buffer with a " + delay + " second delay.\nBuffer now has " + _stateBuffer.Count + " enties."); 
     }

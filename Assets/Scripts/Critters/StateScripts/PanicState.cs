@@ -12,7 +12,7 @@ public class PanicState : State
     {
         if (AIBrainReady())
         {
-            Debug.Log("Changing to panic state");
+            //Debug.Log("Changing to panic state");
             AI.RigidMode(false);
             AI.GetAgent.enabled = true;
             //AI.Animator.SetBool("PanicState", true);

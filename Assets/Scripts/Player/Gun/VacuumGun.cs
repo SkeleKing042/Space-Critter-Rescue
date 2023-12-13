@@ -17,7 +17,7 @@ public class VacuumGun : MonoBehaviour
     }
     // alien components 
     //[Header("Alien Components")]
-    private List<AlienData> aData = new List<AlienData>();
+    private List<AlienData> _aData = new List<AlienData>();
     private Trap _trap;
     //public GameObject Bubble;
     private SoundPropagation _sound;
@@ -55,7 +55,7 @@ public class VacuumGun : MonoBehaviour
     void Update()
     {
         //  collect alien cosine value in relation to the player
-        foreach (AlienData aData in aData)
+        foreach (AlienData aData in _aData)
             if (aData != null && aData.gObject != null)
             {
                 Vector3 pos = aData.gObject.transform.position - transform.position;
@@ -99,14 +99,15 @@ public class VacuumGun : MonoBehaviour
             _pulling = true;
             _equipment_Animator.SetBool("isSucking", true);
 
-            foreach (AlienData aData in aData)
+            List<AlienData> eraseList = new List<AlienData>();
+            foreach (AlienData aData in _aData)
             {
                 try
                 {
                     if (!Physics.Linecast(transform.position, aData.AI.transform.position, _layermask))
                     {
                         Debug.DrawRay(transform.position, aData.AI.transform.position, Color.black);
-                        Debug.Log("Nothing inbewtween the alien and the player");
+                        //Debug.Log("Nothing inbewtween the alien and the player");
                         if ((aData.gObject.tag == "bigAlien" && aData.AI.ReadState.GetType() == typeof(TrappedState)) || aData.gObject.tag == "alien")
                         {
                             // set alien state to captures
@@ -129,13 +130,18 @@ public class VacuumGun : MonoBehaviour
                 catch (Exception e)
                 {
                     Debug.Log(e);
+                    eraseList.Add(aData);
                 }
+            }
+            foreach (var erasable in eraseList)
+            {
+                _aData.Remove(erasable);
             }
         }
         else
         {
             EndPull();
-            foreach (AlienData alien in aData)
+            foreach (AlienData alien in _aData)
                 UnassignAlien(alien.gObject);
         }
     }
@@ -144,7 +150,7 @@ public class VacuumGun : MonoBehaviour
         _pulling = false;
         _equipment_Animator.SetBool("isSucking", false);
 
-        foreach (AlienData aData in aData)
+        foreach (AlienData aData in _aData)
         {
             if (aData.AI.ReadState.GetType() == typeof(CaptureState))
             {
@@ -171,14 +177,14 @@ public class VacuumGun : MonoBehaviour
             ad.gObject = alien.gameObject;
             ad.AI = alien.GetComponent<CreatureAI>();
             ad.Rigidbody = alien.GetComponent<Rigidbody>();
-            aData.Add(ad);
+            _aData.Add(ad);
         }
     }
 
     private void OnTriggerExit(Collider alien)
     {
        // Debug.Log("on trigger exit called");
-        if ((alien.gameObject.tag == "alien" || alien.gameObject.tag == "bigAlien") && aData.Count > 0)
+        if ((alien.gameObject.tag == "alien" || alien.gameObject.tag == "bigAlien") && _aData.Count > 0)
         {
                // Debug.Log("tag check passed");
                 UnassignAlien(alien.gameObject);
@@ -198,13 +204,13 @@ public class VacuumGun : MonoBehaviour
     }*/
     public void UnassignAlien(GameObject alien)
     {
-        Debug.Log("Unassign Creature");
-        foreach (AlienData dData in aData)
+        //Debug.Log("Unassign Creature");
+        foreach (AlienData dData in _aData)
         {
             if (dData.gObject == alien)
             {
                 
-                aData.Remove(dData);
+                _aData.Remove(dData);
                 break;
             }
         }         
