@@ -519,8 +519,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 1
+  m_Center: {x: -0.4, y: 0, z: -0.8}
 --- !u!114 &2025321122069800002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,8 +588,6 @@ MonoBehaviour:
   _stunTime: 2
   _layermask: 0
   _equipment_Animator: {fileID: 0}
-  _VC_animator: {fileID: 0}
-  timesToPlaySuckAnimation: 0
 --- !u!114 &2025321121461694841
 MonoBehaviour:
   m_ObjectHideFlags: 0
