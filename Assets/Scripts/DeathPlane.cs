@@ -10,7 +10,7 @@ public class DeathPlane : MonoBehaviour
         Debug.Log(other.name + " has hit the deathplane...");
         if (other.tag == "Player")
         {
-            other.transform.parent.GetComponent<PlayerMovement>().ReturnToLastGrounedPoint();
+            other.transform.parent.GetComponent<PlayerMovement>().ReturnToNearPylon();
         }
         if (other.tag.ToLower() == "trap")
         {

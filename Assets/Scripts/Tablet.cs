@@ -387,16 +387,12 @@ public class Tablet : MonoBehaviour
     private bool Validate2DArrayOutput()
     {
         bool b = false;
-        if (GetIndexAtPosition() < 0)
+        if (GetIndexAtPosition() < 0 || GetIndexAtPosition() > _pylonManager.PylonArray.Length)
             b = false;
         else
-        {
             if (_pylonManager.PylonArray[GetIndexAtPosition()])
-            {
                 b = true;
-            }
-        }
-        Debug.Log("The position of " + _teleportIndex.ToString() + " is " + b);
+        //Debug.Log("The position of " + _teleportIndex.ToString() + " is " + b);
         return b;
     }
     /// <summary>
@@ -417,15 +413,16 @@ public class Tablet : MonoBehaviour
                         continue;
 
                     //If this location is the teleport index, that is were the cursor should be
-                    if (new Vector2(x, y) == _teleportIndex)
-                    {
-                        _teleportLocationImages[x].Images[y].color = _color_currentlySelectedTeleport;
-                    }
                     else
                     {
                         //Change the image colour depending of if the pylon is on or off.
                         if (_pylonManager.PylonArray[GetIndexAtPosition(x, y)].isOn)
                         {
+                            if (!_pylonManager.PylonArray[GetIndexAtPosition()].isOn)
+                            {
+                                _teleportIndex = new Vector2(x, y);
+                            }
+                            else
                             _teleportLocationImages[x].Images[y].color = _color_availableTeleport;
                         }
                         else
@@ -437,6 +434,7 @@ public class Tablet : MonoBehaviour
                 }
             }
         }
+        _teleportLocationImages[(int)_teleportIndex.x].Images[(int)_teleportIndex.y].color = _color_currentlySelectedTeleport;
     }
     /*private void SetTeleportLocationColors()
     {
@@ -495,31 +493,25 @@ public class Tablet : MonoBehaviour
     /// </summary>
     public void UpdateArrayIndex(Vector2 amount)
     {
-        //Create a new v2 for safety
-        Vector2 newIndex = Vector2.zero;
-
         if (TabletState)
-            newIndex = _teleportIndex + amount;
-
-        //Check if the new index is within the bounds of the array
-        if (newIndex.x >= _teleportLocationImages.Length)
-            newIndex.x = 0;
-        if (newIndex.x < 0)
-            newIndex.x = _teleportLocationImages.Length - 1;
-        if (newIndex.y >= _teleportLocationImages[(int)newIndex.x].Images.Length)
-            newIndex.y = 0;
-        if (newIndex.y < 0)
-            newIndex.y = _teleportLocationImages[(int)newIndex.x].Images.Length - 1;
-
-        //Check if the data at this new index is valid
-        if (_teleportLocationImages[(int)newIndex.x].Images[(int)newIndex.y] == null || Validate2DArrayOutput())
         {
-            UpdateArrayIndex(amount);
+            _teleportIndex += amount;
+            //Check if the new index is within the bounds of the array
+            if (_teleportIndex.x >= _teleportLocationImages.Length)
+                _teleportIndex.x = 0;
+            if (_teleportIndex.x < 0)
+                _teleportIndex.x = _teleportLocationImages.Length - 1;
+            if (_teleportIndex.y >= _teleportLocationImages[(int)_teleportIndex.x].Images.Length)
+                _teleportIndex.y = 0;
+            if (_teleportIndex.y < 0)
+                _teleportIndex.y = _teleportLocationImages[(int)_teleportIndex.x].Images.Length - 1;
+
+            if (GetIndexAtPosition(_teleportIndex) == -1 || _pylonManager.PylonArray[GetIndexAtPosition(_teleportIndex)] == null)
+            {
+                UpdateArrayIndex(amount);
+            }
+            Update2DArrayVisuals();
         }
-
-        _teleportIndex = newIndex;
-
-        Update2DArrayVisuals();
     }
     /*public void MoveTeleportIndex(Vector2 dir)
     {

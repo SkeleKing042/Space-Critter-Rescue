@@ -310,6 +310,34 @@ public class PlayerMovement : MonoBehaviour
         PlayerRigidbody.velocity = Vector3.zero;       
         transform.position = _lastGroundPoint + RespawnOffset;
     }     
+    public void ReturnToNearPylon()
+    {
+        PlayerRigidbody.velocity = Vector3.zero;
+        PylonManager manager = FindObjectOfType<PylonManager>();
+        TeleportPylon targetPylon = null;
+        for (int i = 0; i < 10; i++)
+        {
+            foreach (TeleportPylon pylon in manager.PylonArray)
+            {
+                if (pylon.isOn)
+                    if (targetPylon == null || Vector3.Distance(transform.position, targetPylon.transform.position) > Vector3.Distance(transform.position, pylon.transform.position))
+                    {
+                        targetPylon = pylon;
+                    }
+            }
+            if (targetPylon != null)
+            {
+                targetPylon.PullObjectHere(gameObject);
+                break;
+            }
+            else
+            {
+                Debug.Log("No pylons on. Make sure the play has to pass one");
+            }
+        }
+        //Set player transform to pylon transform - class plyon funct???
+        //transform.position = _lastGroundPoint + RespawnOffset;
+    }
     #endregion
 
     #region Jumping
