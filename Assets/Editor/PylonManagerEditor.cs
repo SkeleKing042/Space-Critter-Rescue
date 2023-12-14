@@ -11,17 +11,16 @@ public class PylonManagerEditor : Editor
     private void OnSceneGUI()
     {
         PylonManager manager = (PylonManager)target;
-        foreach (arrayYAxis segment in manager.PylonArray)
-            foreach (TeleportPylon pylon in segment.Pylons)
+        foreach (TeleportPylon pylon in manager.PylonArray)
+        {
+            if (pylon != null)
             {
-                if (pylon != null)
-                {
-                    DrawPylonVisuals(pylon);
-                    Handles.color = Color.blue;
-                    Handles.DrawLine(manager.transform.position, pylon.transform.position);
-                }
+                DrawPylonVisuals(pylon);
+                Handles.color = Color.blue;
+                Handles.DrawLine(manager.transform.position, pylon.transform.position);
             }
-    }
+        }
+    } 
     private void DrawPylonVisuals(TeleportPylon pylon)
     {
         Handles.color = new Color(0.5f, 0.65f, 0, 0.5f);

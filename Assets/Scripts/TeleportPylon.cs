@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class TeleportPylon : MonoBehaviour
 {
-    [SerializeField] int pylonIndex;
     [SerializeField] GameObject On;
     [SerializeField] GameObject Off;
     public bool isOn = false;
