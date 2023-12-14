@@ -32,6 +32,8 @@ public class VacuumGun : MonoBehaviour
     [SerializeField] private float _offsetFixSpeed;
     [SerializeField] private float _stunTime;
     [SerializeField] private int _layermask;
+    [SerializeField] private float _rumbleHigh;
+    [SerializeField] private float _rumbleLow;
 
     // fixed varibles 
     [Header("Fixed Varibles")]
@@ -41,6 +43,9 @@ public class VacuumGun : MonoBehaviour
     public bool Pulling { get { return _pulling;  } }
     private float  _alienOffset;
     //private bool _wasJustPulling;
+    private RumbleManger _rumbleManger;
+    private SFXManager _sfxManager;
+    private float _timer;
 
     [Header("Animators")]
     [SerializeField] Animator _equipment_Animator;
@@ -50,6 +55,8 @@ public class VacuumGun : MonoBehaviour
     private void Awake()
     {
         _trap = FindObjectOfType<Trap>();
+        _rumbleManger = FindObjectOfType<RumbleManger>();
+        _sfxManager = FindObjectOfType<SFXManager>();
     }
 
     void Update()
@@ -94,10 +101,17 @@ public class VacuumGun : MonoBehaviour
     {
         // proprapgate sound
         //Sound.PropagateSound(0.00001f);
+
+        _timer = Time.deltaTime;
+        _rumbleManger.RumbleStart(_rumbleLow, _rumbleHigh, _timer);
+        
         if (gameObject.activeSelf == true)
         {
-            _pulling = true;
+            _sfxManager.SuckingStart();
+            _sfxManager.SuckingSound();
+            _pulling = true; 
             _equipment_Animator.SetBool("isSucking", true);
+
 
             foreach (AlienData aData in aData)
             {
@@ -141,6 +155,8 @@ public class VacuumGun : MonoBehaviour
     }
     public void EndPull()
     {
+        _sfxManager.SuckingStop();
+        _timer = 0;
         _pulling = false;
         _equipment_Animator.SetBool("isSucking", false);
 

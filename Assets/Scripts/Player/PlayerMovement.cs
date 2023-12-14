@@ -1,5 +1,5 @@
 //Created by Jackson Lucas
-//Last Edited by Jackson Lucas
+//Last Edited by Adanna Okoye
 
 using System.Collections;
 using System.Collections.Generic;
@@ -100,6 +100,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Current Location")]
     [SerializeField] public CurrentLocation _currentLocation;
 
+    private SFXManager _sfxManger;
+    public GameObject Jetpack;
     public enum CurrentLocation
     {
         space,
@@ -117,6 +119,7 @@ public class PlayerMovement : MonoBehaviour
         _camera = Camera.main;
         DoMovement = true;
         _soundPropagation = GetComponentInChildren<SoundPropagation>();
+        _sfxManger = FindObjectOfType<SFXManager>();  
 
         //_instance = FindObjectOfType<RumbleManger>();
     }
@@ -140,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 triBreakVelocity = new Vector3(breakVelocity.x, 0, breakVelocity.y);
             //Apply the force
             PlayerRigidbody.AddForce(-triBreakVelocity);
+
         }
         else if(DoMovement)
         {
@@ -151,17 +155,22 @@ public class PlayerMovement : MonoBehaviour
             Vector3 sideForce = _orientedForceObject.right * MovementInput.x * _strafeAccel * PlayerRigidbody.mass;
             //Debug.Log("Ground norm is " + GetGroundNormal());
             PlayerRigidbody.AddForce((forwardForce + sideForce) * Time.deltaTime);
-
-            if(!_crouched && horizontalVel.magnitude > _maxSpeed * 0.1f)
+            
+                
+            if (!_crouched && horizontalVel.magnitude > _maxSpeed * 0.1f)
             {
+                _sfxManger.Walking();
                 _soundPropagation.PropagateSound(Mathf.Clamp(horizontalVel.magnitude / _maxSpeed, 0, 1));
             }
+
+          
             GroundedCheck();
         }
 
         //...otherwise, if on the ground & out of fuel...
         if (_jetFuel < 1 && GroundedCheck())
         {
+           
             //...refuel the jetpack
             if (_refuelTime > 0)
                 _refuelTime -= Time.deltaTime;
@@ -175,6 +184,8 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerRigidbody.AddForce(Physics.gravity.y * Vector3.up, ForceMode.Acceleration);
         }
+ 
+           
 
     }
 
@@ -282,9 +293,13 @@ public class PlayerMovement : MonoBehaviour
             Physics.Raycast(GroundPoints[3], Vector3.down * PlayerHeight, out hit, PlayerHeight, _groundLayer)
             )
         {
+            Jetpack.SetActive(false);
+            _sfxManger.JetpackRecharge();
             //Debug.Log("Hit object \"" + hit.collider.gameObject.name + "\" tagged as \"" + hit.collider.gameObject.tag);
-                return true;               
-        }                                  
+            return true;    
+        
+        }
+        
         return false;                      
     }
     public Vector3 GetGroundNormal()
@@ -357,7 +372,7 @@ public class PlayerMovement : MonoBehaviour
             //If we have fuel...
             if (_jetFuel > 0)
             {
-                float _timePressed = Time.deltaTime;
+                _sfxManger.Jetpackflying();
                 _soundPropagation.PropagateSound(0.85f);
                 //... push the player up and reduce the fuel
                 if ((_holdAfterJump && _burnTime <= 0) || (_jetInputReady))
@@ -373,6 +388,7 @@ public class PlayerMovement : MonoBehaviour
                    
                     _burnTime -= Time.deltaTime;
                 }
+                
                 //_instance.RumbleStart(0.1f, 0.9f, 1f);
             }
 

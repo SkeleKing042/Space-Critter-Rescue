@@ -1,5 +1,5 @@
 // Created By Adanna Okoye
-//Last Edited by Jackson Lucas
+//Last Edited by Adanna Okoye
 
 using UnityEngine;
 
@@ -9,6 +9,7 @@ public class CollectAlien : MonoBehaviour
     private VacuumGun _vac;
     private Inventory _inv;
     private Trap _trap;
+    private SFXManager _sfxManager;
 
     [SerializeField] private Animator _VC_Animator;
     [SerializeField] int crittersCaught;
@@ -19,6 +20,7 @@ public class CollectAlien : MonoBehaviour
         _vac = FindObjectOfType<VacuumGun>();
         _inv = FindObjectOfType<Inventory>();
         _trap = FindObjectOfType<Trap>();
+        _sfxManager = GetComponent<SFXManager>();
     }
 
     private void Update()
@@ -35,6 +37,7 @@ public class CollectAlien : MonoBehaviour
             if(_vac.Pulling == true)
             {
                 //  Debug.Log("Pulling check passed");
+                _sfxManager.CritterCollection();
                 _inv.AddCritterToInv(critter.gameObject);
                 _vac.UnassignAlien(critter.gameObject);
                 _VC_Animator.SetTrigger("SuckTrigger");
