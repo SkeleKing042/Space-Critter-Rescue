@@ -17,8 +17,9 @@ public class BigCreatureSounds : MonoBehaviour
     public List<AudioClip> Sleep;
     public List<AudioClip> Captured;
 
-    [SerializeField] private float _time;
+     private float _time;
     [SerializeField] private float _soundSpeed;
+    [SerializeField] private float _sleepVolume;
     public float JumpSpeed;
 
     [SerializeField] private CreatureAI _creatureAI;
@@ -32,7 +33,7 @@ public class BigCreatureSounds : MonoBehaviour
     public void CritterSFX()
     {
 
-        if ((_creatureAI.ReadState.GetType() == typeof(RoamingState) || (_creatureAI.ReadState.GetType() == typeof(PanicState))))
+        if  (_creatureAI.ReadState.GetType() == typeof(PanicState))
         {
             CritterAudio.clip = CritterPanic[0];
             _time -= Time.deltaTime;
@@ -40,7 +41,7 @@ public class BigCreatureSounds : MonoBehaviour
             if (_time < 0 && !CritterAudio.isPlaying)
             {
                 // LegSource.volume = 15f / magnitude;
-                CritterAudio.volume = 1;
+             //  CritterAudio.volume = 1;
 
                 CritterAudio.Play();
                 _time = JumpSpeed;
@@ -56,7 +57,7 @@ public class BigCreatureSounds : MonoBehaviour
             if (_time < 0 && !CritterAudio.isPlaying)
             {
                 // LegSource.volume = 15f / magnitude;
-                CritterAudio.volume = 1;
+               // CritterAudio.volume = 1;
 
                 CritterAudio.Play();
                 _time = _soundSpeed;
@@ -73,7 +74,7 @@ public class BigCreatureSounds : MonoBehaviour
             if (_time < 0 && !CritterAudio.isPlaying)
             {
                 // LegSource.volume = 15f / magnitude;
-                CritterAudio.volume = 1;
+              //  CritterAudio.volume = _sleepVolume;
 
                 CritterAudio.Play();
                 _time = _soundSpeed;
@@ -89,7 +90,7 @@ public class BigCreatureSounds : MonoBehaviour
             if (_time < 0 && !CritterAudio.isPlaying)
             {
                 // LegSource.volume = 15f / magnitude;
-                CritterAudio.volume = 1;
+                //CritterAudio.volume = 1;
 
                 CritterAudio.Play();
                 _time = _soundSpeed;
@@ -104,7 +105,7 @@ public class BigCreatureSounds : MonoBehaviour
             if (_time < 0 && !CritterAudio.isPlaying)
             {
                 // LegSource.volume = 15f / magnitude;
-                CritterAudio.volume = 1;
+              //  CritterAudio.volume = 1;
 
                 CritterAudio.Play();
                 _time = _soundSpeed;
@@ -119,7 +120,7 @@ public class BigCreatureSounds : MonoBehaviour
             if (_time < 0 && !CritterAudio.isPlaying)
             {
                 // LegSource.volume = 15f / magnitude;
-                CritterAudio.volume = 1;
+                //CritterAudio.volume = 1;
 
                 CritterAudio.Play();
                 _time = _soundSpeed;
@@ -134,7 +135,7 @@ public class BigCreatureSounds : MonoBehaviour
             if (_time < 0 && !CritterAudio.isPlaying)
             {
                 // LegSource.volume = 15f / magnitude;
-                CritterAudio.volume = 1;
+               // CritterAudio.volume = 1;
 
                 CritterAudio.Play();
                 _time = _soundSpeed;

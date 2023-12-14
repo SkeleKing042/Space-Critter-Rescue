@@ -222,8 +222,8 @@ MonoBehaviour:
   Captured:
   - {fileID: 8300000, guid: ff7ca9d21145d2d4eaf1e7be8e3e46cd, type: 3}
   - {fileID: 8300000, guid: 7258e6925e3894f46b9c5245687a196d, type: 3}
-  _time: 1
-  _soundSpeed: 1
+  _soundSpeed: 3
+  _sleepVolume: 0.6
   JumpSpeed: 1
   _creatureAI: {fileID: 3390830656048057688}
 --- !u!82 &-1209094813782808168
@@ -247,9 +247,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 50
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -257,23 +257,32 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.01
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -3.6564085
+      outSlope: -3.6564085
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0.22642145
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.33638594
+      value: 0.11852816
+      inSlope: -0.662759
+      outSlope: -0.662759
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 1
+      outWeight: 0.14793499
+    - serializedVersion: 3
+      time: 0.92507935
+      value: 0
+      inSlope: -0.010003988
+      outSlope: -0.010003988
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -282,7 +291,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

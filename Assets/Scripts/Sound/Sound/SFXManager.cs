@@ -146,7 +146,6 @@ public class SFXManager : MonoBehaviour
             if (_footstepTimer < 0 && !LegSource.isPlaying)
             {
                 // LegSource.volume = 15f / magnitude;
-                LegSource.volume = 1;
                 int _soundplayed = UnityEngine.Random.Range(0, FootStepSounds.Count);
                 LegSource.clip = FootStepSounds[_soundplayed];
                 LegSource.Play();
