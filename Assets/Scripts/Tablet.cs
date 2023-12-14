@@ -314,7 +314,7 @@ public class Tablet : MonoBehaviour
                 //SetupBackpack();
                 break;
             case 1:
-                //FindObjectOfType<GameManager>().UpdateAllBars();
+                Update2DArrayVisuals();
                 break;
             case 2:
                 //SetTeleportLocationColors();
@@ -422,19 +422,22 @@ public class Tablet : MonoBehaviour
                             {
                                 _teleportIndex = new Vector2(x, y);
                             }
-                            else
                             _teleportLocationImages[x].Images[y].color = _color_availableTeleport;
                         }
                         else
                         {
                             _teleportLocationImages[x].Images[y].color = _color_unavailableTeleport;
-
                         }
                     }
                 }
             }
         }
-        _teleportLocationImages[(int)_teleportIndex.x].Images[(int)_teleportIndex.y].color = _color_currentlySelectedTeleport;
+        if (_pylonManager.PylonArray[GetIndexAtPosition()].isOn)
+        {
+            _teleportLocationImages[(int)_teleportIndex.x].Images[(int)_teleportIndex.y].color = _color_currentlySelectedTeleport;
+        }
+        else
+            Debug.Log("Player doesn't start near a pylon!");
     }
     /*private void SetTeleportLocationColors()
     {
