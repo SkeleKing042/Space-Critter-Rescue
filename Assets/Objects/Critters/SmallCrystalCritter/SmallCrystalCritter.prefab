@@ -200,9 +200,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CritterAudio: {fileID: 6254170468166373164}
-  CritterClips:
+  CritterJump:
   - {fileID: 8300000, guid: 1d452581fd95dc742be9545c6008fa80, type: 3}
   - {fileID: 8300000, guid: 607e5cfc50d7b4248b7b2653c618280b, type: 3}
+  Idle:
+  - {fileID: 8300000, guid: 83551bcb46cde16479476e57380db21b, type: 3}
+  - {fileID: 8300000, guid: 4441453311442204dbeb8d7d838a7ae8, type: 3}
+  - {fileID: 8300000, guid: ff4cd5411854cc34bb74f62d7d43856d, type: 3}
+  Eating:
+  - {fileID: 8300000, guid: 2f674edc618d8ae49b62a1b70b4b162c, type: 3}
+  Drinking:
+  - {fileID: 8300000, guid: 78817602f17be7543b9b3f24a66d98ad, type: 3}
+  - {fileID: 8300000, guid: 046a18368b45de8499d5044a3c015bd3, type: 3}
+  Stunned:
+  - {fileID: 8300000, guid: 1a692f5ec23a20d47845659ebbc223fa, type: 3}
+  - {fileID: 8300000, guid: 6c2a1d2e1335dc5438fd12f8f36027c6, type: 3}
+  Alert:
+  - {fileID: 8300000, guid: a56980c4f3b375446bdd32e77a902574, type: 3}
+  - {fileID: 8300000, guid: e27b7789047dea04d839a4c23433c8e7, type: 3}
+  Sleep:
+  - {fileID: 8300000, guid: 7830264d56589e7479e92ce577828e39, type: 3}
+  Captured:
+  - {fileID: 8300000, guid: 2abb4efff167a0347a23ed943310b9d1, type: 3}
+  - {fileID: 8300000, guid: 31e90d7288c304547977f3ad42dbc3e5, type: 3}
+  _time: 0
+  _soundSpeed: 0.4
   JumpSpeed: 0.5
   _creatureAI: {fileID: 3390830656048057688}
 --- !u!82 &6254170468166373164

@@ -159,7 +159,6 @@ public class PlayerMovement : MonoBehaviour
                 
             if (!_crouched && horizontalVel.magnitude > _maxSpeed * 0.1f)
             {
-                _sfxManger.Walking();
                 _soundPropagation.PropagateSound(Mathf.Clamp(horizontalVel.magnitude / _maxSpeed, 0, 1));
             }
 
@@ -184,6 +183,7 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerRigidbody.AddForce(Physics.gravity.y * Vector3.up, ForceMode.Acceleration);
         }
+       
  
            
 
@@ -253,6 +253,7 @@ public class PlayerMovement : MonoBehaviour
                 _equipment_Animator.SetBool("isRunning", false);
             }
             _flooringIt = !_flooringIt;
+            
         }
 
 

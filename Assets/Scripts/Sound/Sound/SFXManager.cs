@@ -44,6 +44,7 @@ public class SFXManager : MonoBehaviour
     float _timer;
     bool Recharged;
     bool _open;
+    
     private PlayerMovement _fuel;
 
     // Start is called before the first frame update
@@ -51,9 +52,7 @@ public class SFXManager : MonoBehaviour
     {
         _fuel = GetComponent<PlayerMovement>();
         _open = false;
-        input = GetComponent<PlayerInput>();
-        action = input.Player.Jump;
-        action.Enable();
+       
 
         //JetPack.SetActive(false);
         Debug.Log("input is: " + input);
@@ -70,6 +69,7 @@ public class SFXManager : MonoBehaviour
             JetPack.SetActive(false);
             JetPackSource.Stop();
         }
+
     }
 
     #region Collection
@@ -151,7 +151,7 @@ public class SFXManager : MonoBehaviour
                 LegSource.clip = FootStepSounds[_soundplayed];
                 LegSource.Play();
 
-                _footstepTimer = 0.5f;
+                _footstepTimer = 0.2f;
             }
 
 
