@@ -29,9 +29,10 @@ public class CritterSounds : MonoBehaviour
     void Update()
     {
 
-        CritterJumping();
+        CritterSFX();
     }
-    public void CritterJumping()
+    #region Small Creatures
+    public void CritterSFX()
     {
         
         if ((_creatureAI.ReadState.GetType() == typeof(RoamingState) || (_creatureAI.ReadState.GetType() == typeof(PanicState))))
@@ -156,5 +157,6 @@ public class CritterSounds : MonoBehaviour
 
 
         // LegSource.time();
+        #endregion
     }
 }

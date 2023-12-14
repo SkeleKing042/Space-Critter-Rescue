@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 3390830656048057688}
   - component: {fileID: 839125753}
   - component: {fileID: 2502173139634410398}
+  - component: {fileID: -9026894765664401297}
+  - component: {fileID: -1080990539564282305}
   m_Layer: 0
   m_Name: LargeCrystalCritter
   m_TagString: alien
@@ -131,6 +133,142 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 2.1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &-9026894765664401297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3390830656048057695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad3526465cffba2458159afb68a5b6ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CritterAudio: {fileID: -1080990539564282305}
+  CritterPanic:
+  - {fileID: 8300000, guid: a43060911b23d024a8bb8b77ad071737, type: 3}
+  Idle:
+  - {fileID: 8300000, guid: 86efaabe98b1fca48982fdc1b5e18a08, type: 3}
+  - {fileID: 8300000, guid: bbcbee6ce9f5e2546a092c962e107cfd, type: 3}
+  Eating:
+  - {fileID: 8300000, guid: 608b473a651cc3c48996ebd7618bfb74, type: 3}
+  - {fileID: 8300000, guid: fa2b3a6d9da6169418311ac3cdb55692, type: 3}
+  Drinking:
+  - {fileID: 8300000, guid: 72d4c85c310a3a6409b2c727b23828c2, type: 3}
+  - {fileID: 8300000, guid: 4de417d82a548624eb0a5d38653a41fd, type: 3}
+  Stunned:
+  - {fileID: 8300000, guid: 46e5b5d62fd036e42b38ac71b264d3a3, type: 3}
+  - {fileID: 8300000, guid: bc034009fb24a484e89c7ce082988dc4, type: 3}
+  Alert:
+  - {fileID: 8300000, guid: 4b4fb358d558695438b17601f89857aa, type: 3}
+  - {fileID: 8300000, guid: 1754c1dbd2d63464dbc893460e7ffb58, type: 3}
+  - {fileID: 8300000, guid: c3d1f1e4633e0b341a0056bfaca10fbd, type: 3}
+  Sleep:
+  - {fileID: 8300000, guid: 7e363962dfa537044b90876353dee4a9, type: 3}
+  Captured:
+  - {fileID: 8300000, guid: ff7ca9d21145d2d4eaf1e7be8e3e46cd, type: 3}
+  - {fileID: 8300000, guid: 7258e6925e3894f46b9c5245687a196d, type: 3}
+  _time: 1
+  _soundSpeed: 1
+  JumpSpeed: 1
+  _creatureAI: {fileID: 3390830656048057688}
+--- !u!82 &-1080990539564282305
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3390830656048057695}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5627833457246093028
 GameObject:
   m_ObjectHideFlags: 0
